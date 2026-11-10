@@ -56,5 +56,5 @@ def get_config() -> Config:
 
 if __name__ == "__main__":
     cfg = get_config()
-    print(cfg.openai_api_key)
-    print(cfg.openai_api_base)
+    # print(cfg.openai_api_key)
+    # print(cfg.openai_api_base)
