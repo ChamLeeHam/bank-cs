@@ -137,24 +137,31 @@ transfer_not_received_by_recipient、transfer_timing（status / howto）；card_
 
 ## 微调结果（Day 3）
 
-Qwen2.5-1.5B-Instruct + LoRA（rank 16，3 epoch，RTX 3080 Ti 训练 12 分钟），`configs/intent_lora_sft.yaml`；
+Qwen2.5-1.5B-Instruct + LoRA（rank 16，3 epoch，RTX 3080 Ti 训练 7–12 分钟），`configs/intent_lora_sft.yaml`；
 测试集 640 条（`data/intent/reviewed/test.jsonl`），评分脚本 `src/scripts/score_intent.py`，结果在 `data/intent/eval/`。
+
+三个模型都按**同一份修正后的测试集标签**评分（`intent_lora_v1` 的预测文件按新标签重新评分）：
 
 | 模型 | 二级准确率 | 一级准确率 | 二级宏 F1 | 一级宏 F1 | 无效输出 |
 |---|---|---|---|---|---|
-| 基座模型（零样本，提示词列出全部标签） | 45.3% | 64.5% | 0.348 | 0.660 | 18.0% |
-| **LoRA 微调** | **91.9%** | **95.2%** | **0.909** | **0.953** | **0.8%** |
+| 基座模型（零样本，提示词列出全部标签） | 45.8% | 65.0% | 0.351 | 0.665 | 18.0% |
+| LoRA v1（Banking77 原标签） | 92.0% | 95.3% | 0.911 | 0.954 | 0.8% |
+| **LoRA v2（训练集按转账时间规则修正 29 条）** | **92.5%** | **96.2%** | **0.910** | **0.963** | **0.5%** |
 
-按语言（LoRA）：en 95.4% / zh 95.6% / mixed 94.5%（一级准确率），三种语言差距不到 1.1 个百分点。
+按语言（v2，一级准确率）：en 96.8% / zh 95.1% / mixed 96.8%，中英混杂与纯英文持平。
 
-**分析**：
-- 一级 95.2% vs 二级 91.9%：约 3 个百分点的错误留在同一分支内（例如 card_service 内部的二级意图混淆），不影响分流
-- 进错分支的错误主要是 transfer_status ↔ transfer_howto（9 条），其次是 fraud_report / dispute_refund / fees_rates 之间；
-  这些正是边界规则中最难的几组，gate 的置信度分流和追问可以兜底
-- 部分"错误"其实是 Banking77 原始标签的问题（如 "How long can an EU transfer take?" 标为 pending_transfer，模型判为 transfer_timing 更合理）
-- 测试集中按新规则改标的 4 条"我的转账要多久"被模型判为 howto：训练集中同类句子仍是 Banking77 原标签（transfer_timing），
-  规则只改了测试集，训练集需要同样修正后重新训练
-- 无效输出 5 条（0.8%，都是 mixed），如 `complaint/report_lost_card`：路由节点必须用 `ALL_LABELS` 校验，一级意图有效时保留一级、否则追问
+**v1 → v2：统一转账时间规则**
+- 规则：客户已经有一笔转账在途中（我的 / 已发出 / 在等 / the transfer）→ transfer_status；一般性或未来的转账问多久 → transfer_howto
+- Banking77 的 transfer_timing 和 pending_transfer 等标签没有按这个规则区分，所以训练集改了 29 条、测试集改了 7 条
+  （决定记录在 `data/intent/review/*timing_rule_claude.jsonl`）
+- 效果：status → howto 的错误从 4 条降到 1 条，一级准确率 +0.9 个百分点；但每个版本只训练了一次，差距只有 6 条样本，不能排除随机波动
+
+**分析（v2）**：
+- 一级 96.2% vs 二级 92.5%：约 3.7 个百分点的错误留在同一分支内（例如 card_service 内部的二级意图混淆），不影响分流
+- 进错分支的错误共 24 条，分散在 fraud_report / dispute_refund / fees_rates 等边界上；gate 的置信度分流和追问可以兜底
+- 剩下的转账类"错误"多数是 Banking77 原始标签的问题：如"我刚才想做的账户转账失败了"标为 beneficiary_not_allowed、
+  "我的信用卡被拒了"标为 declined_transfer，模型的判断（failed_transfer / card_service）更合理
+- 无效输出 3 条（0.5%），如 `complaint/other`：路由节点必须用 `ALL_LABELS` 校验，一级意图有效时保留一级、否则追问
 - 局限：测试集与训练集来自同样的数据源和同一个 LLM 翻译，真实客户消息的准确率会更低
 
 数据来源：Banking77（Casanueva et al., 2020），PolyAI，CC-BY-4.0

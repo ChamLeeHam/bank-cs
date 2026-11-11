@@ -47,7 +47,8 @@ def score(pred_dir: Path) -> dict:
 
     rows = []
     for t, p in zip(test, preds):
-        assert p["label"].strip() == t["label"], "预测文件与测试集顺序不一致"
+        # 用句子对齐而不是用标签：测试集标签修正后，旧模型的预测文件仍可以按新标签重新评分
+        assert t["text"] in p["prompt"], f"预测文件与测试集顺序不一致：{t['text']}"
         out = clean_output(p["predict"])
         rows.append({"lang": t["lang"], "gold": t["label"], "pred": out, "valid": out in ALL_LABELS,
                      "gold1": t["intent"], "pred1": split_label(out)[0]})

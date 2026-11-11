@@ -351,7 +351,7 @@
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
   "instruction": "How long can an EU transfer take?",
   "input": "",
-  "output": "transfer_status/pending_transfer"
+  "output": "transfer_howto/transfer_timing"
  },
  {
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
@@ -567,7 +567,7 @@
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
   "instruction": "How long does it take for an international transfer into my account?",
   "input": "",
-  "output": "transfer_status/balance_not_updated_after_bank_transfer"
+  "output": "transfer_howto/transfer_timing"
  },
  {
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
@@ -621,7 +621,7 @@
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
   "instruction": "How long for money transfer to show?",
   "input": "",
-  "output": "transfer_status/pending_transfer"
+  "output": "transfer_howto/transfer_timing"
  },
  {
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",

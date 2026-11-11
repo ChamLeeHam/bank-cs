@@ -1,0 +1,100 @@
+{
+  "name": "intent_lora",
+  "all": {
+    "n": 640,
+    "acc_l2": 0.925,
+    "acc_l1": 0.9625,
+    "f1_l2": 0.9095404360929891,
+    "f1_l1": 0.9628620501899552,
+    "invalid": 0.0046875
+  },
+  "by_lang": {
+    "en": {
+      "n": 216,
+      "acc_l2": 0.9398148148148148,
+      "acc_l1": 0.9675925925925926,
+      "f1_l2": 0.9308159559959481,
+      "f1_l1": 0.9679616295849228,
+      "invalid": 0.0
+    },
+    "zh": {
+      "n": 204,
+      "acc_l2": 0.8970588235294118,
+      "acc_l1": 0.9509803921568627,
+      "f1_l2": 0.8673946423946424,
+      "f1_l1": 0.9522047040406894,
+      "invalid": 0.0
+    },
+    "mixed": {
+      "n": 220,
+      "acc_l2": 0.9363636363636364,
+      "acc_l1": 0.9681818181818181,
+      "f1_l2": 0.9082699240593978,
+      "f1_l1": 0.9682545261436816,
+      "invalid": 0.013636363636363636
+    }
+  },
+  "confusions": [
+    [
+      [
+        "transfer_howto",
+        "transfer_status"
+      ],
+      4
+    ],
+    [
+      [
+        "fraud_report",
+        "card_lost_freeze"
+      ],
+      2
+    ],
+    [
+      [
+        "fraud_report",
+        "dispute_refund"
+      ],
+      2
+    ],
+    [
+      [
+        "fraud_report",
+        "fees_rates"
+      ],
+      2
+    ],
+    [
+      [
+        "complaint",
+        "account_service"
+      ],
+      2
+    ],
+    [
+      [
+        "balance_inquiry",
+        "transfer_howto"
+      ],
+      1
+    ],
+    [
+      [
+        "transfer_status",
+        "card_service"
+      ],
+      1
+    ],
+    [
+      [
+        "transfer_status",
+        "transfer_howto"
+      ],
+      1
+    ]
+  ],
+  "invalid_examples": [
+    "complaint/other",
+    "fees_rates/transaction_fee_charged",
+    "account_service/compromised_card"
+  ]
+}

@@ -1875,7 +1875,7 @@
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
   "instruction": "How long does it take for money to transfer?",
   "input": "",
-  "output": "transfer_status/balance_not_updated_after_bank_transfer"
+  "output": "transfer_howto/transfer_timing"
  },
  {
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
@@ -1983,7 +1983,7 @@
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
   "instruction": "When will I see an updated balance after a transfer?",
   "input": "",
-  "output": "transfer_status/balance_not_updated_after_bank_transfer"
+  "output": "transfer_howto/transfer_timing"
  },
  {
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
@@ -2001,7 +2001,7 @@
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
   "instruction": "How long does it take for a money transfer to show up?",
   "input": "",
-  "output": "transfer_status/pending_transfer"
+  "output": "transfer_howto/transfer_timing"
  },
  {
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
@@ -2199,7 +2199,7 @@
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
   "instruction": "How long does it take for a bank transfer to show on my balance?",
   "input": "",
-  "output": "transfer_status/balance_not_updated_after_bank_transfer"
+  "output": "transfer_howto/transfer_timing"
  },
  {
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
@@ -2457,7 +2457,7 @@
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
   "instruction": "转账入账通常要等多久？",
   "input": "",
-  "output": "transfer_status/pending_transfer"
+  "output": "transfer_howto/transfer_timing"
  },
  {
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
@@ -2487,7 +2487,7 @@
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
   "instruction": "How long is the wait for a money transfer to show up?",
   "input": "",
-  "output": "transfer_status/pending_transfer"
+  "output": "transfer_howto/transfer_timing"
  },
  {
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
@@ -2733,7 +2733,7 @@
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
   "instruction": "一个 transfer post 要多久啊？",
   "input": "",
-  "output": "transfer_status/balance_not_updated_after_bank_transfer"
+  "output": "transfer_howto/transfer_timing"
  },
  {
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
@@ -3117,7 +3117,7 @@
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
   "instruction": "How long will a transaction to a friend take?",
   "input": "",
-  "output": "transfer_status/transfer_not_received_by_recipient"
+  "output": "transfer_howto/transfer_timing"
  },
  {
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
@@ -7173,7 +7173,7 @@
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
   "instruction": "When can I expect the transfer to be complete?",
   "input": "",
-  "output": "transfer_howto/transfer_timing"
+  "output": "transfer_status/pending_transfer"
  },
  {
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
@@ -7227,7 +7227,7 @@
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
   "instruction": "I've made a transfer, how long until the money reaches my account?",
   "input": "",
-  "output": "transfer_howto/transfer_timing"
+  "output": "transfer_status/balance_not_updated_after_bank_transfer"
  },
  {
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
@@ -7563,7 +7563,7 @@
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
   "instruction": "我在等 money enter 我的 account。需要等多久？",
   "input": "",
-  "output": "transfer_howto/transfer_timing"
+  "output": "transfer_status/balance_not_updated_after_bank_transfer"
  },
  {
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
@@ -7695,7 +7695,7 @@
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
   "instruction": "What is taking so long on my transfer from the US?",
   "input": "",
-  "output": "transfer_howto/transfer_timing"
+  "output": "transfer_status/balance_not_updated_after_bank_transfer"
  },
  {
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
@@ -7791,7 +7791,7 @@
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
   "instruction": "我从欧洲转过来的钱在哪里？",
   "input": "",
-  "output": "transfer_howto/transfer_timing"
+  "output": "transfer_status/balance_not_updated_after_bank_transfer"
  },
  {
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
@@ -7833,7 +7833,7 @@
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
   "instruction": "我有一笔从 US 来的 transfer，要等多久？",
   "input": "",
-  "output": "transfer_howto/transfer_timing"
+  "output": "transfer_status/balance_not_updated_after_bank_transfer"
  },
  {
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
@@ -7899,7 +7899,7 @@
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
   "instruction": "已经几天了，我的转账还要等多久？",
   "input": "",
-  "output": "transfer_howto/transfer_timing"
+  "output": "transfer_status/pending_transfer"
  },
  {
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
@@ -7971,7 +7971,7 @@
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
   "instruction": "我在等一笔从美国来的转账，还要多久？",
   "input": "",
-  "output": "transfer_howto/transfer_timing"
+  "output": "transfer_status/balance_not_updated_after_bank_transfer"
  },
  {
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
@@ -8007,7 +8007,7 @@
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
   "instruction": "我从美国的转账什么时候会到？",
   "input": "",
-  "output": "transfer_howto/transfer_timing"
+  "output": "transfer_status/balance_not_updated_after_bank_transfer"
  },
  {
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
@@ -8043,7 +8043,7 @@
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
   "instruction": "为什么我从欧洲转的账还没成功？",
   "input": "",
-  "output": "transfer_howto/transfer_timing"
+  "output": "transfer_status/balance_not_updated_after_bank_transfer"
  },
  {
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
@@ -8103,7 +8103,7 @@
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
   "instruction": "我的 account 还没 receive 到那笔钱，这个会要等多久 ah？",
   "input": "",
-  "output": "transfer_howto/transfer_timing"
+  "output": "transfer_status/balance_not_updated_after_bank_transfer"
  },
  {
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
@@ -8169,7 +8169,7 @@
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
   "instruction": "我的转账什么时候会到我的账户？",
   "input": "",
-  "output": "transfer_howto/transfer_timing"
+  "output": "transfer_status/balance_not_updated_after_bank_transfer"
  },
  {
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
@@ -8445,7 +8445,7 @@
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
   "instruction": "这个星期内我会在 account 看到那个 transfer 吗？",
   "input": "",
-  "output": "transfer_howto/transfer_timing"
+  "output": "transfer_status/balance_not_updated_after_bank_transfer"
  },
  {
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
@@ -8499,7 +8499,7 @@
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
   "instruction": "我的 transfer 几时会进到我的 account？",
   "input": "",
-  "output": "transfer_howto/transfer_timing"
+  "output": "transfer_status/balance_not_updated_after_bank_transfer"
  },
  {
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
@@ -8577,7 +8577,7 @@
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
   "instruction": "I transferred money from the US, How long does it take?",
   "input": "",
-  "output": "transfer_howto/transfer_timing"
+  "output": "transfer_status/balance_not_updated_after_bank_transfer"
  },
  {
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
@@ -8631,7 +8631,7 @@
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
   "instruction": "Where is my money transfer?",
   "input": "",
-  "output": "transfer_howto/transfer_timing"
+  "output": "transfer_status/pending_transfer"
  },
  {
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
@@ -8811,13 +8811,13 @@
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
   "instruction": "Will the transfer show up in my account soon?",
   "input": "",
-  "output": "transfer_howto/transfer_timing"
+  "output": "transfer_status/balance_not_updated_after_bank_transfer"
  },
  {
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
   "instruction": "从美国转来的钱什么时候会到我的账户？",
   "input": "",
-  "output": "transfer_howto/transfer_timing"
+  "output": "transfer_status/balance_not_updated_after_bank_transfer"
  },
  {
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
@@ -8859,13 +8859,13 @@
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
   "instruction": "我的 transfer 会超过 3 天才到我的 account 吗？",
   "input": "",
-  "output": "transfer_howto/transfer_timing"
+  "output": "transfer_status/balance_not_updated_after_bank_transfer"
  },
  {
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
   "instruction": "How many days until my US transfer arrives?",
   "input": "",
-  "output": "transfer_howto/transfer_timing"
+  "output": "transfer_status/balance_not_updated_after_bank_transfer"
  },
  {
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
@@ -8931,7 +8931,7 @@
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
   "instruction": "我从 Europe 的 transfer 几时会到？",
   "input": "",
-  "output": "transfer_howto/transfer_timing"
+  "output": "transfer_status/balance_not_updated_after_bank_transfer"
  },
  {
   "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
