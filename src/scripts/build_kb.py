@@ -69,12 +69,16 @@ def main() -> None:
     if args.check:
         return
 
+    from src.utils import search_embedding_utils
     from src.utils.bge_m3_embedding_utils import generate_dense_embedding
-    from src.utils.milvus_utils import create_kb_collection, get_milvus_client, hybrid_search
+    from src.utils.milvus_utils import create_kb_collection, get_milvus_client
 
+    # 1. 向量化
     start = time.perf_counter()
-    vectors = generate_dense_embedding([c["text"] for c in chunks])
+    vectors = generate_dense_embedding([c["text"] for c in chunks])["dense"]
     print(f"向量化完成：{len(vectors)} 条，用时 {time.perf_counter() - start:.1f}s")
+
+    # 2. 重建集合并写入
 
     client = get_milvus_client()
     create_kb_collection(client, config.kb_collection)
@@ -82,11 +86,11 @@ def main() -> None:
     client.flush(config.kb_collection)
     print(f"已写入 Milvus 集合 {config.kb_collection}：{client.get_collection_stats(config.kb_collection)['row_count']} 条")
 
-    # 检索自测：中文 / 英文 / 中英混杂
+    # 3. 检索自测：中文 / 英文 / 中英混杂
     print("\n检索自测（top 2）：")
     for q in ["How much is the overseas TT fee?", "汇款到中国要几天？", "我的 PIN 被 lock 了怎么办",
               "我要怎么更新地址？", "ATM 吞了我的卡", "can I open account if I'm 15"]:
-        hits = hybrid_search(client, q, generate_dense_embedding([q])[0], top_k=2)
+        hits = search_embedding_utils.process(q)["embedding_chunks"][:2]
         print(f"  {q}")
         for h in hits:
             print(f"      {h['score']:.4f}  《{h['title'].split(' / ')[0]}》{h['section']}")

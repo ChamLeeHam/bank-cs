@@ -49,20 +49,17 @@ def rank_of(chunks: list[dict], expected: list[str]) -> int | None:
 
 def retrieval_eval(rows: list[dict]) -> dict:
     from src.nodes.rag_answer import RagAnswerNode
-    from src.utils.bge_m3_embedding_utils import generate_dense_embedding
-    from src.utils.milvus_utils import get_milvus_client, hybrid_search
-    from src.utils.rewrite_query_utils import rewrite_query
+    from src.utils import rewrite_query_utils, search_embedding_utils
 
     node = RagAnswerNode()
-    client = get_milvus_client()
     stages = {"A 混合检索": [], "B +问题重写": [], "C +HyDE+RRF": [], "D +reranker": []}
     details = []
     for row in rows:
         q, history = row["question"], [tuple(h) for h in row.get("history", [])]
         start = time.perf_counter()
-        a = hybrid_search(client, q, generate_dense_embedding([q])[0], top_k=config.rag_candidates)
-        rewritten = rewrite_query(q, history)
-        b = hybrid_search(client, rewritten, generate_dense_embedding([rewritten])[0], top_k=config.rag_candidates)
+        a = search_embedding_utils.process(q)["embedding_chunks"]
+        rewritten = rewrite_query_utils.process(q, history)["rewritten_query"]
+        b = search_embedding_utils.process(rewritten)["embedding_chunks"]
         _, kept, info = node.retrieve(q, history)  # 完整流程：重写 + 两路检索 + RRF + 精排 + 断崖截断
         elapsed = time.perf_counter() - start
         results = {"A 混合检索": a, "B +问题重写": b, "C +HyDE+RRF": info["fused"], "D +reranker": info["reranked"]}

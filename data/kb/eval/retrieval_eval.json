@@ -12,8 +12,8 @@
   },
   "C +HyDE+RRF": {
    "hit@1": 0.9375,
-   "hit@3": 0.96875,
-   "mrr": 0.9557291666666666
+   "hit@3": 1.0,
+   "mrr": 0.9583333333333334
   },
   "D +reranker": {
    "hit@1": 0.84375,
@@ -24,7 +24,7 @@
    "知识库内：保留了正确章节": 0.9375,
    "知识库外：正确判为没有答案": 1.0,
    "平均保留章节数": 1.40625,
-   "平均检索用时（秒）": 3.7083333333333335
+   "平均检索用时（秒）": 3.744444444444445
   }
  },
  "details": [
@@ -34,14 +34,14 @@
     "本地转账费用"
    ],
    "rewritten": "PayNow 转账要收钱吗？",
-   "hyde": "通过 PayNow/FAST 转账至本地账户一般免手续费；海外电汇等跨境转账可能另收费，具体以本行收费表为准。",
+   "hyde": "通过本行手机银行使用 PayNow 转账一般免收手续费；若涉及多币种账户或跨境安排，请以实际页面提示为准。",
    "best_score": 0.9809,
    "kept": [
     "如何收款",
     "本地转账费用",
     "转账方式比较"
    ],
-   "seconds": 7.4,
+   "seconds": 9.9,
    "A 混合检索": 1,
    "B +问题重写": 1,
    "C +HyDE+RRF": 1,
@@ -67,12 +67,12 @@
     "海外电汇（TT）手续费"
    ],
    "rewritten": "What's the charge for sending a TT to Malaysia?",
-   "hyde": "TT charges to Malaysia vary by remittance channel, currency and account type. They typically include a cable/handling fee and may be lower via online banking. Please refer to our current fee schedule before sending.",
+   "hyde": "TT charges to Malaysia vary by channel and account type. They include our remittance commission/cable charge plus any correspondent bank fees. Please check our Remittance Tariff or Online Banking for the exact amount.",
    "best_score": 0.3605,
    "kept": [
     "海外电汇（TT）手续费"
    ],
-   "seconds": 2.5,
+   "seconds": 4.2,
    "A 混合检索": 1,
    "B +问题重写": 1,
    "C +HyDE+RRF": 1,
@@ -98,12 +98,12 @@
     "汇率如何确定"
    ],
    "rewritten": "你们的 exchange rate 是怎么定的？周末会不会不一样？",
-   "hyde": "汇率按银行参考国际市场报价及成本厘定，含点差；周末及非交易日可能采用不同牌价或顺延更新，以交易时系统显示为准。多币种账户兑换亦适用。",
+   "hyde": "本行汇率参考国际市场行情及资金成本制定，并可能随时调整。周末及公共假期因市场休市，汇率可能与平日不同；海外电汇、多币种账户兑换均以交易确认时汇率为准。",
    "best_score": 0.8481,
    "kept": [
     "汇率如何确定"
    ],
-   "seconds": 4.0,
+   "seconds": 3.6,
    "A 混合检索": 1,
    "B +问题重写": 1,
    "C +HyDE+RRF": 1,
@@ -129,14 +129,14 @@
     "外币兑换与外币刷卡费用"
    ],
    "rewritten": "I paid in USD on Amazon with my Visa, why was there an extra 3.25%?",
-   "hyde": "A 3.25% cross-border/foreign currency transaction fee may apply when your Visa payment is processed outside your billing currency or overseas, even if Amazon prices the item in USD. To reduce this, consider using a multi-currency account or a USD-denominated card where available.",
+   "hyde": "The extra 3.25% is likely a cross-border or foreign-currency transaction fee charged by your card issuer when Amazon processes the payment outside the card’s billing country or in USD. Please review your card terms; choosing the card’s local currency at checkout may help reduce this fee.",
    "best_score": 0.0612,
    "kept": [
     "外币兑换与外币刷卡费用",
     "ATM 取款费用",
     "账单上看不懂的费用"
    ],
-   "seconds": 4.8,
+   "seconds": 3.0,
    "A 混合检索": 1,
    "B +问题重写": 1,
    "C +HyDE+RRF": 1,
@@ -162,12 +162,12 @@
     "ATM 取款费用"
    ],
    "rewritten": "在日本 ATM 拿钱要多少 fee？",
-   "hyde": "在日本ATM取款手续费取决于卡种及ATM运营方，通常含本行海外取现费与当地附加费；如使用多币种账户可减少汇兑费用，取款需使用PIN，具体以收费表为准。",
+   "hyde": "在日本ATM取现需使用PIN，本行按卡种收取境外ATM取款手续费，当地ATM可能另收附加费，并按清算汇率结算；具体费率见服务收费表。",
    "best_score": 0.4341,
    "kept": [
     "ATM 取款费用"
    ],
-   "seconds": 3.2,
+   "seconds": 4.1,
    "A 混合检索": 1,
    "B +问题重写": 1,
    "C +HyDE+RRF": 1,
@@ -193,12 +193,12 @@
     "账单上看不懂的费用"
    ],
    "rewritten": "statement 上面有一笔看不懂的小额 charge 是什么？",
-   "hyde": "该笔小额扣款可能为账户服务费、海外交易或多币种账户相关费用、商户预授权/验证交易。请核对交易描述；若非本人授权，请立即通过官方渠道联系我们冻结卡并查询。",
+   "hyde": "可能是海外电汇手续费、预授权或账户服务费。请登录网银查看交易详情及商户名，或经OTP验证后联系客服核实。",
    "best_score": 0.9915,
    "kept": [
     "账单上看不懂的费用"
    ],
-   "seconds": 3.7,
+   "seconds": 3.1,
    "A 混合检索": 1,
    "B +问题重写": 1,
    "C +HyDE+RRF": 1,
@@ -224,12 +224,12 @@
     "银行卡年费与其他卡费"
    ],
    "rewritten": "信用卡年费可以免吗？",
-   "hyde": "信用卡年费能否豁免视卡种及促销政策而定；达标消费或指定活动可申请减免，未达标按标准计收。您可通过手机银行（经OTP验证）查询并申请豁免。",
+   "hyde": "信用卡年费可否豁免视卡种及年费政策而定；如满足消费、积分或GIRO自动扣款条件，可申请豁免。可经网上银行或客服提交，OTP验证后以审批结果为准。",
    "best_score": 0.9963,
    "kept": [
     "银行卡年费与其他卡费"
    ],
-   "seconds": 4.4,
+   "seconds": 4.2,
    "A 混合检索": 1,
    "B +问题重写": 1,
    "C +HyDE+RRF": 1,
@@ -255,12 +255,12 @@
     "转账方式比较"
    ],
    "rewritten": "What's the difference between PayNow and FAST?",
-   "hyde": "PayNow is an overlay on FAST that lets you send instant funds using a mobile number, NRIC/FIN or UEN. FAST is the underlying interbank instant transfer system, which requires the recipient’s account number.",
+   "hyde": "PayNow and FAST are both instant SGD transfer services in Singapore. PayNow is an overlay on FAST: you can send funds using a mobile number, NRIC/FIN or UEN linked to your account. FAST requires the recipient’s bank account number. PayNow is commonly used for domestic person-to-person and business payments; FAST supports broader account-to-account transfers.",
    "best_score": 0.8907,
    "kept": [
     "转账方式比较"
    ],
-   "seconds": 3.3,
+   "seconds": 2.9,
    "A 混合检索": 1,
    "B +问题重写": 1,
    "C +HyDE+RRF": 1,
@@ -287,7 +287,7 @@
     "转账方式比较"
    ],
    "rewritten": "FAST transfer 一般几分钟会到？",
-   "hyde": "FAST 转账一般实时到账，最快数秒，通常不超过数分钟；实际到账时间以收款银行处理为准。",
+   "hyde": "FAST 转账一般实时到账，通常几分钟内完成；具体到账时间视收款银行处理而定。",
    "best_score": 0.9869,
    "kept": [
     "转账一般多久到账",
@@ -319,12 +319,12 @@
     "如何汇款到海外"
    ],
    "rewritten": "How do I send money to my mum's bank account in China?",
-   "hyde": "Please use our Overseas Telegraphic Transfer service via online banking. Add your mother’s China bank account as a beneficiary (name, account number, SWIFT/BIC), confirm charges and exchange rate, then authorise with OTP. Funds will be debited from your multi-currency account.",
+   "hyde": "Log in to Online Banking, select Overseas Telegraphic Transfer, and enter your mother’s name, bank account and SWIFT code. Confirm with OTP; ensure your multi-currency account has sufficient balance.",
    "best_score": 0.0155,
    "kept": [
     "如何汇款到海外"
    ],
-   "seconds": 3.9,
+   "seconds": 2.7,
    "A 混合检索": 3,
    "B +问题重写": 3,
    "C +HyDE+RRF": 3,
@@ -350,15 +350,15 @@
     "如何收款"
    ],
    "rewritten": "我朋友在美国要汇钱给我，要给他什么资料？",
-   "hyde": "请提供收款银行名称及地址、SWIFT/BIC代码、账号、户名；如使用多币种账户，请确认币种及账号。朋友可通过海外电汇汇入。",
+   "hyde": "请提供收款账户姓名、账号、开户银行名称及SWIFT/BIC；如汇入多币种账户，请注明币种。建议使用海外电汇，并核对汇款用途等信息。",
    "best_score": 0.0356,
    "kept": [
     "如何汇款到海外"
    ],
-   "seconds": 2.9,
+   "seconds": 2.7,
    "A 混合检索": 6,
    "B +问题重写": 6,
-   "C +HyDE+RRF": 4,
+   "C +HyDE+RRF": 3,
    "D +reranker": 2,
    "top_reranked": [
     [
@@ -381,12 +381,12 @@
     "收款人限制"
    ],
    "rewritten": "Why can't I add Binance as a payee?",
-   "hyde": "Binance is not a supported payee. To meet regulatory and risk requirements, we do not permit adding cryptocurrency exchanges as payees. Please use PayNow, FAST, GIRO or an overseas wire for eligible transfers; your PIN/OTP is required to authorise them.",
+   "hyde": "Binance cannot be added as a payee because cryptocurrency-related payees are not supported under our compliance policy. PayNow, FAST, GIRO and overseas telegraphic transfer to Binance are unavailable.",
    "best_score": 0.1813,
    "kept": [
     "收款人限制"
    ],
-   "seconds": 4.2,
+   "seconds": 5.1,
    "A 混合检索": 1,
    "B +问题重写": 1,
    "C +HyDE+RRF": 1,
@@ -412,13 +412,13 @@
     "转账限额"
    ],
    "rewritten": "我想一次转 SGD 10,000 给朋友，可以吗？",
-   "hyde": "可以。通过 PayNow/FAST 转账须在账户每日限额内，并以 OTP/PIN 验证；若单笔限额不足 SGD 10,000，请先调整限额或分行办理。海外电汇适用于跨境付款。",
+   "hyde": "可以。通过 PayNow/FAST 转本地朋友，单笔 SGD 10,000 通常可，但受账户及每日限额约束，需 PIN/OTP 验证；如为海外电汇，请另查限额与费用。",
    "best_score": 0.966,
    "kept": [
     "收款人限制",
     "转账限额"
    ],
-   "seconds": 3.6,
+   "seconds": 2.4,
    "A 混合检索": 1,
    "B +问题重写": 1,
    "C +HyDE+RRF": 1,
@@ -444,12 +444,12 @@
     "转账失败的常见原因"
    ],
    "rewritten": "My transfer got returned, what usually causes that?",
-   "hyde": "Transfers are usually returned due to incorrect beneficiary name/account details, a closed or restricted account, name mismatch, exceeded limits, failed OTP/PIN verification, or invalid currency/account details for overseas remittance, PayNow, FAST, GIRO or a multi-currency account. Please verify the details and retry.",
+   "hyde": "Transfers are usually returned due to incorrect beneficiary details, a closed/ineligible account, PayNow/FAST/GIRO or overseas remittance limits, compliance checks, or failed PIN/OTP verification. Review the return reason; contact us if it persists.",
    "best_score": 0.7759,
    "kept": [
     "转账失败的常见原因"
    ],
-   "seconds": 4.0,
+   "seconds": 4.9,
    "A 混合检索": 1,
    "B +问题重写": 1,
    "C +HyDE+RRF": 1,
@@ -475,13 +475,13 @@
     "激活新卡"
    ],
    "rewritten": "新卡收到了要怎么开通？",
-   "hyde": "请登录手机银行“卡片管理”激活新卡，完成OTP验证并设置PIN；激活后可用于PayNow、FAST、GIRO及多币种账户，海外电汇服务请另行开通。",
+   "hyde": "新卡收到后，请登录手机银行，在“卡片管理”中选择激活新卡，按提示验证身份并输入OTP，随后设置交易PIN即可开通。如无法激活，请联系客服。",
    "best_score": 0.9913,
    "kept": [
     "激活新卡",
     "卡片即将到期"
    ],
-   "seconds": 3.0,
+   "seconds": 2.2,
    "A 混合检索": 2,
    "B +问题重写": 2,
    "C +HyDE+RRF": 1,
@@ -507,14 +507,14 @@
     "新卡寄送时间"
    ],
    "rewritten": "My new card still hasn't arrived after two weeks",
-   "hyde": "We’re sorry your new card has not arrived. Cards are usually delivered within 7–10 business days. Please check your mailing address in the app and contact our card services hotline for delivery status or a replacement. Once received, activate it using the OTP and set your PIN. Do not share your OTP or PIN with anyone.",
+   "hyde": "Please check your card delivery status in the app. If it has not arrived after two weeks, call our hotline to verify your identity and arrange a replacement or branch collection. You will be notified when the card is dispatched. Never share your PIN or OTP.",
    "best_score": 0.2053,
    "kept": [
     "激活新卡",
     "新卡寄送时间",
     "ATM 吞卡"
    ],
-   "seconds": 4.6,
+   "seconds": 3.8,
    "A 混合检索": 1,
    "B +问题重写": 1,
    "C +HyDE+RRF": 1,
@@ -540,7 +540,7 @@
     "修改 PIN 与 PIN 被锁"
    ],
    "rewritten": "我的 PIN 输错三次了，现在用不了",
-   "hyde": "您的 PIN 因连续输错三次已被锁定。请通过手机银行使用 OTP 重置 PIN，或携带有效身份证件至网点解锁。",
+   "hyde": "您的PIN因连续输错三次已被锁定，请通过网上银行/手机银行使用OTP验证重置PIN，或携带有效证件至网点办理解锁。",
    "best_score": 0.9934,
    "kept": [
     "修改 PIN 与 PIN 被锁",
@@ -573,12 +573,12 @@
     "卡被拒或不能用"
    ],
    "rewritten": "Why does my card keep getting declined overseas?",
-   "hyde": "Your card may be declined overseas if overseas usage is not enabled, your travel notice is missing, the transaction exceeds your limits, your multi-currency account balance is insufficient, or fraud monitoring requires PIN/OTP verification. Check your card controls and limits in the app, enable overseas usage, or contact us.",
+   "hyde": "Your card may be declined overseas because overseas usage is disabled, transaction limits are exceeded, available balance is insufficient, or PIN/OTP verification fails. Enable overseas transactions in our app or contact us.",
    "best_score": 0.9978,
    "kept": [
     "卡被拒或不能用"
    ],
-   "seconds": 2.9,
+   "seconds": 4.4,
    "A 混合检索": 1,
    "B +问题重写": 1,
    "C +HyDE+RRF": 1,
@@ -604,12 +604,12 @@
     "ATM 吞卡"
    ],
    "rewritten": "ATM 把我的卡吃掉了",
-   "hyde": "请勿离开ATM，立即致电本行客服热线报备吞卡；携带有效身份证件至该ATM所属网点领卡。如无法取回，可办理挂失及补卡。切勿向他人透露PIN或OTP。",
+   "hyde": "如ATM吞卡，请勿离开，立即致电本行客服并提供卡号及身份信息；按指示办理取卡或挂失补卡。验证时可能需PIN或OTP，切勿向他人透露。",
    "best_score": 0.961,
    "kept": [
     "ATM 吞卡"
    ],
-   "seconds": 3.8,
+   "seconds": 3.2,
    "A 混合检索": 1,
    "B +问题重写": 1,
    "C +HyDE+RRF": 1,
@@ -635,12 +635,12 @@
     "卡片即将到期"
    ],
    "rewritten": "My card expires next month, do I need to apply for a new one?",
-   "hyde": "No. We will automatically issue a replacement card before expiry and mail it to your registered address. Activate it via OTP and set your PIN; your old card will then be deactivated.",
+   "hyde": "No. We will automatically send a renewal card to your registered address before expiry. Activate it using the OTP/PIN provided, then destroy your old card. Please update your address if needed.",
    "best_score": 0.7734,
    "kept": [
     "卡片即将到期"
    ],
-   "seconds": 3.2,
+   "seconds": 3.6,
    "A 混合检索": 1,
    "B +问题重写": 1,
    "C +HyDE+RRF": 1,
@@ -666,12 +666,12 @@
     "补发实体卡与附属卡"
    ],
    "rewritten": "可以给我太太办一张 supplementary card 吗？",
-   "hyde": "可以。您可为主卡配偶申请附属卡，提交双方身份资料并经本行审批后寄发；附属卡交易计入主卡账户，激活需OTP验证。",
+   "hyde": "可以。您可为太太申请附属卡（Supplementary Card），须提供婚姻关系及双方身份证明，主卡人承担还款责任，可通过网上银行或分行办理。",
    "best_score": 0.0698,
    "kept": [
     "补发实体卡与附属卡"
    ],
-   "seconds": 2.9,
+   "seconds": 2.6,
    "A 混合检索": 1,
    "B +问题重写": 1,
    "C +HyDE+RRF": 1,
@@ -686,7 +686,7 @@
      0.0
     ],
     [
-     "激活新卡",
+     "卡组织与受理范围",
      0.0
     ]
    ]
@@ -697,12 +697,12 @@
     "卡组织与受理范围"
    ],
    "rewritten": "Is your debit card Visa or Mastercard?",
-   "hyde": "Our debit cards are issued as Visa debit cards; Mastercard debit cards are not offered. For overseas transactions, card controls or replacement requests, please use Internet Banking or visit a branch. PIN and OTP may be required for activation and certain transactions.",
+   "hyde": "Our debit cards are issued on either Visa or Mastercard, depending on the card variant selected. The applicable network is shown by the logo on your card. Please refer to your card terms for details.",
    "best_score": 0.8876,
    "kept": [
     "卡组织与受理范围"
    ],
-   "seconds": 3.1,
+   "seconds": 3.0,
    "A 混合检索": 1,
    "B +问题重写": 1,
    "C +HyDE+RRF": 1,
@@ -728,12 +728,12 @@
     "开户条件"
    ],
    "rewritten": "Can I open an account if I'm 15?",
-   "hyde": "If you are 15, you may open a minor/joint savings account with a parent or guardian’s consent and joint signatory arrangement. Certain services—such as PayNow, FAST, GIRO, overseas remittance, and multi-currency account features—may be restricted until you meet the bank’s age requirement. ATM card/PIN and OTP access may also be limited.",
+   "hyde": "Yes—at 15, you may open a savings account with parental/guardian consent. Multi-currency accounts, PayNow/FAST/GIRO and overseas remittance may require guardian approval; PIN/OTP activation applies.",
    "best_score": 0.0454,
    "kept": [
     "开户条件"
    ],
-   "seconds": 3.4,
+   "seconds": 5.1,
    "A 混合检索": 1,
    "B +问题重写": 1,
    "C +HyDE+RRF": 1,
@@ -759,12 +759,12 @@
     "身份验证"
    ],
    "rewritten": "开户需要什么证件？没有 Singpass 可以吗？",
-   "hyde": "开户请携有效身份证件及地址证明；无Singpass可到分行人工核验办理，PayNow、FAST、GIRO等服务或需后续激活。",
+   "hyde": "开户请备有效身份证/护照及住址证明。无Singpass可携证件到分行办理，需完成PIN/OTP及额外身份核验。",
    "best_score": 0.9988,
    "kept": [
     "身份验证"
    ],
-   "seconds": 4.1,
+   "seconds": 3.1,
    "A 混合检索": 1,
    "B +问题重写": 1,
    "C +HyDE+RRF": 1,
@@ -790,12 +790,12 @@
     "身份验证失败"
    ],
    "rewritten": "The app keeps rejecting my selfie during verification",
-   "hyde": "Please ensure good lighting, remove glasses/hats, keep your full face in frame, and follow the on-screen prompts. If selfie verification still fails, retry using OTP/PIN or visit a branch. Never share your OTP or PIN.",
+   "hyde": "Please ensure good lighting, a clean lens and no facial obstructions, then retry the selfie verification. If it still fails, log in with your OTP/PIN and contact our support team for assistance.",
    "best_score": 0.0133,
    "kept": [
     "身份验证失败"
    ],
-   "seconds": 3.7,
+   "seconds": 4.1,
    "A 混合检索": 1,
    "B +问题重写": 1,
    "C +HyDE+RRF": 1,
@@ -821,12 +821,12 @@
     "修改个人资料"
    ],
    "rewritten": "我搬家了，地址要怎么改？",
-   "hyde": "您可登录网上银行/手机银行，在个人资料中更新住址，并按提示完成OTP验证；如无法在线办理，请携有效身份证件至任一网点更新。",
+   "hyde": "您可登录网上银行或手机银行，在“个人资料—地址更新”修改住址，并通过OTP或PIN验证；如无法登录，请携有效证件至分行办理。",
    "best_score": 0.2903,
    "kept": [
     "修改个人资料"
    ],
-   "seconds": 2.4,
+   "seconds": 2.2,
    "A 混合检索": 1,
    "B +问题重写": 1,
    "C +HyDE+RRF": 1,
@@ -852,12 +852,12 @@
     "忘记登录密码"
    ],
    "rewritten": "I can't remember my internet banking password",
-   "hyde": "Reset your internet banking password via the “Forgot Password” link on the login page. Verify your identity using an OTP sent to your registered mobile number, then create a new password. Never share your password, PIN or OTP with anyone. Contact us if you need assistance.",
+   "hyde": "Use “Forgot Password” on the Internet Banking login page. Complete verification with your PIN and OTP, then reset your password. If locked, call our hotline for assistance.",
    "best_score": 0.9753,
    "kept": [
     "忘记登录密码"
    ],
-   "seconds": 2.9,
+   "seconds": 3.6,
    "A 混合检索": 1,
    "B +问题重写": 1,
    "C +HyDE+RRF": 1,
@@ -883,12 +883,12 @@
     "销户"
    ],
    "rewritten": "我想 close 我的 savings account",
-   "hyde": "您可携带有效身份证件到任一支行办理销户；请先清零余额、结清费用，并取消相关GIRO/PayNow安排。部分情况需OTP验证。",
+   "hyde": "请携身份证件到分行办理销户，或经网上银行提交申请（视资格）。销户前请结清余额及未结交易，并取消GIRO、FAST、PayNow等关联；海外电汇、多币种账户请先处理。办理时需OTP/PIN验证。",
    "best_score": 0.9958,
    "kept": [
     "销户"
    ],
-   "seconds": 3.5,
+   "seconds": 4.6,
    "A 混合检索": 1,
    "B +问题重写": 1,
    "C +HyDE+RRF": 1,
@@ -914,10 +914,10 @@
     "多币种账户支持的货币"
    ],
    "rewritten": "Can I hold Japanese yen in my account?",
-   "hyde": "Yes. Eligible customers can hold Japanese yen in a multi-currency account. JPY balances support FX conversion and overseas wire transfers; FAST, PayNow and GIRO are available only for supported currencies. PIN/OTP may be required for transactions.",
+   "hyde": "Yes. You can hold Japanese yen (JPY) in an eligible Multi-Currency Account. JPY balances can be used for deposits, transfers and overseas remittances through available channels, subject to account terms.",
    "best_score": 0.0016,
    "kept": [],
-   "seconds": 3.6,
+   "seconds": 3.1,
    "A 混合检索": 1,
    "B +问题重写": 1,
    "C +HyDE+RRF": 1,
@@ -944,12 +944,12 @@
     "收款人限制"
    ],
    "rewritten": "你们可以存比特币吗？",
-   "hyde": "本行暂不支持比特币等加密货币存款，亦不接受通过海外电汇、PayNow、FAST或GIRO存入相关资产。多币种账户仅支持法定货币，详情请登录网上银行查询。",
+   "hyde": "很抱歉，本行不接受比特币等加密货币存款，也不提供数字资产托管。您可通过 FAST、PayNow、GIRO 或海外电汇将资金存入多币种账户。",
    "best_score": 0.044,
    "kept": [
     "多币种账户支持的货币"
    ],
-   "seconds": 3.0,
+   "seconds": 2.5,
    "A 混合检索": 1,
    "B +问题重写": 1,
    "C +HyDE+RRF": 1,
@@ -973,10 +973,10 @@
    "question": "定期存款利率是多少？",
    "expected": null,
    "rewritten": "定期存款利率是多少？",
-   "hyde": "定期存款利率随币种、存期及金额而异，并会按市场调整。请登录网上银行/手机银行或前往网点查询最新利率；多币种账户各币种利率可能不同，最终以办理时公布为准。",
+   "hyde": "定期存款利率随存期、币种及金额而异，多币种账户各币种利率不同。请登录网上银行/手机银行经OTP验证查询最新利率，或前往网点咨询，以本行公布为准。",
    "best_score": 0.0043,
    "kept": [],
-   "seconds": 3.1,
+   "seconds": 3.2,
    "A 混合检索": null,
    "B +问题重写": null,
    "C +HyDE+RRF": null,
@@ -1000,10 +1000,10 @@
    "question": "How do I apply for a home loan?",
    "expected": null,
    "rewritten": "How do I apply for a home loan?",
-   "hyde": "Apply online via our Home Loan page: submit your details, upload income documents and verify with OTP. After approval, set up GIRO for repayments. A specialist will guide you on eligibility and rates.",
+   "hyde": "Apply online via Internet Banking or visit a branch. Submit income and property documents, verify your identity with OTP, and upon approval, set up GIRO for monthly repayments.",
    "best_score": 0.001,
    "kept": [],
-   "seconds": 4.0,
+   "seconds": 3.7,
    "A 混合检索": null,
    "B +问题重写": null,
    "C +HyDE+RRF": null,
@@ -1027,10 +1027,10 @@
    "question": "你们的分行几点开门？",
    "expected": null,
    "rewritten": "你们的分行几点开门？",
-   "hyde": "我行分行柜台通常周一至周五 9:00–16:30 营业，周六 9:00–12:30，周日及公共假期休息；各分行略有不同，请以官网分行查询为准。",
+   "hyde": "本行分行一般为周一至周五9:00–16:30营业，周六及公共假期不营业，具体以各分行公告为准；可使用FAST、PayNow或GIRO办理转账。",
    "best_score": 0.0027,
    "kept": [],
-   "seconds": 3.0,
+   "seconds": 2.9,
    "A 混合检索": null,
    "B +问题重写": null,
    "C +HyDE+RRF": null,
@@ -1054,10 +1054,10 @@
    "question": "Does my credit card come with travel insurance?",
    "expected": null,
    "rewritten": "Does my credit card come with travel insurance?",
-   "hyde": "Travel insurance may be included with selected credit cards, subject to card type, eligibility and activation. Please review your Cardmember Agreement and Benefits Guide or contact us to confirm coverage, limits and exclusions before travelling.",
+   "hyde": "Travel insurance may be included depending on your card type and plan. Please refer to your Card Benefits Guide or contact Customer Service to confirm eligibility, coverage limits and claim procedures.",
    "best_score": 0.0023,
    "kept": [],
-   "seconds": 3.2,
+   "seconds": 3.0,
    "A 混合检索": null,
    "B +问题重写": null,
    "C +HyDE+RRF": null,
@@ -1083,13 +1083,13 @@
     "本地转账费用"
    ],
    "rewritten": "FAST 转账的手续费是多少？",
-   "hyde": "通过本行网上银行/手机银行办理 FAST 转账通常免手续费；经柜台或人工渠道办理可能按收费表收取，详情请查阅最新收费表。",
+   "hyde": "通过本行网上银行或手机银行办理 FAST 转账一般免收手续费；经柜台等特殊渠道办理，可能按现行收费表收费，具体以账户条款为准。",
    "best_score": 0.8842,
    "kept": [
     "本地转账费用",
     "转账限额"
    ],
-   "seconds": 6.3,
+   "seconds": 5.9,
    "A 混合检索": 4,
    "B +问题重写": 1,
    "C +HyDE+RRF": 1,
@@ -1115,14 +1115,14 @@
     "修改 PIN 与 PIN 被锁"
    ],
    "rewritten": "What if I forgot the PIN for my new card?",
-   "hyde": "You can reset your new card’s PIN securely via the mobile app using OTP verification, at an ATM, or at any branch. If you are overseas, please contact Customer Service for assistance. Never share your PIN with anyone.",
+   "hyde": "Please reset your card PIN via our banking app or online banking using OTP verification. Alternatively, visit any branch or contact Customer Service for assistance. For security, never share your PIN or OTP with anyone.",
    "best_score": 0.7768,
    "kept": [
     "激活新卡",
     "ATM 吞卡",
     "修改 PIN 与 PIN 被锁"
    ],
-   "seconds": 7.2,
+   "seconds": 7.5,
    "A 混合检索": 1,
    "B +问题重写": 1,
    "C +HyDE+RRF": 1,

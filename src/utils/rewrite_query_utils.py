@@ -1,22 +1,17 @@
-"""
-问题重写工具（参考课程 03-rag/rewritten_query.py）：根据对话历史把当前问题改写成独立、指代明确的问题
-
-例：上一轮问 "海外电汇手续费多少？"，这一轮问 "那 FAST 呢？" -> "FAST 转账的手续费是多少？"
-- 没有历史时直接返回原问题（第一轮不调用 LLM，省一次请求）
-- 只使用最近几条脱敏后的对话（state["messages"] 中只保存脱敏文本，见 history_utils.py）
-- 失败时返回原问题，不影响后续检索
-"""
+# 根据多轮对话的历史记录实现问题重写（参考课程 03-rag/rewritten_query.py）
+# 例：上一轮问 "海外电汇手续费多少？"，这一轮问 "那 FAST 呢？" -> "FAST 转账的手续费是多少？"
 import json
 import logging
 
-from src.utils.llm_util import get_llm_client
+from src.utils.llm_util import extract_json_from_markdown, get_llm_client
 
-logger = logging.getLogger("bank.rewrite_query")
+logger = logging.getLogger(__name__)
+
 MAX_HISTORY = 4  # 最近 2 轮（客户 + 客服）
 
-REWRITE_PROMPT = """你是银行客服系统的问题重写助手。根据历史对话，把客户的当前问题改写成一个独立、完整、指代明确的问题，用于检索知识库。
+REPHRASE_PROMPT = """你是银行客服系统的问题重写助手。根据历史对话，把客户的当前问题改写成一个独立、完整、指代明确的问题，用于检索知识库。
 历史对话：
-{history}
+{history_text}
 
 当前问题：{query}
 
@@ -28,16 +23,37 @@ REWRITE_PROMPT = """你是银行客服系统的问题重写助手。根据历史
 4. 不要回答问题，不要添加历史中没有的信息"""
 
 
-def rewrite_query(query: str, history: list[tuple[str, str]]) -> str:
-    """history: [(角色, 文本), ...]，角色为 客户 或 客服"""
+def process(query: str, history: list[tuple[str, str]]):
+    """history: [(角色, 脱敏文本), ...]，角色为 客户 / 客服（见 history_utils.history_of）"""
+    # 1. 对历史记录进行裁剪：只取最近几条
     history = history[-MAX_HISTORY:]
+
+    # 2. 没有历史时直接返回原问题（第一轮不调用模型，省一次请求）
     if not history:
-        return query
+        return {"rewritten_query": query, "history": history}
+
     try:
-        text = "\n".join(f"{role}：{content}" for role, content in history)
-        reply = get_llm_client(0.0, response_format=True).invoke(REWRITE_PROMPT.format(history=text, query=query)).content
-        rewritten = str(json.loads(reply).get("rewritten_query") or "").strip()
-        return rewritten or query
+        # 3. 组装提示词
+        history_text = "\n".join(f"{role}：{content}" for role, content in history)
+        prompt = REPHRASE_PROMPT.format(history_text=history_text, query=query)
+
+        # 4. 调用 LLM（要求返回 JSON）
+        client = get_llm_client(response_format=True)
+        content = client.invoke(prompt).content.strip()
+
+        # 5. 解析 JSON
+        result = json.loads(extract_json_from_markdown(content))
+        rewritten_query = str(result.get("rewritten_query") or "").strip() or query
+        logger.info("3. 问题重写完成")
     except Exception as e:
-        logger.warning("问题重写失败，使用原问题：%s", e)
-        return query
+        logger.warning(f"问题重写失败，使用原问题：{e}")
+        rewritten_query = query
+
+    # 6. 返回重写后的问题
+    return {"rewritten_query": rewritten_query, "history": history}
+
+
+if __name__ == "__main__":
+    history = [("客户", "海外电汇手续费多少？"), ("客服", "每笔海外电汇（TT）收取 SGD 10 手续费。")]
+    print(process("那 FAST 呢？", history)["rewritten_query"])
+    print(process("那 FAST 呢？", [])["rewritten_query"])  # 没有历史：原样返回

@@ -23,7 +23,7 @@ uv run python src/scripts/build_kb.py --check  # 只校验文档格式
 ```
 
 - **向量**：本地 BGE-M3（`pretrained/bge-m3`），1024 维稠密向量，中英文在同一个向量空间，客户问题不发送到外部服务
-- **混合检索**（`src/utils/milvus_utils.py`）：稠密向量（语义）+ Milvus 内置 BM25（关键词，jieba 分词 + 小写），RRF 融合
+- **混合检索**（`src/utils/search_embedding_utils.py`、`milvus_utils.py`）：稠密向量（语义）+ Milvus 内置 BM25（关键词，jieba 分词 + 小写），RRF 融合
 - **集合**：`lioncity_faq`（用 `BANK_KB_COLLECTION` 配置），不会影响 Milvus 中其他项目的集合
 
 ## RAG 流程（结构同课程 `03-rag`）
@@ -34,15 +34,23 @@ uv run python src/scripts/build_kb.py --check  # 只校验文档格式
         HyDE 检索（问题 + 假设答案）────────┘
 ```
 
-| 步骤 | 文件 | 对应课程文件 | 说明 |
+代码风格与课程一致：每一步是 `src/utils/` 下的一个模块，对外提供 `process(...)`，返回带名字的字典；
+模型和客户端用模块级全局变量 + `get_xxx()` 只加载一次；每个模块都有 `if __name__ == "__main__":` 自测。
+回答节点 `src/nodes/rag_answer.py` 按顺序调用各步（对应课程的 `invoke_rag`）。
+
+| 步骤 | 文件 → 返回值 | 对应课程文件 | 说明 |
 |---|---|---|---|
-| 问题重写 | `src/utils/rewrite_query_utils.py` | `13-rewritten_query.py` | 结合最近 2 轮对话，"那 FAST 呢？" → "FAST 转账的手续费是多少？"；第一轮不调用 |
-| 混合检索 | `src/utils/milvus_utils.py`、`bge_m3_embedding_utils.py` | `12-search_embedding.py` | BGE-M3 稠密 + Milvus 内置 BM25（课程用 BGE-M3 的稀疏向量，作用相同） |
-| HyDE 检索 | `src/utils/hyde_utils.py` | `search_embedding_HyDE.py` | LLM 先写一段假设答案，用"问题 + 假设答案"再检索一次；假设答案只用于检索 |
-| 加权 RRF | `src/utils/rrf_utils.py` | `rrf.py` | 问题检索权重 1.0，HyDE 检索权重 0.7 |
-| 精排 + 断崖截断 | `src/utils/bge_rerank_utils.py` | `reranker.py` | bge-reranker-base，保留 1–3 个章节；最高分 < 0.01 视为知识库中没有答案 |
-| 生成 | `src/nodes/rag_answer.py` | `15-response.py` | 只能根据保留的章节回答，带上最近对话 |
+| 问题重写 | `rewrite_query_utils.py` → `{"rewritten_query"}` | `rewritten_query.py` | 结合最近 2 轮对话，"那 FAST 呢？" → "FAST 转账的手续费是多少？"；第一轮不调用 |
+| 混合检索 | `search_embedding_utils.py` → `{"embedding_chunks"}` | `search_embedding.py` | BGE-M3 稠密 + Milvus 内置 BM25（课程用 BGE-M3 的稀疏向量，作用相同） |
+| HyDE 检索 | `hyde_utils.py` → `{"hyde_doc", "embedding_chunks"}` | `search_embedding_HyDE.py` | LLM 先写一段假设答案，用"问题 + 假设答案"再检索一次；假设答案只用于检索 |
+| 加权 RRF | `rrf_utils.py` → `{"rrf_chunks"}` | `rrf.py` | 问题检索权重 1.0，HyDE 检索权重 0.7 |
+| 精排 + 断崖截断 | `reranker_utils.py` → `{"reranker_chunks"}` | `reranker.py` | bge-reranker-base，保留 1–3 个章节；最高分 < 0.01 视为知识库中没有答案 |
+| 生成 | `response_utils.py` → `{"answer"}` | `response.py` | 只能根据保留的章节回答，带上最近对话；数字核对 |
 | 评估 | `src/scripts/eval_rag.py` | `18/20-rag_*_eval.py`、`17-ragas-eval.py` | 检索 Hit@k + RAGAS 四项指标 |
+
+公共工具：`llm_util.py`（`get_llm_client`、`extract_json_from_markdown`）、`bge_m3_embedding_utils.py`、
+`bge_rerank_utils.py`（`get_reranker_model`）、`milvus_utils.py`（`get_milvus_client`、`create_hybrid_search_request`、
+`execute_hybrid_search_request`）、`history_utils.py`，与课程 `utils/` 同名。
 
 与课程不同的地方：
 - 修正了课程代码中的 3 个 bug：HyDE 提示词写成了元组（`HYDE_PROMPT_TEMPLATE, format(query)`），问题没有填进去；
@@ -66,7 +74,7 @@ uv run python src/scripts/build_kb.py --check  # 只校验文档格式
 |---|---|---|---|
 | A 混合检索 | 87.5% | 93.8% | 0.914 |
 | B + 问题重写 | 90.6% | 96.9% | 0.938 |
-| C + HyDE + RRF | **93.8%** | 96.9% | **0.956** |
+| C + HyDE + RRF | **93.8%** | **100%** | **0.958** |
 | D + reranker（完整流程） | 84.4% | **100%** | 0.917 |
 
 完整流程：知识库内的问题 **93.8%** 保留了正确章节；知识库外的问题 **100%** 正确判为"没有答案"；平均保留 1.4 个章节，检索约 3.7 秒。
