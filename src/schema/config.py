@@ -14,7 +14,7 @@ class Config:
     pre_train_dir = ROOT_DIR / "pretrained"  #预训练模型目录
     data_dir: Path = ROOT_DIR / "data"    #数据目录
     log_dir: Path = ROOT_DIR / "logs" # 日志目录
-    checkpoint_dir: Path = ROOT_DIR / "checkpoints"   #checkpoint目录
+    checkpoint_dir: Path = ROOT_DIR / "checkpoint"   #checkpoint目录
 
 
     # 定义项目配置信息
@@ -26,7 +26,7 @@ class Config:
     mysql_host:str = field(default_factory=lambda: os.getenv("MYSQL_HOST","localhost"))
     mysql_user:str = field(default_factory=lambda: os.getenv("MYSQL_USER","root"))
     mysql_password:str = field(default_factory=lambda: os.getenv("MYSQL_PASSWORD",""))
-    mysql_port:str = field(default_factory=lambda: os.getenv("MYSQL_PORT","3306"))
+    mysql_port: int = field(default_factory=lambda: int(os.getenv("MYSQL_PORT", "3306")))
     mysql_database:str = field(default_factory=lambda: os.getenv("MYSQL_DATABASE","lioncity_bank"))
     mysql_charset:str = field(default_factory=lambda: os.getenv("MYSQL_CHARSET","utf8mb4"))
 
@@ -35,6 +35,9 @@ class Config:
     neo4j_user:str = field(default_factory=lambda: os.getenv("NEO4J_USERNAME","neo4j"))
     neo4j_password:str = field(default_factory=lambda: os.getenv("NEO4J_PASSWORD",""))
     neo4j_database: str = field(default_factory=lambda: os.getenv("NEO4J_DATABASE","neo4j"))
+
+    intent_threshold: float = field(default_factory=lambda: float(os.getenv("INTENT_THRESHOLD", "0.7")))
+    clarify_threshold: float = field(default_factory=lambda: float(os.getenv("CLARIFY_THRESHOLD", "0.4")))
 
     #schema的配置
     schema:list = field(default_factory=lambda: [s.strip() for s in os.getenv("SCHEMA","").split(",") if s.strip()])

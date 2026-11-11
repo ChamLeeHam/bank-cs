@@ -104,9 +104,8 @@ class GateNode(BaseNode):
     name = "gate"
 
     def process(self, state: GraphState) -> StateUpdate:
-        # TODO: 在 config.py 中加入 intent_threshold / clarify_threshold 后去掉 getattr 的默认值
-        high = getattr(self.config, "intent_threshold", 0.7)
-        low = getattr(self.config, "clarify_threshold", 0.4)
+        high = self.config.intent_threshold
+        low = self.config.clarify_threshold
         score = state.get("intent_score", 0.0)
         missing: list[str] = []  # TODO: Day 5 按意图的必填信息表检查（如冻结卡需要 card_last4）
 
