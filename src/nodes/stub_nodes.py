@@ -33,27 +33,22 @@ def pick(lang: str, en: str, zh: str) -> str:
     return en if lang == "en" else zh
 
 
-# 意图 -> 分支（占位，Day 1 Task 3 完成意图设计后替换为你自己的表）
-INTENT_ROUTES = {
-    "card_lost_freeze": "account",
-    "transfer_status": "account",
-    "balance": "account",
-    "fees_rates": "rag",
-    "faq": "rag",
-    "complaint": "handoff",
-    "fraud_report": "handoff",
-    "out_of_scope": "refuse",
-    "greeting": "refuse",
-}
+# 意图 -> 分支：统一从 src/intents.py 读取
+from src.intents import INTENT_ROUTES  # noqa: E402
 
-# 关键词路由（占位），顺序即优先级：盗刷优先于挂失
+# 关键词路由（占位，Day 3 替换为微调模型），顺序即优先级：
+#   盗刷 > 挂失；争议 > 费用；一般性转账问题（多久/怎么）> 本人转账进度
 KEYWORD_RULES = [
-    ("fraud_report", r"盗刷|didn'?t make|not mine|unauthori[sz]ed|fraud|没(有)?(做|消费)过"),
+    ("fraud_report", r"盗刷|didn'?t make|not mine|unauthori[sz]ed|fraud|don'?t recogni[sz]e|没(有)?(做|消费)过"),
     ("card_lost_freeze", r"lost|丢|不见|freeze|冻结|stolen"),
     ("complaint", r"投诉|complain|太差|terrible|manager|人工"),
+    ("dispute_refund", r"charged twice|twice|refund|退款|扣了两次|重复扣|wrong amount"),
+    ("transfer_howto", r"how long|how do i (send|transfer|receive)|多久|怎么(转账|汇款|收款)"),
     ("transfer_status", r"remittance|transfer|汇款|转账|到了没|到账"),
-    ("balance", r"balance|余额|还有多少钱"),
+    ("balance_inquiry", r"balance|余额|还有多少钱"),
     ("fees_rates", r"fee|手续费|收费|rate|汇率|charge"),
+    ("card_service", r"activate|激活|\bpin\b|密码锁|吞|swallow|card (arrive|delivery)|寄卡"),
+    ("account_service", r"open an account|开户|verify|身份验证|address|地址|password|忘记密码|close my account|销户"),
     ("out_of_scope", r"stock|股票|基金|crypto|比特币|invest|投资|天气|weather"),
     ("greeting", r"^(hi|hello|hey|你好|您好|哈喽)[!！.。\s]*$"),
 ]
@@ -85,7 +80,7 @@ class IntentRouterNode(BaseNode):
         for intent, pattern in KEYWORD_RULES:
             if re.search(pattern, text, re.IGNORECASE):
                 return {"intent": intent, "intent_score": 0.9, "router_backend": "keyword"}
-        return {"intent": "faq", "intent_score": 0.5, "router_backend": "keyword"}
+        return {"intent": "unknown", "intent_score": 0.5, "router_backend": "keyword"}
 
 
 class EntityExtractionNode(BaseNode):
