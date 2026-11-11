@@ -35,7 +35,11 @@ UNKNOWN_SCORE = 0.5  # 无法识别时的分数：落在 0.4~0.7 之间 -> gate 
 
 
 class IntentModel:
-    """Qwen2.5-1.5B + LoRA，进程内只加载一次（第一次调用时加载，约 10 秒）"""
+    """
+    Qwen2.5-1.5B + LoRA，进程内只加载一次（第一次调用时加载，约 10 秒）
+    同一份权重两种用法：开启 LoRA = 意图分类（predict）；关闭 LoRA = 原版 Qwen 对话（chat，RAG 生成回答），
+    不需要再加载第二个模型，也不会把客户问题发送到外部 API
+    """
 
     _instance = None
     _lock = threading.Lock()
@@ -87,6 +91,16 @@ class IntentModel:
             if LABEL_SEP in decoded:
                 break
         return label, round(score, 4)
+
+    def chat(self, messages: list[dict], max_new_tokens: int = 256) -> str:
+        """关闭 LoRA，用原版 Qwen2.5-1.5B-Instruct 生成回答（贪心解码，结果可复现）"""
+        torch = self.torch
+        prompt = self.tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+        inputs = self.tokenizer(prompt, return_tensors="pt").to(self.device)
+        with torch.no_grad(), self.model.disable_adapter():
+            out = self.model.generate(**inputs, max_new_tokens=max_new_tokens, do_sample=False,
+                                      repetition_penalty=1.05, pad_token_id=self.tokenizer.eos_token_id)
+        return self.tokenizer.decode(out[0, inputs["input_ids"].shape[1]:], skip_special_tokens=True).strip()
 
 
 def keyword_intent(text: str) -> tuple[str, float]:

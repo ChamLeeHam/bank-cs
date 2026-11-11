@@ -49,6 +49,18 @@ class Config:
     intent_base_model: Path = field(default_factory=lambda: ROOT_DIR / os.getenv("INTENT_BASE_MODEL", "pretrained/Qwen2.5-1.5B-Instruct"))
     intent_adapter: Path = field(default_factory=lambda: ROOT_DIR / os.getenv("INTENT_ADAPTER", "checkpoint/intent_lora"))
 
+    # 知识库（RAG）：本地 BGE-M3 向量 + Milvus 混合检索（稠密向量 + BM25）
+    # 集合名用 BANK_KB_COLLECTION，不用 .env 里其他项目的 MILVUS_COLLECTION，避免覆盖已有集合
+    milvus_uri: str = field(default_factory=lambda: os.getenv("MILVUS_URL", "http://localhost:19530"))
+    milvus_token: str = field(default_factory=lambda: os.getenv("MILVUS_TOKEN", ""))
+    kb_collection: str = field(default_factory=lambda: os.getenv("BANK_KB_COLLECTION", "lioncity_faq"))
+    kb_dir: Path = field(default_factory=lambda: ROOT_DIR / os.getenv("BANK_KB_DIR", "data/kb"))
+    embed_model: Path = field(default_factory=lambda: ROOT_DIR / os.getenv("EMBED_MODEL", "pretrained/bge-m3"))
+    kb_top_k: int = field(default_factory=lambda: int(os.getenv("BANK_KB_TOP_K", "3")))
+    # RAG 回答由谁生成：deepseek = DeepSeek API（只发送脱敏后的问题 + 公开的 FAQ 片段）；local = 本地 Qwen2.5-1.5B
+    # DeepSeek 不可用时自动改用本地 Qwen，再不行就返回资料原文
+    rag_generator: str = field(default_factory=lambda: os.getenv("RAG_GENERATOR", "deepseek"))
+
     #schema的配置
     schema:list = field(default_factory=lambda: [s.strip() for s in os.getenv("SCHEMA","").split(",") if s.strip()])
 

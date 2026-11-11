@@ -17,8 +17,9 @@ from langgraph.graph.state import CompiledStateGraph
 from langgraph.types import Command
 
 from src.nodes.intent_router import IntentRouterNode  # Day 3：微调模型（不可用时自动降级为关键词规则）
+from src.nodes.rag_answer import RagAnswerNode  # Day 4：Milvus 混合检索 + 本地 Qwen 生成 + 引用来源
 from src.nodes.stub_nodes import (InputGuardNode, EntityExtractionNode, GateNode, AskBackNode,
-                                  RagAnswerNode, VerifyOtpNode, AccountAgentNode, HandoffNode, RefuseNode,
+                                  VerifyOtpNode, AccountAgentNode, HandoffNode, RefuseNode,
                                   OutputGuardNode)
 from src.schema.state import GraphState, create_turn_input
 from src.schema.base import setup_logging
