@@ -1,13 +1,12 @@
 """
-把人工检查的结果应用到数据集，输出 data/intent/reviewed/{train,test}.jsonl（Day 3 微调使用这里的文件）
+把检查数据的结果改到数据集里，输出到 data/intent/reviewed/，微调用的就是这里的文件
 
-检查结果有两种来源，都放在 data/intent/review/ 下：
-  1. *.jsonl：每行一条决定 {"text", "action": ok|relabel|delete, "label", "note", "reviewer"}
-  2. *.json ：Label Studio 导出的 JSON（Export -> JSON），自动转换成上面的格式
-用句子原文（text）匹配，所以重新运行 build_intent_dataset.py 后（id 会变）检查结果仍然有效。
+检查结果放在 data/intent/review/ 下面，两种格式都可以：
+1. jsonl，每行一条：{"text", "action": ok/relabel/delete, "label", "note", "reviewer"}
+2. Label Studio 导出的 json
+按句子原文匹配，所以数据集重新生成以后（id 会变）也还能用
 
-运行（在项目根目录）：
-    uv run python src/scripts/apply_review.py
+运行：uv run python src/scripts/apply_review.py
 """
 import json
 import sys
@@ -27,7 +26,7 @@ OUT_DIR = INTENT_DIR / "reviewed"
 
 
 def from_label_studio(path: Path) -> list[dict]:
-    """Label Studio 导出的 JSON -> 检查决定（每个任务取最后一次标注）"""
+    """把 Label Studio 导出的 JSON 转成检查结果，每个任务用最后一次标注"""
     decisions = []
     for task in json.loads(path.read_text(encoding="utf-8")):
         annotations = [a for a in task.get("annotations", []) if not a.get("was_cancelled")]

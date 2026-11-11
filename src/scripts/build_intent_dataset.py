@@ -1,17 +1,16 @@
 """
-Day 2：构建意图识别数据集（英文 / 中文 / 中英混杂）
+构建意图识别的数据集，有英文、中文和中英混杂三种
 
-流程：
-  1. Banking77 抽样：每个一级意图最多 TRAIN_PER_INTENT 条，在二级意图之间均匀抽取
-  2. LLM 生成：Banking77 中没有的意图（GENERATE_ONLY）、样本不够的意图（NEEDS_TOP_UP），按二级意图分别生成英文句子
-  3. 语言分配：每个意图内 1/3 保持英文，1/3 翻译成中文，1/3 改写成新加坡式中英混杂
-  4. 去重（测试集中与训练集重复的句子删除），输出 jsonl + Label Studio 导入文件
+1. 从 Banking77 抽样，每个意图最多 300 条，二级意图之间平均分
+2. Banking77 里没有或者太少的意图，用 DeepSeek 生成英文句子
+3. 每个意图里 1/3 保留英文，1/3 翻译成中文，1/3 改成新加坡那种中英混着说的
+4. 去重，测试集里和训练集重复的句子删掉，最后输出 jsonl 和 Label Studio 的导入文件
 
-运行（在项目根目录）：
-    uv run python src/scripts/build_intent_dataset.py --trial   # 试跑：每个意图只取少量样本，先检查质量
-    uv run python src/scripts/build_intent_dataset.py           # 完整构建
+运行：
+    uv run python src/scripts/build_intent_dataset.py --trial   # 先少量试跑看看质量
+    uv run python src/scripts/build_intent_dataset.py
 
-LLM 的返回结果缓存在 data/intent/cache/，重新运行不会重复调用（也不会重复收费）。
+DeepSeek 返回的结果会缓存在 data/intent/cache/，重新运行不会再调用
 """
 import argparse
 import hashlib
@@ -35,7 +34,7 @@ from src.schema.config import get_config
 
 config = get_config()
 
-# ==================== 1. 基础配置 ====================
+# 1. 配置
 CONFIG = {
     "raw_dir": config.data_dir / "raw",
     "out_dir": config.data_dir / "intent",
@@ -47,11 +46,11 @@ CONFIG = {
     "seed": 42,
 }
 LANGS = ["en", "zh", "mixed"]
-# 同一个 Banking77 标签里混有两种意图，标注时需要逐条检查（见 data/intent_design.md）
+# 这几个 Banking77 标签里混着两种意图，标注的时候要一条条看
 REVIEW_LABELS = {"transfer_not_received_by_recipient", "transfer_timing",
                  "card_payment_fee_charged", "extra_charge_on_statement"}
 
-# 手动定义的二级意图：给 LLM 的说明
+# 自己定义的二级意图，生成数据时告诉 LLM 每个是什么意思
 SUB_INTENT_DESC = {
     "check_balance": "asks how much money is in their own account (balance of savings / current / multi-currency account)",
     "lost_or_stolen_card": "says their card is lost, missing or stolen and wants it frozen or blocked",
@@ -69,12 +68,12 @@ SUB_INTENT_DESC = {
 }
 
 
-# ==================== 2. LLM 调用（带缓存） ====================
+# 2. 调用 LLM，结果缓存起来
 class LLMClient:
-    """DeepSeek（OpenAI 兼容接口）。返回 JSON；结果按 prompt 的哈希缓存到文件，重跑不重复调用"""
+    """调 DeepSeek，返回 JSON。同样的提示词只调一次，结果存到文件里"""
 
     def __init__(self, cache_file: Path):
-        # 生成用较高温度（句子更多样），翻译用较低温度（更忠实于原意）
+        # 生成句子温度高一点，句子多样一些；翻译温度低一点，意思不要跑偏
         self.llms = {t: ChatOpenAI(model=config.deepseek_model, api_key=config.deepseek_api_key,
                                    base_url=config.deepseek_base_url, temperature=t, timeout=120, max_retries=3,
                                    model_kwargs={"response_format": {"type": "json_object"}})
@@ -152,14 +151,14 @@ Rules:
 - Style for this batch: {style}.
 Return JSON: {{"items": ["...", ...]}} with {n} items."""
 
-# 每一批使用不同的风格，批次之间可以并行生成，又不会大量重复
+# 每一批换一种风格，这样可以同时生成好几批，也不太会重复
 STYLES = ["short and direct (3-8 words)", "polite and formal", "annoyed or impatient", "casual, lowercase, typos, no punctuation",
           "longer, with some background details", "Singlish style (lah, leh, can or not)", "phrased as a question",
           "phrased as a statement, not a question", "elderly customer, simple words", "young customer, chat abbreviations (pls, u, thx)"]
 
 
 def translate(client: LLMClient, texts: list[str], lang: str) -> list[str]:
-    """批量翻译；模型返回的条数不对时，把这一批拆成两半再试"""
+    """批量翻译，返回的条数不对就拆成两半再试"""
     numbered = json.dumps(texts, ensure_ascii=False, indent=0)
     try:
         return client.items(TRANSLATE_PROMPTS[lang].format(n=len(texts), texts=numbered), len(texts),
@@ -177,9 +176,9 @@ def generate(client: LLMClient, sub_intent: str, n: int, batch_no: int, tag: str
     return client.items(prompt, n, exact=False, temperature=1.0)
 
 
-# ==================== 3. 抽样与生成 ====================
+# 3. 抽样和生成
 def balanced_sample(groups: dict[str, list[str]], target: int, rng: random.Random) -> list[tuple[str, str]]:
-    """在各组（二级意图）之间轮流抽取，直到 target 条或全部用完 -> [(二级意图, 句子)]"""
+    """在各个二级意图之间轮流抽，抽够 target 条或者抽完为止"""
     pools = {k: rng.sample(v, len(v)) for k, v in groups.items() if v}
     picked: list[tuple[str, str]] = []
     while len(picked) < target and pools:
@@ -193,7 +192,7 @@ def balanced_sample(groups: dict[str, list[str]], target: int, rng: random.Rando
 
 
 def banking77_rows(split: str, target: int, rng: random.Random) -> dict[str, list[tuple[str, str]]]:
-    """Banking77 -> {一级意图: [(二级意图, 英文句子)]}"""
+    """Banking77 按一级意图分好，每个意图是 [(二级意图, 英文句子)]"""
     df = pd.read_csv(CONFIG["raw_dir"] / f"banking77_{split}.csv")
     df = df[df["category"].isin(BANKING77_TO_INTENT)]
     by_intent: dict[str, dict[str, list[str]]] = defaultdict(lambda: defaultdict(list))
@@ -203,7 +202,7 @@ def banking77_rows(split: str, target: int, rng: random.Random) -> dict[str, lis
 
 
 def generated_rows(client: LLMClient, intent: str, need: int, split: str) -> list[tuple[str, str]]:
-    """为某个一级意图生成 need 条英文句子，在其（手动定义的）二级意图之间平均分配"""
+    """给一个意图生成 need 条英文句子，几个二级意图平均分"""
     subs = [s for s in sub_intents_of(intent) if s in SUB_INTENT_DESC]
     per_sub = math.ceil(need / len(subs))
     size = CONFIG["batch_size"]
@@ -234,7 +233,7 @@ def generated_rows(client: LLMClient, intent: str, need: int, split: str) -> lis
 
 
 def assign_langs(rows: list[tuple[str, str]], rng: random.Random) -> list[dict]:
-    """每个意图内按 en / zh / mixed 轮流分配（先打乱，保证各二级意图都分到三种语言）"""
+    """每个意图里按 en、zh、mixed 轮流分（先打乱顺序）"""
     rows = rng.sample(rows, len(rows))
     return [{"sub_intent": sub, "source_text": text, "lang": LANGS[i % 3]} for i, (sub, text) in enumerate(rows)]
 
@@ -261,7 +260,7 @@ def build_split(client: LLMClient, split: str, target: int, rng: random.Random, 
 
 
 def translate_records(client: LLMClient, records: list[dict]) -> None:
-    """把分到 zh / mixed 的记录翻译 / 改写；en 直接使用原句"""
+    """分到 zh 和 mixed 的句子拿去翻译，en 的不用动"""
     jobs = []
     for lang in ("zh", "mixed"):
         todo = [r for r in records if r["lang"] == lang]
@@ -281,31 +280,31 @@ def translate_records(client: LLMClient, records: list[dict]) -> None:
         r.setdefault("text", r["source_text"])
 
 
-# ==================== 4. 清洗与输出 ====================
+# 4. 清洗和输出
 import re  # noqa: E402
 
-# 中文句里允许保留的英文（品牌、常见缩写）；出现其他英文单词的"中文句"改标为 mixed
+# 中文句子里可以留着的英文（品牌、缩写），有其他英文单词的话就改成 mixed
 ZH_ALLOWED_EN = {"visa", "mastercard", "unionpay", "paynow", "giro", "atm", "pin", "otp", "sgd", "nric", "mrt", "app",
                  "singtel", "starhub", "grab", "shopee", "lazada", "foodpanda", "sq", "dbs", "ocbc", "uob", "tt", "fast",
                  "usd", "myr", "cny", "gbp", "eur", "id", "sms", "qr", "pdf"}
 _EN_WORD = re.compile(r"[A-Za-z]+")
-# LLM 生成的句子里有时提到真实银行（"我的 POSB 卡丢了"），这会和意图矛盾（那是别家银行的卡）；
-# 只有 out_of_scope/other_company 本来就是问其他公司，可以保留
+# 生成的句子有时会提到真的银行，比如"我的 POSB 卡丢了"，这就和意图对不上了
+# other_company 本来就是问别的公司，所以保留
 _OTHER_BANK = re.compile(r"\b(POSB|DBS|OCBC|UOB|Citi\w*|HSBC|Maybank|Standard Chartered|Revolut)\b", re.IGNORECASE)
 
 
-# "Grab 退款还没到" 在 Banking77 里属于 dispute_refund（商家退款没到账），LLM 却按 other_company 生成；
-# 两边标签矛盾，所以 other_company 中涉及退款的句子全部删除（人工检查测试集时发现）
+# "Grab 退款还没到"在 Banking77 里算 dispute_refund，生成的时候却放在了 other_company，
+# 两边对不上，所以 other_company 里提到退款的句子都删掉
 _REFUND = re.compile(r"refund|refnd|money back|退款|退钱", re.IGNORECASE)
 
 
 def norm_key(text: str) -> str:
-    """去重用：忽略大小写、空格和标点"""
+    """去重的时候不管大小写、空格和标点"""
     return re.sub(r"[\W_]+", "", text.lower())
 
 
 def clean(records: list[dict], forbidden: set[str] = frozenset()) -> list[dict]:
-    """去掉空句、重复句、与训练集重复的句子；mixed 必须同时包含中文和英文"""
+    """去掉空的、重复的、和训练集重复的句子；mixed 的句子要同时有中文和英文"""
     out, seen = [], set(forbidden)
     dropped = Counter()
     for r in records:
@@ -343,7 +342,7 @@ def finalize(records: list[dict], split: str) -> list[dict]:
     fields = ["id", "text", "lang", "intent", "sub_intent", "label", "source", "source_text", "review"]
     for i, r in enumerate(records, 1):
         r["id"] = f"{split}-{i:05d}"
-        # 需要人工重点检查：LLM 生成的句子、容易混淆的 Banking77 标签
+        # 要重点检查的：LLM 生成的句子，还有容易混的几个 Banking77 标签
         r["review"] = r["source"] == "llm" or r["sub_intent"] in REVIEW_LABELS
     return [{k: r[k] for k in fields} for r in records]
 
@@ -356,7 +355,7 @@ def write_jsonl(path: Path, records: list[dict]) -> None:
 
 
 def write_label_studio(out_dir: Path, splits: dict[str, list[dict]]) -> None:
-    """Label Studio：Taxonomy 两级标签 + 预标注（标注员只需检查和修改）"""
+    """生成 Label Studio 的配置和任务，任务里预先填好标签，标注的人只要检查"""
     ls_dir = out_dir / "label_studio"
     ls_dir.mkdir(parents=True, exist_ok=True)
 

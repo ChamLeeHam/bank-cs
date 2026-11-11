@@ -1,4 +1,4 @@
-# 根据用户的问题进行混合检索，返回相应的块（参考课程 03-rag/search_embedding.py）
+# 根据问题做混合检索，返回相关的块
 import logging
 
 from src.schema.config import get_config
@@ -8,17 +8,16 @@ from src.utils.milvus_utils import create_hybrid_search_request, execute_hybrid_
 logger = logging.getLogger(__name__)
 
 
-def process(query: str, intent: str = None):
+def process(query, intent=None):
     config = get_config()
 
-    # 1. 生成查询的稠密向量
-    logger.info("1. 生成查询向量")
-    embeddings = generate_dense_embedding([query])  # {"dense": [...]}
+    # 1. 问题转成向量
+    embeddings = generate_dense_embedding([query])
 
-    # 2. 构建标量条件：根据一级意图筛选（为空时不筛选）
+    # 2. 按一级意图过滤（不传就不过滤）
     filter_expr = _build_filter_expr(intent)
 
-    # 3. 构建混合检索：每一路多取一些候选，融合后再截取
+    # 3. 构建检索请求，每一路多取一些，合并后再截取
     requests = create_hybrid_search_request(
         dense_vector=embeddings["dense"][0],
         query_text=query,
@@ -26,7 +25,7 @@ def process(query: str, intent: str = None):
         limit=config.rag_candidates * 3,
     )
 
-    # 4. 执行混合检索
+    # 4. 执行检索
     client = get_milvus_client()
     result = execute_hybrid_search_request(
         client=client,
@@ -34,20 +33,27 @@ def process(query: str, intent: str = None):
         requests=requests,
         limit=config.rag_candidates,
     )
-    logger.info("4. 执行完成混合检索")
-    chunks = _extract_entities(result[0] if result else [])
-    return {"embedding_chunks": chunks}
+    logger.info("混合检索完成")
+
+    hits = result[0] if result else []
+    return {"embedding_chunks": _extract_entities(hits)}
 
 
-def _build_filter_expr(intent: str):
+def _build_filter_expr(intent):
     if not intent:
         return None
     return f'intent == "{intent}"'
 
 
-def _extract_entities(hits) -> list[dict]:
-    """把 Milvus 的命中结果整理成块：{doc, title, section, ..., id, score}"""
-    return [{**hit["entity"], "id": hit["id"], "score": round(hit["distance"], 4)} for hit in hits]
+def _extract_entities(hits):
+    """把检索结果整理成字典列表"""
+    chunks = []
+    for hit in hits:
+        chunk = dict(hit["entity"])
+        chunk["id"] = hit["id"]
+        chunk["score"] = round(hit["distance"], 4)
+        chunks.append(chunk)
+    return chunks
 
 
 if __name__ == "__main__":

@@ -1,12 +1,9 @@
 """
-定义各个节点中都存在的一些共性能力（参考课程 base.py）
-1、日志的输出（开始 / 完成 / 耗时，不记录客户原文）
+所有节点共用的功能：
+1、日志（开始、完成、用时，不记客户的原话）
 2、配置信息
-3、异常处理（统一包装为 BankAssistantError，并标注节点名）
-4、执行路径记录（每个节点执行后把自己的名字追加到 state["trace"]）
-
-运行自测（在项目根目录）：
-    uv run python -m src.schema.base
+3、异常处理（统一包成 BankAssistantError，带上节点名）
+4、记录执行路径（每个节点跑完把名字加到 state["trace"]）
 """
 import logging
 import time
@@ -19,32 +16,31 @@ from src.schema.config import Config, get_config
 from src.schema.exceptions import BankAssistantError, ValidationError
 from src.schema.state import GraphState
 
-# 节点返回的是“部分状态更新”：只包含本节点修改过的字段，LangGraph 负责合并到完整状态
+# 节点只返回自己改了的字段，LangGraph 会合并到完整的状态里
 StateUpdate = dict[str, Any]
 
 
 class BaseNode(ABC):
 
-    name: str = "base_node"  # 节点名称，子类必须覆盖（也是 trace 中记录的名字）
-    fail_soft: bool = False  # 出错时是否降级继续执行：
-    #   False（默认）：关键节点，出错直接抛出，由服务层返回兜底回复（如 input_guard、account_agent）
-    #   True：可降级节点，出错时记录 error 并继续后面的流程（如 entity_extraction、术语扩展）
+    name: str = "base_node"  # 节点名，子类要改成自己的
+    fail_soft: bool = False  # 出错了要不要继续往下走
+    # False：重要的节点，出错就抛出去（比如 input_guard、account_agent）
+    # True：不那么重要的节点，出错记下来，流程继续（比如 entity_extraction）
 
     def __init__(self, config: Optional[Config] = None) -> None:
-        self.config = config or get_config()  # 配置对象
-        self.logger = logging.getLogger(f"bank.{self.name}")  # 日志对象，统一以 bank. 开头，方便单独调级别
+        self.config = config or get_config()
+        self.logger = logging.getLogger(f"bank.{self.name}")
 
     def __call__(self, state: GraphState) -> StateUpdate:
         session = state.get("session_id", "-")
         start = time.perf_counter()
-        # 注意：日志只记录会话 ID 和节点名，不记录 question 等客户原文（避免隐私进入日志）
+        # 日志里只记会话 ID 和节点名，不记客户的原话
         self.logger.info(f"-----{self.name} 开始执行----- session={session}")
         try:
             result = self.process(state)
             result = self._check_result(result)
         except GraphBubbleUp:
-            # interrupt() 通过抛出 GraphInterrupt 来暂停流程（等待 OTP / 客户确认）。
-            # 它是 Exception 的子类，必须原样抛出，不能被当成错误包装，否则人机协同会失效。
+            # interrupt() 是靠抛异常来暂停的，这里要原样抛出去，不能当成错误处理，不然 OTP 暂停就没用了
             self.logger.info(f"-----{self.name} 暂停，等待客户输入----- session={session}")
             raise
         except Exception as e:
@@ -64,17 +60,17 @@ class BaseNode(ABC):
         return result
 
     def _check_result(self, result: Any) -> StateUpdate:
-        """检查 process() 的返回值，防止异常对象这类错误悄悄进入状态"""
+        """检查 process() 的返回值"""
         if result is None:
             return {}
         if isinstance(result, BaseException):
-            raise result  # 写成了 return ValidationError(...)：按抛出处理
+            raise result  # 不小心写成了 return ValidationError(...)，就当成抛出
         if not isinstance(result, dict):
             raise ValidationError(f"process() 必须返回 dict，实际返回 {type(result).__name__}", self.name)
-        return dict(result)  # 复制一份，避免修改到节点内部的对象
+        return dict(result)
 
     def _trace(self, state: GraphState, failed: bool = False) -> list[str]:
-        """在执行路径中追加当前节点（主图串行执行，直接覆盖 trace 是安全的）"""
+        """把当前节点加到执行路径里"""
         return list(state.get("trace") or []) + [f"{self.name}!" if failed else self.name]
 
     @staticmethod

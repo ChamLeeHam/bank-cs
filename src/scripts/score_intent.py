@@ -1,15 +1,13 @@
 """
-意图识别评分：读取 LLaMA Factory 的 generated_predictions.jsonl，与测试集逐条对比
+给意图识别打分：读 LLaMA Factory 输出的 generated_predictions.jsonl，和测试集一条条对比
 
-指标（《需求文档》第六章）：
-  - 二级意图准确率、一级意图准确率（一级 = 二级的前缀；两者的差距说明错误是否留在同一分支内）
-  - 一级 / 二级宏平均 F1
-  - 按语言（en / zh / mixed）分别统计
-  - 无效输出率：生成式模型可能输出不在标签表中的内容，路由节点需要降级处理
-  - 最常见的混淆（一级意图层面，即会进错分支的错误）
+算这些指标：
+- 一级、二级意图的准确率和宏平均 F1
+- 英文、中文、中英混杂分开算
+- 无效输出的比例（模型输出了标签表里没有的标签）
+- 最常见的分错的情况（一级意图分错，就会走错分支）
 
-运行（在项目根目录）：
-    uv run python src/scripts/score_intent.py checkpoint/intent_lora/predict [更多预测目录 ...]
+运行：uv run python src/scripts/score_intent.py checkpoint/intent_lora/predict
 """
 import json
 import sys
@@ -25,7 +23,7 @@ TEST_FILE = PROJECT_ROOT / "data" / "intent" / "reviewed" / "test.jsonl"
 
 
 def macro_f1(gold: list[str], pred: list[str]) -> float:
-    """宏平均 F1：每个真实类别的 F1 取平均（小类和大类同等重要）"""
+    """宏平均 F1：每个类别的 F1 再取平均，小类和大类一样重要"""
     scores = []
     for c in set(gold):
         tp = sum(g == c and p == c for g, p in zip(gold, pred))
@@ -36,7 +34,7 @@ def macro_f1(gold: list[str], pred: list[str]) -> float:
 
 
 def clean_output(text: str) -> str:
-    """只取第一行、去掉空白；模型偶尔会多输出解释"""
+    """只要第一行，模型有时候会多写几句解释"""
     return text.strip().splitlines()[0].strip() if text.strip() else ""
 
 
@@ -47,7 +45,7 @@ def score(pred_dir: Path) -> dict:
 
     rows = []
     for t, p in zip(test, preds):
-        # 用句子对齐而不是用标签：测试集标签修正后，旧模型的预测文件仍可以按新标签重新评分
+        # 按句子对齐，不按标签。这样测试集改了标签以后，旧的预测结果也能重新打分
         assert t["text"] in p["prompt"], f"预测文件与测试集顺序不一致：{t['text']}"
         out = clean_output(p["predict"])
         rows.append({"lang": t["lang"], "gold": t["label"], "pred": out, "valid": out in ALL_LABELS,

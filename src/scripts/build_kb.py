@@ -1,14 +1,14 @@
 """
-构建知识库：data/kb/*.md -> 按章节切块 -> BGE-M3 向量 -> Milvus 集合（默认 lioncity_faq）
+建知识库：读 data/kb/ 里的文档，按章节切块，用 bge-m3 转成向量，存进 Milvus
 
-切块规则：每个 "## " 章节是一个块（中文 + 英文两段放在同一个块里，任何语言的问题都能匹配到）
-  - 章节标题就是引用来源，回答时显示"来源：《费用与汇率》海外电汇（TT）手续费"
-  - <!-- sub_intents: a, b --> 标注该章节对应的二级意图（必须是 src/intents.py 中存在的标签）
-  - 文件开头的 front matter 写明文档标题和一级意图
+每个 "## " 章节是一块，中文和英文两段放在同一块里
+- 章节标题就是回答里显示的来源
+- <!-- sub_intents: a, b --> 写这个章节对应哪些二级意图
+- 文件开头写文档标题和一级意图
 
-运行（在项目根目录）：
-    uv run python src/scripts/build_kb.py          # 重建集合并做检索自测
-    uv run python src/scripts/build_kb.py --check  # 只解析和校验文档，不写入 Milvus
+运行：
+    uv run python src/scripts/build_kb.py          # 重建集合，再测一下检索
+    uv run python src/scripts/build_kb.py --check  # 只检查文档格式
 """
 import argparse
 import re
@@ -50,7 +50,7 @@ def parse_doc(path: Path) -> list[dict]:
         body = COMMENT.sub("", body).strip()
         chunks.append({"doc": path.stem, "title": meta["title"], "section": section.strip(), "intent": meta["intent"],
                        "sub_intents": subs,
-                       # 写入向量和 BM25 的文本带上章节标题，标题里的关键词（如 "PIN"、"TT"）也能被检索到
+                       # 存的文本带上章节标题，标题里的词（比如 PIN、TT）也能搜到
                        "text": f"{section.strip()}\n{body}"})
     return chunks
 
@@ -86,7 +86,7 @@ def main() -> None:
     client.flush(config.kb_collection)
     print(f"已写入 Milvus 集合 {config.kb_collection}：{client.get_collection_stats(config.kb_collection)['row_count']} 条")
 
-    # 3. 检索自测：中文 / 英文 / 中英混杂
+    # 3. 测一下检索
     print("\n检索自测（top 2）：")
     for q in ["How much is the overseas TT fee?", "汇款到中国要几天？", "我的 PIN 被 lock 了怎么办",
               "我要怎么更新地址？", "ATM 吞了我的卡", "can I open account if I'm 15"]:

@@ -1,12 +1,9 @@
 """
-把检查后的意图数据（data/intent/reviewed/）转换成 LLaMA Factory 的 alpaca 格式
+把 data/intent/reviewed/ 里的数据转成 LLaMA Factory 用的 alpaca 格式，输出到 data/intent/llamafactory/
+- intent_train.json、intent_test.json、dataset_info.json
+- intent_test_zeroshot.json：同一个测试集，提示词里列出了所有标签，给没微调的模型做对比
 
-输出 data/intent/llamafactory/：
-    intent_train.json, intent_test.json, dataset_info.json（LLaMA Factory 的 dataset_dir 指向这个目录即可，不需要改 LLaMA Factory 仓库）
-    intent_test_zeroshot.json：同样的测试集，但系统提示词列出全部标签（基座模型对比用）
-
-运行（在项目根目录）：
-    uv run python src/scripts/export_llamafactory.py
+运行：uv run python src/scripts/export_llamafactory.py
 """
 import json
 import sys

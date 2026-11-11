@@ -1,19 +1,17 @@
-"""
-意图定义（唯一来源）：数据集构建、意图路由、gate 分流都从这里读取
-详细说明与边界规则见 data/intent_design.md
-"""
+# 意图的定义都放在这里，做数据集、意图识别和 gate 分流都用这个文件
+# 更详细的说明在 data/intent_design.md
 import re
 
-# 意图 -> 中文名、说明、分支、必填槽位
+# 意图 -> 中文名、说明、分支、必填信息
 INTENTS: dict[str, dict] = {
-    # ---------- account：需要 OTP + 查询客户本人数据 ----------
+    # account：要验证 OTP，查客户自己的数据
     "balance_inquiry": {"zh": "余额查询", "route": "account", "slots": [],
                         "desc": "查询本人账户余额"},
     "transfer_status": {"zh": "汇款进度", "route": "account", "slots": [],
                         "desc": "查询本人某笔转账/汇款是否到账、为什么失败（有多笔时由账户智能体追问）"},
     "card_lost_freeze": {"zh": "挂失冻结", "route": "account", "slots": ["card_last4"],
                          "desc": "银行卡丢失/被盗，需要冻结"},
-    # ---------- rag：一般性问题，查知识库 ----------
+    # rag：一般性的问题，查知识库
     "fees_rates": {"zh": "费用汇率", "route": "rag", "slots": [],
                    "desc": "手续费、汇率、为什么收费"},
     "transfer_howto": {"zh": "转账指南", "route": "rag", "slots": [],
@@ -22,14 +20,14 @@ INTENTS: dict[str, dict] = {
                      "desc": "激活、寄送、PIN、过期换卡、卡不能用、ATM 吞卡"},
     "account_service": {"zh": "账户服务", "route": "rag", "slots": [],
                         "desc": "开户条件、身份验证、修改资料、忘记密码、销户、多币种"},
-    # ---------- handoff：转人工 ----------
+    # handoff：转人工
     "fraud_report": {"zh": "盗刷举报", "route": "handoff", "slots": [], "priority": "urgent",
                      "desc": "有不是本人做的交易/取现/扣款，或怀疑卡被盗用"},
     "dispute_refund": {"zh": "争议退款", "route": "handoff", "slots": [],
                        "desc": "本人做的交易但有问题：重复扣款、退款未到、金额或汇率不对"},
     "complaint": {"zh": "投诉", "route": "handoff", "slots": [],
                   "desc": "主要表达不满（是否要求转人工由 human_requested 单独判断，不是意图）"},
-    # ---------- refuse ----------
+    # refuse：拒答或者欢迎语
     "out_of_scope": {"zh": "超出范围", "route": "refuse", "slots": [],
                      "desc": "投资建议、闲聊、其他公司、与银行业务无关"},
     "greeting": {"zh": "问候", "route": "refuse", "slots": [],
@@ -39,7 +37,7 @@ INTENTS: dict[str, dict] = {
 INTENT_NAMES = list(INTENTS)
 INTENT_ROUTES = {name: info["route"] for name, info in INTENTS.items()}
 
-# Banking77 标签 -> 本项目意图（未列出的 26 个标签丢弃）
+# Banking77 的标签对应到我们的意图，没列出来的 26 个标签不用
 BANKING77_TO_INTENT: dict[str, str] = {
     # transfer_status
     "balance_not_updated_after_bank_transfer": "transfer_status",
@@ -102,37 +100,35 @@ BANKING77_TO_INTENT: dict[str, str] = {
     "wrong_exchange_rate_for_cash_withdrawal": "dispute_refund",
 }
 
-# Banking77 中没有、需要 LLM 生成数据的意图（greeting 用规则，不生成）
+# Banking77 里没有的意图，要用 LLM 生成数据（greeting 用规则，不用生成）
 GENERATE_ONLY = ["balance_inquiry", "complaint", "out_of_scope"]
-# Banking77 中太少、需要 LLM 补充的意图
+# Banking77 里数据太少的意图，用 LLM 补一些
 NEEDS_TOP_UP = ["card_lost_freeze"]
-# 每个意图最多使用的样本数（避免 card_service 等大类压倒小类；意图内部按二级意图均匀抽样）
+# 每个意图最多用 300 条，免得 card_service 这种大类太多
 MAX_PER_INTENT = 300
 
-# ============== 二级意图 ==============
-# 规则：
-#   1. 从 Banking77 映射来的意图：二级意图 = 原始 Banking77 标签（数据已带标签，不需要额外标注）
-#   2. Banking77 中没有的意图：在下面手动定义，LLM 按二级意图分别生成数据
-#   3. 翻译成中文 / 中英混杂的样本，沿用英文原句的二级意图
-#   4. gate 只看一级意图做分流；二级意图用于 RAG 检索过滤、数据看板和评估
+# 二级意图
+# Banking77 来的意图，二级意图就是 Banking77 原来的标签
+# Banking77 没有的意图，在下面手动定义，按二级意图分别生成数据
+# 翻译成中文和中英混杂的句子，二级意图跟英文原句一样
+# gate 只看一级意图，二级意图用在检索、统计和评估
 GENERATED_SUB_INTENTS: dict[str, list[str]] = {
     "balance_inquiry": ["check_balance"],
-    "card_lost_freeze": ["lost_or_stolen_card"],  # 补充数据沿用 Banking77 的同名二级意图
+    "card_lost_freeze": ["lost_or_stolen_card"],  # 和 Banking77 的标签同名
     "complaint": ["waiting_time", "staff_attitude", "app_problem", "unfair_fee"],
     "out_of_scope": ["investment_advice", "chitchat", "other_company", "non_banking"],
     "greeting": ["hello"],
 }
 
-LABEL_SEP = "/"  # 微调模型的输出格式：一级意图/二级意图，如 card_service/pin_blocked
+LABEL_SEP = "/"  # 模型输出的格式是 一级意图/二级意图，比如 card_service/pin_blocked
 
-# 微调模型的系统提示词：训练（export_llamafactory.py）和推理（意图路由节点）必须完全相同
+# 微调用的系统提示词，训练和使用的时候要一模一样
 INTENT_SYSTEM = "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。"
 
-# ============== 转人工请求（独立信号，不是意图） ==============
-# "我的卡丢了，帮我转人工" 同时属于 card_lost_freeze 和"要求人工"。如果把"要求人工"做成一个意图，
-# 模型只能二选一（参考课程 day04 1.1.1）。所以由 input_guard 用规则单独判断，写入 human_requested，
-# 意图照常识别（工单里仍能看到客户原本想办什么）。
-# 只放几乎不会误判的说法；单独的"人工"不放（会命中"人工智能"）
+# 要求转人工
+# "我的卡丢了，帮我转人工" 既是挂失，又要转人工。如果把转人工也当成一个意图，模型只能选一个，
+# 所以单独用规则判断，意图照常识别。
+# 只放不容易误判的说法，单独一个"人工"不行，"人工智能"也会匹配上
 HUMAN_REQUEST_RE = re.compile(
     r"转人工|人工客服|找人工|要人工|真人客服|"
     r"human agent|live agent|(want|need|get) (a )?real person|"
@@ -146,9 +142,11 @@ def is_human_request(text: str) -> bool:
 
 
 def sub_intents_of(intent: str) -> list[str]:
-    """某个一级意图下的全部二级意图（Banking77 标签 + 手动定义，去重并保持顺序）"""
+    """一个一级意图下面所有的二级意图"""
     subs = [label for label, i in BANKING77_TO_INTENT.items() if i == intent]
-    subs += [s for s in GENERATED_SUB_INTENTS.get(intent, []) if s not in subs]
+    for s in GENERATED_SUB_INTENTS.get(intent, []):
+        if s not in subs:
+            subs.append(s)
     return subs
 
 
@@ -157,17 +155,17 @@ def full_label(intent: str, sub_intent: str) -> str:
 
 
 def split_label(label: str) -> tuple[str, str]:
-    """把模型输出的 'card_service/pin_blocked' 拆成 (一级, 二级)；只有一级时二级为空"""
+    """'card_service/pin_blocked' 拆成 ('card_service', 'pin_blocked')"""
     intent, _, sub = label.strip().partition(LABEL_SEP)
     return intent.strip(), sub.strip()
 
 
-# 微调模型的全部输出标签
+# 模型可能输出的全部标签
 ALL_LABELS = [full_label(i, s) for i in INTENTS for s in sub_intents_of(i)]
 
 
 def zero_shot_system() -> str:
-    """基座模型 / API 大模型对比用：没有微调过的模型不知道标签集合，所以在提示词中列出全部标签和说明"""
+    """给没微调过的模型用的提示词，把所有标签都列出来（做对比实验用）"""
     lines = [INTENT_SYSTEM, "", "可选的标签（只能从中选择一个）："]
     for intent, info in INTENTS.items():
         if intent == "greeting":

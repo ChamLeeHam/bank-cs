@@ -1,23 +1,20 @@
 """
-RAG 评估（参考课程 03-rag/18-rag_rrf_eval.py、20-rag_rrf_eval_reranker.py、17-ragas-eval.py）
+RAG 评估，测试集是 data/kb/eval_questions.jsonl，一共 36 条：
+30 条知识库里有答案的，4 条知识库里没有的，2 条要结合上一轮对话的追问
 
-测试集：data/kb/eval_questions.jsonl（36 条：30 条知识库内的问题，4 条知识库外的问题，2 条依赖上一轮对话的追问）
+1. 检索评估：一步步加上每个环节，看每一步有没有用
+    A 只用混合检索
+    B 加上问题重写
+    C 再加上 HyDE 和 RRF
+    D 再加上 reranker，也就是完整流程
+   指标是 Hit@1、Hit@3、MRR，完整流程还要看有答案的问题有没有留下正确的章节，没答案的问题有没有判断出来
 
-第一部分：检索评估（逐步加入课程流程中的各个环节，看每一步的作用）
-    A 混合检索              —— 只用原问题，稠密 + BM25
-    B A + 问题重写
-    C B + HyDE + 加权 RRF
-    D C + reranker 精排     —— 完整流程（精排后的排序）
-  指标：Hit@1、Hit@3、MRR（正确章节排名的倒数的平均）；
-       完整流程另外统计：知识库内的问题是否保留了正确章节、知识库外的问题是否正确判为"没有答案"
+2. RAGAS（加 --ragas）：给完整流程的回答打分，评判用 DeepSeek，向量用本地 bge-m3
+   ContextRelevance、AnswerRelevancy、Faithfulness、ResponseGroundedness 四个指标
 
-第二部分：RAGAS（--ragas），对完整流程生成的回答打分，评判模型用 DeepSeek，向量用本地 BGE-M3：
-    ContextRelevance（检索内容是否与问题相关）、AnswerRelevancy（回答是否切题）、
-    Faithfulness（回答中的事实能否被检索内容支撑）、ResponseGroundedness（回答是否由检索内容支撑）
-
-运行（在项目根目录）：
-    uv run python src/scripts/eval_rag.py           # 检索评估
-    uv run python src/scripts/eval_rag.py --ragas   # 检索评估 + RAGAS
+运行：
+    uv run python src/scripts/eval_rag.py
+    uv run python src/scripts/eval_rag.py --ragas
 """
 import argparse
 import json
@@ -91,7 +88,7 @@ def retrieval_eval(rows: list[dict]) -> dict:
 
 
 def generate_samples(rows: list[dict]) -> list[dict]:
-    """完整流程为知识库内的问题生成回答（知识库外的问题没有检索内容，不适用 RAGAS 指标）"""
+    """用完整流程回答知识库里有答案的问题"""
     from src.nodes.rag_answer import RagAnswerNode
 
     node = RagAnswerNode()
@@ -109,7 +106,7 @@ def generate_samples(rows: list[dict]) -> list[dict]:
 
 
 def ragas_eval(samples: list[dict]) -> dict:
-    """用 RAGAS 的四个指标打分（课程 18-rag_eval.py 的做法）；评判请求逐个发送并失败重试，避免并发时被限流"""
+    """用 RAGAS 的四个指标打分。评判的请求一个一个发，失败了重试，一起发会被限流"""
     import asyncio
 
     from openai import AsyncOpenAI
@@ -118,8 +115,8 @@ def ragas_eval(samples: list[dict]) -> dict:
     from ragas.metrics.collections import AnswerRelevancy, ContextRelevance, Faithfulness, ResponseGroundedness
 
     client = AsyncOpenAI(api_key=config.deepseek_api_key, base_url=config.deepseek_base_url)
-    # max_tokens 要设大：deepseek-v4-flash 回答前会先输出推理内容，RAGAS 默认的长度不够，
-    # Faithfulness 逐条判断事实时输出会被截断（IncompleteOutputException）
+    # max_tokens 要大一点，deepseek-v4-flash 会先输出思考过程，
+    # 默认的长度不够，Faithfulness 的输出会被截断
     judge = llm_factory(config.deepseek_model, client=client, max_tokens=8192)
     embeddings = embedding_factory("huggingface", model=str(config.embed_model))
     metrics = {"context_relevance": ContextRelevance(llm=judge),
