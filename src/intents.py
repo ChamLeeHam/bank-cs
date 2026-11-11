@@ -125,6 +125,9 @@ GENERATED_SUB_INTENTS: dict[str, list[str]] = {
 
 LABEL_SEP = "/"  # 微调模型的输出格式：一级意图/二级意图，如 card_service/pin_blocked
 
+# 微调模型的系统提示词：训练（export_llamafactory.py）和推理（意图路由节点）必须完全相同
+INTENT_SYSTEM = "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。"
+
 # ============== 转人工请求（独立信号，不是意图） ==============
 # "我的卡丢了，帮我转人工" 同时属于 card_lost_freeze 和"要求人工"。如果把"要求人工"做成一个意图，
 # 模型只能二选一（参考课程 day04 1.1.1）。所以由 input_guard 用规则单独判断，写入 human_requested，
@@ -161,6 +164,17 @@ def split_label(label: str) -> tuple[str, str]:
 
 # 微调模型的全部输出标签
 ALL_LABELS = [full_label(i, s) for i in INTENTS for s in sub_intents_of(i)]
+
+
+def zero_shot_system() -> str:
+    """基座模型 / API 大模型对比用：没有微调过的模型不知道标签集合，所以在提示词中列出全部标签和说明"""
+    lines = [INTENT_SYSTEM, "", "可选的标签（只能从中选择一个）："]
+    for intent, info in INTENTS.items():
+        if intent == "greeting":
+            continue
+        lines.append(f"- {intent}（{info['zh']}：{info['desc']}）")
+        lines += [f"    {full_label(intent, s)}" for s in sub_intents_of(intent)]
+    return "\n".join(lines)
 
 
 def route_of(intent: str) -> str:

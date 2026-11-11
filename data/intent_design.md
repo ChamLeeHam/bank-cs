@@ -135,4 +135,26 @@ transfer_not_received_by_recipient、transfer_timing（status / howto）；card_
 - 翻译质量：抽查的中文 / 中英混杂句子没有发现改变原意的翻译
 - 训练集未逐条检查（1345 条），只用规则清洗；Label Studio 导出的 JSON 放进 `data/intent/review/` 后重新运行脚本即可合并
 
+## 微调结果（Day 3）
+
+Qwen2.5-1.5B-Instruct + LoRA（rank 16，3 epoch，RTX 3080 Ti 训练 12 分钟），`configs/intent_lora_sft.yaml`；
+测试集 640 条（`data/intent/reviewed/test.jsonl`），评分脚本 `src/scripts/score_intent.py`，结果在 `data/intent/eval/`。
+
+| 模型 | 二级准确率 | 一级准确率 | 二级宏 F1 | 一级宏 F1 | 无效输出 |
+|---|---|---|---|---|---|
+| 基座模型（零样本，提示词列出全部标签） | 45.3% | 64.5% | 0.348 | 0.660 | 18.0% |
+| **LoRA 微调** | **91.9%** | **95.2%** | **0.909** | **0.953** | **0.8%** |
+
+按语言（LoRA）：en 95.4% / zh 95.6% / mixed 94.5%（一级准确率），三种语言差距不到 1.1 个百分点。
+
+**分析**：
+- 一级 95.2% vs 二级 91.9%：约 3 个百分点的错误留在同一分支内（例如 card_service 内部的二级意图混淆），不影响分流
+- 进错分支的错误主要是 transfer_status ↔ transfer_howto（9 条），其次是 fraud_report / dispute_refund / fees_rates 之间；
+  这些正是边界规则中最难的几组，gate 的置信度分流和追问可以兜底
+- 部分"错误"其实是 Banking77 原始标签的问题（如 "How long can an EU transfer take?" 标为 pending_transfer，模型判为 transfer_timing 更合理）
+- 测试集中按新规则改标的 4 条"我的转账要多久"被模型判为 howto：训练集中同类句子仍是 Banking77 原标签（transfer_timing），
+  规则只改了测试集，训练集需要同样修正后重新训练
+- 无效输出 5 条（0.8%，都是 mixed），如 `complaint/report_lost_card`：路由节点必须用 `ALL_LABELS` 校验，一级意图有效时保留一级、否则追问
+- 局限：测试集与训练集来自同样的数据源和同一个 LLM 翻译，真实客户消息的准确率会更低
+
 数据来源：Banking77（Casanueva et al., 2020），PolyAI，CC-BY-4.0

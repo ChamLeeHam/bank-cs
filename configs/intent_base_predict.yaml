@@ -1,0 +1,32 @@
+# 对比基线：未微调的 Qwen2.5-1.5B-Instruct，系统提示词列出全部标签（零样本）
+#   llamafactory-cli train configs/intent_base_predict.yaml
+#   uv run python src/scripts/score_intent.py checkpoint/intent_base/predict
+
+### model
+model_name_or_path: pretrained/Qwen2.5-1.5B-Instruct
+trust_remote_code: true
+
+### method
+stage: sft
+do_predict: true
+finetuning_type: lora
+
+### dataset
+dataset_dir: data/intent/llamafactory
+eval_dataset: intent_test_zeroshot
+template: qwen
+cutoff_len: 2048          # 提示词里列出了全部标签，比微调版长很多
+overwrite_cache: true
+preprocessing_num_workers: 1
+dataloader_num_workers: 0
+
+### output
+output_dir: checkpoint/intent_base/predict
+overwrite_output_dir: true
+report_to: none
+
+### predict
+per_device_eval_batch_size: 8
+predict_with_generate: true
+max_new_tokens: 32
+do_sample: false

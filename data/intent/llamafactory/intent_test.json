@@ -1,0 +1,3842 @@
+[
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Please advise the current balance of my multi-currency account.",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我现在就要我的余额啦，为什么这么慢？",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我想问一下我的 multi-currency account balance。",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Could you kindly advise how much money is in my multi-currency account?",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "往来账户的 SGD 余额",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "不要再叫我 log in，直接告诉我我的 SGD savings balance。",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "hello can u just tell me my account balance alr i've been waiting",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "请尽快告知我往来账户的余额。",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的 savings 里面有多少钱？",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "whats my account balance",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "请告诉我我的 SGD 往来账户里有多少钱。",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的 balance 还剩多少 lah？",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "May I request my current account balance, please?",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我已经问了三次了。我的往来账户余额是多少？",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "帮我 check 我的 current account balance。",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "how much inside my account",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "往来账户余额多少",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "balance please，savings account，快点 lah。",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Kindly confirm the available balance in my SGD savings account.",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "可以 kindly 告诉我我的 current account 里面有多少吗？",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "how much money left",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "查我的余额可以吗",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Good evening，请 confirm 我 multi-currency account 的 balance。",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "May I have the current balance of my savings account, please?",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "你们能不能查我的多币种余额？我现在在 MRT，现在就要。",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Good afternoon，请问我的 current account balance 是多少？",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "my SGD savings balance",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我想知道我的储蓄账户余额，谢谢",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Good morning，可以 kindly 告诉我 savings account 的 balance 吗？",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "balance in my multi-currency",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "麻烦你确认一下我的储蓄账户余额，谢谢。",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "可以帮我 check 一下，然后告诉我 current account 的 balance 吗？",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "my savings how much ah",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "储蓄账户的余额",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "可以让我知道我的 SGD savings account 的 balance 吗？",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Why is my balance still not showing? I need to know how much is in my savings account now.",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "pls 告诉我我的 savings account balance。",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "bal in savings?",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "直接告诉我余额",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的钱在哪里？我的 savings account 还剩多少？",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "please tell me my current acount balance",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我想查一下我的储蓄账户余额，谢谢",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我现在 need 我的 balance。",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "wats my balance pls",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "告诉我我的余额",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "请给我 savings balance。",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "multi currency balance check",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "储蓄账户余额？",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "现在要 balance please。",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "may i know how much is in my multi currency account",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "为什么 App 一直显示错误？告诉我我的往来账户余额。",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Good morning，可以 kindly 告诉我我的 savings account balance 吗？",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "how much left in savings",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "直接给我我储蓄账户里的金额可以吗？",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "可以让我知道我的 current account 现在有多少吗？",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Please advise my savings account balance, thank you.",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "请告知我的往来账户里有多少可用余额。",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "请告诉我我的 savings account 的 balance。",
+  "input": "",
+  "output": "balance_inquiry/check_balance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "How long can an EU transfer take?",
+  "input": "",
+  "output": "transfer_status/pending_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "为什么我的转账会被拒绝？",
+  "input": "",
+  "output": "transfer_status/declined_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "请帮我，我一直在 face 转钱给朋友的问题，因为我全部 transactions 都 failed。",
+  "input": "",
+  "output": "transfer_status/failed_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Why does my transfer say \"pending\"?",
+  "input": "",
+  "output": "transfer_status/pending_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "交易失败了？",
+  "input": "",
+  "output": "transfer_status/failed_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我 transfer 钱之后，我的 account balance 没有 change。",
+  "input": "",
+  "output": "transfer_status/balance_not_updated_after_bank_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "I would like to know why my transfer was declined.",
+  "input": "",
+  "output": "transfer_status/declined_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我刚把地址从达勒姆的一个地方改到沃尔顿-昂-内兹的一个地方。我新房子有个新房东，他们还没收到我的付款，但我知道我是按时发出去的，可以帮我查一下他们收到了没有吗？",
+  "input": "",
+  "output": "transfer_status/transfer_not_received_by_recipient"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我刚完成 bank transfer，balance 还没有 update。",
+  "input": "",
+  "output": "transfer_status/balance_not_updated_after_bank_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "I made a bank transfer a couple of hours ago from my UK account.  It hasn't appeared, can you check to make sure it went through?",
+  "input": "",
+  "output": "transfer_status/balance_not_updated_after_bank_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "再查一下，你的资金可能会被拒绝。",
+  "input": "",
+  "output": "transfer_status/declined_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我朋友还没有 receive 到我做的 transaction。",
+  "input": "",
+  "output": "transfer_status/transfer_not_received_by_recipient"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "I think my transfer was declined, but why?",
+  "input": "",
+  "output": "transfer_status/declined_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "为什么我的转账失败了？",
+  "input": "",
+  "output": "transfer_status/failed_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我昨天 try 在网上买东西，但一直讲 declined。今天再 try 也是一样。到底什么坏了？",
+  "input": "",
+  "output": "transfer_status/declined_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Why couldn't I complete a transfer?",
+  "input": "",
+  "output": "transfer_status/failed_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我要怎样加快转账？我的转账还在处理中。",
+  "input": "",
+  "output": "transfer_status/pending_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "可以帮我 handle 一下我的 transfer 吗",
+  "input": "",
+  "output": "transfer_status/failed_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "I tried to make a transfer, but it was declined. Can you tell me why?",
+  "input": "",
+  "output": "transfer_status/declined_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "为什么转账显示处理中？",
+  "input": "",
+  "output": "transfer_status/pending_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我想 transfer money 去另一个 country，可是现在只是 pending 没有 send 出去。我的 account details 是对的，please help me。",
+  "input": "",
+  "output": "transfer_status/pending_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "I tried to transfer money and it did not work.",
+  "input": "",
+  "output": "transfer_status/failed_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我转了钱，但收款人说还没收到。为什么会这样？",
+  "input": "",
+  "output": "transfer_status/transfer_not_received_by_recipient"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我试过 make transfer，可是被 declined 了。为什么会这样？",
+  "input": "",
+  "output": "transfer_status/declined_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "I did a transfer to my account but it doesn't show up",
+  "input": "",
+  "output": "transfer_status/balance_not_updated_after_bank_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我昨天想在eBay上买一支高尔夫球杆，但我的信用卡被拒了。我试了很多次，今天早上又试了一次。可以帮我查一下我的卡吗？",
+  "input": "",
+  "output": "transfer_status/declined_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的 bank transfer 到现在还没有 show 在我的 account 里。",
+  "input": "",
+  "output": "transfer_status/balance_not_updated_after_bank_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "When will the transfer be completed?",
+  "input": "",
+  "output": "transfer_status/pending_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "为什么我的收款人还没收到钱？",
+  "input": "",
+  "output": "transfer_status/transfer_not_received_by_recipient"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "跟我讲为什么我的 transfer failed 啦！",
+  "input": "",
+  "output": "transfer_status/failed_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "The person I sent money to hasn't gotten it yet!",
+  "input": "",
+  "output": "transfer_status/transfer_not_received_by_recipient"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "为什么我转不了账？",
+  "input": "",
+  "output": "transfer_status/declined_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我好像一直做不到 successful transfer，你可以跟我讲我哪里做错了吗？",
+  "input": "",
+  "output": "transfer_status/failed_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "I am still waiting for a money transfer to show",
+  "input": "",
+  "output": "transfer_status/pending_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我从[country]转的账到哪里了？",
+  "input": "",
+  "output": "transfer_status/balance_not_updated_after_bank_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我还在等这个 transaction complete。",
+  "input": "",
+  "output": "transfer_status/transfer_not_received_by_recipient"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "How long does it take for an international transfer into my account?",
+  "input": "",
+  "output": "transfer_status/balance_not_updated_after_bank_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的转账被拒了，但我知道它本来应该成功的。",
+  "input": "",
+  "output": "transfer_status/declined_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "为什么没有 show 我做过 balance transfer？",
+  "input": "",
+  "output": "transfer_status/balance_not_updated_after_bank_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "I transferred money yesterday, but it still isn't available?",
+  "input": "",
+  "output": "transfer_status/pending_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的转账为什么被拒？",
+  "input": "",
+  "output": "transfer_status/declined_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "System 是不是 down 了？我一直在 try transfer，可是都 fail leh。",
+  "input": "",
+  "output": "transfer_status/failed_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "I have completed a transfer but it is not showing up.",
+  "input": "",
+  "output": "transfer_status/balance_not_updated_after_bank_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的交易要多久才能完成？",
+  "input": "",
+  "output": "transfer_status/transfer_not_received_by_recipient"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我 transfer 了一些钱，为什么我的 balance 没有 change？",
+  "input": "",
+  "output": "transfer_status/balance_not_updated_after_bank_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "How long for money transfer to show?",
+  "input": "",
+  "output": "transfer_status/pending_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我已经转了钱，为什么没成功？",
+  "input": "",
+  "output": "transfer_status/failed_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我已经 complete 了这个 money transaction，可是 recipient 还没有 receive 到。",
+  "input": "",
+  "output": "transfer_status/transfer_not_received_by_recipient"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "What is the reason my transfer was declined?",
+  "input": "",
+  "output": "transfer_status/declined_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我几个小时前给我朋友转了一些钱，但她还没收到。她真的很需要这笔钱。这个要多久？",
+  "input": "",
+  "output": "transfer_status/transfer_not_received_by_recipient"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我 transfer 了一些钱，可是我觉得它好像 lost 在 somewhere。",
+  "input": "",
+  "output": "transfer_status/balance_not_updated_after_bank_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "My transfer did not go through.",
+  "input": "",
+  "output": "transfer_status/failed_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我在等一笔处理中的转账完成。",
+  "input": "",
+  "output": "transfer_status/pending_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "为什么我的 transfer 没有 go through？",
+  "input": "",
+  "output": "transfer_status/failed_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "I tried to make a transfer but it failed",
+  "input": "",
+  "output": "transfer_status/failed_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我转了一些钱，但收款人取款时遇到问题。",
+  "input": "",
+  "output": "transfer_status/transfer_not_received_by_recipient"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Transfer 终于 work 了，可是现在 pending 很久了。你们要我 wait 多久？这个很 urgent 的。",
+  "input": "",
+  "output": "transfer_status/pending_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "I made a transfer a few hours ago from a UK banking account.  I do not yet see the transfer.  Please check on this for me.",
+  "input": "",
+  "output": "transfer_status/balance_not_updated_after_bank_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我几天前转了新住处的房租，但房东说还没收到，虽然我这边显示已经完成。我核对过转过去的账号，肯定是对的。可以帮我确认这笔交易到底有没有成功吗？",
+  "input": "",
+  "output": "transfer_status/transfer_not_received_by_recipient"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "这个 transfer 几时会 go through？",
+  "input": "",
+  "output": "transfer_status/pending_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Card stolen pls freeze now",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "请帮帮我！我的卡被偷了！",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的 debit card 不见了，please block 它。",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "block card lost at mrt",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我要怎么报失被偷的卡？",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的 bags 被偷了。我需要一张 new card，不过要先 cancel 被偷的那张。",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "I cannot find my credit card.",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的卡丢了该怎么办？",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的 debit card 丢了，请 block 它。",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "nric lost card freeze pls",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Help！有人偷了我的 card！",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "I cant find my card, it's gone.",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的ATM卡被偷了，帮我停卡。",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "不懂为什么我的 card 不见了。我应该怎么做？",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "My card was taken from me",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "有人偷了我的卡。我要报失。我已经报警了，但我要怎么向你们报失？",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Card 被偷了，马上 block 它 lah。",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "How do I report my card lost or stolen?",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我觉得我的卡被偷了，这种情况我可以怎么做？很紧急。",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的 card 不见了，please 帮我。",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "My card is lost! What can I do?",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我要怎么冻结被偷的卡？",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "如果我的 card 不见了，我应该怎样做？",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "card kena stolen block it",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "卡被偷了要怎么处理？",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "今天较早的时候有人偷了我的 wallet，不确定 exact 几时，应该是在 Piccadilly Circus。你可以 check 一下有没有人试过用这张 card，然后当然要 block 它吗？",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "pls freeze card lost today",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的 card 不见了，freeze 它。",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "lost wallet block my card",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的卡不见了",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的 card 被一个 idiot 偷了。",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "I think I lost my card . I dont know how long it has been missing. Can you see if maybe someone else has been using it?",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的卡丢了。",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "完成 report process 需要 police report 的 copy 吗？",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "card gone can u block",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "你们能帮我找到我的卡吗？",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "My card is gone I think it was stolen",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我觉得我的信用卡被人偷了。",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的 card 被偷了要怎样 report？",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "I need help with a lost card",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的卡不见了，帮我冻结它",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Help! 我找不到我的 card。",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "My entire gym bag, including my wallet, was stolen out of my locker today. Everything in my wallet is gone - how do I block the card to make it can't be used?",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我找不到我的卡，觉得可能被偷了。",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的 card 被偷了，可以帮我 freeze 吗？",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "lost card freeze asap",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "帮我停掉我不见的 ATM 卡",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "card 被偷了，现在帮我 freeze。",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "I'm in Spain and my stuff has been stolen. My card was with it and I need a new one shipped and the old one frozen.",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的卡丢了，帮我停掉。",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的 card 不知道放哪里了，pls freeze now。",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Oh no!  I lost my card!  Help!",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "有人偷了我的 card，我需要 help，please。",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "My card is lost! What do I do now?",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的 PayNow 卡被偷了，请帮我停掉。",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我今天不见 wallet，里面所有 credit cards 都在，可以帮我 block card 和 send replacement 吗？",
+  "input": "",
+  "output": "card_lost_freeze/lost_or_stolen_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Can you explain the transfer fee to me?",
+  "input": "",
+  "output": "fees_rates/transfer_fee_charged"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我账单上多出来的 1 欧元费用是什么？",
+  "input": "",
+  "output": "fees_rates/extra_charge_on_statement"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Exchange rate 是用什么 currencies 算的？",
+  "input": "",
+  "output": "fees_rates/exchange_rate"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Does it cost extra to exchange currencies?",
+  "input": "",
+  "output": "fees_rates/exchange_charge"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "为什么我提现你们要收费？",
+  "input": "",
+  "output": "fees_rates/cash_withdrawal_charge"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我以前 cash withdrawal 从来没有被 charge fee，几时开始变了？",
+  "input": "",
+  "output": "fees_rates/cash_withdrawal_charge"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "I had to pay in order to do a transfer",
+  "input": "",
+  "output": "fees_rates/transfer_fee_charged"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的账户因为取现被扣了钱，为什么会这样？",
+  "input": "",
+  "output": "fees_rates/cash_withdrawal_charge"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "为什么我的 transfer 被 charge 了一个 fee leh？",
+  "input": "",
+  "output": "fees_rates/transfer_fee_charged"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Why was my transfer charged fees?",
+  "input": "",
+  "output": "fees_rates/transfer_fee_charged"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我要怎样查到汇率？",
+  "input": "",
+  "output": "fees_rates/exchange_rate"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "这个 1 euro 的 fee 从哪里来的？",
+  "input": "",
+  "output": "fees_rates/extra_charge_on_statement"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "whats the exchange charge",
+  "input": "",
+  "output": "fees_rates/exchange_charge"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "汇率是怎样计算的？",
+  "input": "",
+  "output": "fees_rates/exchange_rate"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我想 exchange currencies，不过这样做会有 extra charge 吗？",
+  "input": "",
+  "output": "fees_rates/exchange_charge"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Why would I be charged a fee for card payment?",
+  "input": "",
+  "output": "fees_rates/card_payment_fee_charged"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "为什么我被 overcharge 一 pound!?",
+  "input": "",
+  "output": "fees_rates/extra_charge_on_statement"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Do you offer a discount on multiple currency exchanges?",
+  "input": "",
+  "output": "fees_rates/exchange_charge"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我以为提现是不用收费的",
+  "input": "",
+  "output": "fees_rates/cash_withdrawal_charge"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我做 transfer 的时候有一个 extra charge。",
+  "input": "",
+  "output": "fees_rates/transfer_fee_charged"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "I was charged a fee for my transfer.",
+  "input": "",
+  "output": "fees_rates/transfer_fee_charged"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "你们的国际汇率是多少？",
+  "input": "",
+  "output": "fees_rates/exchange_rate"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Exchange rates 是根据什么来算的？",
+  "input": "",
+  "output": "fees_rates/exchange_rate"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Where do you guys acquire your exchange rate?",
+  "input": "",
+  "output": "fees_rates/exchange_rate"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我要去哪里查汇率？",
+  "input": "",
+  "output": "fees_rates/exchange_charge"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Cross currency exchange 要多少钱，还有我可以 check 看有没有任何 discounts 吗？",
+  "input": "",
+  "output": "fees_rates/exchange_charge"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "I was charged for something I didn't expect",
+  "input": "",
+  "output": "fees_rates/transfer_fee_charged"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "当付款有额外收费时，应该要有人通知我。我之前刚好在看 App 时，注意到有一笔跟付款有关的额外收费，之前完全没有人通知过我。",
+  "input": "",
+  "output": "fees_rates/card_payment_fee_charged"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的 card payment 被 charge 了一个 fee，为什么？",
+  "input": "",
+  "output": "fees_rates/card_payment_fee_charged"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Why did I have to pay more when I do it with my card?",
+  "input": "",
+  "output": "fees_rates/card_payment_fee_charged"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "为什么我的取现被收了一笔根本不该收的费用？",
+  "input": "",
+  "output": "fees_rates/cash_withdrawal_charge"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Exchange currencies 要多少钱？",
+  "input": "",
+  "output": "fees_rates/exchange_charge"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Why was I charged a fee for withdrawing cash?",
+  "input": "",
+  "output": "fees_rates/cash_withdrawal_charge"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "你好，请帮帮我，因为我转了一些钱但收款人没有收到一样的金额。他收到的少了一点。因为这个我又需要转差额。我已经转了钱，但收款人的账户只入账比较少的金额。现在我已经把差额转过去了。我觉得有点问题，可以请你们查一下吗？",
+  "input": "",
+  "output": "fees_rates/transfer_fee_charged"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我 statement 里面这个 €1 fee 是什么？",
+  "input": "",
+  "output": "fees_rates/extra_charge_on_statement"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "My work sends me all over the world, can I get a discount for all the money I have to exchange?",
+  "input": "",
+  "output": "fees_rates/exchange_charge"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "为什么我的账户因为使用 ATM 被扣钱？",
+  "input": "",
+  "output": "fees_rates/cash_withdrawal_charge"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我在 grocery store checkout 时发现需要 cash，所以 request 了一些。不过我看到这个 transaction 有 fee，为什么我被 charge fee？",
+  "input": "",
+  "output": "fees_rates/cash_withdrawal_charge"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "转账费用是多少？",
+  "input": "",
+  "output": "fees_rates/transfer_fee_charged"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Transfer 会 charge fees 吗？",
+  "input": "",
+  "output": "fees_rates/transfer_fee_charged"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "There is a transaction for $1 and I don't know why it was charged.",
+  "input": "",
+  "output": "fees_rates/extra_charge_on_statement"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "汇率是什么时候定的？",
+  "input": "",
+  "output": "fees_rates/exchange_rate"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Exchange currencies 会被 charge 吗？",
+  "input": "",
+  "output": "fees_rates/exchange_charge"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "My statement has a dollar I have been charged showing up on it.",
+  "input": "",
+  "output": "fees_rates/extra_charge_on_statement"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我用卡付款为什么还被收费用？",
+  "input": "",
+  "output": "fees_rates/card_payment_fee_charged"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我 notice 我的 statement 有一个 extra $1 charge，可以 tell 我为什么吗？",
+  "input": "",
+  "output": "fees_rates/extra_charge_on_statement"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "I payed with a card and was charged an extra fee",
+  "input": "",
+  "output": "fees_rates/card_payment_fee_charged"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "为什么我的账单里多出一英镑会有费用？",
+  "input": "",
+  "output": "fees_rates/extra_charge_on_statement"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "为什么我用 card 付款会被 charge 一个 fee？我之前从来没有 extra fee 的。",
+  "input": "",
+  "output": "fees_rates/card_payment_fee_charged"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Why are fees charged on cash withdrawals? I went to withdraw some money earlier today after shopping. There's a fee that wasn't there before.",
+  "input": "",
+  "output": "fees_rates/cash_withdrawal_charge"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "可以帮我查一下为什么我的账单上会有这笔额外费用吗？",
+  "input": "",
+  "output": "fees_rates/extra_charge_on_statement"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的 withdrawal 被 charge extra 了。",
+  "input": "",
+  "output": "fees_rates/cash_withdrawal_charge"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "How often do your exchange rates change",
+  "input": "",
+  "output": "fees_rates/exchange_rate"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "跨币种兑换的基础金额是多少？",
+  "input": "",
+  "output": "fees_rates/exchange_charge"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "用 card payment 有 fee 吗？",
+  "input": "",
+  "output": "fees_rates/card_payment_fee_charged"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Why was I charged an extra fee when paying with my card?",
+  "input": "",
+  "output": "fees_rates/card_payment_fee_charged"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我换钱时会拿到什么样的外汇汇率？",
+  "input": "",
+  "output": "fees_rates/exchange_rate"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Why couldn't I do a transfer to a beneficiary?",
+  "input": "",
+  "output": "transfer_howto/beneficiary_not_allowed"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "别人要怎么把钱转给我？",
+  "input": "",
+  "output": "transfer_howto/receiving_money"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我想从我另一个 bank account transfer money 进这个 account。",
+  "input": "",
+  "output": "transfer_howto/transfer_into_account"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "When will money be available in my account?",
+  "input": "",
+  "output": "transfer_howto/transfer_timing"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我想转钱进我的账户。",
+  "input": "",
+  "output": "transfer_howto/transfer_into_account"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "有一个很重要的东西 from China 我需要 transfer，大概要多久？",
+  "input": "",
+  "output": "transfer_howto/transfer_timing"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "When should I expect to see my transfer hit my account?",
+  "input": "",
+  "output": "transfer_status/pending_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我想从账户转钱来充值。需要哪些步骤？",
+  "input": "",
+  "output": "transfer_howto/transfer_into_account"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我从 Europe initiate 了一个 Bank transfer，这个要多久？",
+  "input": "",
+  "output": "transfer_status/pending_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "How do I do a successful transfer to an account?",
+  "input": "",
+  "output": "transfer_howto/beneficiary_not_allowed"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我想用银行转账给账户充值，要怎么操作？",
+  "input": "",
+  "output": "transfer_howto/transfer_into_account"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "那笔钱 transfer 不到 beneficiary。",
+  "input": "",
+  "output": "transfer_howto/beneficiary_not_allowed"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "How long until the money is in my account?",
+  "input": "",
+  "output": "transfer_howto/transfer_timing"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我要转钱进账户的话，步骤是什么？",
+  "input": "",
+  "output": "transfer_howto/transfer_into_account"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我需要一个 from China 的 fast transfer，会有多快？",
+  "input": "",
+  "output": "transfer_howto/transfer_timing"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "How can I transfer money to my account?",
+  "input": "",
+  "output": "transfer_howto/transfer_into_account"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我刚才想做的账户转账失败了。",
+  "input": "",
+  "output": "transfer_howto/beneficiary_not_allowed"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "你们 app 没有 cryptocurrency 是什么情况 ah？",
+  "input": "",
+  "output": "transfer_howto/beneficiary_not_allowed"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Can I directly transfer my salary onto here?",
+  "input": "",
+  "output": "transfer_howto/receiving_money"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我需要转钱进我的账户，该怎么弄？",
+  "input": "",
+  "output": "transfer_howto/transfer_into_account"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Salary 会通过这个 receive 吗？",
+  "input": "",
+  "output": "transfer_howto/receiving_money"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "How do I transfer money to my account?",
+  "input": "",
+  "output": "transfer_howto/transfer_into_account"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "别人可以怎样转钱给我？",
+  "input": "",
+  "output": "transfer_howto/receiving_money"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我要怎样把我的 funds transfer 进我的 account？",
+  "input": "",
+  "output": "transfer_howto/transfer_into_account"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Hey I want to buy some crypto but the app doesn't allow me to! What's the issue, I really want to exchange this",
+  "input": "",
+  "output": "transfer_howto/beneficiary_not_allowed"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我没法转账到账户。",
+  "input": "",
+  "output": "transfer_howto/beneficiary_not_allowed"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我要做什么才可以 transfer 我的 paycheck 进我的 account？",
+  "input": "",
+  "output": "transfer_howto/receiving_money"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "I would like to transfer some money from my other bank account into this one.",
+  "input": "",
+  "output": "transfer_howto/transfer_into_account"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我需要选择英镑，薪水才能正常入账吗？",
+  "input": "",
+  "output": "transfer_howto/receiving_money"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我没有办法做 transfer 去一个 account。",
+  "input": "",
+  "output": "transfer_howto/beneficiary_not_allowed"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "I would like to transfer funds from one account to another.",
+  "input": "",
+  "output": "transfer_howto/transfer_into_account"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我以前转账都没问题，但现在遇到一个错误说不能转。为什么会这样？",
+  "input": "",
+  "output": "transfer_howto/beneficiary_not_allowed"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我在 try exchange crypto，可是不行。Tell 我怎样 fix。",
+  "input": "",
+  "output": "transfer_howto/beneficiary_not_allowed"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "How long do I have to wait for a transfer from the US?",
+  "input": "",
+  "output": "transfer_howto/transfer_timing"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的转账要多久才会成功？",
+  "input": "",
+  "output": "transfer_status/pending_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "别人可以怎样 transfer money 给我？",
+  "input": "",
+  "output": "transfer_howto/receiving_money"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Can i deposit my salary to this account?",
+  "input": "",
+  "output": "transfer_howto/receiving_money"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "转账到我的账户要等多久？",
+  "input": "",
+  "output": "transfer_howto/transfer_timing"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "为什么我会收到 message 说我的 transfer not possible？我之前做过没有问题。Please fix lah。",
+  "input": "",
+  "output": "transfer_howto/beneficiary_not_allowed"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "How does a transfer work?",
+  "input": "",
+  "output": "transfer_howto/transfer_into_account"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "为什么我不能转账到另一个账户？",
+  "input": "",
+  "output": "transfer_howto/beneficiary_not_allowed"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我要怎样通过 transfer send 我 account 的 money？",
+  "input": "",
+  "output": "transfer_howto/transfer_into_account"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Can I get paid in another currency?",
+  "input": "",
+  "output": "transfer_howto/receiving_money"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "这个可以用来收我的薪水吗？",
+  "input": "",
+  "output": "transfer_howto/receiving_money"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "From China 的 urgent transfer 大概要多久？",
+  "input": "",
+  "output": "transfer_howto/transfer_timing"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "I receive my salary in GBP. Do I need to configure this somehwere?",
+  "input": "",
+  "output": "transfer_howto/receiving_money"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我有一笔加密货币兑换一直过不了，请帮我处理一下。",
+  "input": "",
+  "output": "transfer_howto/beneficiary_not_allowed"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的 Europe transfer 要 wait 多久？",
+  "input": "",
+  "output": "transfer_status/pending_transfer"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Can I use this to receive my salary?",
+  "input": "",
+  "output": "transfer_howto/receiving_money"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "可以存入英镑吗？",
+  "input": "",
+  "output": "transfer_howto/receiving_money"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我不明白怎样 top up 我的 account，可以 explain 一下 process 吗？",
+  "input": "",
+  "output": "transfer_howto/transfer_into_account"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "How long does a transfer take from the point it's sent, to the point it arrives in my account?",
+  "input": "",
+  "output": "transfer_howto/transfer_timing"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "你知道我能不能用这个收薪水吗？",
+  "input": "",
+  "output": "transfer_howto/receiving_money"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我 transfer 去 beneficiary 遇到问题。",
+  "input": "",
+  "output": "transfer_howto/beneficiary_not_allowed"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "How long to I have to wait for a transfer to reach my account?",
+  "input": "",
+  "output": "transfer_howto/transfer_timing"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "转账多久会显示在我的账户里？",
+  "input": "",
+  "output": "transfer_howto/transfer_timing"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "US transfer 的 wait 是多久？",
+  "input": "",
+  "output": "transfer_howto/transfer_timing"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "What methods can I use to add money to my account?",
+  "input": "",
+  "output": "transfer_howto/transfer_into_account"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我可以通过这个拿到薪水吗？",
+  "input": "",
+  "output": "transfer_howto/receiving_money"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "为什么我现在不被 allow transfer funds？我一直收到 error message。",
+  "input": "",
+  "output": "transfer_howto/beneficiary_not_allowed"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Is it possible to give a second card for this account to my daughter?",
+  "input": "",
+  "output": "card_service/getting_spare_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "你们的卡会邮寄到哪些地方？",
+  "input": "",
+  "output": "card_service/order_physical_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的 new card 要 activate 需要做什么？",
+  "input": "",
+  "output": "card_service/activate_my_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "I would like to change my pin.",
+  "input": "",
+  "output": "card_service/change_pin"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "卡大概要多久才会寄到？",
+  "input": "",
+  "output": "card_service/card_delivery_estimate"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Visa 和 Mastercard 我可以 choose 哪一个吗？",
+  "input": "",
+  "output": "card_service/visa_or_mastercard"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "are both visa and mastercard available to me?",
+  "input": "",
+  "output": "card_service/visa_or_mastercard"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我想选一个不同的PIN。",
+  "input": "",
+  "output": "card_service/change_pin"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "这个 account 可以申请第二张 physical card 吗？",
+  "input": "",
+  "output": "card_service/getting_spare_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "How do I know why my card isn't working?",
+  "input": "",
+  "output": "card_service/card_not_working"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的卡可以用来网上购物吗？",
+  "input": "",
+  "output": "card_service/card_acceptance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的 card 是不是 anywhere 都可以用？",
+  "input": "",
+  "output": "card_service/card_acceptance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Why could I not get cash?",
+  "input": "",
+  "output": "card_service/declined_cash_withdrawal"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "请给我一张Visa卡和一张Mastercard卡。",
+  "input": "",
+  "output": "card_service/visa_or_mastercard"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我在拿 cash 的时候，card 拿不回来。",
+  "input": "",
+  "output": "card_service/card_swallowed"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Where are the locations of ATMs that accept this card?",
+  "input": "",
+  "output": "card_service/atm_support"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的新卡在哪里？我已经等了一个星期！",
+  "input": "",
+  "output": "card_service/card_arrival"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我刚拿到 new card，但不确定要怎样 check 它的 PIN。",
+  "input": "",
+  "output": "card_service/get_physical_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Can you let me know if Visa is among the card scheme assignments?",
+  "input": "",
+  "output": "card_service/visa_or_mastercard"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "激活新卡有哪些步骤？",
+  "input": "",
+  "output": "card_service/activate_my_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "U.S. 的 delivery time 是多久？",
+  "input": "",
+  "output": "card_service/card_delivery_estimate"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "What is the tracking number for my card that was mailed?",
+  "input": "",
+  "output": "card_service/card_arrival"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "如果我的卡快到期了，下一步是什么？",
+  "input": "",
+  "output": "card_service/card_about_to_expire"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "card 会不会突然 stop working leh？",
+  "input": "",
+  "output": "card_service/card_not_working"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "My daughter would like a card as well, how can we make this happen?",
+  "input": "",
+  "output": "card_service/getting_spare_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "可以帮我激活我的卡吗？",
+  "input": "",
+  "output": "card_service/activate_my_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "请帮我 check 我的 account！我的 card 在 ATM 一直 decline，我已经试了两个不同的了！",
+  "input": "",
+  "output": "card_service/declined_cash_withdrawal"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "What can I do if contactless doesn't work?",
+  "input": "",
+  "output": "card_service/contactless_not_working"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我试了我的卡好多次，但一直都不行。",
+  "input": "",
+  "output": "card_service/card_not_working"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我要怎样可以 ASAP 拿到 new card 来 replace 一张快 expire 的旧 card？",
+  "input": "",
+  "output": "card_service/card_about_to_expire"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "What is the tracking number for the card you sent?",
+  "input": "",
+  "output": "card_service/card_arrival"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我要怎样使用感应付款？",
+  "input": "",
+  "output": "card_service/contactless_not_working"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的 card 不被 accept。",
+  "input": "",
+  "output": "card_service/declined_card_payment"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "What do I do if the ATM ate my card?",
+  "input": "",
+  "output": "card_service/card_swallowed"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我在哪里可以查看我的PIN？",
+  "input": "",
+  "output": "card_service/pin_blocked"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "如果我有这张 card，可以去哪些 ATM？",
+  "input": "",
+  "output": "card_service/atm_support"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Nothing goes through on my card.",
+  "input": "",
+  "output": "card_service/card_not_working"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "为什么我卡上的一笔交易被拒了？",
+  "input": "",
+  "output": "card_service/declined_card_payment"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我 locate 不到 card 的 PIN。",
+  "input": "",
+  "output": "card_service/get_physical_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Who accepts this card?",
+  "input": "",
+  "output": "card_service/card_acceptance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的卡可以用来支付什么？",
+  "input": "",
+  "output": "card_service/card_acceptance"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "有没有 ATM 的 list？",
+  "input": "",
+  "output": "card_service/atm_support"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "My card is about to expire. How do I get a new one?",
+  "input": "",
+  "output": "card_service/card_about_to_expire"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的卡又没有寄到，可以给我建议吗？",
+  "input": "",
+  "output": "card_service/card_delivery_estimate"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "关于这张 card 的 PIN？",
+  "input": "",
+  "output": "card_service/get_physical_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "I attempted to get cash but was declined.",
+  "input": "",
+  "output": "card_service/declined_cash_withdrawal"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的新卡开通了感应付款吗？",
+  "input": "",
+  "output": "card_service/contactless_not_working"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我一个星期前 order 了 card，现在还没到。我要怎样做 ah？",
+  "input": "",
+  "output": "card_service/card_arrival"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "If I want a physical card, do I have to pay anything?",
+  "input": "",
+  "output": "card_service/order_physical_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我想设置一个新PIN。",
+  "input": "",
+  "output": "card_service/change_pin"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "为什么你们一直 decline 我的 payment？我已经用这张 card 试了几次，就是 not working。",
+  "input": "",
+  "output": "card_service/declined_card_payment"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "What are the fees for a physical card?",
+  "input": "",
+  "output": "card_service/order_physical_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我已经用完了所有可以试PIN的次数。",
+  "input": "",
+  "output": "card_service/pin_blocked"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的 PIN not working，我需要 assistance。",
+  "input": "",
+  "output": "card_service/pin_blocked"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "I am waiting for my card to arrive.",
+  "input": "",
+  "output": "card_service/card_delivery_estimate"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我输错PIN太多次，现在被锁了。帮我解锁！",
+  "input": "",
+  "output": "card_service/pin_blocked"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "哪些 ATM 会 accept 这张 card？",
+  "input": "",
+  "output": "card_service/atm_support"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "The ATM didn't give me the card back!",
+  "input": "",
+  "output": "card_service/card_swallowed"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "在App里哪里可以查到我的新PIN？",
+  "input": "",
+  "output": "card_service/get_physical_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "今天在 bus 上 NFC payment 不能用。帮帮我 leh？",
+  "input": "",
+  "output": "card_service/contactless_not_working"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Please terminate my account.",
+  "input": "",
+  "output": "account_service/terminate_account"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "请删除我的账户，你们的服务不达标。",
+  "input": "",
+  "output": "account_service/terminate_account"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "请 show 我怎样 reset 我的 passcode。",
+  "input": "",
+  "output": "account_service/passcode_forgotten"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Why am I required to verify my identity?",
+  "input": "",
+  "output": "account_service/why_verify_identity"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "你们有做欧元兑换吗？",
+  "input": "",
+  "output": "account_service/fiat_currency_support"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "你们 accept 换去 EUR 吗？",
+  "input": "",
+  "output": "account_service/fiat_currency_support"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "How do I go forth on verifying my identity?",
+  "input": "",
+  "output": "account_service/verify_my_identity"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我可以用哪些法币来持有和兑换？",
+  "input": "",
+  "output": "account_service/fiat_currency_support"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "请帮我 verify 我的 id。",
+  "input": "",
+  "output": "account_service/unable_to_verify_identity"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "I have moved.  Where can I update my details?",
+  "input": "",
+  "output": "account_service/edit_personal_details"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "开账户的最低年龄是多少？",
+  "input": "",
+  "output": "account_service/age_limit"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "如果我 request 把我的 funds hold 住，你们是用哪些 currencies？",
+  "input": "",
+  "output": "account_service/fiat_currency_support"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Why isn't my ID being verified?",
+  "input": "",
+  "output": "account_service/unable_to_verify_identity"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "你们支持哪些法币？",
+  "input": "",
+  "output": "account_service/fiat_currency_support"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "为什么你们 need 知道那么多关于我的东西 ah？",
+  "input": "",
+  "output": "account_service/why_verify_identity"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "How to change my address.",
+  "input": "",
+  "output": "account_service/edit_personal_details"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我要验证身份需要什么？",
+  "input": "",
+  "output": "account_service/unable_to_verify_identity"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的 password 不见了",
+  "input": "",
+  "output": "account_service/passcode_forgotten"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "I forgot my code to get into the app.",
+  "input": "",
+  "output": "account_service/passcode_forgotten"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我要怎样帮我女儿开银行户口？",
+  "input": "",
+  "output": "account_service/age_limit"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "如果我的 kids 想用你们的 service，他们要几岁才可以？",
+  "input": "",
+  "output": "account_service/age_limit"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Can I still use my account, even though the identity verification has not passed yet?",
+  "input": "",
+  "output": "account_service/why_verify_identity"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我最多可以持有几种货币？",
+  "input": "",
+  "output": "account_service/fiat_currency_support"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的 kids 要几岁才能用你们的 service？",
+  "input": "",
+  "output": "account_service/age_limit"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "What should I do to verify my identity?",
+  "input": "",
+  "output": "account_service/verify_my_identity"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "跟我讲一下 identity check 的 steps leh",
+  "input": "",
+  "output": "account_service/verify_my_identity"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "What fiat currencies are supported for holding and exchange?",
+  "input": "",
+  "output": "account_service/fiat_currency_support"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的孩子要几岁才能开户口？",
+  "input": "",
+  "output": "account_service/age_limit"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我要做哪些 steps 来 verify 我的 identity？",
+  "input": "",
+  "output": "account_service/verify_my_identity"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "unhappy with you, how to delete account",
+  "input": "",
+  "output": "account_service/terminate_account"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的身份验证要多久？",
+  "input": "",
+  "output": "account_service/unable_to_verify_identity"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我想要 skip 掉我的 identity verification。",
+  "input": "",
+  "output": "account_service/why_verify_identity"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Can I make transfers before identity verification?",
+  "input": "",
+  "output": "account_service/why_verify_identity"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我需要更改我的账户资料。",
+  "input": "",
+  "output": "account_service/edit_personal_details"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我想 close 我的 account。",
+  "input": "",
+  "output": "account_service/terminate_account"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Since my id hasn't been verified, when can I use my account?",
+  "input": "",
+  "output": "account_service/why_verify_identity"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我可以帮我刚出生的宝宝开银行户口吗？",
+  "input": "",
+  "output": "account_service/age_limit"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我可以 resend 我的 passcode 吗 ah？",
+  "input": "",
+  "output": "account_service/passcode_forgotten"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "How old does one have to be to have an account with the bank?",
+  "input": "",
+  "output": "account_service/age_limit"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "如果我的密码不能用，我该怎么做？",
+  "input": "",
+  "output": "account_service/passcode_forgotten"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "你们的 system 支持 multiple currency 吗？",
+  "input": "",
+  "output": "account_service/fiat_currency_support"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "I need to change my name what do I do?",
+  "input": "",
+  "output": "account_service/edit_personal_details"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "为什么它要我验证身份？",
+  "input": "",
+  "output": "account_service/why_verify_identity"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "不懂为什么，我在 verify 我的 identity 时遇到问题。",
+  "input": "",
+  "output": "account_service/unable_to_verify_identity"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "What's the process for ID verification?",
+  "input": "",
+  "output": "account_service/verify_my_identity"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我没法让 App 确认是我本人。",
+  "input": "",
+  "output": "account_service/unable_to_verify_identity"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "这个 app 不认得是我。",
+  "input": "",
+  "output": "account_service/unable_to_verify_identity"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "I have forgotten my password.",
+  "input": "",
+  "output": "account_service/passcode_forgotten"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我要做什么才能更改账户上的地址？",
+  "input": "",
+  "output": "account_service/edit_personal_details"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的 identity check 需要什么 ah？",
+  "input": "",
+  "output": "account_service/verify_my_identity"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "I moved.  Where do I update my details?",
+  "input": "",
+  "output": "account_service/edit_personal_details"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "可以告诉我怎样重置密码吗？",
+  "input": "",
+  "output": "account_service/passcode_forgotten"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我需要你帮我 delete 我的 account。",
+  "input": "",
+  "output": "account_service/terminate_account"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "I am highly unsatisfied with this company and want to delete my account!",
+  "input": "",
+  "output": "account_service/terminate_account"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我想关闭账户。我不喜欢你们提供的服务。",
+  "input": "",
+  "output": "account_service/terminate_account"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "开 account 的年龄是多少？",
+  "input": "",
+  "output": "account_service/age_limit"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "I want to change my address.",
+  "input": "",
+  "output": "account_service/edit_personal_details"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我不喜欢要填写这么多关于我身份的资料。",
+  "input": "",
+  "output": "account_service/why_verify_identity"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我需要 verify 我的 identity。",
+  "input": "",
+  "output": "account_service/verify_my_identity"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Can I freeze my card right now?",
+  "input": "",
+  "output": "fraud_report/compromised_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的账户有一笔我没有授权的直接扣款。",
+  "input": "",
+  "output": "fraud_report/direct_debit_payment_not_recognised"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的 card 是不是被人 access 了？app 里面有一些不是我做的 payments。",
+  "input": "",
+  "output": "fraud_report/card_payment_not_recognised"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "I just lost my wallet and I see that they are already withdrawing money from my account. How can I stop this?",
+  "input": "",
+  "output": "fraud_report/cash_withdrawal_not_recognised"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "如果我觉得有人拿到了我的卡资料，我该怎么做？",
+  "input": "",
+  "output": "fraud_report/compromised_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "这个 card payment 不是我做的。",
+  "input": "",
+  "output": "fraud_report/card_payment_not_recognised"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "I didn't get cash from an ATM, but the app says I did",
+  "input": "",
+  "output": "fraud_report/cash_withdrawal_not_recognised"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我觉得有人用我的卡把钱取走了。我该怎么办？",
+  "input": "",
+  "output": "fraud_report/cash_withdrawal_not_recognised"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我觉得有人不应该有我的 card numbers 的 access。",
+  "input": "",
+  "output": "fraud_report/compromised_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "There are a few transaction that I don't recognize, I think someone managed to get my card details and use it.",
+  "input": "",
+  "output": "fraud_report/compromised_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我要怎样 freeze 我的 card？我觉得有人在用它做很多 online transactions lah。",
+  "input": "",
+  "output": "fraud_report/compromised_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "What do I do if I think my card was improperly used?",
+  "input": "",
+  "output": "fraud_report/compromised_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我有一笔还没设置过的直接扣款交易，但我想……",
+  "input": "",
+  "output": "fraud_report/direct_debit_payment_not_recognised"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我有一笔 direct debit charge，我不认得。",
+  "input": "",
+  "output": "fraud_report/direct_debit_payment_not_recognised"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "There is a payment in the App that is not mine.",
+  "input": "",
+  "output": "fraud_report/card_payment_not_recognised"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我看到一笔不是我做的付款。",
+  "input": "",
+  "output": "fraud_report/card_payment_not_recognised"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我 card 上有些 transactions 我不认得，我觉得一定有人拿到我的 card info 然后用了。",
+  "input": "",
+  "output": "fraud_report/compromised_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "There's a cash withdraw on my statement that I didn't make.",
+  "input": "",
+  "output": "fraud_report/cash_withdrawal_not_recognised"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的账户被扣了一笔不应该有的费用。",
+  "input": "",
+  "output": "fraud_report/direct_debit_payment_not_recognised"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "如果我看到一笔不是我做的 payment，我应该怎样做？",
+  "input": "",
+  "output": "fraud_report/card_payment_not_recognised"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "I found an unauthorized card payment",
+  "input": "",
+  "output": "fraud_report/card_payment_not_recognised"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的账户有一笔不是我做的交易。",
+  "input": "",
+  "output": "fraud_report/card_payment_not_recognised"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我知道这已经非常迟了。我 check 了最近几个月的 transactions 后，发现一笔很大的 charge，我确定不是我做的。还可以 dispute 吗？",
+  "input": "",
+  "output": "fraud_report/direct_debit_payment_not_recognised"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "I don't recognise a card payment",
+  "input": "",
+  "output": "fraud_report/card_payment_not_recognised"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我不确定账单里的一笔提款。",
+  "input": "",
+  "output": "fraud_report/cash_withdrawal_not_recognised"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "为什么我的 account 会有一笔我不认得的 payment？",
+  "input": "",
+  "output": "fraud_report/card_payment_not_recognised"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "I didn't take out money from an ATM but my app statement shows that I did. How can I fix this?",
+  "input": "",
+  "output": "fraud_report/cash_withdrawal_not_recognised"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "这笔直接扣款交易不是我做的。",
+  "input": "",
+  "output": "fraud_report/direct_debit_payment_not_recognised"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "app 里面有一笔 withdrawal 不是我的。",
+  "input": "",
+  "output": "fraud_report/cash_withdrawal_not_recognised"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "I think there has been a purchase made that wasn't by me.",
+  "input": "",
+  "output": "fraud_report/card_payment_not_recognised"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "有一笔刷卡付款我不认得。",
+  "input": "",
+  "output": "fraud_report/card_payment_not_recognised"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的 account 里面有一笔 suspicious cash withdraw。",
+  "input": "",
+  "output": "fraud_report/cash_withdrawal_not_recognised"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Even though it's late, I wanted to see about disputing a charge. I was just looking through my transactions over the past couple of months and noticed a pretty large amount that was not completed by me. Is this possibly something I can still do.",
+  "input": "",
+  "output": "fraud_report/direct_debit_payment_not_recognised"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的账户有一笔未授权的500英镑现金提款。我肯定没有提过这笔钱。我需要你们帮忙。",
+  "input": "",
+  "output": "fraud_report/cash_withdrawal_not_recognised"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我不确定，不过可能有人在用我的 card。",
+  "input": "",
+  "output": "fraud_report/compromised_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Someone has my card number, freeze my account.",
+  "input": "",
+  "output": "fraud_report/compromised_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "有人偷了我的卡。虽然我的卡还在我身上，但刚刚有人提了500英镑现金。请尽快帮我。",
+  "input": "",
+  "output": "fraud_report/cash_withdrawal_not_recognised"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "有个我不认识的人没有经过 permission 就用了我的 card。",
+  "input": "",
+  "output": "fraud_report/compromised_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "I have a payment I didn't do",
+  "input": "",
+  "output": "fraud_report/card_payment_not_recognised"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的账单里有一笔我不认得的直接扣款。",
+  "input": "",
+  "output": "fraud_report/direct_debit_payment_not_recognised"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我觉得我不在家的时候，我的 child 用了我的 card。",
+  "input": "",
+  "output": "fraud_report/compromised_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Please put a freeze on my card,  I am worried there has been some payments on it and I don't know what for.",
+  "input": "",
+  "output": "fraud_report/card_payment_not_recognised"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我要怎么取消我的卡？我的账户有一些不是我做的扣款。",
+  "input": "",
+  "output": "fraud_report/cash_withdrawal_not_recognised"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我没有 approve，为什么我的 account 会被一个 seller deduct leh？",
+  "input": "",
+  "output": "fraud_report/direct_debit_payment_not_recognised"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "There is a suspicious direct debit payment.",
+  "input": "",
+  "output": "fraud_report/direct_debit_payment_not_recognised"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我现在要怎样立刻阻止我的账户被诈骗？",
+  "input": "",
+  "output": "fraud_report/compromised_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "帮我一下 lah，有一笔 Direct Debit 不是我做的。",
+  "input": "",
+  "output": "fraud_report/direct_debit_payment_not_recognised"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "I am seeing in the App a some cash withdrawal that its not mine",
+  "input": "",
+  "output": "fraud_report/cash_withdrawal_not_recognised"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的账户有一笔扣款不是我做的。",
+  "input": "",
+  "output": "fraud_report/direct_debit_payment_not_recognised"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "请 freeze 我的 account，它已经被 hacked 了。",
+  "input": "",
+  "output": "fraud_report/compromised_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "There are some payments with my card that I don't know where they are coming from. Just checked today and it's been since a couple days as well! What to I do? Can I revert this retrospectively? My card needs to be frozen immediately as well!",
+  "input": "",
+  "output": "fraud_report/card_payment_not_recognised"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的卡最近有一笔扣款，我确定不是我做的，因为我从没见过那个名字。可以帮我调查吗？",
+  "input": "",
+  "output": "fraud_report/card_payment_not_recognised"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "有一些 transactions 不是我做的，一定是别人用了我的 card。",
+  "input": "",
+  "output": "fraud_report/compromised_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "The app said I withdrew cash at an ATM and I didn't",
+  "input": "",
+  "output": "fraud_report/cash_withdrawal_not_recognised"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我发现一笔直接扣款不是我做的。",
+  "input": "",
+  "output": "fraud_report/direct_debit_payment_not_recognised"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "如果我在 statement 里看到一笔奇怪的 withdrawl，我该怎么办？",
+  "input": "",
+  "output": "fraud_report/cash_withdrawal_not_recognised"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Help!  My wallet was stolen and someone is taking money out.  I need this money!  What can I do?",
+  "input": "",
+  "output": "fraud_report/cash_withdrawal_not_recognised"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我觉得有人在用我的卡。有一些交易不是我做的。",
+  "input": "",
+  "output": "fraud_report/compromised_card"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "有人拿了我的 money，但我不知道是谁 leh。",
+  "input": "",
+  "output": "fraud_report/direct_debit_payment_not_recognised"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "When I got cash, my exchange rate was wrong.",
+  "input": "",
+  "output": "dispute_refund/wrong_exchange_rate_for_cash_withdrawal"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我有一张重复的卡，还被扣了两次钱。我要怎么解决？",
+  "input": "",
+  "output": "dispute_refund/transaction_charged_twice"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我买东西的 return 为什么还没有 show up 在我的 account？",
+  "input": "",
+  "output": "dispute_refund/Refund_not_showing_up"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Can you explain your exchange rate policy? I don't think I received the correct amount of cash in my ATM transaction.",
+  "input": "",
+  "output": "dispute_refund/wrong_exchange_rate_for_cash_withdrawal"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的现金提款汇率出错了。",
+  "input": "",
+  "output": "dispute_refund/wrong_exchange_rate_for_cash_withdrawal"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我买了一个 item，可是给我的 exchange rate 不对。",
+  "input": "",
+  "output": "dispute_refund/card_payment_wrong_exchange_rate"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Why is the exchange rate so exorbitant? This should have been a much higher amount of cash for that to apply.",
+  "input": "",
+  "output": "dispute_refund/wrong_exchange_rate_for_cash_withdrawal"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我在ATM看到这笔交易套用的汇率不对。",
+  "input": "",
+  "output": "dispute_refund/wrong_exchange_rate_for_cash_withdrawal"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的 refund 要多久才会拿到？",
+  "input": "",
+  "output": "dispute_refund/Refund_not_showing_up"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "I didn't get the right amount at the ATM.",
+  "input": "",
+  "output": "dispute_refund/wrong_amount_of_cash_received"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的退款不见了。",
+  "input": "",
+  "output": "dispute_refund/Refund_not_showing_up"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我对我的 purchase 不满意，要怎样 cancel 这个 order？",
+  "input": "",
+  "output": "dispute_refund/request_refund"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "I didn't receive the right amount of cash back",
+  "input": "",
+  "output": "dispute_refund/wrong_amount_of_cash_received"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我最近买的东西，为什么汇率不对？",
+  "input": "",
+  "output": "dispute_refund/card_payment_wrong_exchange_rate"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Hello。我 check 了我的 transactions，看到我去 restaurant 时 card 被 double charged。我想拿回我的钱。",
+  "input": "",
+  "output": "dispute_refund/transaction_charged_twice"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "I took out cash abroad and the exchange rate isn't correct.",
+  "input": "",
+  "output": "dispute_refund/wrong_exchange_rate_for_cash_withdrawal"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的账户上好像有重复扣款。",
+  "input": "",
+  "output": "dispute_refund/transaction_charged_twice"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "如果我在国外，可以在 ATM withdraw 而且没有 fees 吗？",
+  "input": "",
+  "output": "dispute_refund/wrong_exchange_rate_for_cash_withdrawal"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "What are my remedies if I think I was charged twice for the same expense?",
+  "input": "",
+  "output": "dispute_refund/transaction_charged_twice"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我觉得我这笔刷卡付款的汇率不对。",
+  "input": "",
+  "output": "dispute_refund/card_payment_wrong_exchange_rate"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我要怎样 request cash back？ATM 给我的 amount 不对，不过 app 显示的是我真正被 charge 的 amount...",
+  "input": "",
+  "output": "dispute_refund/wrong_amount_of_cash_received"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Help! I keep checking my account, but my refund is not showing. I requested that a seller refund my money a while back, but there is no money showing in my account. What can you do for me?",
+  "input": "",
+  "output": "dispute_refund/Refund_not_showing_up"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我要的是100，但只拿到20。",
+  "input": "",
+  "output": "dispute_refund/wrong_amount_of_cash_received"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "可以帮我 check 一下我是不是被 charge 两次吗？",
+  "input": "",
+  "output": "dispute_refund/transaction_charged_twice"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Will declined funds I tried to withdraw be returned to me?",
+  "input": "",
+  "output": "dispute_refund/wrong_amount_of_cash_received"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我想为我买的东西申请退款。",
+  "input": "",
+  "output": "dispute_refund/request_refund"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "为什么 ATM 给我的 cash 少过我要求的 amount？",
+  "input": "",
+  "output": "dispute_refund/wrong_amount_of_cash_received"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Looks like my card payment was duplicated. I went to pay at the store earlier, got declined once,second time it works. App still stays pending for one of the payments. Can you please remove one of them as it's wrong and clearly was declined?",
+  "input": "",
+  "output": "dispute_refund/transaction_charged_twice"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "你好，我照你说的让卖家发起退款了，已经一个星期了，我还没收到钱。请告诉我该怎么办。",
+  "input": "",
+  "output": "dispute_refund/Refund_not_showing_up"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我有一个 item 还没收到，需要 refund。我可以直接 cancel 这个 payment 吗？我不知道要怎样做。",
+  "input": "",
+  "output": "dispute_refund/request_refund"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "I feel like too much money was taken during my currency exchange.",
+  "input": "",
+  "output": "dispute_refund/wrong_exchange_rate_for_cash_withdrawal"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我要取消我之前买的东西。",
+  "input": "",
+  "output": "dispute_refund/request_refund"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "可以给我 refund 吗？",
+  "input": "",
+  "output": "dispute_refund/request_refund"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Why is the exchange rate wrong when I purchase something abroad?",
+  "input": "",
+  "output": "dispute_refund/card_payment_wrong_exchange_rate"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我用外币付了一样东西，但发现汇率不对。",
+  "input": "",
+  "output": "dispute_refund/card_payment_wrong_exchange_rate"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我应该已经收到 refund 了，可是我的 statement 里没有 show 出来。",
+  "input": "",
+  "output": "dispute_refund/Refund_not_showing_up"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "The amount of cash I received was incorrect",
+  "input": "",
+  "output": "dispute_refund/wrong_amount_of_cash_received"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "ATM没有给我要求的提款金额。",
+  "input": "",
+  "output": "dispute_refund/wrong_amount_of_cash_received"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我买了这个 item，被 charge 的 amount 不对，我可以拿回 refund 吗？",
+  "input": "",
+  "output": "dispute_refund/request_refund"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Why is there a transaction that shows multiple times?",
+  "input": "",
+  "output": "dispute_refund/transaction_charged_twice"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我上个星期六买东西时被多收了钱。我拿到的汇率对吗？",
+  "input": "",
+  "output": "dispute_refund/card_payment_wrong_exchange_rate"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "The conversion rate on the ATM that I used with foreign currency was wrong.",
+  "input": "",
+  "output": "dispute_refund/wrong_exchange_rate_for_cash_withdrawal"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我想取消一笔付款。我几天前买了东西，到现在还没收到。",
+  "input": "",
+  "output": "dispute_refund/request_refund"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Hello，我很 urgent 要拿到这个 product 的 refund。Merchant 没有帮到我，我现在可以怎样做来 ASAP 解决？",
+  "input": "",
+  "output": "dispute_refund/request_refund"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "I requested a refund, and never received it. What can I do?",
+  "input": "",
+  "output": "dispute_refund/Refund_not_showing_up"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我很确定我的兑换出问题了。我把俄罗斯卢布换成英镑，结果被收了太多钱！",
+  "input": "",
+  "output": "dispute_refund/card_payment_wrong_exchange_rate"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "这个 rate 太低了。你 sure 你们用的 exchange rate 是对的吗？",
+  "input": "",
+  "output": "dispute_refund/card_payment_wrong_exchange_rate"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "A transaction is repeated several times on my account.",
+  "input": "",
+  "output": "dispute_refund/transaction_charged_twice"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "退款还没出现在我的账户里",
+  "input": "",
+  "output": "dispute_refund/Refund_not_showing_up"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我 online order 的东西很久了还没到。我真的够了！把钱 refund 给我，我不要 pay 这些人。",
+  "input": "",
+  "output": "dispute_refund/request_refund"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Why is your exchange rate for my card payment wrong",
+  "input": "",
+  "output": "dispute_refund/card_payment_wrong_exchange_rate"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我出国时需要在ATM拿到正确的外币，而且汇率要对的。",
+  "input": "",
+  "output": "dispute_refund/wrong_exchange_rate_for_cash_withdrawal"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我做了一个 currency exchange，觉得被 charge 多了，超过应该的。",
+  "input": "",
+  "output": "dispute_refund/card_payment_wrong_exchange_rate"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Did my refund go through? It's not on my statement.",
+  "input": "",
+  "output": "dispute_refund/Refund_not_showing_up"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我转出去的钱在哪里？手机App上显示正在被提走。",
+  "input": "",
+  "output": "dispute_refund/wrong_amount_of_cash_received"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我从 ATM withdraw 了 cash，但收到的 amount 不对。我要 cash back，因为 app 显示的是我实际拿到的 amount。请帮我处理这个。",
+  "input": "",
+  "output": "dispute_refund/wrong_amount_of_cash_received"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "I recently got charged twice from a restaurant that I was at this week and I would like for one of those payments to be removed from my account.",
+  "input": "",
+  "output": "dispute_refund/transaction_charged_twice"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "为什么我在账单里看不到最近的退款？",
+  "input": "",
+  "output": "dispute_refund/Refund_not_showing_up"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "为什么我的 card 有超过一个 charge？我只 pay 了一次，不是两次。这个要怎么 fix？",
+  "input": "",
+  "output": "dispute_refund/transaction_charged_twice"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "very rude service at branch",
+  "input": "",
+  "output": "complaint/staff_attitude"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "你们员工今天很没礼貌",
+  "input": "",
+  "output": "complaint/staff_attitude"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我还在等你们的 email reply leh",
+  "input": "",
+  "output": "complaint/waiting_time"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "waiting 30 mins for chat",
+  "input": "",
+  "output": "complaint/waiting_time"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "App很慢，做不了GIRO",
+  "input": "",
+  "output": "complaint/app_problem"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "你们的 officer 态度很 dismissive，又很 impatient",
+  "input": "",
+  "output": "complaint/staff_attitude"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "stop overcharging customers please",
+  "input": "",
+  "output": "complaint/unfair_fee"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "上周发的邮件还没回复",
+  "input": "",
+  "output": "complaint/waiting_time"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "这些 charges 不公平 lah",
+  "input": "",
+  "output": "complaint/unfair_fee"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "hotline staff kept cutting me off",
+  "input": "",
+  "output": "complaint/staff_attitude"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "在分行排了一个小时队",
+  "input": "",
+  "output": "complaint/waiting_time"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "打 hotline 等的时间真的太长了",
+  "input": "",
+  "output": "complaint/waiting_time"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "too many hidden fees",
+  "input": "",
+  "output": "complaint/unfair_fee"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "App卡在加载页面",
+  "input": "",
+  "output": "complaint/app_problem"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "fees 一直起，没停过",
+  "input": "",
+  "output": "complaint/unfair_fee"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "staff careless with my NRIC details",
+  "input": "",
+  "output": "complaint/staff_attitude"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "为什么有这么多额外收费",
+  "input": "",
+  "output": "complaint/unfair_fee"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "staff 对我讲话很 down，好像看不起我",
+  "input": "",
+  "output": "complaint/staff_attitude"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "app crash when check balnce",
+  "input": "",
+  "output": "complaint/app_problem"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "收费真的很不合理咧",
+  "input": "",
+  "output": "complaint/unfair_fee"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "现在的 customer service 真的很慢",
+  "input": "",
+  "output": "complaint/waiting_time"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "internet banking not loadin",
+  "input": "",
+  "output": "complaint/app_problem"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "收这么多钱不公平",
+  "input": "",
+  "output": "complaint/unfair_fee"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "staff 完全没有 listen 我讲",
+  "input": "",
+  "output": "complaint/staff_attitude"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "customer service quite rude sia",
+  "input": "",
+  "output": "complaint/staff_attitude"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "手机银行一直闪退咧",
+  "input": "",
+  "output": "complaint/app_problem"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "PayNow 之后 app 就 hang 了",
+  "input": "",
+  "output": "complaint/app_problem"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "why alway log out",
+  "input": "",
+  "output": "complaint/app_problem"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "你们热线的等待时间太离谱了",
+  "input": "",
+  "output": "complaint/waiting_time"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "officer 完全 ignore 我的问题",
+  "input": "",
+  "output": "complaint/staff_attitude"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "live chat no response yet",
+  "input": "",
+  "output": "complaint/waiting_time"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "每个月收费都这么高",
+  "input": "",
+  "output": "complaint/unfair_fee"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "bank staff 一点帮助都没有",
+  "input": "",
+  "output": "complaint/staff_attitude"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "unhelpful staf wasted my time",
+  "input": "",
+  "output": "complaint/staff_attitude"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "为什么 branch 的 queue 这么慢",
+  "input": "",
+  "output": "complaint/waiting_time"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "app keeps freezin on iPhone",
+  "input": "",
+  "output": "complaint/app_problem"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "App有问题，登录不了",
+  "input": "",
+  "output": "complaint/app_problem"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "mobile app 现在很 slow",
+  "input": "",
+  "output": "complaint/app_problem"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "paynow issue staff so rude",
+  "input": "",
+  "output": "complaint/staff_attitude"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "branch 的 staff 很 careless",
+  "input": "",
+  "output": "complaint/staff_attitude"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "ibanking log me out again",
+  "input": "",
+  "output": "complaint/app_problem"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "App又一直闪退",
+  "input": "",
+  "output": "complaint/app_problem"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我已经 on hold 40 mins 了",
+  "input": "",
+  "output": "complaint/waiting_time"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "branch queue damn long",
+  "input": "",
+  "output": "complaint/waiting_time"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "银行什么小事情都要收费",
+  "input": "",
+  "output": "complaint/unfair_fee"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "officer 对我 roll eyes",
+  "input": "",
+  "output": "complaint/staff_attitude"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Your fees are too high",
+  "input": "",
+  "output": "complaint/unfair_fee"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "登录页面一直卡住",
+  "input": "",
+  "output": "complaint/app_problem"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "那个 teller 真的很 unhelpful",
+  "input": "",
+  "output": "complaint/staff_attitude"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "your fees very expensive leh",
+  "input": "",
+  "output": "complaint/unfair_fee"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "收费真的离谱到不行",
+  "input": "",
+  "output": "complaint/unfair_fee"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "chat 回复等超久，please",
+  "input": "",
+  "output": "complaint/waiting_time"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "online banking dwn again",
+  "input": "",
+  "output": "complaint/app_problem"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "费用真的太多了",
+  "input": "",
+  "output": "complaint/unfair_fee"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "app 自己 log out",
+  "input": "",
+  "output": "complaint/app_problem"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "your service charges unfair",
+  "input": "",
+  "output": "complaint/unfair_fee"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "客服中心没人接电话",
+  "input": "",
+  "output": "complaint/waiting_time"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "phone queue 一直不会动的",
+  "input": "",
+  "output": "complaint/waiting_time"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "现在可以买哪只股票？",
+  "input": "",
+  "output": "out_of_scope/investment_advice"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "你是 robot 还是 human 啊？",
+  "input": "",
+  "output": "out_of_scope/chitchat"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "recipe for mee goreng can",
+  "input": "",
+  "output": "out_of_scope/non_banking"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Maybank 卡迟还费用是多少？",
+  "input": "",
+  "output": "out_of_scope/other_company"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "为什么我的 rice 每次都 soggy 的 leh？",
+  "input": "",
+  "output": "out_of_scope/non_banking"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "MRT to Sentosa how ah",
+  "input": "",
+  "output": "out_of_scope/non_banking"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我的 SGD 买什么基金最好？",
+  "input": "",
+  "output": "out_of_scope/investment_advice"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "你平时 for fun 会做什么？",
+  "input": "",
+  "output": "out_of_scope/chitchat"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "whats due for science homework",
+  "input": "",
+  "output": "out_of_scope/non_banking"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "买加密货币安全吗？",
+  "input": "",
+  "output": "out_of_scope/investment_advice"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "这个 weather 热到 damn sian 啊。",
+  "input": "",
+  "output": "out_of_scope/chitchat"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "crypto recommendation pls urgent",
+  "input": "",
+  "output": "out_of_scope/investment_advice"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "StarHub 合约到期续约价格多少？",
+  "input": "",
+  "output": "out_of_scope/other_company"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "OCBC card 的 annual fee 可以 waive 吗？",
+  "input": "",
+  "output": "out_of_scope/other_company"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "what homework due tomorrow ah",
+  "input": "",
+  "output": "out_of_scope/non_banking"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "讲点好笑的啦",
+  "input": "",
+  "output": "out_of_scope/chitchat"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "boil 一个 egg 要多久？",
+  "input": "",
+  "output": "out_of_scope/non_banking"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "where can park near Orchard",
+  "input": "",
+  "output": "out_of_scope/non_banking"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "我应该买 Tesla 吗？",
+  "input": "",
+  "output": "out_of_scope/investment_advice"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Singtel plan cancel 有 fee 吗？",
+  "input": "",
+  "output": "out_of_scope/other_company"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "where put my bonus",
+  "input": "",
+  "output": "out_of_scope/investment_advice"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "早安，你好吗",
+  "input": "",
+  "output": "out_of_scope/chitchat"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "你晚上会 sleep 吗？",
+  "input": "",
+  "output": "out_of_scope/chitchat"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "how are you today",
+  "input": "",
+  "output": "out_of_scope/chitchat"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "你叫什么名字，机器人？",
+  "input": "",
+  "output": "out_of_scope/chitchat"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "有没有 joke 啊？",
+  "input": "",
+  "output": "out_of_scope/chitchat"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "any news on today's match",
+  "input": "",
+  "output": "out_of_scope/non_banking"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "有什么好的单位信托吗？",
+  "input": "",
+  "output": "out_of_scope/investment_advice"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "airline 的 baggage fee 多少钱？",
+  "input": "",
+  "output": "out_of_scope/other_company"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "mrt so crowded today",
+  "input": "",
+  "output": "out_of_scope/chitchat"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "需要个人理财建议",
+  "input": "",
+  "output": "out_of_scope/investment_advice"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "可以讲一个 joke 给我吗？",
+  "input": "",
+  "output": "out_of_scope/chitchat"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "help with algebra please",
+  "input": "",
+  "output": "out_of_scope/non_banking"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "改航班日期费用多少？",
+  "input": "",
+  "output": "out_of_scope/other_company"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "哪一个 fund 可以 beat inflation？",
+  "input": "",
+  "output": "out_of_scope/investment_advice"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "which ETF better for me",
+  "input": "",
+  "output": "out_of_scope/investment_advice"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "在家怎么煮叻沙？",
+  "input": "",
+  "output": "out_of_scope/non_banking"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "现在买 crypto 还是等先？",
+  "input": "",
+  "output": "out_of_scope/investment_advice"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "do you like chicken rice",
+  "input": "",
+  "output": "out_of_scope/chitchat"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "退休适合做什么投资？",
+  "input": "",
+  "output": "out_of_scope/investment_advice"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "有 10k 可以 invest 什么？",
+  "input": "",
+  "output": "out_of_scope/investment_advice"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "UOB credit card fee waiver?",
+  "input": "",
+  "output": "out_of_scope/other_company"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "今天几点日落？",
+  "input": "",
+  "output": "out_of_scope/non_banking"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "beginner 有 fund recommendation 吗？",
+  "input": "",
+  "output": "out_of_scope/investment_advice"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "what's the weather today",
+  "input": "",
+  "output": "out_of_scope/chitchat"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "下周有什么股票贴士？",
+  "input": "",
+  "output": "out_of_scope/investment_advice"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "StarHub roaming plan 多少钱？",
+  "input": "",
+  "output": "out_of_scope/other_company"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Scoot change fee 是多少？",
+  "input": "",
+  "output": "out_of_scope/other_company"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "Can I cancel Singtel line?",
+  "input": "",
+  "output": "out_of_scope/other_company"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "你可以 sing 一首 song 吗？",
+  "input": "",
+  "output": "out_of_scope/chitchat"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "可以给我鸡饭食谱吗？",
+  "input": "",
+  "output": "out_of_scope/non_banking"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "这个 news 是真的还是 fake？",
+  "input": "",
+  "output": "out_of_scope/non_banking"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "wheres nearest MRT station",
+  "input": "",
+  "output": "out_of_scope/non_banking"
+ },
+ {
+  "system": "你是狮城银行客服系统的意图分类器。判断客户消息的意图，只输出“一级意图/二级意图”，不要输出其他内容。",
+  "instruction": "今天又下雨了咯",
+  "input": "",
+  "output": "out_of_scope/chitchat"
+ }
+]

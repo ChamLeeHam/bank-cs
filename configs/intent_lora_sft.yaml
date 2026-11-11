@@ -1,0 +1,49 @@
+# LLaMA Factory：Qwen2.5-1.5B-Instruct LoRA 微调意图路由模型（《需求文档》F7）
+# 在项目根目录运行（路径都相对于项目根目录）：
+#   llamafactory-cli train configs/intent_lora_sft.yaml
+# 显卡：RTX 3080 Ti 12GB，bf16 + LoRA 足够，不需要 QLoRA
+
+### model
+model_name_or_path: pretrained/Qwen2.5-1.5B-Instruct
+trust_remote_code: true
+
+### method
+stage: sft
+do_train: true
+finetuning_type: lora
+lora_target: all          # 所有线性层都加 LoRA
+lora_rank: 16
+lora_alpha: 32
+lora_dropout: 0.05
+
+### dataset（src/scripts/export_llamafactory.py 生成）
+dataset_dir: data/intent/llamafactory
+dataset: intent_train
+template: qwen
+cutoff_len: 256           # 客服消息很短，256 足够
+overwrite_cache: true
+preprocessing_num_workers: 1   # Windows 上多进程预处理容易出错
+dataloader_num_workers: 0
+
+### output
+output_dir: checkpoint/intent_lora
+logging_steps: 10
+save_strategy: epoch
+save_total_limit: 2
+plot_loss: true
+overwrite_output_dir: true
+report_to: none
+
+### train
+per_device_train_batch_size: 16
+gradient_accumulation_steps: 1
+learning_rate: 2.0e-4     # LoRA 常用学习率（比全参数微调大一个数量级）
+num_train_epochs: 3.0
+lr_scheduler_type: cosine
+warmup_ratio: 0.1
+bf16: true
+
+### eval（从训练集划出 10% 作为验证集；测试集只在最后评估时使用）
+val_size: 0.1
+per_device_eval_batch_size: 16
+eval_strategy: epoch

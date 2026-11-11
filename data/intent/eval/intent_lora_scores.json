@@ -1,0 +1,102 @@
+{
+  "name": "intent_lora",
+  "all": {
+    "n": 640,
+    "acc_l2": 0.91875,
+    "acc_l1": 0.9515625,
+    "f1_l2": 0.9091553966700111,
+    "f1_l1": 0.9529539272987548,
+    "invalid": 0.0078125
+  },
+  "by_lang": {
+    "en": {
+      "n": 216,
+      "acc_l2": 0.9305555555555556,
+      "acc_l1": 0.9537037037037037,
+      "f1_l2": 0.9208707730685036,
+      "f1_l1": 0.9544913337596264,
+      "invalid": 0.0
+    },
+    "zh": {
+      "n": 204,
+      "acc_l2": 0.9068627450980392,
+      "acc_l1": 0.9558823529411765,
+      "f1_l2": 0.8894732839177283,
+      "f1_l1": 0.9573956092315945,
+      "invalid": 0.0
+    },
+    "mixed": {
+      "n": 220,
+      "acc_l2": 0.9181818181818182,
+      "acc_l1": 0.9454545454545454,
+      "f1_l2": 0.8959928249401933,
+      "f1_l1": 0.9480228663289832,
+      "invalid": 0.022727272727272728
+    }
+  },
+  "confusions": [
+    [
+      [
+        "transfer_status",
+        "transfer_howto"
+      ],
+      6
+    ],
+    [
+      [
+        "transfer_howto",
+        "transfer_status"
+      ],
+      3
+    ],
+    [
+      [
+        "account_service",
+        "fees_rates"
+      ],
+      2
+    ],
+    [
+      [
+        "fraud_report",
+        "card_lost_freeze"
+      ],
+      2
+    ],
+    [
+      [
+        "fraud_report",
+        "fees_rates"
+      ],
+      2
+    ],
+    [
+      [
+        "dispute_refund",
+        "fees_rates"
+      ],
+      2
+    ],
+    [
+      [
+        "balance_inquiry",
+        "transfer_howto"
+      ],
+      1
+    ],
+    [
+      [
+        "transfer_status",
+        "card_service"
+      ],
+      1
+    ]
+  ],
+  "invalid_examples": [
+    "fraud_report/balance_not_updated_after_bank_transfer",
+    "complaint/report_lost_card",
+    "fees_rates/exchange_support",
+    "fees_rates/how_to_calculate_rate",
+    "account_lost_freeze/lost_or_stolen_card"
+  ]
+}

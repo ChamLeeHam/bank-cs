@@ -1,0 +1,33 @@
+# 用微调后的 LoRA 预测测试集（结果：checkpoint/intent_lora/predict/generated_predictions.jsonl）
+#   llamafactory-cli train configs/intent_lora_predict.yaml
+# 然后在项目环境中评分：uv run python src/scripts/score_intent.py checkpoint/intent_lora/predict
+
+### model
+model_name_or_path: pretrained/Qwen2.5-1.5B-Instruct
+adapter_name_or_path: checkpoint/intent_lora
+trust_remote_code: true
+
+### method
+stage: sft
+do_predict: true
+finetuning_type: lora
+
+### dataset
+dataset_dir: data/intent/llamafactory
+eval_dataset: intent_test
+template: qwen
+cutoff_len: 256
+overwrite_cache: true
+preprocessing_num_workers: 1
+dataloader_num_workers: 0
+
+### output
+output_dir: checkpoint/intent_lora/predict
+overwrite_output_dir: true
+report_to: none
+
+### predict（贪心解码，结果可复现）
+per_device_eval_batch_size: 32
+predict_with_generate: true
+max_new_tokens: 32
+do_sample: false

@@ -1,0 +1,102 @@
+{
+  "name": "intent_base",
+  "all": {
+    "n": 640,
+    "acc_l2": 0.453125,
+    "acc_l1": 0.6453125,
+    "f1_l2": 0.3479160040407624,
+    "f1_l1": 0.6600876519816787,
+    "invalid": 0.1796875
+  },
+  "by_lang": {
+    "en": {
+      "n": 216,
+      "acc_l2": 0.4861111111111111,
+      "acc_l1": 0.6574074074074074,
+      "f1_l2": 0.39374094310669366,
+      "f1_l1": 0.6768095448461598,
+      "invalid": 0.19444444444444445
+    },
+    "zh": {
+      "n": 204,
+      "acc_l2": 0.44607843137254904,
+      "acc_l1": 0.6372549019607843,
+      "f1_l2": 0.3234189910713208,
+      "f1_l1": 0.6509888717758573,
+      "invalid": 0.17647058823529413
+    },
+    "mixed": {
+      "n": 220,
+      "acc_l2": 0.42727272727272725,
+      "acc_l1": 0.6409090909090909,
+      "f1_l2": 0.30089534708648286,
+      "f1_l1": 0.6495831102765183,
+      "invalid": 0.16818181818181818
+    }
+  },
+  "confusions": [
+    [
+      [
+        "transfer_howto",
+        "transfer_status"
+      ],
+      13
+    ],
+    [
+      [
+        "dispute_refund",
+        "fraud_report"
+      ],
+      11
+    ],
+    [
+      [
+        "complaint",
+        "out_of_scope"
+      ],
+      11
+    ],
+    [
+      [
+        "card_lost_freeze",
+        "card_service"
+      ],
+      10
+    ],
+    [
+      [
+        "complaint",
+        "fees_rates"
+      ],
+      10
+    ],
+    [
+      [
+        "account_service",
+        "card_service"
+      ],
+      9
+    ],
+    [
+      [
+        "transfer_status",
+        "transfer_howto"
+      ],
+      8
+    ],
+    [
+      [
+        "fraud_report",
+        "card_lost_freeze"
+      ],
+      8
+    ]
+  ],
+  "invalid_examples": [
+    "一级意图：balance_inquiry（余额查询：查询本人账户余额）",
+    "balance_inquiry/fiat_currency_support",
+    "fiat_currency_support/multi_currency_balance_check",
+    "一级意图：balance_inquiry（余额查询：查询本人账户余额）",
+    "transfer_status/lost_or_stolen_card"
+  ]
+}
