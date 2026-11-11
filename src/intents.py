@@ -132,7 +132,7 @@ LABEL_SEP = "/"  # 微调模型的输出格式：一级意图/二级意图，如
 # 只放几乎不会误判的说法；单独的"人工"不放（会命中"人工智能"）
 HUMAN_REQUEST_RE = re.compile(
     r"转人工|人工客服|找人工|要人工|真人客服|"
-    r"human agent|real person|live agent|customer service officer|"
+    r"human agent|live agent|(want|need|get) (a )?real person|"
     r"(speak|talk) to (a |an )?(human|person|agent|someone|staff|officer)",
     re.IGNORECASE,
 )
@@ -177,9 +177,10 @@ if __name__ == "__main__":
     assert all(sub_intents_of(i) for i in INTENTS), "有一级意图没有任何二级意图"
     assert split_label("card_service/pin_blocked") == ("card_service", "pin_blocked")
     assert len(ALL_LABELS) == len(set(ALL_LABELS)), "标签重复"
-    for text in ("我的卡丢了，帮我转人工", "Can I speak to a human?", "I want a live agent"):
+    for text in ("我的卡丢了，帮我转人工", "Can I speak to a human?", "I want a live agent", "I need a real person"):
         assert is_human_request(text), text
-    for text in ("你们的人工智能客服太差了", "How do I transfer money?", "人工费怎么算", "我要投诉你们的客服人员"):
+    for text in ("你们的人工智能客服太差了", "How do I transfer money?", "人工费怎么算", "我要投诉你们的客服人员",
+                 "are you a real person or a bot ah"):
         assert not is_human_request(text), text
 
     print(f"{len(INTENTS)} 个一级意图，{len(ALL_LABELS)} 个二级意图（其中 {len(BANKING77_TO_INTENT)} 个来自 Banking77）")

@@ -22,6 +22,11 @@ class Config:
     openai_api_base:str = field(default_factory=lambda: os.getenv("OPENAI_BASE_URL",""))
     default_model:str = field(default_factory=lambda: os.getenv("DEFAULT_MODEL","gpt-4o"))
 
+    # DeepSeek 用于生成 / 翻译训练数据
+    deepseek_api_key: str = field(default_factory=lambda: os.getenv("DEEPSEEK_API_KEY", ""))
+    deepseek_base_url: str = field(default_factory=lambda: os.getenv("DEEPSEEK_BASE_URL", "https://api.deepseek.com"))
+    deepseek_model: str = field(default_factory=lambda: os.getenv("DEEPSEEK_MODEL_NAME", "deepseek-chat"))
+
     # MYSQL数据库的配置
     mysql_host:str = field(default_factory=lambda: os.getenv("MYSQL_HOST","localhost"))
     mysql_user:str = field(default_factory=lambda: os.getenv("MYSQL_USER","root"))

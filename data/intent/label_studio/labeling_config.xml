@@ -1,0 +1,93 @@
+<View>
+  <Header value="$lang · $source · 原句：$source_text"/>
+  <Text name="text" value="$text"/>
+  <Taxonomy name="intent" toName="text" maxUsages="1" leafsOnly="true">
+    <Choice value="balance_inquiry">
+      <Choice value="check_balance"/>
+    </Choice>
+    <Choice value="transfer_status">
+      <Choice value="balance_not_updated_after_bank_transfer"/>
+      <Choice value="declined_transfer"/>
+      <Choice value="failed_transfer"/>
+      <Choice value="pending_transfer"/>
+      <Choice value="transfer_not_received_by_recipient"/>
+    </Choice>
+    <Choice value="card_lost_freeze">
+      <Choice value="lost_or_stolen_card"/>
+    </Choice>
+    <Choice value="fees_rates">
+      <Choice value="card_payment_fee_charged"/>
+      <Choice value="cash_withdrawal_charge"/>
+      <Choice value="exchange_charge"/>
+      <Choice value="exchange_rate"/>
+      <Choice value="extra_charge_on_statement"/>
+      <Choice value="transfer_fee_charged"/>
+    </Choice>
+    <Choice value="transfer_howto">
+      <Choice value="beneficiary_not_allowed"/>
+      <Choice value="receiving_money"/>
+      <Choice value="transfer_into_account"/>
+      <Choice value="transfer_timing"/>
+    </Choice>
+    <Choice value="card_service">
+      <Choice value="activate_my_card"/>
+      <Choice value="atm_support"/>
+      <Choice value="card_about_to_expire"/>
+      <Choice value="card_acceptance"/>
+      <Choice value="card_arrival"/>
+      <Choice value="card_delivery_estimate"/>
+      <Choice value="card_not_working"/>
+      <Choice value="card_swallowed"/>
+      <Choice value="change_pin"/>
+      <Choice value="contactless_not_working"/>
+      <Choice value="declined_card_payment"/>
+      <Choice value="declined_cash_withdrawal"/>
+      <Choice value="get_physical_card"/>
+      <Choice value="getting_spare_card"/>
+      <Choice value="order_physical_card"/>
+      <Choice value="pin_blocked"/>
+      <Choice value="visa_or_mastercard"/>
+    </Choice>
+    <Choice value="account_service">
+      <Choice value="age_limit"/>
+      <Choice value="edit_personal_details"/>
+      <Choice value="fiat_currency_support"/>
+      <Choice value="passcode_forgotten"/>
+      <Choice value="terminate_account"/>
+      <Choice value="unable_to_verify_identity"/>
+      <Choice value="verify_my_identity"/>
+      <Choice value="why_verify_identity"/>
+    </Choice>
+    <Choice value="fraud_report">
+      <Choice value="card_payment_not_recognised"/>
+      <Choice value="cash_withdrawal_not_recognised"/>
+      <Choice value="compromised_card"/>
+      <Choice value="direct_debit_payment_not_recognised"/>
+    </Choice>
+    <Choice value="dispute_refund">
+      <Choice value="Refund_not_showing_up"/>
+      <Choice value="request_refund"/>
+      <Choice value="transaction_charged_twice"/>
+      <Choice value="wrong_amount_of_cash_received"/>
+      <Choice value="card_payment_wrong_exchange_rate"/>
+      <Choice value="wrong_exchange_rate_for_cash_withdrawal"/>
+    </Choice>
+    <Choice value="complaint">
+      <Choice value="waiting_time"/>
+      <Choice value="staff_attitude"/>
+      <Choice value="app_problem"/>
+      <Choice value="unfair_fee"/>
+    </Choice>
+    <Choice value="out_of_scope">
+      <Choice value="investment_advice"/>
+      <Choice value="chitchat"/>
+      <Choice value="other_company"/>
+      <Choice value="non_banking"/>
+    </Choice>
+  </Taxonomy>
+  <Choices name="quality" toName="text" choice="single" showInline="true">
+    <Choice value="ok"/>
+    <Choice value="bad_translation"/>
+    <Choice value="delete"/>
+  </Choices>
+</View>

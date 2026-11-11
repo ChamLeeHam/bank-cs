@@ -115,4 +115,16 @@ transfer_not_received_by_recipient、transfer_timing（status / howto）；card_
 3. 所有意图都补充中文和中英混杂的样本（Banking77 只有英文）
 4. greeting 用规则识别，不生成训练数据
 
+**构建结果**（`src/scripts/build_intent_dataset.py`，DeepSeek 生成 / 翻译，结果缓存在 `data/intent/cache/`）：
+
+| 数据集 | 条数 | en / zh / mixed | Banking77 / LLM 生成 | 需重点检查 |
+|---|---|---|---|---|
+| train | 3285 | 1097 / 1066 / 1122 | 2175 / 1110 | 1345 |
+| test | 648 | 219 / 206 / 223 | 453 / 195 | 242 |
+
+- 每个一级意图约 300 条（测试集约 60 条），11 个意图（greeting 用规则，不训练）
+- 每个意图内 1/3 保持英文、1/3 翻译成中文、1/3 改写成新加坡式中英混杂；翻译时保留了普通英文单词的"中文句"改标为 mixed
+- 清洗：去重（忽略大小写和标点）、测试集与训练集不重复、删除提到其他银行的句子（other_company 除外）
+- "需重点检查"：LLM 生成的句子 + 容易混淆的 4 个 Banking77 标签；Label Studio 中按 `review` 字段筛选
+
 数据来源：Banking77（Casanueva et al., 2020），PolyAI，CC-BY-4.0

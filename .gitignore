@@ -9,3 +9,6 @@ storage/
 model/
 .idea/
 data/raw/
+# Day 2: LLM response cache and trial output (rebuild with build_intent_dataset.py)
+data/intent/cache/
+data/intent/trial/
