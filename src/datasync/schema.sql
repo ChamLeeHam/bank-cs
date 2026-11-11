@@ -9,7 +9,8 @@ CREATE DATABASE IF NOT EXISTS lioncity_bank
 USE lioncity_bank;
 
 SET FOREIGN_KEY_CHECKS = 0;
-DROP TABLE IF EXISTS turn_log, tickets, card_transactions, transfers, payees, cards, accounts, customers;
+DROP TABLE IF EXISTS turn_log, tickets, card_transactions, transfers, payees, cards, accounts, customers,
+                     product_alias, product_attr, product, product_category;
 SET FOREIGN_KEY_CHECKS = 1;
 
 -- 客户 -----------------------------------------------------------------
@@ -141,3 +142,40 @@ CREATE TABLE turn_log (
   INDEX idx_log_session (session_id, created_at),
   INDEX idx_log_time (created_at)
 ) COMMENT '每轮对话的审计日志（每日报表数据来源）';
+-- 产品分类 -------------------------------------------------------------
+CREATE TABLE product_category (
+  category_id   VARCHAR(20)  PRIMARY KEY            COMMENT '如 transfer',
+  name_zh       VARCHAR(20)  NOT NULL,
+  name_en       VARCHAR(30)  NOT NULL
+) COMMENT '产品分类：转账、银行卡、账户';
+
+-- 产品 -----------------------------------------------------------------
+CREATE TABLE product (
+  product_id    VARCHAR(30)  PRIMARY KEY            COMMENT '如 overseas_tt',
+  category_id   VARCHAR(20)  NOT NULL,
+  name_zh       VARCHAR(30)  NOT NULL,
+  name_en       VARCHAR(50)  NOT NULL,
+  CONSTRAINT fk_prod_cat FOREIGN KEY (category_id) REFERENCES product_category(category_id)
+) COMMENT '银行产品';
+
+-- 产品属性 -------------------------------------------------------------
+CREATE TABLE product_attr (
+  attr_id       INT AUTO_INCREMENT PRIMARY KEY,
+  product_id    VARCHAR(30)  NOT NULL,
+  attr_key      VARCHAR(30)  NOT NULL               COMMENT '如 fee、arrival_time、daily_limit',
+  name_zh       VARCHAR(30)  NOT NULL,
+  name_en       VARCHAR(50)  NOT NULL,
+  value_zh      VARCHAR(200) NOT NULL,
+  value_en      VARCHAR(200) NOT NULL,
+  CONSTRAINT fk_attr_prod FOREIGN KEY (product_id) REFERENCES product(product_id),
+  UNIQUE KEY uk_prod_attr (product_id, attr_key)
+) COMMENT '产品属性，数值和知识库文档一致';
+
+-- 产品别名 -------------------------------------------------------------
+CREATE TABLE product_alias (
+  alias_id      INT AUTO_INCREMENT PRIMARY KEY,
+  product_id    VARCHAR(30)  NOT NULL,
+  alias         VARCHAR(50)  NOT NULL               COMMENT '客户的说法，如 电汇、汇钱回家、wire transfer',
+  CONSTRAINT fk_alias_prod FOREIGN KEY (product_id) REFERENCES product(product_id),
+  UNIQUE KEY uk_alias (alias)
+) COMMENT '客户说法 -> 产品，用来做实体链接';

@@ -1,10 +1,9 @@
 # 还没做完的节点先用简单的规则代替，保证主图能跑通
-# 已经换成正式版本的：intent_router（intent_router.py）、rag_answer（rag_answer.py）
+# 已经换成正式版本的：intent_router.py、rag_answer.py、verify_otp.py
 # 还要做的：entity_extraction、account_agent、handoff 写工单
 import re
 
 from langchain_core.messages import AIMessage, HumanMessage
-from langgraph.types import interrupt
 
 from src.intents import INTENT_ROUTES, is_human_request
 from src.schema.base import BaseNode, StateUpdate
@@ -157,26 +156,6 @@ class AskBackNode(BaseNode):
         return {"answer": pick(lang,
                                "Sorry, could you tell me a bit more? For example: card, transfer, fees or account balance.",
                                "不好意思，能再具体说明一下吗？例如：银行卡、转账汇款、手续费或账户余额。")}
-
-
-class VerifyOtpNode(BaseNode):
-    """查账户之前先验证 OTP，同一个会话验证过一次就不用再验"""
-    name = "verify_otp"
-
-    def process(self, state: GraphState) -> StateUpdate:
-        if state.get("otp_verified"):
-            return {}
-        # 注意 interrupt 之前不能有副作用，因为恢复的时候这个节点会从头再跑一遍
-        code = interrupt({"type": "otp",
-                          "message_en": "For your security, please enter the 6-digit OTP sent to your phone.",
-                          "message_zh": "为了您的账户安全，请输入发送到您手机的 6 位验证码。"})
-        verified = str(code).strip() == "123456"  # TODO: 改成查 MySQL 里的 customers.demo_otp
-        if verified:
-            return {"otp_verified": True}
-        lang = state.get("lang", "en")
-        return {"otp_verified": False,
-                "answer": pick(lang, "The OTP is incorrect, so I can't access your account.",
-                               "验证码不正确，无法查询账户信息。")}
 
 
 class AccountAgentNode(BaseNode):

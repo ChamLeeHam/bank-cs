@@ -18,7 +18,7 @@ from pymysql.constants import CLIENT
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent.parent
-TABLES = ["customers", "accounts", "cards", "payees", "transfers", "card_transactions", "tickets", "turn_log"]
+TABLES = ["customers", "accounts", "cards", "payees", "transfers", "card_transactions", "tickets", "turn_log", "product_category", "product", "product_attr", "product_alias"]
 
 
 def connect(database: str | None = None) -> pymysql.connections.Connection:
@@ -56,7 +56,7 @@ def main() -> None:
     ap.add_argument("--check", action="store_true", help="only print row counts")
     args = ap.parse_args()
     load_dotenv(ROOT / ".env")
-    db = os.getenv("MYSQL_DATABASE", "lioncity_bank")  # must match the name used in schema.sql
+    db = os.getenv("MYSQL_DATABASE", "lioncity_bank")
 
     try:
         conn = connect()

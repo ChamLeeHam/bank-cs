@@ -94,3 +94,64 @@ INSERT INTO tickets (session_id, customer_id, intent, sub_intent, priority, stat
  '客户反映 App 转账页面多次闪退。',
  '您好，我们已将问题转交技术团队，最新版本 App 已修复，请更新后再试。',
  NOW() - INTERVAL 7 DAY);
+
+-- 产品 ---------------------------------------------------------------
+INSERT INTO product_category VALUES
+('transfer', '转账', 'Transfers'), ('card', '银行卡', 'Cards'), ('account', '账户', 'Accounts');
+
+INSERT INTO product VALUES
+('paynow',      'transfer', 'PayNow',   'PayNow'),
+('fast',        'transfer', 'FAST 转账', 'FAST'),
+('giro',        'transfer', 'GIRO 扣款', 'GIRO'),
+('overseas_tt', 'transfer', '海外电汇',  'Overseas TT'),
+('visa_debit',        'card',    'Visa 借记卡',       'Visa Debit Card'),
+('unionpay_debit',    'card',    '银联借记卡',         'UnionPay Debit Card'),
+('mastercard_credit', 'card',    'Mastercard 信用卡', 'Mastercard Credit Card'),
+('savings',           'account', '储蓄账户',          'Savings Account'),
+('multi_currency',    'account', '多币种账户',         'Multi-currency Account');
+
+INSERT INTO product_attr (product_id, attr_key, name_zh, name_en, value_zh, value_en) VALUES
+('overseas_tt', 'fee',          '手续费',   'Fee',          '每笔 SGD 10，中转行可能另扣 SGD 10–30；选 OUR 另加 SGD 20 可全额到账',
+                                                            'SGD 10 per transfer; intermediary banks may deduct SGD 10–30; add SGD 20 (OUR) for the full amount'),
+('overseas_tt', 'arrival_time', '到账时间', 'Arrival time', '工作日下午 3 点前提交当天处理，一般 1–3 个工作日到账，部分国家 5 个工作日',
+                                                            'Submitted before 3 pm on a business day: processed same day, usually 1–3 working days, up to 5 for some countries'),
+('overseas_tt', 'daily_limit',  '每日限额', 'Daily limit',  '默认 SGD 20,000', 'SGD 20,000 by default'),
+('fast',        'fee',          '手续费',   'Fee',          '网银和 App 免费，柜台每笔 SGD 5', 'Free online and in the app; SGD 5 at a branch counter'),
+('fast',        'arrival_time', '到账时间', 'Arrival time', '通常几分钟内，全天可用', 'Usually within minutes, 24/7'),
+('fast',        'daily_limit',  '每日限额', 'Daily limit',  '默认 SGD 5,000，最高可调到 SGD 200,000', 'SGD 5,000 by default, up to SGD 200,000'),
+('paynow',      'fee',          '手续费',   'Fee',          '免费', 'Free'),
+('paynow',      'arrival_time', '到账时间', 'Arrival time', '实时到账，全天 24 小时可用', 'Arrives instantly, 24/7'),
+('paynow',      'daily_limit',  '每日限额', 'Daily limit',  '默认 SGD 5,000，最高可调到 SGD 200,000', 'SGD 5,000 by default, up to SGD 200,000'),
+('giro',        'fee',          '手续费',   'Fee',          '免费', 'Free'),
+('giro',        'arrival_time', '到账时间', 'Arrival time', '按账单机构的扣款日处理', 'Processed on the billing organisation''s deduction date'),
+-- 银行卡
+('visa_debit',        'annual_fee',      '年费',       'Annual fee',              '无', 'None'),
+('visa_debit',        'fx_fee',          '外币交易费', 'Foreign transaction fee', '3.25%', '3.25%'),
+('visa_debit',        'replacement_fee', '补卡费',     'Replacement fee',         'SGD 15，被盗并已报警免费', 'SGD 15, free if stolen with a police report'),
+('unionpay_debit',    'fx_fee',          '外币交易费', 'Foreign transaction fee', '1%', '1%'),
+('unionpay_debit',    'replacement_fee', '补卡费',     'Replacement fee',         'SGD 15，被盗并已报警免费', 'SGD 15, free if stolen with a police report'),
+('mastercard_credit', 'annual_fee',      '年费',       'Annual fee',              'SGD 196.20，首两年免，之后每年消费满 SGD 10,000 可豁免',
+                                                                                  'SGD 196.20, waived for the first two years, then waived if you spend SGD 10,000 in the year'),
+('mastercard_credit', 'fx_fee',          '外币交易费', 'Foreign transaction fee', '3.25%', '3.25%'),
+('mastercard_credit', 'late_fee',        '逾期还款费', 'Late payment fee',        'SGD 100', 'SGD 100'),
+('mastercard_credit', 'replacement_fee', '补卡费',     'Replacement fee',         'SGD 15，被盗并已报警免费', 'SGD 15, free if stolen with a police report'),
+-- 账户
+('savings',        'close_fee',  '销户费',     'Closing fee',          '开户 6 个月内销户收 SGD 30', 'SGD 30 if closed within 6 months of opening'),
+('savings',        'close_time', '销户时间',   'Closing time',         '一般 7 个工作日内完成', 'Usually 7 working days'),
+('multi_currency', 'currencies', '支持货币',   'Supported currencies', '11 种：SGD、USD、CNY、MYR、EUR、GBP、AUD、JPY、HKD、THB、IDR',
+                                                                       '11 currencies: SGD, USD, CNY, MYR, EUR, GBP, AUD, JPY, HKD, THB and IDR'),
+('multi_currency', 'fx_fee',     '兑换手续费', 'Conversion fee',       '账户内兑换不另收手续费，成本包含在汇率差价中',
+                                                                       'No separate fee; the cost is included in the buy and sell rates');
+
+INSERT INTO product_alias (product_id, alias) VALUES
+('overseas_tt', 'TT'), ('overseas_tt', '电汇'), ('overseas_tt', '海外汇款'), ('overseas_tt', '汇款到海外'),
+('overseas_tt', '汇钱回家'), ('overseas_tt', 'telegraphic transfer'), ('overseas_tt', 'wire transfer'),
+('overseas_tt', 'overseas transfer'), ('overseas_tt', 'remittance'),
+('fast', 'FAST'), ('paynow', 'PayNow'), ('paynow', 'pay now'), ('giro', 'GIRO'),
+('mastercard_credit', '信用卡'), ('mastercard_credit', 'credit card'), ('mastercard_credit', 'Mastercard'),
+('mastercard_credit', '万事达'),
+('visa_debit', '借记卡'), ('visa_debit', 'debit card'), ('visa_debit', 'Visa'),
+('unionpay_debit', '银联'), ('unionpay_debit', '银联卡'), ('unionpay_debit', 'UnionPay'),
+('savings', '储蓄账户'), ('savings', 'savings account'),
+('multi_currency', '多币种'), ('multi_currency', '多币种账户'), ('multi_currency', 'multi-currency'),
+('multi_currency', 'multi currency');

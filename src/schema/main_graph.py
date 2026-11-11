@@ -13,9 +13,9 @@ from langgraph.types import Command
 
 from src.nodes.intent_router import IntentRouterNode
 from src.nodes.rag_answer import RagAnswerNode
+from src.nodes.verify_otp import VerifyOtpNode
 from src.nodes.stub_nodes import (InputGuardNode, EntityExtractionNode, GateNode, AskBackNode,
-                                  VerifyOtpNode, AccountAgentNode, HandoffNode, RefuseNode,
-                                  OutputGuardNode)
+                                  AccountAgentNode, HandoffNode, RefuseNode, OutputGuardNode)
 from src.schema.state import GraphState, create_turn_input
 from src.schema.base import setup_logging
 
@@ -156,11 +156,12 @@ if __name__ == '__main__':
     print("===== 问题（同一个会话的第 2 轮，已经验证过了）：我的余额还有多少？")
     show(run_query("otp-demo", "C001", "我的余额还有多少？"))
 
-    # 3.验证码错了，不能查账户
+    # 3.验证码输错 3 次，不能查账户
     print("===== 问题：我的 card 尾号 4821 lost 了")
     show(run_query("otp-wrong", "C001", "我的 card 尾号 4821 lost 了"))
-    print("===== 客户输入验证码：000000")
-    show(resume("otp-wrong", "000000"))
+    for code in ["000000", "111111", "222222"]:
+        print(f"===== 客户输入验证码：{code}")
+        show(resume("otp-wrong", code))
 
     # 4.连续追问 2 次还是不清楚，第 3 次转人工
     for question in ["嗯", "那个", "就是那个"]:
