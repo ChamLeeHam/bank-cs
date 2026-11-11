@@ -98573,39 +98573,6 @@
  {
   "data": {
    "id": "train-02988",
-   "text": "foodpanda 的 refund 5 天了还没进来，到底发生什么事",
-   "lang": "mixed",
-   "intent": "out_of_scope",
-   "sub_intent": "other_company",
-   "label": "out_of_scope/other_company",
-   "source": "llm",
-   "source_text": "foodpanda refnd still not in after 5 days, what is going on",
-   "review": true
-  },
-  "predictions": [
-   {
-    "model_version": "dataset_v1",
-    "result": [
-     {
-      "from_name": "intent",
-      "to_name": "text",
-      "type": "taxonomy",
-      "value": {
-       "taxonomy": [
-        [
-         "out_of_scope",
-         "other_company"
-        ]
-       ]
-      }
-     }
-    ]
-   }
-  ]
- },
- {
-  "data": {
-   "id": "train-02989",
    "text": "can you recommend ETF to buy for long term? yes or no only",
    "lang": "en",
    "intent": "out_of_scope",
@@ -98638,7 +98605,7 @@
  },
  {
   "data": {
-   "id": "train-02990",
+   "id": "train-02989",
    "text": "到底可不可以推荐一只基金？不要叫我去分行。",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -98671,7 +98638,7 @@
  },
  {
   "data": {
-   "id": "train-02991",
+   "id": "train-02990",
    "text": "为什么我孩子的 homework 这么难，我连解都解不到",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -98704,7 +98671,7 @@
  },
  {
   "data": {
-   "id": "train-02992",
+   "id": "train-02991",
    "text": "don't give me those standard answers leh so irritating",
    "lang": "en",
    "intent": "out_of_scope",
@@ -98737,7 +98704,7 @@
  },
  {
   "data": {
-   "id": "train-02993",
+   "id": "train-02992",
    "text": "StarHub 宽频又断线，还没有回扣？解释一下。",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -98770,7 +98737,7 @@
  },
  {
   "data": {
-   "id": "train-02994",
+   "id": "train-02993",
    "text": "good morning，只是来 check in 打个招呼，希望你今天过得顺顺利利",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -98803,7 +98770,7 @@
  },
  {
   "data": {
-   "id": "train-02995",
+   "id": "train-02994",
    "text": "Could you please summarise today's top local news headlines in Singapore?",
    "lang": "en",
    "intent": "out_of_scope",
@@ -98836,7 +98803,7 @@
  },
  {
   "data": {
-   "id": "train-02996",
+   "id": "train-02995",
    "text": "Singtel 账单多收钱，我要争议这笔收费。",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -98869,7 +98836,7 @@
  },
  {
   "data": {
-   "id": "train-02997",
+   "id": "train-02996",
    "text": "good morning，请问可以了解一下 Singtel 的 SIM-only plan 取消 policy 吗？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -98902,7 +98869,7 @@
  },
  {
   "data": {
-   "id": "train-02998",
+   "id": "train-02997",
    "text": "u human ah",
    "lang": "en",
    "intent": "out_of_scope",
@@ -98935,7 +98902,7 @@
  },
  {
   "data": {
-   "id": "train-02999",
+   "id": "train-02998",
    "text": "请问去乌节路怎么走？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -98968,7 +98935,7 @@
  },
  {
   "data": {
-   "id": "train-03000",
+   "id": "train-02999",
    "text": "我已经很 impatient 了，just chat with me 一下可以吗",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -99001,7 +98968,7 @@
  },
  {
   "data": {
-   "id": "train-03001",
+   "id": "train-03000",
    "text": "why are you so slow sia i just asked a simple question",
    "lang": "en",
    "intent": "out_of_scope",
@@ -99034,40 +99001,7 @@
  },
  {
   "data": {
-   "id": "train-03002",
-   "text": "Grab 订单的退款还没收到，怎么办？",
-   "lang": "zh",
-   "intent": "out_of_scope",
-   "sub_intent": "other_company",
-   "label": "out_of_scope/other_company",
-   "source": "llm",
-   "source_text": "grab order missing refund how",
-   "review": true
-  },
-  "predictions": [
-   {
-    "model_version": "dataset_v1",
-    "result": [
-     {
-      "from_name": "intent",
-      "to_name": "text",
-      "type": "taxonomy",
-      "value": {
-       "taxonomy": [
-        [
-         "out_of_scope",
-         "other_company"
-        ]
-       ]
-      }
-     }
-    ]
-   }
-  ]
- },
- {
-  "data": {
-   "id": "train-03003",
+   "id": "train-03001",
    "text": "telco plan 为什么会有 hidden charges",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -99100,7 +99034,7 @@
  },
  {
   "data": {
-   "id": "train-03004",
+   "id": "train-03002",
    "text": "this recipe says fold the batter what does that even mean",
    "lang": "en",
    "intent": "out_of_scope",
@@ -99133,7 +99067,7 @@
  },
  {
   "data": {
-   "id": "train-03005",
+   "id": "train-03003",
    "text": "请问去裕廊搭哪路巴士？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -99166,40 +99100,7 @@
  },
  {
   "data": {
-   "id": "train-03006",
-   "text": "panda 的 refund 还没 receive 到",
-   "lang": "mixed",
-   "intent": "out_of_scope",
-   "sub_intent": "other_company",
-   "label": "out_of_scope/other_company",
-   "source": "llm",
-   "source_text": "panda refund not recieved yet",
-   "review": true
-  },
-  "predictions": [
-   {
-    "model_version": "dataset_v1",
-    "result": [
-     {
-      "from_name": "intent",
-      "to_name": "text",
-      "type": "taxonomy",
-      "value": {
-       "taxonomy": [
-        [
-         "out_of_scope",
-         "other_company"
-        ]
-       ]
-      }
-     }
-    ]
-   }
-  ]
- },
- {
-  "data": {
-   "id": "train-03007",
+   "id": "train-03004",
    "text": "advice on my investments pls",
    "lang": "en",
    "intent": "out_of_scope",
@@ -99232,7 +99133,7 @@
  },
  {
   "data": {
-   "id": "train-03008",
+   "id": "train-03005",
    "text": "我应不应该每月用 GIRO 转钱进基金？哪一只？快点。",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -99265,7 +99166,7 @@
  },
  {
   "data": {
-   "id": "train-03009",
+   "id": "train-03006",
    "text": "现在应该买哪一个 crypto",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -99298,7 +99199,7 @@
  },
  {
   "data": {
-   "id": "train-03010",
+   "id": "train-03007",
    "text": "how to get to Changi Airport",
    "lang": "en",
    "intent": "out_of_scope",
@@ -99331,7 +99232,7 @@
  },
  {
   "data": {
-   "id": "train-03011",
+   "id": "train-03008",
    "text": "哪只基金最适合我？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -99364,7 +99265,7 @@
  },
  {
   "data": {
-   "id": "train-03012",
+   "id": "train-03009",
    "text": "可以 recommend 一个 SGD5k 的投资吗",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -99397,7 +99298,7 @@
  },
  {
   "data": {
-   "id": "train-03013",
+   "id": "train-03010",
    "text": "whats up today",
    "lang": "en",
    "intent": "out_of_scope",
@@ -99430,7 +99331,7 @@
  },
  {
   "data": {
-   "id": "train-03014",
+   "id": "train-03011",
    "text": "GrabFood 漏送餐品，却只给部分优惠券，不能接受。",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -99463,7 +99364,7 @@
  },
  {
   "data": {
-   "id": "train-03015",
+   "id": "train-03012",
    "text": "good morning，可以 share 一个适合 family dinner 的简单蒸鱼 recipe 吗？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -99496,40 +99397,7 @@
  },
  {
   "data": {
-   "id": "train-03016",
-   "text": "Grab charged me twice for the same ride and still hasn't refunded. fix it",
-   "lang": "en",
-   "intent": "out_of_scope",
-   "sub_intent": "other_company",
-   "label": "out_of_scope/other_company",
-   "source": "llm",
-   "source_text": "Grab charged me twice for the same ride and still hasn't refunded. fix it",
-   "review": true
-  },
-  "predictions": [
-   {
-    "model_version": "dataset_v1",
-    "result": [
-     {
-      "from_name": "intent",
-      "to_name": "text",
-      "type": "taxonomy",
-      "value": {
-       "taxonomy": [
-        [
-         "out_of_scope",
-         "other_company"
-        ]
-       ]
-      }
-     }
-    ]
-   }
-  ]
- },
- {
-  "data": {
-   "id": "train-03017",
+   "id": "train-03013",
    "text": "可以请你推荐适合我退休辅助计划户头的投资吗？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -99562,7 +99430,7 @@
  },
  {
   "data": {
-   "id": "train-03018",
+   "id": "train-03014",
    "text": "请 advise 我应该 invest 在 global equity fund 还是 bond fund",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -99595,7 +99463,7 @@
  },
  {
   "data": {
-   "id": "train-03019",
+   "id": "train-03015",
    "text": "need investment advice urgently",
    "lang": "en",
    "intent": "out_of_scope",
@@ -99628,7 +99496,7 @@
  },
  {
   "data": {
-   "id": "train-03020",
+   "id": "train-03016",
    "text": "12 乘 8 是多少？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -99661,7 +99529,7 @@
  },
  {
   "data": {
-   "id": "train-03021",
+   "id": "train-03017",
    "text": "为什么 take so long？直接讲我的 SGD bonus 应该 invest 在 stocks 还是 bonds",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -99694,7 +99562,7 @@
  },
  {
   "data": {
-   "id": "train-03022",
+   "id": "train-03018",
    "text": "Kindly advise on the baggage allowance policy for Singapore Airlines economy class.",
    "lang": "en",
    "intent": "out_of_scope",
@@ -99727,7 +99595,7 @@
  },
  {
   "data": {
-   "id": "train-03023",
+   "id": "train-03019",
    "text": "早安，请问 Citi PremierMiles 信用卡的最低消费要求和年费豁免条件是什么？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -99760,7 +99628,7 @@
  },
  {
   "data": {
-   "id": "train-03024",
+   "id": "train-03020",
    "text": "可以告诉我 M1 的 broadband contract 有没有 include router 吗？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -99793,7 +99661,7 @@
  },
  {
   "data": {
-   "id": "train-03025",
+   "id": "train-03021",
    "text": "i would be grateful if you could explain UOB's credit card cash advance fee",
    "lang": "en",
    "intent": "out_of_scope",
@@ -99826,7 +99694,7 @@
  },
  {
   "data": {
-   "id": "train-03026",
+   "id": "train-03022",
    "text": "你几岁？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -99859,7 +99727,7 @@
  },
  {
   "data": {
-   "id": "train-03027",
+   "id": "train-03023",
    "text": "请帮我 understand 这个关于 balancing equations 的 chemistry homework question",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -99892,7 +99760,7 @@
  },
  {
   "data": {
-   "id": "train-03028",
+   "id": "train-03024",
    "text": "May I ask for a vegetarian recipe that uses common ingredients from a local supermarket?",
    "lang": "en",
    "intent": "out_of_scope",
@@ -99925,7 +99793,7 @@
  },
  {
   "data": {
-   "id": "train-03029",
+   "id": "train-03025",
    "text": "会下雨吗？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -99958,40 +99826,7 @@
  },
  {
   "data": {
-   "id": "train-03030",
-   "text": "可以 explain 一下用 card 付的 cancelled Foodpanda order 的 refund timeline 吗？",
-   "lang": "mixed",
-   "intent": "out_of_scope",
-   "sub_intent": "other_company",
-   "label": "out_of_scope/other_company",
-   "source": "llm",
-   "source_text": "Could you please explain the refund timeline for a cancelled Foodpanda order paid by card?",
-   "review": true
-  },
-  "predictions": [
-   {
-    "model_version": "dataset_v1",
-    "result": [
-     {
-      "from_name": "intent",
-      "to_name": "text",
-      "type": "taxonomy",
-      "value": {
-       "taxonomy": [
-        [
-         "out_of_scope",
-         "other_company"
-        ]
-       ]
-      }
-     }
-    ]
-   }
-  ]
- },
- {
-  "data": {
-   "id": "train-03031",
+   "id": "train-03026",
    "text": "explain photosynthesis for homework",
    "lang": "en",
    "intent": "out_of_scope",
@@ -100024,7 +99859,7 @@
  },
  {
   "data": {
-   "id": "train-03032",
+   "id": "train-03027",
    "text": "请给我个人理财建议：一次性投资一笔钱，但不要承担过大风险。",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -100057,7 +99892,7 @@
  },
  {
   "data": {
-   "id": "train-03033",
+   "id": "train-03028",
    "text": "我想说你的 replies 很 polite。你们有 receive 跟 customers 讲话的 training 吗？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -100090,7 +99925,7 @@
  },
  {
   "data": {
-   "id": "train-03034",
+   "id": "train-03029",
    "text": "may i ask for directions from Woodlands MRT to the nearest library please",
    "lang": "en",
    "intent": "out_of_scope",
@@ -100123,7 +99958,7 @@
  },
  {
   "data": {
-   "id": "train-03035",
+   "id": "train-03030",
    "text": "快点回答：5000 块是买股票还是基金？不要一直重复叫我自己做。",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -100156,7 +99991,7 @@
  },
  {
   "data": {
-   "id": "train-03036",
+   "id": "train-03031",
    "text": "请问可以 enquire 一下 Singtel 去 Malaysia 的 roaming add-on pricing 吗？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -100189,7 +100024,7 @@
  },
  {
   "data": {
-   "id": "train-03037",
+   "id": "train-03032",
    "text": "where to invest my bonus",
    "lang": "en",
    "intent": "out_of_scope",
@@ -100222,40 +100057,7 @@
  },
  {
   "data": {
-   "id": "train-03038",
-   "text": "请提供新航退还未使用税费的政策信息。",
-   "lang": "zh",
-   "intent": "out_of_scope",
-   "sub_intent": "other_company",
-   "label": "out_of_scope/other_company",
-   "source": "llm",
-   "source_text": "Kindly provide information on Singapore Airlines' poilcy for refunding unused taxes.",
-   "review": true
-  },
-  "predictions": [
-   {
-    "model_version": "dataset_v1",
-    "result": [
-     {
-      "from_name": "intent",
-      "to_name": "text",
-      "type": "taxonomy",
-      "value": {
-       "taxonomy": [
-        [
-         "out_of_scope",
-         "other_company"
-        ]
-       ]
-      }
-     }
-    ]
-   }
-  ]
- },
- {
-  "data": {
-   "id": "train-03039",
+   "id": "train-03033",
    "text": "为什么我的 soup 没有味道，我明明 exactly follow 了 recipe",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -100288,7 +100090,7 @@
  },
  {
   "data": {
-   "id": "train-03040",
+   "id": "train-03034",
    "text": "any updates on the election or not i keep hearing nonsense",
    "lang": "en",
    "intent": "out_of_scope",
@@ -100321,7 +100123,7 @@
  },
  {
   "data": {
-   "id": "train-03041",
+   "id": "train-03035",
    "text": "我还是不明白这道数学题，请好好解释一下。",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -100354,40 +100156,7 @@
  },
  {
   "data": {
-   "id": "train-03042",
-   "text": "good afternoon，可以 explain 一下 foodpanda 怎么处理 missing items 的 refund 吗？",
-   "lang": "mixed",
-   "intent": "out_of_scope",
-   "sub_intent": "other_company",
-   "label": "out_of_scope/other_company",
-   "source": "llm",
-   "source_text": "good afternoon could you please explain how foodpanda handles refnds for missing items",
-   "review": true
-  },
-  "predictions": [
-   {
-    "model_version": "dataset_v1",
-    "result": [
-     {
-      "from_name": "intent",
-      "to_name": "text",
-      "type": "taxonomy",
-      "value": {
-       "taxonomy": [
-        [
-         "out_of_scope",
-         "other_company"
-        ]
-       ]
-      }
-     }
-    ]
-   }
-  ]
- },
- {
-  "data": {
-   "id": "train-03043",
+   "id": "train-03036",
    "text": "do you sleep at night",
    "lang": "en",
    "intent": "out_of_scope",
@@ -100420,7 +100189,7 @@
  },
  {
   "data": {
-   "id": "train-03044",
+   "id": "train-03037",
    "text": "请问可以帮我理解这道中学代数题怎么解吗？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -100453,7 +100222,7 @@
  },
  {
   "data": {
-   "id": "train-03045",
+   "id": "train-03038",
    "text": "直接 tell me 买什么 stock 就好",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -100486,7 +100255,7 @@
  },
  {
   "data": {
-   "id": "train-03046",
+   "id": "train-03039",
    "text": "why does Citi need my NRIC just to update phone number for credit card",
    "lang": "en",
    "intent": "out_of_scope",
@@ -100519,7 +100288,7 @@
  },
  {
   "data": {
-   "id": "train-03047",
+   "id": "train-03040",
    "text": "Maybank 卡为什么收逾期费？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -100552,40 +100321,7 @@
  },
  {
   "data": {
-   "id": "train-03048",
-   "text": "deliveroo 的 refund 被 reject 了，help",
-   "lang": "mixed",
-   "intent": "out_of_scope",
-   "sub_intent": "other_company",
-   "label": "out_of_scope/other_company",
-   "source": "llm",
-   "source_text": "deliveroo refund rejected help",
-   "review": true
-  },
-  "predictions": [
-   {
-    "model_version": "dataset_v1",
-    "result": [
-     {
-      "from_name": "intent",
-      "to_name": "text",
-      "type": "taxonomy",
-      "value": {
-       "taxonomy": [
-        [
-         "out_of_scope",
-         "other_company"
-        ]
-       ]
-      }
-     }
-    ]
-   }
-  ]
- },
- {
-  "data": {
-   "id": "train-03049",
+   "id": "train-03041",
    "text": "weather so hot today",
    "lang": "en",
    "intent": "out_of_scope",
@@ -100618,7 +100354,7 @@
  },
  {
   "data": {
-   "id": "train-03050",
+   "id": "train-03042",
    "text": "我关掉数据后却出现 M1 漫游费，帮我处理一下。",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -100651,7 +100387,7 @@
  },
  {
   "data": {
-   "id": "train-03051",
+   "id": "train-03043",
    "text": "可以 kindly explain 一下怎么 calculate 我儿子 homework 里 triangle 的 area 吗？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -100684,7 +100420,7 @@
  },
  {
   "data": {
-   "id": "train-03052",
+   "id": "train-03044",
    "text": "good morning could you please tell me how to get to Gardens by the Bay from Marina Bay MRT",
    "lang": "en",
    "intent": "out_of_scope",
@@ -100717,7 +100453,7 @@
  },
  {
   "data": {
-   "id": "train-03053",
+   "id": "train-03045",
    "text": "我在 MRT 上，需要快点回答：我该买哪种加密货币？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -100750,7 +100486,7 @@
  },
  {
   "data": {
-   "id": "train-03054",
+   "id": "train-03046",
    "text": "你是 robot 还是 real person？hurry up leh",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -100783,7 +100519,7 @@
  },
  {
   "data": {
-   "id": "train-03055",
+   "id": "train-03047",
    "text": "today very shiok weather",
    "lang": "en",
    "intent": "out_of_scope",
@@ -100816,7 +100552,7 @@
  },
  {
   "data": {
-   "id": "train-03056",
+   "id": "train-03048",
    "text": "我应该投资什么？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -100849,7 +100585,7 @@
  },
  {
   "data": {
-   "id": "train-03057",
+   "id": "train-03049",
    "text": "mee goreng 最好的 recipe 是什么",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -100882,7 +100618,7 @@
  },
  {
   "data": {
-   "id": "train-03058",
+   "id": "train-03050",
    "text": "wheres the nearest hawker centre i dont want a long walk",
    "lang": "en",
    "intent": "out_of_scope",
@@ -100915,7 +100651,7 @@
  },
  {
   "data": {
-   "id": "train-03059",
+   "id": "train-03051",
    "text": "我想知道新 MRT 线开通有没有什么新闻更新。",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -100948,7 +100684,7 @@
  },
  {
   "data": {
-   "id": "train-03060",
+   "id": "train-03052",
    "text": "最近的 MRT station 在哪里",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -100981,7 +100717,7 @@
  },
  {
   "data": {
-   "id": "train-03061",
+   "id": "train-03053",
    "text": "airasia change date fee",
    "lang": "en",
    "intent": "out_of_scope",
@@ -101014,7 +100750,7 @@
  },
  {
   "data": {
-   "id": "train-03062",
+   "id": "train-03054",
    "text": "不要再给那些笼统的免责声明，直接告诉我我的钱该投资什么",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -101047,7 +100783,7 @@
  },
  {
   "data": {
-   "id": "train-03063",
+   "id": "train-03055",
    "text": "可以直接给我 question 5 的 answer 了吗？我没有 all day leh",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -101080,7 +100816,7 @@
  },
  {
   "data": {
-   "id": "train-03064",
+   "id": "train-03056",
    "text": "just tell me which stock to buy lah, don't keep asking me to do own research",
    "lang": "en",
    "intent": "out_of_scope",
@@ -101113,40 +100849,7 @@
  },
  {
   "data": {
-   "id": "train-03065",
-   "text": "我已经取消订阅了，Netflix 还扣我的钱。现在马上退款",
-   "lang": "mixed",
-   "intent": "out_of_scope",
-   "sub_intent": "other_company",
-   "label": "out_of_scope/other_company",
-   "source": "llm",
-   "source_text": "Netflix charged me after I cancelled subscription. refund it now",
-   "review": true
-  },
-  "predictions": [
-   {
-    "model_version": "dataset_v1",
-    "result": [
-     {
-      "from_name": "intent",
-      "to_name": "text",
-      "type": "taxonomy",
-      "value": {
-       "taxonomy": [
-        [
-         "out_of_scope",
-         "other_company"
-        ]
-       ]
-      }
-     }
-    ]
-   }
-  ]
- },
- {
-  "data": {
-   "id": "train-03066",
+   "id": "train-03057",
    "text": "Cathay 的 seat selection fee 是多少？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -101179,7 +100882,7 @@
  },
  {
   "data": {
-   "id": "train-03067",
+   "id": "train-03058",
    "text": "Hello, may I ask what your name is? I am just curious about the assistant I am speaking with.",
    "lang": "en",
    "intent": "out_of_scope",
@@ -101212,7 +100915,7 @@
  },
  {
   "data": {
-   "id": "train-03068",
+   "id": "train-03059",
    "text": "可以建议一个适合打算十年内在新加坡退休的人的投资产品吗？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -101245,7 +100948,7 @@
  },
  {
   "data": {
-   "id": "train-03069",
+   "id": "train-03060",
    "text": "MRT disruption 有什么 news 吗？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -101278,7 +100981,7 @@
  },
  {
   "data": {
-   "id": "train-03070",
+   "id": "train-03061",
    "text": "are u there?? reply faster can",
    "lang": "en",
    "intent": "out_of_scope",
@@ -101311,7 +101014,7 @@
  },
  {
   "data": {
-   "id": "train-03071",
+   "id": "train-03062",
    "text": "这雨也太夸张了吧，我又被困在 MRT 了",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -101344,7 +101047,7 @@
  },
  {
   "data": {
-   "id": "train-03072",
+   "id": "train-03063",
    "text": "可以帮我 with 我的 English homework 吗？是写 formal letter 的",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -101377,7 +101080,7 @@
  },
  {
   "data": {
-   "id": "train-03073",
+   "id": "train-03064",
    "text": "I would like formal advice on whether to buy an ETF or a unit trust using PayNow.",
    "lang": "en",
    "intent": "out_of_scope",
@@ -101410,7 +101113,7 @@
  },
  {
   "data": {
-   "id": "train-03074",
+   "id": "train-03065",
    "text": "今天也太热了吧，连 MRT 的冷气都救不了我",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -101443,7 +101146,7 @@
  },
  {
   "data": {
-   "id": "train-03075",
+   "id": "train-03066",
    "text": "200 的 15% 是 what？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -101476,7 +101179,7 @@
  },
  {
   "data": {
-   "id": "train-03076",
+   "id": "train-03067",
    "text": "why does my cake keep sinking this is the third time",
    "lang": "en",
    "intent": "out_of_scope",
@@ -101509,7 +101212,7 @@
  },
  {
   "data": {
-   "id": "train-03077",
+   "id": "train-03068",
    "text": "请告诉我星期天早上从裕廊东到樟宜机场最好的 MRT 路线",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -101542,7 +101245,7 @@
  },
  {
   "data": {
-   "id": "train-03078",
+   "id": "train-03069",
    "text": "讲个 joke lah，不要又来一整段 long paragraph",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -101575,40 +101278,7 @@
  },
  {
   "data": {
-   "id": "train-03079",
-   "text": "food delivery refund how long",
-   "lang": "en",
-   "intent": "out_of_scope",
-   "sub_intent": "other_company",
-   "label": "out_of_scope/other_company",
-   "source": "llm",
-   "source_text": "food delivery refund how long",
-   "review": true
-  },
-  "predictions": [
-   {
-    "model_version": "dataset_v1",
-    "result": [
-     {
-      "from_name": "intent",
-      "to_name": "text",
-      "type": "taxonomy",
-      "value": {
-       "taxonomy": [
-        [
-         "out_of_scope",
-         "other_company"
-        ]
-       ]
-      }
-     }
-    ]
-   }
-  ]
- },
- {
-  "data": {
-   "id": "train-03080",
+   "id": "train-03070",
    "text": "帮我弄英文作文，拜托",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -101641,7 +101311,7 @@
  },
  {
   "data": {
-   "id": "train-03081",
+   "id": "train-03071",
    "text": "M1 的 SIM only plan price 多少钱？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -101674,40 +101344,7 @@
  },
  {
   "data": {
-   "id": "train-03082",
-   "text": "Deliveroo order never arrived and refund rejected? ridiculous",
-   "lang": "en",
-   "intent": "out_of_scope",
-   "sub_intent": "other_company",
-   "label": "out_of_scope/other_company",
-   "source": "llm",
-   "source_text": "Deliveroo order never arrived and refund rejected? ridiculous",
-   "review": true
-  },
-  "predictions": [
-   {
-    "model_version": "dataset_v1",
-    "result": [
-     {
-      "from_name": "intent",
-      "to_name": "text",
-      "type": "taxonomy",
-      "value": {
-       "taxonomy": [
-        [
-         "out_of_scope",
-         "other_company"
-        ]
-       ]
-      }
-     }
-    ]
-   }
-  ]
- },
- {
-  "data": {
-   "id": "train-03083",
+   "id": "train-03072",
    "text": "如果适合的话，请建议一个加密货币，用来做很小额的投机投资",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -101740,7 +101377,7 @@
  },
  {
   "data": {
-   "id": "train-03084",
+   "id": "train-03073",
    "text": "我应该 buy S&P500 ETF 吗？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -101773,7 +101410,7 @@
  },
  {
   "data": {
-   "id": "train-03085",
+   "id": "train-03074",
    "text": "singtel plan cancel how",
    "lang": "en",
    "intent": "out_of_scope",
@@ -101806,7 +101443,7 @@
  },
  {
   "data": {
-   "id": "train-03086",
+   "id": "train-03075",
    "text": "请告诉我，我的储蓄应该放进单位信托，还是继续放在定期存款？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -101839,7 +101476,7 @@
  },
  {
   "data": {
-   "id": "train-03087",
+   "id": "train-03076",
    "text": "帮我 translate 这个去 Malay",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -101872,7 +101509,7 @@
  },
  {
   "data": {
-   "id": "train-03088",
+   "id": "train-03077",
    "text": "May I ask how to solve this math problem involving fractions? I am helping my child with homework.",
    "lang": "en",
    "intent": "out_of_scope",
@@ -101905,40 +101542,7 @@
  },
  {
   "data": {
-   "id": "train-03089",
-   "text": "请问 Deliveroo 订单严重延迟时会不会提供退款？",
-   "lang": "mixed",
-   "intent": "out_of_scope",
-   "sub_intent": "other_company",
-   "label": "out_of_scope/other_company",
-   "source": "llm",
-   "source_text": "May I know if Deliveroo offers refunds when an order is severely delayed?",
-   "review": true
-  },
-  "predictions": [
-   {
-    "model_version": "dataset_v1",
-    "result": [
-     {
-      "from_name": "intent",
-      "to_name": "text",
-      "type": "taxonomy",
-      "value": {
-       "taxonomy": [
-        [
-         "out_of_scope",
-         "other_company"
-        ]
-       ]
-      }
-     }
-    ]
-   }
-  ]
- },
- {
-  "data": {
-   "id": "train-03090",
+   "id": "train-03078",
    "text": "直接 recommend 一个 diversified fund lah，我不需要再听 whole lecture",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -101971,40 +101575,7 @@
  },
  {
   "data": {
-   "id": "train-03091",
-   "text": "foodpanda rider marked delivered but no food. why refund pending",
-   "lang": "en",
-   "intent": "out_of_scope",
-   "sub_intent": "other_company",
-   "label": "out_of_scope/other_company",
-   "source": "llm",
-   "source_text": "foodpanda rider marked delivered but no food. why refund pending",
-   "review": true
-  },
-  "predictions": [
-   {
-    "model_version": "dataset_v1",
-    "result": [
-     {
-      "from_name": "intent",
-      "to_name": "text",
-      "type": "taxonomy",
-      "value": {
-       "taxonomy": [
-        [
-         "out_of_scope",
-         "other_company"
-        ]
-       ]
-      }
-     }
-    ]
-   }
-  ]
- },
- {
-  "data": {
-   "id": "train-03092",
+   "id": "train-03079",
    "text": "告诉我一个可以用我 PayNow 的钱买的低风险基金，别再绕圈子了",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -102037,7 +101608,7 @@
  },
  {
   "data": {
-   "id": "train-03093",
+   "id": "train-03080",
    "text": "可以直接 summarize 一下 news headlines 吗？我没有 time",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -102070,7 +101641,7 @@
  },
  {
   "data": {
-   "id": "train-03094",
+   "id": "train-03081",
    "text": "hello, may i ask what documents are needed to sign up for a Simba mobile plan",
    "lang": "en",
    "intent": "out_of_scope",
@@ -102103,7 +101674,7 @@
  },
  {
   "data": {
-   "id": "train-03095",
+   "id": "train-03082",
    "text": "我已经很不耐烦了，哪个单位信托比较适合新手，直接给我名字",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -102136,7 +101707,7 @@
  },
  {
   "data": {
-   "id": "train-03096",
+   "id": "train-03083",
    "text": "这个月 Grab premium charge 高了，完全没有 notice。why ah？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -102169,7 +101740,7 @@
  },
  {
   "data": {
-   "id": "train-03097",
+   "id": "train-03084",
    "text": "maybank card annual fee waive",
    "lang": "en",
    "intent": "out_of_scope",
@@ -102202,7 +101773,7 @@
  },
  {
   "data": {
-   "id": "train-03098",
+   "id": "train-03085",
    "text": "今天日落是几点",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -102235,40 +101806,7 @@
  },
  {
   "data": {
-   "id": "train-03099",
-   "text": "我想 enquire 关于 GrabFood order 送到冷掉的 refund process",
-   "lang": "mixed",
-   "intent": "out_of_scope",
-   "sub_intent": "other_company",
-   "label": "out_of_scope/other_company",
-   "source": "llm",
-   "source_text": "i would like to enquire about the refund process for a GrabFood order that arrived cold",
-   "review": true
-  },
-  "predictions": [
-   {
-    "model_version": "dataset_v1",
-    "result": [
-     {
-      "from_name": "intent",
-      "to_name": "text",
-      "type": "taxonomy",
-      "value": {
-       "taxonomy": [
-        [
-         "out_of_scope",
-         "other_company"
-        ]
-       ]
-      }
-     }
-    ]
-   }
-  ]
- },
- {
-  "data": {
-   "id": "train-03100",
+   "id": "train-03086",
    "text": "I would appreciate clarification on DBS credit card foreign transaction fees.",
    "lang": "en",
    "intent": "out_of_scope",
@@ -102301,7 +101839,7 @@
  },
  {
   "data": {
-   "id": "train-03101",
+   "id": "train-03087",
    "text": "机器人，你今天怎么样？老实说",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -102334,7 +101872,7 @@
  },
  {
   "data": {
-   "id": "train-03102",
+   "id": "train-03088",
    "text": "weather 有什么 news 吗？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -102367,7 +101905,7 @@
  },
  {
   "data": {
-   "id": "train-03103",
+   "id": "train-03089",
    "text": "which investment is best for my $10k savings? no appointment pls",
    "lang": "en",
    "intent": "out_of_scope",
@@ -102400,7 +101938,7 @@
  },
  {
   "data": {
-   "id": "train-03104",
+   "id": "train-03090",
    "text": "Starhub 一直向我收我已经取消的附加服务的钱。为什么",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -102433,7 +101971,7 @@
  },
  {
   "data": {
-   "id": "train-03105",
+   "id": "train-03091",
    "text": "我的 grammar homework 弄到我快疯了，help",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -102466,7 +102004,7 @@
  },
  {
   "data": {
-   "id": "train-03106",
+   "id": "train-03092",
    "text": "Hi, I hope you are well. The MRT was rather crowded this morning, so I am taking a short break now.",
    "lang": "en",
    "intent": "out_of_scope",
@@ -102499,7 +102037,7 @@
  },
  {
   "data": {
-   "id": "train-03107",
+   "id": "train-03093",
    "text": "我应该买什么股票？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -102532,7 +102070,7 @@
  },
  {
   "data": {
-   "id": "train-03108",
+   "id": "train-03094",
    "text": "Hi，希望你不介意我问，你 enjoy 在 bank 工作吗？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -102565,7 +102103,7 @@
  },
  {
   "data": {
-   "id": "train-03109",
+   "id": "train-03095",
    "text": "recipe for mee goreng now please im hungry",
    "lang": "en",
    "intent": "out_of_scope",
@@ -102598,7 +102136,7 @@
  },
  {
   "data": {
-   "id": "train-03110",
+   "id": "train-03096",
    "text": "今天新加坡的头条新闻",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -102631,7 +102169,7 @@
  },
  {
   "data": {
-   "id": "train-03111",
+   "id": "train-03097",
    "text": "Circles Life plan 要 cancel 怎样弄？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -102664,7 +102202,7 @@
  },
  {
   "data": {
-   "id": "train-03112",
+   "id": "train-03098",
    "text": "is now good to invest",
    "lang": "en",
    "intent": "out_of_scope",
@@ -102697,7 +102235,7 @@
  },
  {
   "data": {
-   "id": "train-03113",
+   "id": "train-03099",
    "text": "请唱一首歌",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -102730,7 +102268,7 @@
  },
  {
   "data": {
-   "id": "train-03114",
+   "id": "train-03100",
    "text": "Good evening。今天雨下得很大，希望你那边是 dry and comfortable 的",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -102763,7 +102301,7 @@
  },
  {
   "data": {
-   "id": "train-03115",
+   "id": "train-03101",
    "text": "Good afternoon. I saw on the news that it may rain later. Do you think the MRT will be crowded?",
    "lang": "en",
    "intent": "out_of_scope",
@@ -102796,7 +102334,7 @@
  },
  {
   "data": {
-   "id": "train-03116",
+   "id": "train-03102",
    "text": "请给我一个在家做咖椰吐司的简单食谱",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -102829,7 +102367,7 @@
  },
  {
   "data": {
-   "id": "train-03117",
+   "id": "train-03103",
    "text": "我想听你的 advice，每个月 regular savings 应该 buy 哪个 investment",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -102862,7 +102400,7 @@
  },
  {
   "data": {
-   "id": "train-03118",
+   "id": "train-03104",
    "text": "why every answer must be so long one",
    "lang": "en",
    "intent": "out_of_scope",
@@ -102895,7 +102433,7 @@
  },
  {
   "data": {
-   "id": "train-03119",
+   "id": "train-03105",
    "text": "你好，希望你不会觉得奇怪，但你在新加坡有没有最喜欢、可以推荐周末散步的地方？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -102928,7 +102466,7 @@
  },
  {
   "data": {
-   "id": "train-03120",
+   "id": "train-03106",
    "text": "Maybank credit card 的 late fee reversed 了没有？我需要 answer",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -102961,7 +102499,7 @@
  },
  {
   "data": {
-   "id": "train-03121",
+   "id": "train-03107",
    "text": "help me with math homework pls",
    "lang": "en",
    "intent": "out_of_scope",
@@ -102994,40 +102532,7 @@
  },
  {
   "data": {
-   "id": "train-03122",
-   "text": "Jetstar 退款要多久",
-   "lang": "mixed",
-   "intent": "out_of_scope",
-   "sub_intent": "other_company",
-   "label": "out_of_scope/other_company",
-   "source": "llm",
-   "source_text": "jetstar refund time how long",
-   "review": true
-  },
-  "predictions": [
-   {
-    "model_version": "dataset_v1",
-    "result": [
-     {
-      "from_name": "intent",
-      "to_name": "text",
-      "type": "taxonomy",
-      "value": {
-       "taxonomy": [
-        [
-         "out_of_scope",
-         "other_company"
-        ]
-       ]
-      }
-     }
-    ]
-   }
-  ]
- },
- {
-  "data": {
-   "id": "train-03123",
+   "id": "train-03108",
    "text": "对 beginners 来说，最好的 unit trust 是哪个？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -103060,7 +102565,7 @@
  },
  {
   "data": {
-   "id": "train-03124",
+   "id": "train-03109",
    "text": "why u keep asking my goals? just recommend one investment can or not",
    "lang": "en",
    "intent": "out_of_scope",
@@ -103093,7 +102598,7 @@
  },
  {
   "data": {
-   "id": "train-03125",
+   "id": "train-03110",
    "text": "你可以推荐一个基金吗",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -103126,7 +102631,7 @@
  },
  {
   "data": {
-   "id": "train-03126",
+   "id": "train-03111",
    "text": "Standard Chartered credit card 的 foreign fee 在网上 purchase 为什么这么高？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -103159,7 +102664,7 @@
  },
  {
   "data": {
-   "id": "train-03127",
+   "id": "train-03112",
    "text": "which bus goes to orchard road fastest im rushing",
    "lang": "en",
    "intent": "out_of_scope",
@@ -103192,7 +102697,7 @@
  },
  {
   "data": {
-   "id": "train-03128",
+   "id": "train-03113",
    "text": "请问可以告诉我 Deliveroo 订阅的取消费用详情吗？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -103225,7 +102730,7 @@
  },
  {
   "data": {
-   "id": "train-03129",
+   "id": "train-03114",
    "text": "Good morning，我只是想知道你比较喜欢 haze season 还是 rainy season",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -103258,7 +102763,7 @@
  },
  {
   "data": {
-   "id": "train-03130",
+   "id": "train-03115",
    "text": "good morning bot",
    "lang": "en",
    "intent": "out_of_scope",
@@ -103291,7 +102796,7 @@
  },
  {
   "data": {
-   "id": "train-03131",
+   "id": "train-03116",
    "text": "为什么 Deliveroo 自取订单也收服务费？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -103324,7 +102829,7 @@
  },
  {
   "data": {
-   "id": "train-03132",
+   "id": "train-03117",
    "text": "Good morning，希望你今天过得 pleasant，你好吗？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -103357,7 +102862,7 @@
  },
  {
   "data": {
-   "id": "train-03133",
+   "id": "train-03118",
    "text": "hi can u tell me a quick recipe for chicken rice please",
    "lang": "en",
    "intent": "out_of_scope",
@@ -103390,7 +102895,7 @@
  },
  {
   "data": {
-   "id": "train-03134",
+   "id": "train-03119",
    "text": "现在好无聊",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -103423,7 +102928,7 @@
  },
  {
   "data": {
-   "id": "train-03135",
+   "id": "train-03120",
    "text": "可以用 CPF OA invest in fund 吗？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -103456,7 +102961,7 @@
  },
  {
   "data": {
-   "id": "train-03136",
+   "id": "train-03121",
    "text": "hello bot hows your day going",
    "lang": "en",
    "intent": "out_of_scope",
@@ -103489,7 +102994,7 @@
  },
  {
   "data": {
-   "id": "train-03137",
+   "id": "train-03122",
    "text": "我应该买哪个交易所买卖基金？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -103522,7 +103027,7 @@
  },
  {
   "data": {
-   "id": "train-03138",
+   "id": "train-03123",
    "text": "citi card 的 cashback policy 是怎样？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -103555,7 +103060,7 @@
  },
  {
   "data": {
-   "id": "train-03139",
+   "id": "train-03124",
    "text": "Excuse me, could you tell me a short joke? I am waiting for a friend and feeling a little bored.",
    "lang": "en",
    "intent": "out_of_scope",
@@ -103588,7 +103093,7 @@
  },
  {
   "data": {
-   "id": "train-03140",
+   "id": "train-03125",
    "text": "有什么加密货币推荐吗？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -103621,7 +103126,7 @@
  },
  {
   "data": {
-   "id": "train-03141",
+   "id": "train-03126",
    "text": "可以请你帮我一下吗？有一题 Primary 5 science homework 关于 water cycle 的。",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -103654,7 +103159,7 @@
  },
  {
   "data": {
-   "id": "train-03142",
+   "id": "train-03127",
    "text": "is there any major news today or just boring stuff",
    "lang": "en",
    "intent": "out_of_scope",
@@ -103687,7 +103192,7 @@
  },
  {
   "data": {
-   "id": "train-03143",
+   "id": "train-03128",
    "text": "请问哪个基金适合风险承受能力低的退休人士？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -103720,7 +103225,7 @@
  },
  {
   "data": {
-   "id": "train-03144",
+   "id": "train-03129",
    "text": "又 rain 了 sia",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -103753,7 +103258,7 @@
  },
  {
   "data": {
-   "id": "train-03145",
+   "id": "train-03130",
    "text": "what's your name",
    "lang": "en",
    "intent": "out_of_scope",
@@ -103786,7 +103291,7 @@
  },
  {
   "data": {
-   "id": "train-03146",
+   "id": "train-03131",
    "text": "请问 M1 住家宽频计划提前终止的费用是多少？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -103819,7 +103324,7 @@
  },
  {
   "data": {
-   "id": "train-03147",
+   "id": "train-03132",
    "text": "我的 savings 最好的 investment 是什么？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -103852,7 +103357,7 @@
  },
  {
   "data": {
-   "id": "train-03148",
+   "id": "train-03133",
    "text": "is bitcoin good buy",
    "lang": "en",
    "intent": "out_of_scope",
@@ -103885,7 +103390,7 @@
  },
  {
   "data": {
-   "id": "train-03149",
+   "id": "train-03134",
    "text": "嗨，希望你不介意我打个招呼。今天天气太热了，我待在家里不出门。",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -103918,7 +103423,7 @@
  },
  {
   "data": {
-   "id": "train-03150",
+   "id": "train-03135",
    "text": "airline 的 name change fee 是多少？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -103951,7 +103456,7 @@
  },
  {
   "data": {
-   "id": "train-03151",
+   "id": "train-03136",
    "text": "why u so stone one answer me properly",
    "lang": "en",
    "intent": "out_of_scope",
@@ -103984,7 +103489,7 @@
  },
  {
   "data": {
-   "id": "train-03152",
+   "id": "train-03137",
    "text": "SQ 行李费多少钱？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -104017,7 +103522,7 @@
  },
  {
   "data": {
-   "id": "train-03153",
+   "id": "train-03138",
    "text": "我想问一下 Maybank credit card 的 late payment charges。",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -104050,7 +103555,7 @@
  },
  {
   "data": {
-   "id": "train-03154",
+   "id": "train-03139",
    "text": "Scoot says baggage fee applies but I already paid at booking. explain",
    "lang": "en",
    "intent": "out_of_scope",
@@ -104083,7 +103588,7 @@
  },
  {
   "data": {
-   "id": "train-03155",
+   "id": "train-03140",
    "text": "请问现在投资加密货币对我来说明智吗？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -104116,7 +103621,7 @@
  },
  {
   "data": {
-   "id": "train-03156",
+   "id": "train-03141",
    "text": "请问你是不是新的 chatbot？我之前没有和你讲过话，只是好奇。",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -104149,7 +103654,7 @@
  },
  {
   "data": {
-   "id": "train-03157",
+   "id": "train-03142",
    "text": "I want personal financial advice not another webpage link, which fund should i buy",
    "lang": "en",
    "intent": "out_of_scope",
@@ -104182,7 +103687,7 @@
  },
  {
   "data": {
-   "id": "train-03158",
+   "id": "train-03143",
    "text": "你是真人吗？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -104215,7 +103720,7 @@
  },
  {
   "data": {
-   "id": "train-03159",
+   "id": "train-03144",
    "text": "Hello，希望这问题不会很 silly，不过你整天 answer messages 会不会累？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -104248,7 +103753,7 @@
  },
  {
   "data": {
-   "id": "train-03160",
+   "id": "train-03145",
    "text": "tell me something funny lah this weather is killing me",
    "lang": "en",
    "intent": "out_of_scope",
@@ -104281,7 +103786,7 @@
  },
  {
   "data": {
-   "id": "train-03161",
+   "id": "train-03146",
    "text": "请问你喜欢笑话吗？可以分享一个轻松的吗？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -104314,7 +103819,7 @@
  },
  {
   "data": {
-   "id": "train-03162",
+   "id": "train-03147",
    "text": "你有没有 feelings 的？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -104347,73 +103852,7 @@
  },
  {
   "data": {
-   "id": "train-03163",
-   "text": "May I ask how long GrabFood usually takes to process a refund to a credit card?",
-   "lang": "en",
-   "intent": "out_of_scope",
-   "sub_intent": "other_company",
-   "label": "out_of_scope/other_company",
-   "source": "llm",
-   "source_text": "May I ask how long GrabFood usually takes to process a refund to a credit card?",
-   "review": true
-  },
-  "predictions": [
-   {
-    "model_version": "dataset_v1",
-    "result": [
-     {
-      "from_name": "intent",
-      "to_name": "text",
-      "type": "taxonomy",
-      "value": {
-       "taxonomy": [
-        [
-         "out_of_scope",
-         "other_company"
-        ]
-       ]
-      }
-     }
-    ]
-   }
-  ]
- },
- {
-  "data": {
-   "id": "train-03164",
-   "text": "Scoot 取消航班的退款要等多久？回答我。",
-   "lang": "mixed",
-   "intent": "out_of_scope",
-   "sub_intent": "other_company",
-   "label": "out_of_scope/other_company",
-   "source": "llm",
-   "source_text": "Scoot refund for cancelled flight taking how long? answer me",
-   "review": true
-  },
-  "predictions": [
-   {
-    "model_version": "dataset_v1",
-    "result": [
-     {
-      "from_name": "intent",
-      "to_name": "text",
-      "type": "taxonomy",
-      "value": {
-       "taxonomy": [
-        [
-         "out_of_scope",
-         "other_company"
-        ]
-       ]
-      }
-     }
-    ]
-   }
-  ]
- },
- {
-  "data": {
-   "id": "train-03165",
+   "id": "train-03148",
    "text": "请问你觉得哪只 stock 或 ETF 适合 long-term growth？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -104446,7 +103885,7 @@
  },
  {
   "data": {
-   "id": "train-03166",
+   "id": "train-03149",
    "text": "whats recipe for laksa",
    "lang": "en",
    "intent": "out_of_scope",
@@ -104479,7 +103918,7 @@
  },
  {
   "data": {
-   "id": "train-03167",
+   "id": "train-03150",
    "text": "你最喜欢什么颜色？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -104512,7 +103951,7 @@
  },
  {
   "data": {
-   "id": "train-03168",
+   "id": "train-03151",
    "text": "讲一个 joke 给我听",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -104545,7 +103984,7 @@
  },
  {
   "data": {
-   "id": "train-03169",
+   "id": "train-03152",
    "text": "why your replies like robot leh no feeling one",
    "lang": "en",
    "intent": "out_of_scope",
@@ -104578,7 +104017,7 @@
  },
  {
   "data": {
-   "id": "train-03170",
+   "id": "train-03153",
    "text": "今晚煮什么啊？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -104611,7 +104050,7 @@
  },
  {
   "data": {
-   "id": "train-03171",
+   "id": "train-03154",
    "text": "为什么这样 quiet？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -104644,7 +104083,7 @@
  },
  {
   "data": {
-   "id": "train-03172",
+   "id": "train-03155",
    "text": "how make kaya toast",
    "lang": "en",
    "intent": "out_of_scope",
@@ -104677,40 +104116,7 @@
  },
  {
   "data": {
-   "id": "train-03173",
-   "text": "Jetstar 选座费用多少？我没选座位。退款。",
-   "lang": "mixed",
-   "intent": "out_of_scope",
-   "sub_intent": "other_company",
-   "label": "out_of_scope/other_company",
-   "source": "llm",
-   "source_text": "Jetstar fee for seat selection? I didn't choose seat. refund",
-   "review": true
-  },
-  "predictions": [
-   {
-    "model_version": "dataset_v1",
-    "result": [
-     {
-      "from_name": "intent",
-      "to_name": "text",
-      "type": "taxonomy",
-      "value": {
-       "taxonomy": [
-        [
-         "out_of_scope",
-         "other_company"
-        ]
-       ]
-      }
-     }
-    ]
-   }
-  ]
- },
- {
-  "data": {
-   "id": "train-03174",
+   "id": "train-03156",
    "text": "这种天气让我想整天 stay in bed。",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -104743,7 +104149,7 @@
  },
  {
   "data": {
-   "id": "train-03175",
+   "id": "train-03157",
    "text": "tell me where to put my savings, stocks funds or crypto, hurry up",
    "lang": "en",
    "intent": "out_of_scope",
@@ -104776,7 +104182,7 @@
  },
  {
   "data": {
-   "id": "train-03176",
+   "id": "train-03158",
    "text": "请问从实龙岗 MRT 站到最近的综合诊疗所怎么走？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -104809,7 +104215,7 @@
  },
  {
   "data": {
-   "id": "train-03177",
+   "id": "train-03159",
    "text": "我应该把钱 put 进 stocks 吗？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -104842,7 +104248,7 @@
  },
  {
   "data": {
-   "id": "train-03178",
+   "id": "train-03160",
    "text": "is it going to rain again later or what",
    "lang": "en",
    "intent": "out_of_scope",
@@ -104875,7 +104281,7 @@
  },
  {
   "data": {
-   "id": "train-03179",
+   "id": "train-03161",
    "text": "去樟宜机场怎么走？快点。",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -104908,7 +104314,7 @@
  },
  {
   "data": {
-   "id": "train-03180",
+   "id": "train-03162",
    "text": "可以请你 advise 一下，regular savings 应该考虑哪个 mutual fund 吗？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -104941,7 +104347,7 @@
  },
  {
   "data": {
-   "id": "train-03181",
+   "id": "train-03163",
    "text": "please advise which stock to buy for long term growth thank you",
    "lang": "en",
    "intent": "out_of_scope",
@@ -104974,7 +104380,7 @@
  },
  {
   "data": {
-   "id": "train-03182",
+   "id": "train-03164",
    "text": "请提供新加坡明天天气预报的最新消息。",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -105007,7 +104413,7 @@
  },
  {
   "data": {
-   "id": "train-03183",
+   "id": "train-03165",
    "text": "今天有什么 news？不要给我 long story leh。",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -105040,7 +104446,7 @@
  },
  {
   "data": {
-   "id": "train-03184",
+   "id": "train-03166",
    "text": "why is this crossword so hard i just need one word",
    "lang": "en",
    "intent": "out_of_scope",
@@ -105073,7 +104479,7 @@
  },
  {
   "data": {
-   "id": "train-03185",
+   "id": "train-03167",
    "text": "MRT 又坏了吗？快点告诉我，我不能迟到。",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -105106,7 +104512,7 @@
  },
  {
   "data": {
-   "id": "train-03186",
+   "id": "train-03168",
    "text": "starhub contract 的 early termination fee 是多少？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -105139,7 +104545,7 @@
  },
  {
   "data": {
-   "id": "train-03187",
+   "id": "train-03169",
    "text": "Sorry to bother you, but could you share a fun fact about Singapore? I am just passing the time.",
    "lang": "en",
    "intent": "out_of_scope",
@@ -105172,7 +104578,7 @@
  },
  {
   "data": {
-   "id": "train-03188",
+   "id": "train-03170",
    "text": "不好意思突然发消息，我只是想打个招呼，祝你接下来一周顺利。",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -105205,7 +104611,7 @@
  },
  {
   "data": {
-   "id": "train-03189",
+   "id": "train-03171",
    "text": "如果你可以 guide 我选一个 investment 给我的孩子 education fund，我会很感激。",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -105238,7 +104644,7 @@
  },
  {
   "data": {
-   "id": "train-03190",
+   "id": "train-03172",
    "text": "are you a robot",
    "lang": "en",
    "intent": "out_of_scope",
@@ -105271,7 +104677,7 @@
  },
  {
   "data": {
-   "id": "train-03191",
+   "id": "train-03173",
    "text": "你好，你今天怎么样？希望你一切都好。",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -105304,7 +104710,7 @@
  },
  {
   "data": {
-   "id": "train-03192",
+   "id": "train-03174",
    "text": "现在可以买哪只 SGX stock？不要再 send 我另一个 risk questionnaire。",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -105337,7 +104743,7 @@
  },
  {
   "data": {
-   "id": "train-03193",
+   "id": "train-03175",
    "text": "Pardon me for asking, but are you a human or a chatbot? I am simply curious.",
    "lang": "en",
    "intent": "out_of_scope",
@@ -105370,7 +104776,7 @@
  },
  {
   "data": {
-   "id": "train-03194",
+   "id": "train-03176",
    "text": "请问 UOB 信用卡支持海外消费分期付款吗？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -105403,7 +104809,7 @@
  },
  {
   "data": {
-   "id": "train-03195",
+   "id": "train-03177",
    "text": "你会不会 laugh 的？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -105436,40 +104842,7 @@
  },
  {
   "data": {
-   "id": "train-03196",
-   "text": "foodpanda refund pending why",
-   "lang": "en",
-   "intent": "out_of_scope",
-   "sub_intent": "other_company",
-   "label": "out_of_scope/other_company",
-   "source": "llm",
-   "source_text": "foodpanda refund pending why",
-   "review": true
-  },
-  "predictions": [
-   {
-    "model_version": "dataset_v1",
-    "result": [
-     {
-      "from_name": "intent",
-      "to_name": "text",
-      "type": "taxonomy",
-      "value": {
-       "taxonomy": [
-        [
-         "out_of_scope",
-         "other_company"
-        ]
-       ]
-      }
-     }
-    ]
-   }
-  ]
- },
- {
-  "data": {
-   "id": "train-03197",
+   "id": "train-03178",
    "text": "Scoot 随身行李费多少？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -105502,7 +104875,7 @@
  },
  {
   "data": {
-   "id": "train-03198",
+   "id": "train-03179",
    "text": "city hall mrt 哪个 exit 去 raffles city？快点 leh。",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -105535,7 +104908,7 @@
  },
  {
   "data": {
-   "id": "train-03199",
+   "id": "train-03180",
    "text": "Can you advise me on buying Bitcoin with a small portion of my savings?",
    "lang": "en",
    "intent": "out_of_scope",
@@ -105568,7 +104941,7 @@
  },
  {
   "data": {
-   "id": "train-03200",
+   "id": "train-03181",
    "text": "早上好。不好意思突然问，你知道有什么关于下雨的好笑笑话吗？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -105601,7 +104974,7 @@
  },
  {
   "data": {
-   "id": "train-03201",
+   "id": "train-03182",
    "text": "为什么没有 clear recommendation？我要的是给 SGD savings 的 fund，不是 lecture。",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -105634,7 +105007,7 @@
  },
  {
   "data": {
-   "id": "train-03202",
+   "id": "train-03183",
    "text": "I would like to know the latest news about the haze situation in Singapore this week.",
    "lang": "en",
    "intent": "out_of_scope",
@@ -105667,7 +105040,7 @@
  },
  {
   "data": {
-   "id": "train-03203",
+   "id": "train-03184",
    "text": "请问 StarHub 允许现有客户免罚金降级手机计划吗？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -105700,7 +105073,7 @@
  },
  {
   "data": {
-   "id": "train-03204",
+   "id": "train-03185",
    "text": "可以直接讲买哪一个 crypto 还是不要买吗？我赶时间 leh。",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -105733,7 +105106,7 @@
  },
  {
   "data": {
-   "id": "train-03205",
+   "id": "train-03186",
    "text": "Kindly recommend a diversified fund for a first-time investor with a modest budget.",
    "lang": "en",
    "intent": "out_of_scope",
@@ -105766,7 +105139,7 @@
  },
  {
   "data": {
-   "id": "train-03206",
+   "id": "train-03187",
    "text": "你好。请问你听得懂新加坡式英语，还是只懂正式英语？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -105799,7 +105172,7 @@
  },
  {
   "data": {
-   "id": "train-03207",
+   "id": "train-03188",
    "text": "HSBC card 的 annual fee 有没有 waive？我不要再多等一个星期。",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -105832,7 +105205,7 @@
  },
  {
   "data": {
-   "id": "train-03208",
+   "id": "train-03189",
    "text": "I would like to ask whether StarHub's mobile plan includes free caller ID.",
    "lang": "en",
    "intent": "out_of_scope",
@@ -105865,40 +105238,7 @@
  },
  {
   "data": {
-   "id": "train-03209",
-   "text": "Grab 退款还没到账。",
-   "lang": "zh",
-   "intent": "out_of_scope",
-   "sub_intent": "other_company",
-   "label": "out_of_scope/other_company",
-   "source": "llm",
-   "source_text": "grab refund still not in",
-   "review": true
-  },
-  "predictions": [
-   {
-    "model_version": "dataset_v1",
-    "result": [
-     {
-      "from_name": "intent",
-      "to_name": "text",
-      "type": "taxonomy",
-      "value": {
-       "taxonomy": [
-        [
-         "out_of_scope",
-         "other_company"
-        ]
-       ]
-      }
-     }
-    ]
-   }
-  ]
- },
- {
-  "data": {
-   "id": "train-03210",
+   "id": "train-03190",
    "text": "最新的 covid news 是什么？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -105931,7 +105271,7 @@
  },
  {
   "data": {
-   "id": "train-03211",
+   "id": "train-03191",
    "text": "I asked which unit trust to buy, not for a whole financial planning appointment",
    "lang": "en",
    "intent": "out_of_scope",
@@ -105964,7 +105304,7 @@
  },
  {
   "data": {
-   "id": "train-03212",
+   "id": "train-03192",
    "text": "今天MRT很挤",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -105997,7 +105337,7 @@
  },
  {
   "data": {
-   "id": "train-03213",
+   "id": "train-03193",
    "text": "Circles.Life 的 plan 写 unlimited，但过了 20GB 就 cut speed？explain 一下",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -106030,7 +105370,7 @@
  },
  {
   "data": {
-   "id": "train-03214",
+   "id": "train-03194",
    "text": "should i buy tesla shares",
    "lang": "en",
    "intent": "out_of_scope",
@@ -106063,7 +105403,7 @@
  },
  {
   "data": {
-   "id": "train-03215",
+   "id": "train-03195",
    "text": "我想找一个正式的叻沙食谱，你可以推荐一个步骤清楚的吗？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -106096,7 +105436,7 @@
  },
  {
   "data": {
-   "id": "train-03216",
+   "id": "train-03196",
    "text": "solve 这个 algebra qn",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -106129,7 +105469,7 @@
  },
  {
   "data": {
-   "id": "train-03217",
+   "id": "train-03197",
    "text": "Excuse me, I hope this is not too forward, but you seem very patient. Do you enjoy helping people?",
    "lang": "en",
    "intent": "out_of_scope",
@@ -106162,7 +105502,7 @@
  },
  {
   "data": {
-   "id": "train-03218",
+   "id": "train-03198",
    "text": "你会讲新加坡式英语，还是只会正式英文？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -106195,7 +105535,7 @@
  },
  {
   "data": {
-   "id": "train-03219",
+   "id": "train-03199",
    "text": "有什么 hawker food recommendations？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -106228,7 +105568,7 @@
  },
  {
   "data": {
-   "id": "train-03220",
+   "id": "train-03200",
    "text": "stop saying depends on my profile. tell me one stock or fund to buy",
    "lang": "en",
    "intent": "out_of_scope",
@@ -106261,7 +105601,7 @@
  },
  {
   "data": {
-   "id": "train-03221",
+   "id": "train-03201",
    "text": "你好你好你好",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -106294,7 +105634,7 @@
  },
  {
   "data": {
-   "id": "train-03222",
+   "id": "train-03202",
    "text": "Please advise Scoot 的 change fees。",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -106327,7 +105667,7 @@
  },
  {
   "data": {
-   "id": "train-03223",
+   "id": "train-03203",
    "text": "good afternoon, may i ask how to walk from Bugis MRT to Haji Lane",
    "lang": "en",
    "intent": "out_of_scope",
@@ -106360,7 +105700,7 @@
  },
  {
   "data": {
-   "id": "train-03224",
+   "id": "train-03204",
    "text": "鸡饭怎么煮？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -106393,7 +105733,7 @@
  },
  {
   "data": {
-   "id": "train-03225",
+   "id": "train-03205",
    "text": "M1 bill 有一个 extra 5G add-on 我从来没要过。现在 remove 掉",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -106426,7 +105766,7 @@
  },
  {
   "data": {
-   "id": "train-03226",
+   "id": "train-03206",
    "text": "why no stock recommendation? I want to buy something this week",
    "lang": "en",
    "intent": "out_of_scope",
@@ -106459,7 +105799,7 @@
  },
  {
   "data": {
-   "id": "train-03227",
+   "id": "train-03207",
    "text": "不好意思，请问你讲哪种语言最舒服？我只是随便聊聊。",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -106492,7 +105832,7 @@
  },
  {
   "data": {
-   "id": "train-03228",
+   "id": "train-03208",
    "text": "Please recommend 一个 fund，可能适合 moderate risk appetite 和五年 horizon 的人。",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -106525,7 +105865,7 @@
  },
  {
   "data": {
-   "id": "train-03229",
+   "id": "train-03209",
    "text": "you take so long to reply i could take MRT to town and back",
    "lang": "en",
    "intent": "out_of_scope",
@@ -106558,7 +105898,7 @@
  },
  {
   "data": {
-   "id": "train-03230",
+   "id": "train-03210",
    "text": "Simba漫游附加包多少钱？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -106591,7 +105931,7 @@
  },
  {
   "data": {
-   "id": "train-03231",
+   "id": "train-03211",
    "text": "Please clarify OCBC 换 lost credit card 有没有 charge fee。",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -106624,7 +105964,7 @@
  },
  {
   "data": {
-   "id": "train-03232",
+   "id": "train-03212",
    "text": "hello?? how are you even working today",
    "lang": "en",
    "intent": "out_of_scope",
@@ -106657,7 +105997,7 @@
  },
  {
   "data": {
-   "id": "train-03233",
+   "id": "train-03213",
    "text": "哪个基金比较安全，适合退休？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -106690,7 +106030,7 @@
  },
  {
   "data": {
-   "id": "train-03234",
+   "id": "train-03214",
    "text": "希望你可以 recommend 一个 low-risk fund，适合 conservative investor。",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -106723,7 +106063,7 @@
  },
  {
   "data": {
-   "id": "train-03235",
+   "id": "train-03215",
    "text": "Good afternoon. I am just making small talk while waiting for my colleague. How is your day so far?",
    "lang": "en",
    "intent": "out_of_scope",
@@ -106756,7 +106096,7 @@
  },
  {
   "data": {
-   "id": "train-03236",
+   "id": "train-03216",
    "text": "你能推荐一个适合我八年内买房储蓄目标的投资计划吗？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -106789,7 +106129,7 @@
  },
  {
   "data": {
-   "id": "train-03237",
+   "id": "train-03217",
    "text": "我想要 request 一个 chilli crab recipe，适合小家庭 gathering。",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -106822,7 +106162,7 @@
  },
  {
   "data": {
-   "id": "train-03238",
+   "id": "train-03218",
    "text": "Singtel contract ended but still billing me full price. stop it",
    "lang": "en",
    "intent": "out_of_scope",
@@ -106855,7 +106195,7 @@
  },
  {
   "data": {
-   "id": "train-03239",
+   "id": "train-03219",
    "text": "为什么我在哪里都找不到这道科学题的答案？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -106888,7 +106228,7 @@
  },
  {
   "data": {
-   "id": "train-03240",
+   "id": "train-03220",
    "text": "Please let me know Scoot 的 booked tickets 可不可以 name change，fee 是多少。",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -106921,7 +106261,7 @@
  },
  {
   "data": {
-   "id": "train-03241",
+   "id": "train-03221",
    "text": "say something funny",
    "lang": "en",
    "intent": "out_of_scope",
@@ -106954,7 +106294,7 @@
  },
  {
   "data": {
-   "id": "train-03242",
+   "id": "train-03222",
    "text": "请问从莱佛士坊MRT站去最靠近的小贩中心怎么走？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -106987,7 +106327,7 @@
  },
  {
   "data": {
-   "id": "train-03243",
+   "id": "train-03223",
    "text": "今天 weather 蛮 warm 的，不是吗？希望 you stay cool",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -107020,7 +106360,7 @@
  },
  {
   "data": {
-   "id": "train-03244",
+   "id": "train-03224",
    "text": "what time does the news start tonight and dont say check tv guide",
    "lang": "en",
    "intent": "out_of_scope",
@@ -107053,7 +106393,7 @@
  },
  {
   "data": {
-   "id": "train-03245",
+   "id": "train-03225",
    "text": "哪里可以停车？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -107086,7 +106426,7 @@
  },
  {
   "data": {
-   "id": "train-03246",
+   "id": "train-03226",
    "text": "可以 explain 这个 algebra thing 不要用那些 jargon 吗",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -107119,7 +106459,7 @@
  },
  {
   "data": {
-   "id": "train-03247",
+   "id": "train-03227",
    "text": "stop asking me to repeat myself can or not",
    "lang": "en",
    "intent": "out_of_scope",
@@ -107152,7 +106492,7 @@
  },
  {
   "data": {
-   "id": "train-03248",
+   "id": "train-03228",
    "text": "很烦，为什么你一直说一样的话？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -107185,7 +106525,7 @@
  },
  {
   "data": {
-   "id": "train-03249",
+   "id": "train-03229",
    "text": "你喜欢 laksa 吗",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -107218,7 +106558,7 @@
  },
  {
   "data": {
-   "id": "train-03250",
+   "id": "train-03230",
    "text": "my cat just yawned",
    "lang": "en",
    "intent": "out_of_scope",
@@ -107251,7 +106591,7 @@
  },
  {
   "data": {
-   "id": "train-03251",
+   "id": "train-03231",
    "text": "我想问个人理财建议，我的花红应该投资股票还是基金？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -107284,7 +106624,7 @@
  },
  {
   "data": {
-   "id": "train-03252",
+   "id": "train-03232",
    "text": "为什么这个 recipe 这么 complicated？直接 tell 我怎样 cook rice 就好",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -107317,7 +106657,7 @@
  },
  {
   "data": {
-   "id": "train-03253",
+   "id": "train-03233",
    "text": "Could you advise on a suitable crypto allocation for a cautious investor, if any?",
    "lang": "en",
    "intent": "out_of_scope",
@@ -107350,7 +106690,7 @@
  },
  {
   "data": {
-   "id": "train-03254",
+   "id": "train-03234",
    "text": "SIA行李限额最后一刻改了？都没人通知我",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -107383,7 +106723,7 @@
  },
  {
   "data": {
-   "id": "train-03255",
+   "id": "train-03235",
    "text": "Please tell me 从 Tampines 到 Orchard Road 搭 public transport 最好的方式。",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -107416,7 +106756,7 @@
  },
  {
   "data": {
-   "id": "train-03256",
+   "id": "train-03236",
    "text": "Good afternoon, kindly share your view on which Singapore-listed stock I should buy for income.",
    "lang": "en",
    "intent": "out_of_scope",
@@ -107449,7 +106789,7 @@
  },
  {
   "data": {
-   "id": "train-03257",
+   "id": "train-03237",
    "text": "你可不可以就回个嗨，不要讲一堆多余的东西？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -107482,7 +106822,7 @@
  },
  {
   "data": {
-   "id": "train-03258",
+   "id": "train-03238",
    "text": "AirAsia 又改我的 flight time，还不肯 waive SGD 50 change fee。why？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -107515,7 +106855,7 @@
  },
  {
   "data": {
-   "id": "train-03259",
+   "id": "train-03239",
    "text": "how many minutes to boil an egg i keep messing up",
    "lang": "en",
    "intent": "out_of_scope",
@@ -107548,7 +106888,7 @@
  },
  {
   "data": {
-   "id": "train-03260",
+   "id": "train-03240",
    "text": "请讲清楚OCBC 365信用卡的年费豁免条件。",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -107581,7 +106921,7 @@
  },
  {
   "data": {
-   "id": "train-03261",
+   "id": "train-03241",
    "text": "不要 push 我 compare yourself，just give 我一个 stock pick for beginners",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -107614,7 +106954,7 @@
  },
  {
   "data": {
-   "id": "train-03262",
+   "id": "train-03242",
    "text": "whats a good dividend stock",
    "lang": "en",
    "intent": "out_of_scope",
@@ -107647,7 +106987,7 @@
  },
  {
   "data": {
-   "id": "train-03263",
+   "id": "train-03243",
    "text": "我应该定期定额投资交易所买卖基金吗？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -107680,7 +107020,7 @@
  },
  {
   "data": {
-   "id": "train-03264",
+   "id": "train-03244",
    "text": "HSBC card 的 foreign fee rate 是多少",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -107713,7 +107053,7 @@
  },
  {
   "data": {
-   "id": "train-03265",
+   "id": "train-03245",
    "text": "standard chartered card fee",
    "lang": "en",
    "intent": "out_of_scope",
@@ -107746,7 +107086,7 @@
  },
  {
   "data": {
-   "id": "train-03266",
+   "id": "train-03246",
    "text": "HSBC信用卡积分没通知就过期？这样不公平",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -107779,7 +107119,7 @@
  },
  {
   "data": {
-   "id": "train-03267",
+   "id": "train-03247",
    "text": "很高兴 meet 你",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -107812,7 +107152,7 @@
  },
  {
   "data": {
-   "id": "train-03268",
+   "id": "train-03248",
    "text": "need a straight answer which crypto to buy, not warnings",
    "lang": "en",
    "intent": "out_of_scope",
@@ -107845,7 +107185,7 @@
  },
  {
   "data": {
-   "id": "train-03269",
+   "id": "train-03249",
    "text": "有什么有趣的小知识吗？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -107878,7 +107218,7 @@
  },
  {
   "data": {
-   "id": "train-03270",
+   "id": "train-03250",
    "text": "我一直问 which fund to buy，你一直叫我 consider risks。annoying",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -107911,7 +107251,7 @@
  },
  {
   "data": {
-   "id": "train-03271",
+   "id": "train-03251",
    "text": "Kindly confirm whether Jetstar charges for cabin baggage beyond the included allowance.",
    "lang": "en",
    "intent": "out_of_scope",
@@ -107944,7 +107284,7 @@
  },
  {
   "data": {
-   "id": "train-03272",
+   "id": "train-03252",
    "text": "从这里怎么去裕廊东MRT？我迟到了",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -107977,7 +107317,7 @@
  },
  {
   "data": {
-   "id": "train-03273",
+   "id": "train-03253",
    "text": "从这里去 Sentosa 怎样才不用浪费时间",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -108010,7 +107350,7 @@
  },
  {
   "data": {
-   "id": "train-03274",
+   "id": "train-03254",
    "text": "I seek your opinion on whether to invest in dividend stocks or growth stocks.",
    "lang": "en",
    "intent": "out_of_scope",
@@ -108043,7 +107383,7 @@
  },
  {
   "data": {
-   "id": "train-03275",
+   "id": "train-03255",
    "text": "嗨，你好吗？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -108076,7 +107416,7 @@
  },
  {
   "data": {
-   "id": "train-03276",
+   "id": "train-03256",
    "text": "怎样 grow 我的 savings",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -108109,7 +107449,7 @@
  },
  {
   "data": {
-   "id": "train-03277",
+   "id": "train-03257",
    "text": "which stock give good returns",
    "lang": "en",
    "intent": "out_of_scope",
@@ -108142,7 +107482,7 @@
  },
  {
   "data": {
-   "id": "train-03278",
+   "id": "train-03258",
    "text": "我想在家做马来炒面，可以给我一个步骤清楚的食谱吗？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -108175,7 +107515,7 @@
  },
  {
   "data": {
-   "id": "train-03279",
+   "id": "train-03259",
    "text": "Please share 最近 Singapore 这个周末 community events 的 news。",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -108208,7 +107548,7 @@
  },
  {
   "data": {
-   "id": "train-03280",
+   "id": "train-03260",
    "text": "directions to Gardens by the Bay",
    "lang": "en",
    "intent": "out_of_scope",
@@ -108241,7 +107581,7 @@
  },
  {
   "data": {
-   "id": "train-03281",
+   "id": "train-03261",
    "text": "你到底可不可以讲个笑话？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -108274,7 +107614,7 @@
  },
  {
   "data": {
-   "id": "train-03282",
+   "id": "train-03262",
    "text": "退休应该 buy 哪个 investment？just answer，不用 ask NRIC",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -108307,7 +107647,7 @@
  },
  {
   "data": {
-   "id": "train-03283",
+   "id": "train-03263",
    "text": "why is my singtel bill suddenly $18 more this month? no explanation at all",
    "lang": "en",
    "intent": "out_of_scope",
@@ -108340,7 +107680,7 @@
  },
  {
   "data": {
-   "id": "train-03284",
+   "id": "train-03264",
    "text": "你今天还好吗？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -108373,7 +107713,7 @@
  },
  {
   "data": {
-   "id": "train-03285",
+   "id": "train-03265",
    "text": "Good morning，可以 advise 我哪个 blue-chip stock 值得用我的 SGD savings 买吗？",
    "lang": "mixed",
    "intent": "out_of_scope",

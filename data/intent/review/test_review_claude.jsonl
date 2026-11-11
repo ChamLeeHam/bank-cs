@@ -1,0 +1,237 @@
+{"text": "Please advise the current balance of my multi-currency account.", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "我现在就要我的余额啦，为什么这么慢？", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "我想问一下我的 multi-currency account balance。", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "Could you kindly advise how much money is in my multi-currency account?", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "往来账户的 SGD 余额", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "不要再叫我 log in，直接告诉我我的 SGD savings balance。", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "hello can u just tell me my account balance alr i've been waiting", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "请尽快告知我往来账户的余额。", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "我的 savings 里面有多少钱？", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "whats my account balance", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "请告诉我我的 SGD 往来账户里有多少钱。", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "我的 balance 还剩多少 lah？", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "May I request my current account balance, please?", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "我已经问了三次了。我的往来账户余额是多少？", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "帮我 check 我的 current account balance。", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "how much inside my account", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "往来账户余额多少", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "balance please，savings account，快点 lah。", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "Kindly confirm the available balance in my SGD savings account.", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "可以 kindly 告诉我我的 current account 里面有多少吗？", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "how much money left", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "查我的余额可以吗", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "Good evening，请 confirm 我 multi-currency account 的 balance。", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "May I have the current balance of my savings account, please?", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "你们能不能查我的多币种余额？我现在在 MRT，现在就要。", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "Good afternoon，请问我的 current account balance 是多少？", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "my SGD savings balance", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "我想知道我的储蓄账户余额，谢谢", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "Good morning，可以 kindly 告诉我 savings account 的 balance 吗？", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "balance in my multi-currency", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "麻烦你确认一下我的储蓄账户余额，谢谢。", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "可以帮我 check 一下，然后告诉我 current account 的 balance 吗？", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "my savings how much ah", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "储蓄账户的余额", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "可以让我知道我的 SGD savings account 的 balance 吗？", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "Why is my balance still not showing? I need to know how much is in my savings account now.", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "pls 告诉我我的 savings account balance。", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "bal in savings?", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "直接告诉我余额", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "我的钱在哪里？我的 savings account 还剩多少？", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "please tell me my current acount balance", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "我想查一下我的储蓄账户余额，谢谢", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "我现在 need 我的 balance。", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "wats my balance pls", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "告诉我我的余额", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "请给我 savings balance。", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "multi currency balance check", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "储蓄账户余额？", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "现在要 balance please。", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "may i know how much is in my multi currency account", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "为什么 App 一直显示错误？告诉我我的往来账户余额。", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "Good morning，可以 kindly 告诉我我的 savings account balance 吗？", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "how much left in savings", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "直接给我我储蓄账户里的金额可以吗？", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "可以让我知道我的 current account 现在有多少吗？", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "Please advise my savings account balance, thank you.", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "请告知我的往来账户里有多少可用余额。", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "请告诉我我的 savings account 的 balance。", "action": "ok", "label": "balance_inquiry/check_balance", "note": "", "reviewer": "claude"}
+{"text": "交易失败了？", "action": "relabel", "label": "transfer_status/failed_transfer", "note": "问的是交易失败，二级意图应为 failed_transfer", "reviewer": "claude"}
+{"text": "我刚把地址从达勒姆的一个地方改到沃尔顿-昂-内兹的一个地方。我新房子有个新房东，他们还没收到我的付款，但我知道我是按时发出去的，可以帮我查一下他们收到了没有吗？", "action": "ok", "label": "transfer_status/transfer_not_received_by_recipient", "note": "", "reviewer": "claude"}
+{"text": "我朋友还没有 receive 到我做的 transaction。", "action": "ok", "label": "transfer_status/transfer_not_received_by_recipient", "note": "", "reviewer": "claude"}
+{"text": "我转了钱，但收款人说还没收到。为什么会这样？", "action": "ok", "label": "transfer_status/transfer_not_received_by_recipient", "note": "", "reviewer": "claude"}
+{"text": "为什么我的收款人还没收到钱？", "action": "ok", "label": "transfer_status/transfer_not_received_by_recipient", "note": "", "reviewer": "claude"}
+{"text": "The person I sent money to hasn't gotten it yet!", "action": "ok", "label": "transfer_status/transfer_not_received_by_recipient", "note": "", "reviewer": "claude"}
+{"text": "我还在等这个 transaction complete。", "action": "ok", "label": "transfer_status/transfer_not_received_by_recipient", "note": "", "reviewer": "claude"}
+{"text": "我的交易要多久才能完成？", "action": "ok", "label": "transfer_status/transfer_not_received_by_recipient", "note": "", "reviewer": "claude"}
+{"text": "我已经 complete 了这个 money transaction，可是 recipient 还没有 receive 到。", "action": "ok", "label": "transfer_status/transfer_not_received_by_recipient", "note": "", "reviewer": "claude"}
+{"text": "我几个小时前给我朋友转了一些钱，但她还没收到。她真的很需要这笔钱。这个要多久？", "action": "ok", "label": "transfer_status/transfer_not_received_by_recipient", "note": "", "reviewer": "claude"}
+{"text": "我转了一些钱，但收款人取款时遇到问题。", "action": "ok", "label": "transfer_status/transfer_not_received_by_recipient", "note": "", "reviewer": "claude"}
+{"text": "我几天前转了新住处的房租，但房东说还没收到，虽然我这边显示已经完成。我核对过转过去的账号，肯定是对的。可以帮我确认这笔交易到底有没有成功吗？", "action": "ok", "label": "transfer_status/transfer_not_received_by_recipient", "note": "", "reviewer": "claude"}
+{"text": "Card stolen pls freeze now", "action": "ok", "label": "card_lost_freeze/lost_or_stolen_card", "note": "", "reviewer": "claude"}
+{"text": "我的 debit card 不见了，please block 它。", "action": "ok", "label": "card_lost_freeze/lost_or_stolen_card", "note": "", "reviewer": "claude"}
+{"text": "block card lost at mrt", "action": "ok", "label": "card_lost_freeze/lost_or_stolen_card", "note": "", "reviewer": "claude"}
+{"text": "我的 debit card 丢了，请 block 它。", "action": "ok", "label": "card_lost_freeze/lost_or_stolen_card", "note": "", "reviewer": "claude"}
+{"text": "nric lost card freeze pls", "action": "ok", "label": "card_lost_freeze/lost_or_stolen_card", "note": "", "reviewer": "claude"}
+{"text": "我的ATM卡被偷了，帮我停卡。", "action": "ok", "label": "card_lost_freeze/lost_or_stolen_card", "note": "", "reviewer": "claude"}
+{"text": "Card 被偷了，马上 block 它 lah。", "action": "ok", "label": "card_lost_freeze/lost_or_stolen_card", "note": "", "reviewer": "claude"}
+{"text": "card kena stolen block it", "action": "ok", "label": "card_lost_freeze/lost_or_stolen_card", "note": "", "reviewer": "claude"}
+{"text": "pls freeze card lost today", "action": "ok", "label": "card_lost_freeze/lost_or_stolen_card", "note": "", "reviewer": "claude"}
+{"text": "我的 card 不见了，freeze 它。", "action": "ok", "label": "card_lost_freeze/lost_or_stolen_card", "note": "", "reviewer": "claude"}
+{"text": "lost wallet block my card", "action": "ok", "label": "card_lost_freeze/lost_or_stolen_card", "note": "", "reviewer": "claude"}
+{"text": "card gone can u block", "action": "ok", "label": "card_lost_freeze/lost_or_stolen_card", "note": "", "reviewer": "claude"}
+{"text": "我的卡不见了，帮我冻结它", "action": "ok", "label": "card_lost_freeze/lost_or_stolen_card", "note": "", "reviewer": "claude"}
+{"text": "lost card freeze asap", "action": "ok", "label": "card_lost_freeze/lost_or_stolen_card", "note": "", "reviewer": "claude"}
+{"text": "帮我停掉我不见的 ATM 卡", "action": "ok", "label": "card_lost_freeze/lost_or_stolen_card", "note": "", "reviewer": "claude"}
+{"text": "card 被偷了，现在帮我 freeze。", "action": "ok", "label": "card_lost_freeze/lost_or_stolen_card", "note": "", "reviewer": "claude"}
+{"text": "我的卡丢了，帮我停掉。", "action": "ok", "label": "card_lost_freeze/lost_or_stolen_card", "note": "", "reviewer": "claude"}
+{"text": "我的 card 不知道放哪里了，pls freeze now。", "action": "ok", "label": "card_lost_freeze/lost_or_stolen_card", "note": "", "reviewer": "claude"}
+{"text": "我的 PayNow 卡被偷了，请帮我停掉。", "action": "ok", "label": "card_lost_freeze/lost_or_stolen_card", "note": "", "reviewer": "claude"}
+{"text": "我账单上多出来的 1 欧元费用是什么？", "action": "ok", "label": "fees_rates/extra_charge_on_statement", "note": "", "reviewer": "claude"}
+{"text": "这个 1 euro 的 fee 从哪里来的？", "action": "ok", "label": "fees_rates/extra_charge_on_statement", "note": "", "reviewer": "claude"}
+{"text": "Why would I be charged a fee for card payment?", "action": "ok", "label": "fees_rates/card_payment_fee_charged", "note": "", "reviewer": "claude"}
+{"text": "为什么我被 overcharge 一 pound!?", "action": "ok", "label": "fees_rates/extra_charge_on_statement", "note": "", "reviewer": "claude"}
+{"text": "当付款有额外收费时，应该要有人通知我。我之前刚好在看 App 时，注意到有一笔跟付款有关的额外收费，之前完全没有人通知过我。", "action": "ok", "label": "fees_rates/card_payment_fee_charged", "note": "", "reviewer": "claude"}
+{"text": "我的 card payment 被 charge 了一个 fee，为什么？", "action": "ok", "label": "fees_rates/card_payment_fee_charged", "note": "", "reviewer": "claude"}
+{"text": "Why did I have to pay more when I do it with my card?", "action": "ok", "label": "fees_rates/card_payment_fee_charged", "note": "", "reviewer": "claude"}
+{"text": "我 statement 里面这个 €1 fee 是什么？", "action": "ok", "label": "fees_rates/extra_charge_on_statement", "note": "", "reviewer": "claude"}
+{"text": "There is an unauthorized fee.", "action": "delete", "label": "fees_rates/card_payment_fee_charged", "note": "费用 / 争议 / 盗刷都说得通，意图不明确", "reviewer": "claude"}
+{"text": "There is a transaction for $1 and I don't know why it was charged.", "action": "ok", "label": "fees_rates/extra_charge_on_statement", "note": "", "reviewer": "claude"}
+{"text": "My statement has a dollar I have been charged showing up on it.", "action": "ok", "label": "fees_rates/extra_charge_on_statement", "note": "", "reviewer": "claude"}
+{"text": "我用卡付款为什么还被收费用？", "action": "ok", "label": "fees_rates/card_payment_fee_charged", "note": "", "reviewer": "claude"}
+{"text": "我 notice 我的 statement 有一个 extra $1 charge，可以 tell 我为什么吗？", "action": "ok", "label": "fees_rates/extra_charge_on_statement", "note": "", "reviewer": "claude"}
+{"text": "I payed with a card and was charged an extra fee", "action": "ok", "label": "fees_rates/card_payment_fee_charged", "note": "", "reviewer": "claude"}
+{"text": "为什么我的账单里多出一英镑会有费用？", "action": "ok", "label": "fees_rates/extra_charge_on_statement", "note": "", "reviewer": "claude"}
+{"text": "为什么我用 card 付款会被 charge 一个 fee？我之前从来没有 extra fee 的。", "action": "ok", "label": "fees_rates/card_payment_fee_charged", "note": "", "reviewer": "claude"}
+{"text": "可以帮我查一下为什么我的账单上会有这笔额外费用吗？", "action": "ok", "label": "fees_rates/extra_charge_on_statement", "note": "", "reviewer": "claude"}
+{"text": "用 card payment 有 fee 吗？", "action": "ok", "label": "fees_rates/card_payment_fee_charged", "note": "", "reviewer": "claude"}
+{"text": "Why was I charged an extra fee when paying with my card?", "action": "ok", "label": "fees_rates/card_payment_fee_charged", "note": "", "reviewer": "claude"}
+{"text": "可以帮我 check 一个 weird charge 吗？那个 pound charge 在我用着的 app 的 statement view 一直不会消失。它只写着 “Pending”，过去两天 status 都没有 change 过。", "action": "delete", "label": "fees_rates/extra_charge_on_statement", "note": "说的是一直 Pending 的卡交易（pending_card_payment，已丢弃的标签）", "reviewer": "claude"}
+{"text": "When will money be available in my account?", "action": "ok", "label": "transfer_howto/transfer_timing", "note": "", "reviewer": "claude"}
+{"text": "有一个很重要的东西 from China 我需要 transfer，大概要多久？", "action": "ok", "label": "transfer_howto/transfer_timing", "note": "", "reviewer": "claude"}
+{"text": "When should I expect to see my transfer hit my account?", "action": "relabel", "label": "transfer_status/pending_transfer", "note": "已发出的某笔转账（我的 / 这笔 / initiated）问多久 -> 汇款进度，不是一般性的转账指南", "reviewer": "claude"}
+{"text": "我从 Europe initiate 了一个 Bank transfer，这个要多久？", "action": "relabel", "label": "transfer_status/pending_transfer", "note": "已发出的某笔转账（我的 / 这笔 / initiated）问多久 -> 汇款进度，不是一般性的转账指南", "reviewer": "claude"}
+{"text": "How long until the money is in my account?", "action": "ok", "label": "transfer_howto/transfer_timing", "note": "", "reviewer": "claude"}
+{"text": "我需要一个 from China 的 fast transfer，会有多快？", "action": "ok", "label": "transfer_howto/transfer_timing", "note": "", "reviewer": "claude"}
+{"text": "How long do I have to wait for a transfer from the US?", "action": "ok", "label": "transfer_howto/transfer_timing", "note": "", "reviewer": "claude"}
+{"text": "我的转账要多久才会成功？", "action": "relabel", "label": "transfer_status/pending_transfer", "note": "已发出的某笔转账（我的 / 这笔 / initiated）问多久 -> 汇款进度，不是一般性的转账指南", "reviewer": "claude"}
+{"text": "转账到我的账户要等多久？", "action": "ok", "label": "transfer_howto/transfer_timing", "note": "", "reviewer": "claude"}
+{"text": "From China 的 urgent transfer 大概要多久？", "action": "ok", "label": "transfer_howto/transfer_timing", "note": "", "reviewer": "claude"}
+{"text": "我的 Europe transfer 要 wait 多久？", "action": "relabel", "label": "transfer_status/pending_transfer", "note": "已发出的某笔转账（我的 / 这笔 / initiated）问多久 -> 汇款进度，不是一般性的转账指南", "reviewer": "claude"}
+{"text": "How long does a transfer take from the point it's sent, to the point it arrives in my account?", "action": "ok", "label": "transfer_howto/transfer_timing", "note": "", "reviewer": "claude"}
+{"text": "How long to I have to wait for a transfer to reach my account?", "action": "ok", "label": "transfer_howto/transfer_timing", "note": "", "reviewer": "claude"}
+{"text": "转账多久会显示在我的账户里？", "action": "ok", "label": "transfer_howto/transfer_timing", "note": "", "reviewer": "claude"}
+{"text": "US transfer 的 wait 是多久？", "action": "ok", "label": "transfer_howto/transfer_timing", "note": "", "reviewer": "claude"}
+{"text": "very rude service at branch", "action": "ok", "label": "complaint/staff_attitude", "note": "", "reviewer": "claude"}
+{"text": "你们员工今天很没礼貌", "action": "ok", "label": "complaint/staff_attitude", "note": "", "reviewer": "claude"}
+{"text": "我还在等你们的 email reply leh", "action": "ok", "label": "complaint/waiting_time", "note": "", "reviewer": "claude"}
+{"text": "waiting 30 mins for chat", "action": "ok", "label": "complaint/waiting_time", "note": "", "reviewer": "claude"}
+{"text": "App很慢，做不了GIRO", "action": "ok", "label": "complaint/app_problem", "note": "", "reviewer": "claude"}
+{"text": "你们的 officer 态度很 dismissive，又很 impatient", "action": "ok", "label": "complaint/staff_attitude", "note": "", "reviewer": "claude"}
+{"text": "stop overcharging customers please", "action": "ok", "label": "complaint/unfair_fee", "note": "", "reviewer": "claude"}
+{"text": "上周发的邮件还没回复", "action": "ok", "label": "complaint/waiting_time", "note": "", "reviewer": "claude"}
+{"text": "这些 charges 不公平 lah", "action": "ok", "label": "complaint/unfair_fee", "note": "", "reviewer": "claude"}
+{"text": "hotline staff kept cutting me off", "action": "ok", "label": "complaint/staff_attitude", "note": "", "reviewer": "claude"}
+{"text": "在分行排了一个小时队", "action": "ok", "label": "complaint/waiting_time", "note": "", "reviewer": "claude"}
+{"text": "打 hotline 等的时间真的太长了", "action": "ok", "label": "complaint/waiting_time", "note": "", "reviewer": "claude"}
+{"text": "too many hidden fees", "action": "ok", "label": "complaint/unfair_fee", "note": "", "reviewer": "claude"}
+{"text": "App卡在加载页面", "action": "ok", "label": "complaint/app_problem", "note": "", "reviewer": "claude"}
+{"text": "fees 一直起，没停过", "action": "ok", "label": "complaint/unfair_fee", "note": "", "reviewer": "claude"}
+{"text": "staff careless with my NRIC details", "action": "ok", "label": "complaint/staff_attitude", "note": "", "reviewer": "claude"}
+{"text": "为什么有这么多额外收费", "action": "ok", "label": "complaint/unfair_fee", "note": "", "reviewer": "claude"}
+{"text": "staff 对我讲话很 down，好像看不起我", "action": "ok", "label": "complaint/staff_attitude", "note": "", "reviewer": "claude"}
+{"text": "app crash when check balnce", "action": "ok", "label": "complaint/app_problem", "note": "", "reviewer": "claude"}
+{"text": "收费真的很不合理咧", "action": "ok", "label": "complaint/unfair_fee", "note": "", "reviewer": "claude"}
+{"text": "现在的 customer service 真的很慢", "action": "ok", "label": "complaint/waiting_time", "note": "", "reviewer": "claude"}
+{"text": "internet banking not loadin", "action": "ok", "label": "complaint/app_problem", "note": "", "reviewer": "claude"}
+{"text": "收这么多钱不公平", "action": "ok", "label": "complaint/unfair_fee", "note": "", "reviewer": "claude"}
+{"text": "staff 完全没有 listen 我讲", "action": "ok", "label": "complaint/staff_attitude", "note": "", "reviewer": "claude"}
+{"text": "customer service quite rude sia", "action": "ok", "label": "complaint/staff_attitude", "note": "", "reviewer": "claude"}
+{"text": "手机银行一直闪退咧", "action": "ok", "label": "complaint/app_problem", "note": "", "reviewer": "claude"}
+{"text": "PayNow 之后 app 就 hang 了", "action": "ok", "label": "complaint/app_problem", "note": "", "reviewer": "claude"}
+{"text": "why alway log out", "action": "ok", "label": "complaint/app_problem", "note": "", "reviewer": "claude"}
+{"text": "你们热线的等待时间太离谱了", "action": "ok", "label": "complaint/waiting_time", "note": "", "reviewer": "claude"}
+{"text": "officer 完全 ignore 我的问题", "action": "ok", "label": "complaint/staff_attitude", "note": "", "reviewer": "claude"}
+{"text": "live chat no response yet", "action": "ok", "label": "complaint/waiting_time", "note": "", "reviewer": "claude"}
+{"text": "每个月收费都这么高", "action": "ok", "label": "complaint/unfair_fee", "note": "", "reviewer": "claude"}
+{"text": "bank staff 一点帮助都没有", "action": "ok", "label": "complaint/staff_attitude", "note": "", "reviewer": "claude"}
+{"text": "unhelpful staf wasted my time", "action": "ok", "label": "complaint/staff_attitude", "note": "", "reviewer": "claude"}
+{"text": "为什么 branch 的 queue 这么慢", "action": "ok", "label": "complaint/waiting_time", "note": "", "reviewer": "claude"}
+{"text": "app keeps freezin on iPhone", "action": "ok", "label": "complaint/app_problem", "note": "", "reviewer": "claude"}
+{"text": "App有问题，登录不了", "action": "ok", "label": "complaint/app_problem", "note": "", "reviewer": "claude"}
+{"text": "mobile app 现在很 slow", "action": "ok", "label": "complaint/app_problem", "note": "", "reviewer": "claude"}
+{"text": "paynow issue staff so rude", "action": "ok", "label": "complaint/staff_attitude", "note": "", "reviewer": "claude"}
+{"text": "还要等多久", "action": "delete", "label": "complaint/waiting_time", "note": "没有上下文，无法判断在等什么", "reviewer": "claude"}
+{"text": "branch 的 staff 很 careless", "action": "ok", "label": "complaint/staff_attitude", "note": "", "reviewer": "claude"}
+{"text": "ibanking log me out again", "action": "ok", "label": "complaint/app_problem", "note": "", "reviewer": "claude"}
+{"text": "App又一直闪退", "action": "ok", "label": "complaint/app_problem", "note": "", "reviewer": "claude"}
+{"text": "我已经 on hold 40 mins 了", "action": "ok", "label": "complaint/waiting_time", "note": "", "reviewer": "claude"}
+{"text": "branch queue damn long", "action": "ok", "label": "complaint/waiting_time", "note": "", "reviewer": "claude"}
+{"text": "银行什么小事情都要收费", "action": "ok", "label": "complaint/unfair_fee", "note": "", "reviewer": "claude"}
+{"text": "officer 对我 roll eyes", "action": "ok", "label": "complaint/staff_attitude", "note": "", "reviewer": "claude"}
+{"text": "Your fees are too high", "action": "ok", "label": "complaint/unfair_fee", "note": "", "reviewer": "claude"}
+{"text": "登录页面一直卡住", "action": "ok", "label": "complaint/app_problem", "note": "", "reviewer": "claude"}
+{"text": "那个 teller 真的很 unhelpful", "action": "ok", "label": "complaint/staff_attitude", "note": "", "reviewer": "claude"}
+{"text": "your fees very expensive leh", "action": "ok", "label": "complaint/unfair_fee", "note": "", "reviewer": "claude"}
+{"text": "收费真的离谱到不行", "action": "ok", "label": "complaint/unfair_fee", "note": "", "reviewer": "claude"}
+{"text": "chat 回复等超久，please", "action": "ok", "label": "complaint/waiting_time", "note": "", "reviewer": "claude"}
+{"text": "online banking dwn again", "action": "ok", "label": "complaint/app_problem", "note": "", "reviewer": "claude"}
+{"text": "费用真的太多了", "action": "ok", "label": "complaint/unfair_fee", "note": "", "reviewer": "claude"}
+{"text": "app 自己 log out", "action": "ok", "label": "complaint/app_problem", "note": "", "reviewer": "claude"}
+{"text": "your service charges unfair", "action": "ok", "label": "complaint/unfair_fee", "note": "", "reviewer": "claude"}
+{"text": "客服中心没人接电话", "action": "ok", "label": "complaint/waiting_time", "note": "", "reviewer": "claude"}
+{"text": "phone queue 一直不会动的", "action": "ok", "label": "complaint/waiting_time", "note": "", "reviewer": "claude"}
+{"text": "现在可以买哪只股票？", "action": "ok", "label": "out_of_scope/investment_advice", "note": "", "reviewer": "claude"}
+{"text": "你是 robot 还是 human 啊？", "action": "ok", "label": "out_of_scope/chitchat", "note": "", "reviewer": "claude"}
+{"text": "recipe for mee goreng can", "action": "ok", "label": "out_of_scope/non_banking", "note": "", "reviewer": "claude"}
+{"text": "Maybank 卡迟还费用是多少？", "action": "ok", "label": "out_of_scope/other_company", "note": "", "reviewer": "claude"}
+{"text": "为什么我的 rice 每次都 soggy 的 leh？", "action": "ok", "label": "out_of_scope/non_banking", "note": "", "reviewer": "claude"}
+{"text": "MRT to Sentosa how ah", "action": "ok", "label": "out_of_scope/non_banking", "note": "", "reviewer": "claude"}
+{"text": "我的 SGD 买什么基金最好？", "action": "ok", "label": "out_of_scope/investment_advice", "note": "", "reviewer": "claude"}
+{"text": "你平时 for fun 会做什么？", "action": "ok", "label": "out_of_scope/chitchat", "note": "", "reviewer": "claude"}
+{"text": "whats due for science homework", "action": "ok", "label": "out_of_scope/non_banking", "note": "", "reviewer": "claude"}
+{"text": "买加密货币安全吗？", "action": "ok", "label": "out_of_scope/investment_advice", "note": "", "reviewer": "claude"}
+{"text": "这个 weather 热到 damn sian 啊。", "action": "ok", "label": "out_of_scope/chitchat", "note": "", "reviewer": "claude"}
+{"text": "crypto recommendation pls urgent", "action": "ok", "label": "out_of_scope/investment_advice", "note": "", "reviewer": "claude"}
+{"text": "StarHub 合约到期续约价格多少？", "action": "ok", "label": "out_of_scope/other_company", "note": "", "reviewer": "claude"}
+{"text": "OCBC card 的 annual fee 可以 waive 吗？", "action": "ok", "label": "out_of_scope/other_company", "note": "", "reviewer": "claude"}
+{"text": "what homework due tomorrow ah", "action": "ok", "label": "out_of_scope/non_banking", "note": "", "reviewer": "claude"}
+{"text": "讲点好笑的啦", "action": "ok", "label": "out_of_scope/chitchat", "note": "", "reviewer": "claude"}
+{"text": "boil 一个 egg 要多久？", "action": "ok", "label": "out_of_scope/non_banking", "note": "", "reviewer": "claude"}
+{"text": "where can park near Orchard", "action": "ok", "label": "out_of_scope/non_banking", "note": "", "reviewer": "claude"}
+{"text": "我应该买 Tesla 吗？", "action": "ok", "label": "out_of_scope/investment_advice", "note": "", "reviewer": "claude"}
+{"text": "Singtel plan cancel 有 fee 吗？", "action": "ok", "label": "out_of_scope/other_company", "note": "", "reviewer": "claude"}
+{"text": "where put my bonus", "action": "ok", "label": "out_of_scope/investment_advice", "note": "", "reviewer": "claude"}
+{"text": "早安，你好吗", "action": "ok", "label": "out_of_scope/chitchat", "note": "", "reviewer": "claude"}
+{"text": "你晚上会 sleep 吗？", "action": "ok", "label": "out_of_scope/chitchat", "note": "", "reviewer": "claude"}
+{"text": "how are you today", "action": "ok", "label": "out_of_scope/chitchat", "note": "", "reviewer": "claude"}
+{"text": "你叫什么名字，机器人？", "action": "ok", "label": "out_of_scope/chitchat", "note": "", "reviewer": "claude"}
+{"text": "有没有 joke 啊？", "action": "ok", "label": "out_of_scope/chitchat", "note": "", "reviewer": "claude"}
+{"text": "any news on today's match", "action": "ok", "label": "out_of_scope/non_banking", "note": "", "reviewer": "claude"}
+{"text": "有什么好的单位信托吗？", "action": "ok", "label": "out_of_scope/investment_advice", "note": "", "reviewer": "claude"}
+{"text": "airline 的 baggage fee 多少钱？", "action": "ok", "label": "out_of_scope/other_company", "note": "", "reviewer": "claude"}
+{"text": "mrt so crowded today", "action": "ok", "label": "out_of_scope/chitchat", "note": "", "reviewer": "claude"}
+{"text": "需要个人理财建议", "action": "ok", "label": "out_of_scope/investment_advice", "note": "", "reviewer": "claude"}
+{"text": "可以讲一个 joke 给我吗？", "action": "ok", "label": "out_of_scope/chitchat", "note": "", "reviewer": "claude"}
+{"text": "help with algebra please", "action": "ok", "label": "out_of_scope/non_banking", "note": "", "reviewer": "claude"}
+{"text": "改航班日期费用多少？", "action": "ok", "label": "out_of_scope/other_company", "note": "", "reviewer": "claude"}
+{"text": "哪一个 fund 可以 beat inflation？", "action": "ok", "label": "out_of_scope/investment_advice", "note": "", "reviewer": "claude"}
+{"text": "which ETF better for me", "action": "ok", "label": "out_of_scope/investment_advice", "note": "", "reviewer": "claude"}
+{"text": "在家怎么煮叻沙？", "action": "ok", "label": "out_of_scope/non_banking", "note": "", "reviewer": "claude"}
+{"text": "现在买 crypto 还是等先？", "action": "ok", "label": "out_of_scope/investment_advice", "note": "", "reviewer": "claude"}
+{"text": "do you like chicken rice", "action": "ok", "label": "out_of_scope/chitchat", "note": "", "reviewer": "claude"}
+{"text": "退休适合做什么投资？", "action": "ok", "label": "out_of_scope/investment_advice", "note": "", "reviewer": "claude"}
+{"text": "有 10k 可以 invest 什么？", "action": "ok", "label": "out_of_scope/investment_advice", "note": "", "reviewer": "claude"}
+{"text": "UOB credit card fee waiver?", "action": "ok", "label": "out_of_scope/other_company", "note": "", "reviewer": "claude"}
+{"text": "今天几点日落？", "action": "ok", "label": "out_of_scope/non_banking", "note": "", "reviewer": "claude"}
+{"text": "beginner 有 fund recommendation 吗？", "action": "ok", "label": "out_of_scope/investment_advice", "note": "", "reviewer": "claude"}
+{"text": "what's the weather today", "action": "ok", "label": "out_of_scope/chitchat", "note": "", "reviewer": "claude"}
+{"text": "下周有什么股票贴士？", "action": "ok", "label": "out_of_scope/investment_advice", "note": "", "reviewer": "claude"}
+{"text": "StarHub roaming plan 多少钱？", "action": "ok", "label": "out_of_scope/other_company", "note": "", "reviewer": "claude"}
+{"text": "Scoot change fee 是多少？", "action": "ok", "label": "out_of_scope/other_company", "note": "", "reviewer": "claude"}
+{"text": "Can I cancel Singtel line?", "action": "ok", "label": "out_of_scope/other_company", "note": "", "reviewer": "claude"}
+{"text": "你可以 sing 一首 song 吗？", "action": "ok", "label": "out_of_scope/chitchat", "note": "", "reviewer": "claude"}
+{"text": "可以给我鸡饭食谱吗？", "action": "ok", "label": "out_of_scope/non_banking", "note": "", "reviewer": "claude"}
+{"text": "这个 news 是真的还是 fake？", "action": "ok", "label": "out_of_scope/non_banking", "note": "", "reviewer": "claude"}
+{"text": "wheres nearest MRT station", "action": "ok", "label": "out_of_scope/non_banking", "note": "", "reviewer": "claude"}
+{"text": "今天又下雨了咯", "action": "ok", "label": "out_of_scope/chitchat", "note": "", "reviewer": "claude"}

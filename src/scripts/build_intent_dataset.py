@@ -294,6 +294,11 @@ _EN_WORD = re.compile(r"[A-Za-z]+")
 _OTHER_BANK = re.compile(r"\b(POSB|DBS|OCBC|UOB|Citi\w*|HSBC|Maybank|Standard Chartered|Revolut)\b", re.IGNORECASE)
 
 
+# "Grab 退款还没到" 在 Banking77 里属于 dispute_refund（商家退款没到账），LLM 却按 other_company 生成；
+# 两边标签矛盾，所以 other_company 中涉及退款的句子全部删除（人工检查测试集时发现）
+_REFUND = re.compile(r"refund|refnd|money back|退款|退钱", re.IGNORECASE)
+
+
 def norm_key(text: str) -> str:
     """去重用：忽略大小写、空格和标点"""
     return re.sub(r"[\W_]+", "", text.lower())
@@ -313,6 +318,9 @@ def clean(records: list[dict], forbidden: set[str] = frozenset()) -> list[dict]:
             continue
         if r["label"] != "out_of_scope/other_company" and _OTHER_BANK.search(text):
             dropped["提到其他银行"] += 1
+            continue
+        if r["label"] == "out_of_scope/other_company" and _REFUND.search(text + " " + r["source_text"]):
+            dropped["其他公司退款（与 dispute_refund 冲突）"] += 1
             continue
         if r["lang"] == "mixed" and not (has_zh and has_en):
             dropped["混杂句缺少中文或英文"] += 1

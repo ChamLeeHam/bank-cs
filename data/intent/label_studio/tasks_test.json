@@ -19439,39 +19439,6 @@
  {
   "data": {
    "id": "test-00590",
-   "text": "foodpanda refund not procesed yet",
-   "lang": "en",
-   "intent": "out_of_scope",
-   "sub_intent": "other_company",
-   "label": "out_of_scope/other_company",
-   "source": "llm",
-   "source_text": "foodpanda refund not procesed yet",
-   "review": true
-  },
-  "predictions": [
-   {
-    "model_version": "dataset_v1",
-    "result": [
-     {
-      "from_name": "intent",
-      "to_name": "text",
-      "type": "taxonomy",
-      "value": {
-       "taxonomy": [
-        [
-         "out_of_scope",
-         "other_company"
-        ]
-       ]
-      }
-     }
-    ]
-   }
-  ]
- },
- {
-  "data": {
-   "id": "test-00591",
    "text": "现在可以买哪只股票？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -19504,7 +19471,7 @@
  },
  {
   "data": {
-   "id": "test-00592",
+   "id": "test-00591",
    "text": "你是 robot 还是 human 啊？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -19537,7 +19504,7 @@
  },
  {
   "data": {
-   "id": "test-00593",
+   "id": "test-00592",
    "text": "recipe for mee goreng can",
    "lang": "en",
    "intent": "out_of_scope",
@@ -19570,7 +19537,7 @@
  },
  {
   "data": {
-   "id": "test-00594",
+   "id": "test-00593",
    "text": "Maybank 卡迟还费用是多少？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -19603,7 +19570,7 @@
  },
  {
   "data": {
-   "id": "test-00595",
+   "id": "test-00594",
    "text": "为什么我的 rice 每次都 soggy 的 leh？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -19636,7 +19603,7 @@
  },
  {
   "data": {
-   "id": "test-00596",
+   "id": "test-00595",
    "text": "MRT to Sentosa how ah",
    "lang": "en",
    "intent": "out_of_scope",
@@ -19669,7 +19636,7 @@
  },
  {
   "data": {
-   "id": "test-00597",
+   "id": "test-00596",
    "text": "我的 SGD 买什么基金最好？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -19702,7 +19669,7 @@
  },
  {
   "data": {
-   "id": "test-00598",
+   "id": "test-00597",
    "text": "你平时 for fun 会做什么？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -19735,7 +19702,7 @@
  },
  {
   "data": {
-   "id": "test-00599",
+   "id": "test-00598",
    "text": "whats due for science homework",
    "lang": "en",
    "intent": "out_of_scope",
@@ -19768,7 +19735,7 @@
  },
  {
   "data": {
-   "id": "test-00600",
+   "id": "test-00599",
    "text": "买加密货币安全吗？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -19801,7 +19768,7 @@
  },
  {
   "data": {
-   "id": "test-00601",
+   "id": "test-00600",
    "text": "这个 weather 热到 damn sian 啊。",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -19834,7 +19801,7 @@
  },
  {
   "data": {
-   "id": "test-00602",
+   "id": "test-00601",
    "text": "crypto recommendation pls urgent",
    "lang": "en",
    "intent": "out_of_scope",
@@ -19867,7 +19834,7 @@
  },
  {
   "data": {
-   "id": "test-00603",
+   "id": "test-00602",
    "text": "StarHub 合约到期续约价格多少？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -19900,7 +19867,7 @@
  },
  {
   "data": {
-   "id": "test-00604",
+   "id": "test-00603",
    "text": "OCBC card 的 annual fee 可以 waive 吗？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -19933,7 +19900,7 @@
  },
  {
   "data": {
-   "id": "test-00605",
+   "id": "test-00604",
    "text": "what homework due tomorrow ah",
    "lang": "en",
    "intent": "out_of_scope",
@@ -19966,7 +19933,7 @@
  },
  {
   "data": {
-   "id": "test-00606",
+   "id": "test-00605",
    "text": "讲点好笑的啦",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -19999,7 +19966,7 @@
  },
  {
   "data": {
-   "id": "test-00607",
+   "id": "test-00606",
    "text": "boil 一个 egg 要多久？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -20032,7 +19999,7 @@
  },
  {
   "data": {
-   "id": "test-00608",
+   "id": "test-00607",
    "text": "where can park near Orchard",
    "lang": "en",
    "intent": "out_of_scope",
@@ -20065,7 +20032,7 @@
  },
  {
   "data": {
-   "id": "test-00609",
+   "id": "test-00608",
    "text": "我应该买 Tesla 吗？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -20098,7 +20065,7 @@
  },
  {
   "data": {
-   "id": "test-00610",
+   "id": "test-00609",
    "text": "Singtel plan cancel 有 fee 吗？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -20131,7 +20098,7 @@
  },
  {
   "data": {
-   "id": "test-00611",
+   "id": "test-00610",
    "text": "where put my bonus",
    "lang": "en",
    "intent": "out_of_scope",
@@ -20164,7 +20131,7 @@
  },
  {
   "data": {
-   "id": "test-00612",
+   "id": "test-00611",
    "text": "早安，你好吗",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -20197,7 +20164,7 @@
  },
  {
   "data": {
-   "id": "test-00613",
+   "id": "test-00612",
    "text": "你晚上会 sleep 吗？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -20230,7 +20197,7 @@
  },
  {
   "data": {
-   "id": "test-00614",
+   "id": "test-00613",
    "text": "how are you today",
    "lang": "en",
    "intent": "out_of_scope",
@@ -20263,7 +20230,7 @@
  },
  {
   "data": {
-   "id": "test-00615",
+   "id": "test-00614",
    "text": "你叫什么名字，机器人？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -20296,7 +20263,7 @@
  },
  {
   "data": {
-   "id": "test-00616",
+   "id": "test-00615",
    "text": "有没有 joke 啊？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -20329,7 +20296,7 @@
  },
  {
   "data": {
-   "id": "test-00617",
+   "id": "test-00616",
    "text": "any news on today's match",
    "lang": "en",
    "intent": "out_of_scope",
@@ -20362,7 +20329,7 @@
  },
  {
   "data": {
-   "id": "test-00618",
+   "id": "test-00617",
    "text": "有什么好的单位信托吗？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -20395,7 +20362,7 @@
  },
  {
   "data": {
-   "id": "test-00619",
+   "id": "test-00618",
    "text": "airline 的 baggage fee 多少钱？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -20428,7 +20395,7 @@
  },
  {
   "data": {
-   "id": "test-00620",
+   "id": "test-00619",
    "text": "mrt so crowded today",
    "lang": "en",
    "intent": "out_of_scope",
@@ -20461,7 +20428,7 @@
  },
  {
   "data": {
-   "id": "test-00621",
+   "id": "test-00620",
    "text": "需要个人理财建议",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -20494,7 +20461,7 @@
  },
  {
   "data": {
-   "id": "test-00622",
+   "id": "test-00621",
    "text": "可以讲一个 joke 给我吗？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -20527,7 +20494,7 @@
  },
  {
   "data": {
-   "id": "test-00623",
+   "id": "test-00622",
    "text": "help with algebra please",
    "lang": "en",
    "intent": "out_of_scope",
@@ -20560,7 +20527,7 @@
  },
  {
   "data": {
-   "id": "test-00624",
+   "id": "test-00623",
    "text": "改航班日期费用多少？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -20593,7 +20560,7 @@
  },
  {
   "data": {
-   "id": "test-00625",
+   "id": "test-00624",
    "text": "哪一个 fund 可以 beat inflation？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -20626,7 +20593,7 @@
  },
  {
   "data": {
-   "id": "test-00626",
+   "id": "test-00625",
    "text": "which ETF better for me",
    "lang": "en",
    "intent": "out_of_scope",
@@ -20659,7 +20626,7 @@
  },
  {
   "data": {
-   "id": "test-00627",
+   "id": "test-00626",
    "text": "在家怎么煮叻沙？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -20692,7 +20659,7 @@
  },
  {
   "data": {
-   "id": "test-00628",
+   "id": "test-00627",
    "text": "现在买 crypto 还是等先？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -20725,7 +20692,7 @@
  },
  {
   "data": {
-   "id": "test-00629",
+   "id": "test-00628",
    "text": "do you like chicken rice",
    "lang": "en",
    "intent": "out_of_scope",
@@ -20758,7 +20725,7 @@
  },
  {
   "data": {
-   "id": "test-00630",
+   "id": "test-00629",
    "text": "退休适合做什么投资？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -20791,7 +20758,7 @@
  },
  {
   "data": {
-   "id": "test-00631",
+   "id": "test-00630",
    "text": "有 10k 可以 invest 什么？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -20824,7 +20791,7 @@
  },
  {
   "data": {
-   "id": "test-00632",
+   "id": "test-00631",
    "text": "UOB credit card fee waiver?",
    "lang": "en",
    "intent": "out_of_scope",
@@ -20857,7 +20824,7 @@
  },
  {
   "data": {
-   "id": "test-00633",
+   "id": "test-00632",
    "text": "今天几点日落？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -20890,7 +20857,7 @@
  },
  {
   "data": {
-   "id": "test-00634",
+   "id": "test-00633",
    "text": "beginner 有 fund recommendation 吗？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -20923,7 +20890,7 @@
  },
  {
   "data": {
-   "id": "test-00635",
+   "id": "test-00634",
    "text": "what's the weather today",
    "lang": "en",
    "intent": "out_of_scope",
@@ -20956,7 +20923,7 @@
  },
  {
   "data": {
-   "id": "test-00636",
+   "id": "test-00635",
    "text": "下周有什么股票贴士？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -20989,7 +20956,7 @@
  },
  {
   "data": {
-   "id": "test-00637",
+   "id": "test-00636",
    "text": "StarHub roaming plan 多少钱？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -21022,73 +20989,7 @@
  },
  {
   "data": {
-   "id": "test-00638",
-   "text": "GrabFood missing item refund?",
-   "lang": "en",
-   "intent": "out_of_scope",
-   "sub_intent": "other_company",
-   "label": "out_of_scope/other_company",
-   "source": "llm",
-   "source_text": "GrabFood missing item refund?",
-   "review": true
-  },
-  "predictions": [
-   {
-    "model_version": "dataset_v1",
-    "result": [
-     {
-      "from_name": "intent",
-      "to_name": "text",
-      "type": "taxonomy",
-      "value": {
-       "taxonomy": [
-        [
-         "out_of_scope",
-         "other_company"
-        ]
-       ]
-      }
-     }
-    ]
-   }
-  ]
- },
- {
-  "data": {
-   "id": "test-00639",
-   "text": "Grab 退款还没收到",
-   "lang": "zh",
-   "intent": "out_of_scope",
-   "sub_intent": "other_company",
-   "label": "out_of_scope/other_company",
-   "source": "llm",
-   "source_text": "grab refund still not received",
-   "review": true
-  },
-  "predictions": [
-   {
-    "model_version": "dataset_v1",
-    "result": [
-     {
-      "from_name": "intent",
-      "to_name": "text",
-      "type": "taxonomy",
-      "value": {
-       "taxonomy": [
-        [
-         "out_of_scope",
-         "other_company"
-        ]
-       ]
-      }
-     }
-    ]
-   }
-  ]
- },
- {
-  "data": {
-   "id": "test-00640",
+   "id": "test-00637",
    "text": "Scoot change fee 是多少？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -21121,7 +21022,7 @@
  },
  {
   "data": {
-   "id": "test-00641",
+   "id": "test-00638",
    "text": "Can I cancel Singtel line?",
    "lang": "en",
    "intent": "out_of_scope",
@@ -21154,40 +21055,7 @@
  },
  {
   "data": {
-   "id": "test-00642",
-   "text": "Scoot 退款要多久啊",
-   "lang": "mixed",
-   "intent": "out_of_scope",
-   "sub_intent": "other_company",
-   "label": "out_of_scope/other_company",
-   "source": "llm",
-   "source_text": "Scoot refund how long ah",
-   "review": true
-  },
-  "predictions": [
-   {
-    "model_version": "dataset_v1",
-    "result": [
-     {
-      "from_name": "intent",
-      "to_name": "text",
-      "type": "taxonomy",
-      "value": {
-       "taxonomy": [
-        [
-         "out_of_scope",
-         "other_company"
-        ]
-       ]
-      }
-     }
-    ]
-   }
-  ]
- },
- {
-  "data": {
-   "id": "test-00643",
+   "id": "test-00639",
    "text": "你可以 sing 一首 song 吗？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -21220,7 +21088,7 @@
  },
  {
   "data": {
-   "id": "test-00644",
+   "id": "test-00640",
    "text": "可以给我鸡饭食谱吗？",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -21253,7 +21121,7 @@
  },
  {
   "data": {
-   "id": "test-00645",
+   "id": "test-00641",
    "text": "这个 news 是真的还是 fake？",
    "lang": "mixed",
    "intent": "out_of_scope",
@@ -21286,7 +21154,7 @@
  },
  {
   "data": {
-   "id": "test-00646",
+   "id": "test-00642",
    "text": "wheres nearest MRT station",
    "lang": "en",
    "intent": "out_of_scope",
@@ -21319,7 +21187,7 @@
  },
  {
   "data": {
-   "id": "test-00647",
+   "id": "test-00643",
    "text": "今天又下雨了咯",
    "lang": "zh",
    "intent": "out_of_scope",
@@ -21342,39 +21210,6 @@
         [
          "out_of_scope",
          "chitchat"
-        ]
-       ]
-      }
-     }
-    ]
-   }
-  ]
- },
- {
-  "data": {
-   "id": "test-00648",
-   "text": "Deliveroo order 的 refund pending 要等多久？",
-   "lang": "mixed",
-   "intent": "out_of_scope",
-   "sub_intent": "other_company",
-   "label": "out_of_scope/other_company",
-   "source": "llm",
-   "source_text": "deliveroo order refund pendng how long",
-   "review": true
-  },
-  "predictions": [
-   {
-    "model_version": "dataset_v1",
-    "result": [
-     {
-      "from_name": "intent",
-      "to_name": "text",
-      "type": "taxonomy",
-      "value": {
-       "taxonomy": [
-        [
-         "out_of_scope",
-         "other_company"
         ]
        ]
       }

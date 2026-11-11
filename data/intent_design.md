@@ -81,7 +81,8 @@
 |---|---|
 | fraud_report vs dispute_refund | 客户**没有做过**这笔交易 → fraud；**做过**但有问题 → dispute |
 | fraud_report vs card_lost_freeze | 卡丢了**并且**有陌生交易 → fraud（更紧急） |
-| transfer_status vs transfer_howto | 提到**我的 / 昨天 / 具体金额 / 某个收款人** → status；一般性的"怎么 / 多久 / 限额" → howto |
+| transfer_status vs transfer_howto | 提到**我的 / 昨天 / 具体金额 / 某个收款人** → status；一般性的"怎么 / 多久 / 限额" → howto。问**已经发出的某笔**转账要多久（"我的转账要多久才成功"）也是 status |
+| dispute_refund vs out_of_scope | 商家退款**没到账 / 被扣两次** → dispute_refund（即使商家是 Grab、foodpanda）；只问其他公司自己的政策（套餐价格、改机票费用）→ out_of_scope/other_company。生成的 other_company 数据中涉及退款的句子已全部删除 |
 | fees_rates vs dispute_refund | "收费标准是什么 / 为什么有这笔费用" → fees；"你们扣错了 / 汇率给错了" → dispute |
 | complaint vs 其他 | 只有当主要内容是不满时才是 complaint；"帮我冻结卡，转人工"仍是 card_lost_freeze + human_requested |
 
@@ -126,5 +127,12 @@ transfer_not_received_by_recipient、transfer_timing（status / howto）；card_
 - 每个意图内 1/3 保持英文、1/3 翻译成中文、1/3 改写成新加坡式中英混杂；翻译时保留了普通英文单词的"中文句"改标为 mixed
 - 清洗：去重（忽略大小写和标点）、测试集与训练集不重复、删除提到其他银行的句子（other_company 除外）
 - "需重点检查"：LLM 生成的句子 + 容易混淆的 4 个 Banking77 标签；Label Studio 中按 `review` 字段筛选
+
+**检查结果**（`src/scripts/apply_review.py` 应用到 `data/intent/reviewed/`，按句子原文匹配，数据重建后仍有效）：
+- 重建后 train 3265 条、test 643 条（删除了 25 条与 dispute_refund 冲突的"其他公司退款"句子）
+- 测试集 237 条需重点检查的句子由 AI（Claude）逐条检查：229 条正确，5 条改标签（4 条"我的转账要多久" howto → status，1 条二级意图修正），3 条意图不明确删除；
+  决定记录在 `data/intent/review/test_review_claude.jsonl`（每条都有原因），最终 test 640 条
+- 翻译质量：抽查的中文 / 中英混杂句子没有发现改变原意的翻译
+- 训练集未逐条检查（1345 条），只用规则清洗；Label Studio 导出的 JSON 放进 `data/intent/review/` 后重新运行脚本即可合并
 
 数据来源：Banking77（Casanueva et al., 2020），PolyAI，CC-BY-4.0
