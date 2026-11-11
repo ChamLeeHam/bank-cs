@@ -33,15 +33,35 @@ def pick(lang: str, en: str, zh: str) -> str:
     return en if lang == "en" else zh
 
 
-# 意图 -> 分支：统一从 src/intents.py 读取
-from src.intents import INTENT_ROUTES  # noqa: E402
+# 意图 -> 分支、转人工请求：统一从 src/intents.py 读取
+from src.intents import INTENT_ROUTES, is_human_request  # noqa: E402
+
+
+def last_user_messages(state: GraphState, n: int = 2) -> list[str]:
+    """对话历史中最近 n 条客户消息（已脱敏），按时间顺序"""
+    texts = [m.content for m in state.get("messages") or [] if isinstance(m, HumanMessage)]
+    return [str(t) for t in texts[-n:]]
+
+
+def router_text(state: GraphState) -> str:
+    """
+    意图路由的输入文本（Day 3 微调模型复用这个函数）
+    上一轮是追问（clarify_count > 0）时，客户这轮的回复往往只是碎片（如"第二笔"），
+    单独分类会出错，所以把上一条消息和这一条拼起来再分类（课程 day04 1.1.1 第 5 点的简化版）
+    """
+    current = state.get("masked_question", "")
+    if state.get("clarify_count", 0) > 0:
+        history = last_user_messages(state, 2)  # input_guard 已把本轮消息追加到最后
+        if len(history) == 2:
+            return f"{history[0]} {current}"
+    return current
 
 # 关键词路由（占位，Day 3 替换为微调模型），顺序即优先级：
 #   盗刷 > 挂失；争议 > 费用；一般性转账问题（多久/怎么）> 本人转账进度
 KEYWORD_RULES = [
     ("fraud_report", r"盗刷|didn'?t make|not mine|unauthori[sz]ed|fraud|don'?t recogni[sz]e|没(有)?(做|消费)过"),
     ("card_lost_freeze", r"lost|丢|不见|freeze|冻结|stolen"),
-    ("complaint", r"投诉|complain|太差|terrible|manager|人工"),
+    ("complaint", r"投诉|complain|太差|terrible|manager"),
     ("dispute_refund", r"charged twice|twice|refund|退款|扣了两次|重复扣|wrong amount"),
     ("transfer_howto", r"how long|how do i (send|transfer|receive)|多久|怎么(转账|汇款|收款)"),
     ("transfer_status", r"remittance|transfer|汇款|转账|到了没|到账"),
@@ -56,7 +76,7 @@ KEYWORD_RULES = [
 
 # ============== 节点 ==============
 class InputGuardNode(BaseNode):
-    """语言识别、隐私脱敏、拦截提示注入"""
+    """语言识别、隐私脱敏、拦截提示注入、识别转人工请求"""
     name = "input_guard"
 
     def process(self, state: GraphState) -> StateUpdate:
@@ -67,6 +87,7 @@ class InputGuardNode(BaseNode):
             "lang": detect_lang(question),
             "masked_question": masked,
             "blocked": bool(_INJECTION.search(question)),
+            "human_requested": is_human_request(masked),
             "messages": [HumanMessage(masked)],  # 对话历史只保存脱敏后的文本
         }
 
@@ -76,7 +97,7 @@ class IntentRouterNode(BaseNode):
     name = "intent_router"
 
     def process(self, state: GraphState) -> StateUpdate:
-        text = state.get("masked_question", "")
+        text = router_text(state)
         for intent, pattern in KEYWORD_RULES:
             if re.search(pattern, text, re.IGNORECASE):
                 # 关键词规则只能判断一级意图；二级意图等 Day 3 微调模型输出 "一级/二级"
@@ -100,22 +121,39 @@ class EntityExtractionNode(BaseNode):
 
 
 class GateNode(BaseNode):
-    """置信度 + 必填信息检查，决定走哪个分支"""
+    """
+    决定走哪个分支，优先级从高到低：
+      1. 客户明确要求人工          -> handoff
+      2. 置信度 < clarify_threshold -> handoff
+      3. 置信度中等 / 缺必填信息    -> ask_back；已连续追问 MAX_CLARIFY 次 -> handoff
+      4. 其余按意图表分流
+    """
     name = "gate"
+    MAX_CLARIFY = 2  # 连续追问次数上限（《需求文档》F9）
 
     def process(self, state: GraphState) -> StateUpdate:
         high = self.config.intent_threshold
         low = self.config.clarify_threshold
         score = state.get("intent_score", 0.0)
+        clarify_count = state.get("clarify_count", 0)
         missing: list[str] = []  # TODO: Day 5 按意图的必填信息表检查（如冻结卡需要 card_last4）
 
+        def result(decision: str, route: str) -> StateUpdate:
+            # 进入追问 +1，进入其他任何分支都清零
+            count = clarify_count + 1 if route == "ask_back" else 0
+            return {"decision": decision, "route": route, "missing_slots": missing, "clarify_count": count}
+
+        if state.get("human_requested"):
+            return result("handoff", "handoff")
         if score < low:
-            return {"decision": "handoff", "route": "handoff", "missing_slots": missing}
+            return result("handoff", "handoff")
         if score < high or missing:
-            return {"decision": "clarify", "route": "ask_back", "missing_slots": missing}
+            if clarify_count >= self.MAX_CLARIFY:
+                return result("handoff", "handoff")
+            return result("clarify", "ask_back")
         route = INTENT_ROUTES.get(state.get("intent", ""), "rag")
         decision = "refuse" if route == "refuse" else "handoff" if route == "handoff" else "answer"
-        return {"decision": decision, "route": route, "missing_slots": missing}
+        return result(decision, route)
 
 
 class AskBackNode(BaseNode):
@@ -182,8 +220,9 @@ class RefuseNode(BaseNode):
     def process(self, state: GraphState) -> StateUpdate:
         lang = state.get("lang", "en")
         if state.get("intent") == "greeting":
-            return {"answer": pick(lang, "Hello! I'm the Lion City Bank assistant. How can I help you today?",
-                                   "您好！我是狮城银行智能客服，请问有什么可以帮您？")}
+            # 明确告知客户是 AI（《需求文档》F4）
+            return {"answer": pick(lang, "Hello! I'm Lion City Bank's AI assistant. How can I help you today?",
+                                   "您好！我是狮城银行 AI 客服，请问有什么可以帮您？")}
         return {"answer": pick(lang,
                                "Sorry, I can't help with that. I can't give investment advice, but I can help with cards, transfers, fees and your account.",
                                "抱歉，这个问题我无法回答，也不能提供投资建议。我可以帮您处理银行卡、转账、手续费和账户相关的问题。")}

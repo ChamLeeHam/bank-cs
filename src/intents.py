@@ -2,6 +2,7 @@
 意图定义（唯一来源）：数据集构建、意图路由、gate 分流都从这里读取
 详细说明与边界规则见 data/intent_design.md
 """
+import re
 
 # 意图 -> 中文名、说明、分支、必填槽位
 INTENTS: dict[str, dict] = {
@@ -27,7 +28,7 @@ INTENTS: dict[str, dict] = {
     "dispute_refund": {"zh": "争议退款", "route": "handoff", "slots": [],
                        "desc": "本人做的交易但有问题：重复扣款、退款未到、金额或汇率不对"},
     "complaint": {"zh": "投诉", "route": "handoff", "slots": [],
-                  "desc": "主要表达不满，或要求人工/经理"},
+                  "desc": "主要表达不满（是否要求转人工由 human_requested 单独判断，不是意图）"},
     # ---------- refuse ----------
     "out_of_scope": {"zh": "超出范围", "route": "refuse", "slots": [],
                      "desc": "投资建议、闲聊、其他公司、与银行业务无关"},
@@ -117,12 +118,28 @@ MAX_PER_INTENT = 300
 GENERATED_SUB_INTENTS: dict[str, list[str]] = {
     "balance_inquiry": ["check_balance"],
     "card_lost_freeze": ["lost_or_stolen_card"],  # 补充数据沿用 Banking77 的同名二级意图
-    "complaint": ["waiting_time", "staff_attitude", "app_problem", "unfair_fee", "want_human"],
+    "complaint": ["waiting_time", "staff_attitude", "app_problem", "unfair_fee"],
     "out_of_scope": ["investment_advice", "chitchat", "other_company", "non_banking"],
     "greeting": ["hello"],
 }
 
 LABEL_SEP = "/"  # 微调模型的输出格式：一级意图/二级意图，如 card_service/pin_blocked
+
+# ============== 转人工请求（独立信号，不是意图） ==============
+# "我的卡丢了，帮我转人工" 同时属于 card_lost_freeze 和"要求人工"。如果把"要求人工"做成一个意图，
+# 模型只能二选一（参考课程 day04 1.1.1）。所以由 input_guard 用规则单独判断，写入 human_requested，
+# 意图照常识别（工单里仍能看到客户原本想办什么）。
+# 只放几乎不会误判的说法；单独的"人工"不放（会命中"人工智能"）
+HUMAN_REQUEST_RE = re.compile(
+    r"转人工|人工客服|找人工|要人工|真人客服|"
+    r"human agent|real person|live agent|customer service officer|"
+    r"(speak|talk) to (a |an )?(human|person|agent|someone|staff|officer)",
+    re.IGNORECASE,
+)
+
+
+def is_human_request(text: str) -> bool:
+    return bool(HUMAN_REQUEST_RE.search(text or ""))
 
 
 def sub_intents_of(intent: str) -> list[str]:
@@ -160,6 +177,10 @@ if __name__ == "__main__":
     assert all(sub_intents_of(i) for i in INTENTS), "有一级意图没有任何二级意图"
     assert split_label("card_service/pin_blocked") == ("card_service", "pin_blocked")
     assert len(ALL_LABELS) == len(set(ALL_LABELS)), "标签重复"
+    for text in ("我的卡丢了，帮我转人工", "Can I speak to a human?", "I want a live agent"):
+        assert is_human_request(text), text
+    for text in ("你们的人工智能客服太差了", "How do I transfer money?", "人工费怎么算", "我要投诉你们的客服人员"):
+        assert not is_human_request(text), text
 
     print(f"{len(INTENTS)} 个一级意图，{len(ALL_LABELS)} 个二级意图（其中 {len(BANKING77_TO_INTENT)} 个来自 Banking77）")
     for name, info in INTENTS.items():

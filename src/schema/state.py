@@ -40,6 +40,7 @@ class GraphState(TypedDict, total=False):
     lang: Lang  # 识别出的语言，决定回复语言【每轮重置】
     masked_question: str  # 脱敏后的问题，input_guard 之后的节点只使用这个字段【每轮重置】
     blocked: bool  # 是否被拦截（如提示注入）；拦截是正常业务结果，不是异常【每轮重置】
+    human_requested: bool  # 客户是否明确要求转人工；独立于意图，gate 优先处理【每轮重置】
 
     # ============== 意图（intent_router 写入） ==============
     intent: str  # 一级意图，决定分支；追问后下一轮需要沿用【跨轮保留】
@@ -52,6 +53,7 @@ class GraphState(TypedDict, total=False):
     missing_slots: list[str]  # gate 写入：当前意图缺少的必填信息【每轮重置】
 
     # ============== 分流（gate 写入） ==============
+    clarify_count: int  # 连续追问次数：进入 ask_back 时 +1，进入其他分支时清零；达到上限转人工【跨轮保留】
     decision: Decision | None  # 置信度分流结果【每轮重置】
     route: Route | None  # 实际进入的分支【每轮重置】
 
@@ -83,6 +85,7 @@ CROSS_TURN_DEFAULTS: dict[str, Any] = {
     "entities": {},
     "otp_verified": False,
     "ticket_id": None,
+    "clarify_count": 0,
 }
 
 # 每轮开始时要重置的字段及其初始值（对应表格中“跨轮保留 = 否”）
@@ -91,6 +94,7 @@ PER_TURN_DEFAULTS: dict[str, Any] = {
     "lang": "en",
     "masked_question": "",
     "blocked": False,
+    "human_requested": False,
     "sub_intent": "",
     "intent_score": 0.0,
     "router_backend": "keyword",
