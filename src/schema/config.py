@@ -61,6 +61,19 @@ class Config:
     # DeepSeek 不可用时自动改用本地 Qwen，再不行就返回资料原文
     rag_generator: str = field(default_factory=lambda: os.getenv("RAG_GENERATOR", "deepseek"))
 
+    # RAG 流程（结构同课程 03-rag）：问题重写 -> 混合检索 + HyDE 检索 -> RRF 融合 -> reranker 精排 + 断崖截断 -> 生成
+    # 用 BANK_ 前缀，避免与 .env 中课程项目的 RERANKER_* 配置冲突（课程的 top-k 是为长 PDF 设计的）
+    rag_rewrite: bool = field(default_factory=lambda: os.getenv("BANK_RAG_REWRITE", "true").lower() == "true")
+    rag_hyde: bool = field(default_factory=lambda: os.getenv("BANK_RAG_HYDE", "true").lower() == "true")
+    rag_candidates: int = field(default_factory=lambda: int(os.getenv("BANK_RAG_CANDIDATES", "10")))  # 每一路检索的候选数
+    hyde_weight: float = field(default_factory=lambda: float(os.getenv("BANK_HYDE_WEIGHT", "0.7")))  # RRF 中 HyDE 一路的权重
+    reranker_model: Path = field(default_factory=lambda: ROOT_DIR / os.getenv("BANK_RERANKER_MODEL", "pretrained/bge-reranker-base"))
+    rerank_min_topk: int = field(default_factory=lambda: int(os.getenv("BANK_RERANK_MIN_TOPK", "1")))
+    rerank_max_topk: int = field(default_factory=lambda: int(os.getenv("BANK_RERANK_MAX_TOPK", "3")))
+    rerank_gap_abs: float = field(default_factory=lambda: float(os.getenv("BANK_RERANK_GAP_ABS", "0.3")))
+    rerank_ratio: float = field(default_factory=lambda: float(os.getenv("BANK_RERANK_RATIO", "0.5")))
+    rerank_min_score: float = field(default_factory=lambda: float(os.getenv("BANK_RERANK_MIN_SCORE", "0.01")))  # 低于此分数视为知识库中没有答案
+
     #schema的配置
     schema:list = field(default_factory=lambda: [s.strip() for s in os.getenv("SCHEMA","").split(",") if s.strip()])
 

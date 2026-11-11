@@ -1,0 +1,371 @@
+{
+ "means": {
+  "context_relevance": 1.0,
+  "answer_relevancy": 0.8271357492199402,
+  "faithfulness": 0.852726574500768,
+  "response_groundedness": 0.9032258064516129
+ },
+ "counts": {
+  "context_relevance": 31,
+  "answer_relevancy": 31,
+  "faithfulness": 31,
+  "response_groundedness": 31
+ },
+ "samples": [
+  {
+   "query": "PayNow 转账要收钱吗？",
+   "answer": "通过 PayNow 进行新加坡本地转账是免费的，网上银行和 App 都不收取手续费；只有在分行柜台办理本地转账时，才会每笔收取 SGD 5。PayNow 是实时到账，全天 24 小时可用。",
+   "contexts": [
+    "如何收款 / How to receive money\n新加坡本地收款：把您的账号和银行代码 7999 告诉付款人，或在 App 中把 PayNow 绑定到您的手机号码或 NRIC。海外汇入：请付款人使用 SWIFT 代码 LCBKSGSGXXX，收款银行名称 Lion City Bank (Demo)，并填写您的账户全名和账号。多币种账户可以直接收取 USD、CNY、MYR 等外币，无需先兑换成新元。\n\nLocal transfers: give the sender your account number and bank code 7999, or link PayNow to your mobile number or NRIC in the app. Incoming overseas transfers: ask the sender to use SWIFT code LCBKSGSGXXX, bank name Lion City Bank (Demo), and your full account name and number. A multi-currency account can receive USD, CNY, MYR and other currencies directly, without converting to SGD first.",
+    "本地转账费用 / Local transfer fees\n通过 PayNow、FAST 或 GIRO 进行新加坡本地转账免费，网上银行和 App 均不收手续费。在分行柜台办理本地转账每笔收取 SGD 5。\n\nLocal transfers by PayNow, FAST or GIRO are free in internet banking and the app. A local transfer made at a branch counter costs SGD 5 per transaction.",
+    "转账方式比较 / Ways to transfer money\nPayNow：用手机号码、NRIC 或 UEN 转账，实时到账，全天 24 小时可用。FAST：用银行账号转给新加坡任何银行，通常几分钟内到账，每笔最高 SGD 200,000。GIRO：用于定期账单扣款（如水电费、保险），按账单机构的周期扣款。海外电汇（TT）：汇款到新加坡以外的银行账户。\n\nPayNow: send to a mobile number, NRIC or UEN; arrives instantly, 24/7. FAST: send to any Singapore bank account by account number; usually arrives within minutes, up to SGD 200,000 per transfer. GIRO: recurring bill payments such as utilities and insurance, deducted on the billing organisation's schedule. Overseas telegraphic transfer (TT): send money to a bank account outside Singapore."
+   ],
+   "context_relevance": 1.0,
+   "answer_relevancy": 0.8204798468734728,
+   "faithfulness": 1.0,
+   "response_groundedness": 1.0
+  },
+  {
+   "query": "What's the charge for sending a TT to Malaysia?",
+   "answer": "Sending an overseas TT costs SGD 10. Intermediary and receiving banks may deduct their own charges, usually the equivalent of SGD 10–30, so the recipient may receive slightly less. To pay all charges yourself (OUR) so the recipient gets the full amount, add SGD 20 per transfer.",
+   "contexts": [
+    "海外电汇（TT）手续费 / Overseas telegraphic transfer (TT) fees\n每笔海外电汇（TT）收取 SGD 10 手续费。中转行和收款行可能另外扣取费用（通常相当于 SGD 10–30），收款人实际收到的金额可能因此减少。如需由汇款人承担全部费用（OUR），每笔另加 SGD 20，收款人可收到全额。\n\nEach overseas telegraphic transfer (TT) costs SGD 10. Intermediary and receiving banks may deduct their own charges (usually the equivalent of SGD 10–30), so the recipient may receive slightly less. To pay all charges yourself (OUR) so the recipient gets the full amount, add SGD 20 per transfer."
+   ],
+   "context_relevance": 1.0,
+   "answer_relevancy": 0.7846933337793546,
+   "faithfulness": 1.0,
+   "response_groundedness": 1.0
+  },
+  {
+   "query": "你们的 exchange rate 是怎么定的？周末会不会不一样？",
+   "answer": "外币兑换、海外电汇和多币种账户转换，均按交易当时的狮城银行牌价执行；工作日牌价约每 5 分钟更新一次。周末和公众假期会使用锁定牌价，并加收 0.5% 的波动缓冲，因此与工作日不同。实时牌价可在 App 的“汇率”页面查看。",
+   "contexts": [
+    "汇率如何确定 / How exchange rates are set\n外币兑换、海外电汇和多币种账户转换使用交易当时的狮城银行牌价。工作日牌价约每 5 分钟更新一次；周末和公众假期使用锁定牌价，并加收 0.5% 的波动缓冲。实时牌价可在 App 的\"汇率\"页面查看。\n\nCurrency conversion, overseas TTs and multi-currency account transfers use Lion City Bank's board rate at the time of the transaction. On business days the rate updates about every 5 minutes. On weekends and public holidays a locked rate applies, with a 0.5% buffer for market movement. You can see live rates on the Rates page of the app."
+   ],
+   "context_relevance": 1.0,
+   "answer_relevancy": 0.6699082637287975,
+   "faithfulness": 1.0,
+   "response_groundedness": 1.0
+  },
+  {
+   "query": "I paid in USD on Amazon with my Visa, why was there an extra 3.25%?",
+   "answer": "The 3.25% is the foreign transaction fee charged on Visa card payments made in a foreign currency, including overseas websites such as Amazon. Since your payment was in USD, this fee applies.",
+   "contexts": [
+    "外币兑换与外币刷卡费用 / Currency conversion and foreign currency card fees\n在多币种账户内兑换货币不另收手续费，成本已包含在买卖汇率差价中。用 Visa 或 Mastercard 卡进行外币消费（包括在海外网站以外币付款），收取交易金额 3.25% 的外币交易费；银联（UnionPay）卡为 1%。以新元付款的海外商户也可能自行收取动态货币转换（DCC）费用，建议选择以当地货币付款。\n\nConverting currencies inside a multi-currency account has no separate fee; the cost is included in the buy and sell rates. Card payments in a foreign currency, including on overseas websites, carry a 3.25% foreign transaction fee on Visa and Mastercard, and 1% on UnionPay. Overseas merchants that charge you in SGD may add their own dynamic currency conversion (DCC) fee, so we recommend paying in the local currency.",
+    "ATM 取款费用 / ATM withdrawal fees\n在狮城银行 ATM 取款免费。在新加坡其他银行的 ATM 取款每次收取 SGD 2。在海外 ATM 取款每次收取 SGD 5，外币金额另加 3.25% 外币交易费；海外 ATM 运营商也可能另收费用，屏幕上会显示。\n\nWithdrawals at Lion City Bank ATMs are free. Withdrawals at other banks' ATMs in Singapore cost SGD 2 each. Overseas ATM withdrawals cost SGD 5 each plus the 3.25% foreign transaction fee; the overseas ATM operator may add its own fee, which is shown on the screen.",
+    "账单上看不懂的费用 / Unfamiliar charges on your statement\n账单上常见的小额费用包括：外币交易费（3.25%）、海外 ATM 取款费（SGD 5）、信用卡年费、补卡费（SGD 15）以及逾期还款费。App 中点击该笔交易可以查看费用类型。如果是您完全没有做过的交易，请立即冻结卡片并举报盗刷；如果认为费用收错了，可以申请人工客服核查。\n\nCommon small charges on a statement include the foreign transaction fee (3.25%), overseas ATM fee (SGD 5), credit card annual fee, card replacement fee (SGD 15) and late payment fee. Tap the transaction in the app to see the fee type. If you never made the transaction, freeze your card and report it as fraud straight away. If you think a fee was charged by mistake, ask for a human agent to review it."
+   ],
+   "context_relevance": 1.0,
+   "answer_relevancy": 0.8589837508506868,
+   "faithfulness": 0.0,
+   "response_groundedness": 0.5
+  },
+  {
+   "query": "在日本 ATM 拿钱要多少 fee？",
+   "answer": "在日本 ATM 取款属于海外取款，每次收取 SGD 5，并按外币金额另加 3.25% 外币交易费。日本 ATM 运营商也可能另收费用，屏幕上会显示。",
+   "contexts": [
+    "ATM 取款费用 / ATM withdrawal fees\n在狮城银行 ATM 取款免费。在新加坡其他银行的 ATM 取款每次收取 SGD 2。在海外 ATM 取款每次收取 SGD 5，外币金额另加 3.25% 外币交易费；海外 ATM 运营商也可能另收费用，屏幕上会显示。\n\nWithdrawals at Lion City Bank ATMs are free. Withdrawals at other banks' ATMs in Singapore cost SGD 2 each. Overseas ATM withdrawals cost SGD 5 each plus the 3.25% foreign transaction fee; the overseas ATM operator may add its own fee, which is shown on the screen."
+   ],
+   "context_relevance": 1.0,
+   "answer_relevancy": 0.9344116509468905,
+   "faithfulness": 1.0,
+   "response_groundedness": 1.0
+  },
+  {
+   "query": "statement 上面有一笔看不懂的小额 charge 是什么？",
+   "answer": "账单上常见的小额费用包括外币交易费（3.25%）、海外 ATM 取款费（SGD 5）、信用卡年费、补卡费（SGD 15）和逾期还款费。您可以在 App 中点击该笔交易查看费用类型。如果是您完全没有做过的交易，请立即冻结卡片并举报盗刷；如果认为费用收错了，可申请转人工客服核查。",
+   "contexts": [
+    "账单上看不懂的费用 / Unfamiliar charges on your statement\n账单上常见的小额费用包括：外币交易费（3.25%）、海外 ATM 取款费（SGD 5）、信用卡年费、补卡费（SGD 15）以及逾期还款费。App 中点击该笔交易可以查看费用类型。如果是您完全没有做过的交易，请立即冻结卡片并举报盗刷；如果认为费用收错了，可以申请人工客服核查。\n\nCommon small charges on a statement include the foreign transaction fee (3.25%), overseas ATM fee (SGD 5), credit card annual fee, card replacement fee (SGD 15) and late payment fee. Tap the transaction in the app to see the fee type. If you never made the transaction, freeze your card and report it as fraud straight away. If you think a fee was charged by mistake, ask for a human agent to review it."
+   ],
+   "context_relevance": 1.0,
+   "answer_relevancy": 0.7731374791345959,
+   "faithfulness": 1.0,
+   "response_groundedness": 1.0
+  },
+  {
+   "query": "信用卡年费可以免吗？",
+   "answer": "信用卡首两年免收年费；之后每年消费满 SGD 10,000 可申请豁免，否则年费为 SGD 196.20。",
+   "contexts": [
+    "银行卡年费与其他卡费 / Card annual fees and other card fees\n借记卡没有年费。信用卡年费为 SGD 196.20，首两年免收；之后每年消费满 SGD 10,000 可申请豁免。信用卡逾期还款费为 SGD 100。借记卡或信用卡补卡费为 SGD 15；如果卡片被盗并已报警，补卡免费。\n\nDebit cards have no annual fee. The credit card annual fee is SGD 196.20, waived for the first two years; after that it can be waived if you spend SGD 10,000 in the year. The credit card late payment fee is SGD 100. Replacing a debit or credit card costs SGD 15, or is free if the card was stolen and you have a police report."
+   ],
+   "context_relevance": 1.0,
+   "answer_relevancy": 0.8468116824826702,
+   "faithfulness": 1.0,
+   "response_groundedness": 1.0
+  },
+  {
+   "query": "What's the difference between PayNow and FAST?",
+   "answer": "PayNow sends money using a mobile number, NRIC or UEN and arrives instantly, 24/7. FAST sends to any Singapore bank account by account number and usually arrives within minutes, with a limit of up to SGD 200,000 per transfer.",
+   "contexts": [
+    "转账方式比较 / Ways to transfer money\nPayNow：用手机号码、NRIC 或 UEN 转账，实时到账，全天 24 小时可用。FAST：用银行账号转给新加坡任何银行，通常几分钟内到账，每笔最高 SGD 200,000。GIRO：用于定期账单扣款（如水电费、保险），按账单机构的周期扣款。海外电汇（TT）：汇款到新加坡以外的银行账户。\n\nPayNow: send to a mobile number, NRIC or UEN; arrives instantly, 24/7. FAST: send to any Singapore bank account by account number; usually arrives within minutes, up to SGD 200,000 per transfer. GIRO: recurring bill payments such as utilities and insurance, deducted on the billing organisation's schedule. Overseas telegraphic transfer (TT): send money to a bank account outside Singapore."
+   ],
+   "context_relevance": 1.0,
+   "answer_relevancy": 0.8819948245533494,
+   "faithfulness": 1.0,
+   "response_groundedness": 1.0
+  },
+  {
+   "query": "FAST transfer 一般几分钟会到？",
+   "answer": "FAST 转账通常在几秒到几分钟内到账，全天可用。如果超过这个时间仍未到账，您可以登录后让我们帮您查询该笔转账的状态。",
+   "contexts": [
+    "转账一般多久到账 / How long transfers take\nPayNow 和 FAST 通常在几秒到几分钟内到账，全天可用。GIRO 按账单机构的扣款日处理。海外电汇在新加坡工作日下午 3 点前提交，当天处理；一般 1–3 个工作日到账，部分国家或地区可能需要 5 个工作日。汇入的海外电汇在本行收到后当天入账。如果超过这些时间仍未到账，可以登录后让我们查询您那一笔转账的状态。\n\nPayNow and FAST usually arrive within seconds to minutes, 24/7. GIRO is processed on the billing organisation's deduction date. Overseas TTs submitted before 3 pm on a Singapore business day are processed the same day and usually arrive in 1–3 working days; some countries can take up to 5 working days. Incoming overseas TTs are credited on the day we receive them. If a transfer is later than this, log in and ask us to check the status of that specific transfer.",
+    "转账方式比较 / Ways to transfer money\nPayNow：用手机号码、NRIC 或 UEN 转账，实时到账，全天 24 小时可用。FAST：用银行账号转给新加坡任何银行，通常几分钟内到账，每笔最高 SGD 200,000。GIRO：用于定期账单扣款（如水电费、保险），按账单机构的周期扣款。海外电汇（TT）：汇款到新加坡以外的银行账户。\n\nPayNow: send to a mobile number, NRIC or UEN; arrives instantly, 24/7. FAST: send to any Singapore bank account by account number; usually arrives within minutes, up to SGD 200,000 per transfer. GIRO: recurring bill payments such as utilities and insurance, deducted on the billing organisation's schedule. Overseas telegraphic transfer (TT): send money to a bank account outside Singapore."
+   ],
+   "context_relevance": 1.0,
+   "answer_relevancy": 0.9222943588437769,
+   "faithfulness": 1.0,
+   "response_groundedness": 1.0
+  },
+  {
+   "query": "How do I send money to my mum's bank account in China?",
+   "answer": "Use the app and go to Transfer > Overseas transfer > Add payee. Enter your mum’s full name, account number, bank name, SWIFT code and address, then check the amount and fees and enter the one-time password sent to your phone to submit. The first transfer to a new payee has a 12-hour cooling period.",
+   "contexts": [
+    "如何汇款到海外 / How to send money overseas\n在 App 中选择\"转账 > 海外汇款 > 新增收款人\"，填写收款人全名、账号、收款银行名称和 SWIFT 代码，以及收款人地址。确认金额和费用后，输入短信验证码（OTP）即可提交。首次向新收款人汇款，需要经过 12 小时冷静期（见\"收款人限制\"）。\n\nIn the app, go to Transfer > Overseas transfer > Add payee and enter the payee's full name, account number, bank name, SWIFT code and address. Check the amount and fees, then enter the one-time password (OTP) sent to your phone to submit. The first transfer to a new payee has a 12-hour cooling period (see \"Payee restrictions\")."
+   ],
+   "context_relevance": 1.0,
+   "answer_relevancy": 0.8226816360401615,
+   "faithfulness": 1.0,
+   "response_groundedness": 0.5
+  },
+  {
+   "query": "我朋友在美国要汇钱给我，要给他什么资料？",
+   "answer": "如果你朋友是通过狮城银行App办理海外汇款，你需要提供收款人全名、账号、收款银行名称和SWIFT代码，以及收款人地址。资料未说明从美国银行直接汇入所需的具体资料，建议转人工客服确认。",
+   "contexts": [
+    "如何汇款到海外 / How to send money overseas\n在 App 中选择\"转账 > 海外汇款 > 新增收款人\"，填写收款人全名、账号、收款银行名称和 SWIFT 代码，以及收款人地址。确认金额和费用后，输入短信验证码（OTP）即可提交。首次向新收款人汇款，需要经过 12 小时冷静期（见\"收款人限制\"）。\n\nIn the app, go to Transfer > Overseas transfer > Add payee and enter the payee's full name, account number, bank name, SWIFT code and address. Check the amount and fees, then enter the one-time password (OTP) sent to your phone to submit. The first transfer to a new payee has a 12-hour cooling period (see \"Payee restrictions\")."
+   ],
+   "context_relevance": 1.0,
+   "answer_relevancy": 0.7668670369952184,
+   "faithfulness": 0.14285714285714285,
+   "response_groundedness": 0.5
+  },
+  {
+   "query": "Why can't I add Binance as a payee?",
+   "answer": "Binance is a cryptocurrency exchange, and payees that are cryptocurrency exchanges cannot be added. We do not support transfers to crypto platforms.",
+   "contexts": [
+    "收款人限制 / Payee restrictions\n为防范诈骗，新增收款人后的 12 小时内，向该收款人的转账每天最多 SGD 1,000。以下情况无法添加收款人：收款人姓名与账户不符、收款国家或地区受制裁、收款方为加密货币交易平台（本行不支持向加密货币平台转账）。如果添加收款人失败，请核对姓名和账号是否与对方银行记录完全一致。\n\nTo protect you from scams, transfers to a newly added payee are limited to SGD 1,000 per day for the first 12 hours. A payee cannot be added if the name does not match the account, if the country is under sanctions, or if the payee is a cryptocurrency exchange (we do not support transfers to crypto platforms). If adding a payee fails, check that the name and account number match the receiving bank's records exactly."
+   ],
+   "context_relevance": 1.0,
+   "answer_relevancy": 0.8521171436876532,
+   "faithfulness": 0.6666666666666666,
+   "response_groundedness": 0.5
+  },
+  {
+   "query": "我想一次转 SGD 10,000 给朋友，可以吗？",
+   "answer": "要看转账方式和收款人情况：如果是 PayNow/FAST 且未调整默认限额，每日上限是 SGD 5,000，不能一次转 SGD 10,000；提高限额需等待 12 小时生效。若是新增收款人，12 小时内向该收款人每天最多 SGD 1,000。海外电汇默认每日限额为 SGD 20,000，需另行设置。",
+   "contexts": [
+    "收款人限制 / Payee restrictions\n为防范诈骗，新增收款人后的 12 小时内，向该收款人的转账每天最多 SGD 1,000。以下情况无法添加收款人：收款人姓名与账户不符、收款国家或地区受制裁、收款方为加密货币交易平台（本行不支持向加密货币平台转账）。如果添加收款人失败，请核对姓名和账号是否与对方银行记录完全一致。\n\nTo protect you from scams, transfers to a newly added payee are limited to SGD 1,000 per day for the first 12 hours. A payee cannot be added if the name does not match the account, if the country is under sanctions, or if the payee is a cryptocurrency exchange (we do not support transfers to crypto platforms). If adding a payee fails, check that the name and account number match the receiving bank's records exactly.",
+    "转账限额 / Transfer limits\nPayNow 和 FAST 的默认每日限额为 SGD 5,000，可在 App 的\"设置 > 转账限额\"中调整，最高 SGD 200,000。降低限额立即生效；提高限额需等待 12 小时才生效，这是防诈骗措施。海外电汇的每日限额另行设置，默认 SGD 20,000。\n\nThe default daily limit for PayNow and FAST is SGD 5,000. You can change it in the app under Settings > Transfer limits, up to SGD 200,000. Lowering the limit takes effect immediately; raising it takes effect after 12 hours as an anti-scam measure. Overseas TTs have a separate daily limit, SGD 20,000 by default."
+   ],
+   "context_relevance": 1.0,
+   "answer_relevancy": 0.7049408686259261,
+   "faithfulness": 1.0,
+   "response_groundedness": 1.0
+  },
+  {
+   "query": "My transfer got returned, what usually causes that?",
+   "answer": "Common reasons include a payee name that does not match the account number, a wrong bank code or SWIFT code, exceeding the daily transfer limit, insufficient balance, or a routine compliance review. Returned funds usually come back to your account within 3–5 working days, and the transfer fee may not be refunded. To find out why your transfer failed, log in and ask us to check that transfer.",
+   "contexts": [
+    "转账失败的常见原因 / Common reasons a transfer fails\n常见原因包括：收款人姓名与账号不符、收款银行代码或 SWIFT 代码错误、超过每日转账限额、账户余额不足，以及转账正在进行例行合规审核。被退回的款项一般在 3–5 个工作日内退回您的账户，手续费可能不退。想了解您某一笔转账为什么失败，可以登录后让我们查询该笔转账。\n\nCommon reasons include: the payee name does not match the account number, the bank code or SWIFT code is wrong, the daily transfer limit was exceeded, the balance was not enough, or the transfer is under routine compliance review. Returned funds usually come back to your account within 3–5 working days; the transfer fee may not be refunded. To find out why one of your own transfers failed, log in and ask us to check that transfer."
+   ],
+   "context_relevance": 1.0,
+   "answer_relevancy": 0.8506712536306166,
+   "faithfulness": 1.0,
+   "response_groundedness": 1.0
+  },
+  {
+   "query": "新卡收到了要怎么开通？",
+   "answer": "收到新卡后，可在 App 中选择“银行卡 > 激活”，输入卡片背面后四位并完成短信验证码（OTP）验证即可激活。也可以到狮城银行 ATM 插卡并设置 PIN 来激活。卡片激活前不能消费或取款。",
+   "contexts": [
+    "激活新卡 / Activating a new card\n收到新卡后，在 App 中选择\"银行卡 > 激活\"，输入卡片背面的后四位并完成短信验证码（OTP）验证即可激活。也可以在狮城银行 ATM 插卡并设置 PIN 来激活。卡片激活前不能消费或取款。\n\nWhen your new card arrives, go to Cards > Activate in the app, enter the last four digits on the back of the card and confirm with the one-time password (OTP). You can also activate it by inserting the card at a Lion City Bank ATM and setting a PIN. The card cannot be used for payments or withdrawals until it is activated.",
+    "卡片即将到期 / Card about to expire\n卡片到期前一个月，我们会自动把新卡寄到您登记的地址，卡号不变，有效期和安全码（CVV）会更新。收到后请激活新卡，并在使用自动扣款的商户（如订阅服务）中更新有效期和 CVV。\n\nOne month before your card expires, we automatically post a new card to your registered address. The card number stays the same; the expiry date and security code (CVV) change. Activate the new card when it arrives and update the expiry date and CVV with merchants that charge you automatically, such as subscriptions."
+   ],
+   "context_relevance": 1.0,
+   "answer_relevancy": 0.8860509271892164,
+   "faithfulness": 1.0,
+   "response_groundedness": 1.0
+  },
+  {
+   "query": "My new card still hasn't arrived after two weeks",
+   "answer": "Since two weeks is 10 working days, the card should have arrived within the usual 5–7 working days. Please contact us to request a resend, and you can also check delivery tracking in the app.",
+   "contexts": [
+    "激活新卡 / Activating a new card\n收到新卡后，在 App 中选择\"银行卡 > 激活\"，输入卡片背面的后四位并完成短信验证码（OTP）验证即可激活。也可以在狮城银行 ATM 插卡并设置 PIN 来激活。卡片激活前不能消费或取款。\n\nWhen your new card arrives, go to Cards > Activate in the app, enter the last four digits on the back of the card and confirm with the one-time password (OTP). You can also activate it by inserting the card at a Lion City Bank ATM and setting a PIN. The card cannot be used for payments or withdrawals until it is activated.",
+    "新卡寄送时间 / Card delivery time\n新卡或补发的卡会在 5–7 个工作日内以挂号信寄到您登记的新加坡地址，App 中可以查看寄送进度。超过 10 个工作日仍未收到，请联系我们补寄。目前不支持把卡寄到新加坡以外的地址。\n\nNew and replacement cards are sent by registered mail to your Singapore address within 5–7 working days; you can track delivery in the app. If you have not received it after 10 working days, contact us to resend it. We cannot currently send cards to addresses outside Singapore.",
+    "ATM 吞卡 / Card retained by an ATM\nATM 吞卡通常是为了安全（例如多次输错 PIN 或卡片读取失败）。被吞的卡会被安全销毁，不会退还。请在 App 中申请补卡，ATM 吞卡的补卡免收费用，新卡 5–7 个工作日寄到。如果担心卡片被盗用，可以先在 App 中冻结卡片。\n\nATMs retain cards for security, for example after several wrong PIN attempts or a card read error. Retained cards are securely destroyed and cannot be returned. Request a replacement in the app; it is free when an ATM kept your card, and the new card arrives in 5–7 working days. If you are worried about misuse, freeze the card in the app first."
+   ],
+   "context_relevance": 1.0,
+   "answer_relevancy": 0.9134402148438374,
+   "faithfulness": 0.75,
+   "response_groundedness": 1.0
+  },
+  {
+   "query": "我的 PIN 输错三次了，现在用不了",
+   "answer": "您的 PIN 因连续输错 3 次已被锁定，卡片暂时不能刷卡或取款。请在 App 中选择“银行卡 > 解锁 PIN”，完成 OTP 验证后重新设置 PIN 即可。若 App 操作遇到问题，建议转人工客服协助。",
+   "contexts": [
+    "修改 PIN 与 PIN 被锁 / Changing or unblocking your PIN\n修改 PIN：在 App 的\"银行卡 > 修改 PIN\"中操作，或在狮城银行 ATM 上修改。连续输错 PIN 3 次后，PIN 会被锁定，卡片暂时不能刷卡或取款。解锁方法：在 App 中选择\"银行卡 > 解锁 PIN\"并完成 OTP 验证，解锁后需重新设置 PIN。\n\nTo change your PIN, use Cards > Change PIN in the app or any Lion City Bank ATM. After 3 wrong PIN attempts in a row, the PIN is blocked and the card cannot be used for payments or withdrawals. To unblock it, go to Cards > Unblock PIN in the app, confirm with the OTP, and set a new PIN.",
+    "忘记登录密码 / Forgotten login password\n在 App 或网上银行登录页面点击\"忘记密码\"，输入 NRIC 或护照号码以及注册手机号，完成短信验证码验证后即可设置新密码。连续输错密码 5 次后账户登录会被锁定 24 小时，也可以按上述步骤重设密码立即解锁。狮城银行不会通过电话或短信向您索取密码或验证码。\n\nTap \"Forgot password\" on the app or internet banking login page, enter your NRIC or passport number and registered mobile number, confirm with the OTP, and set a new password. After 5 wrong passwords in a row, login is locked for 24 hours; resetting the password as above unlocks it immediately. Lion City Bank will never ask for your password or OTP by phone or SMS.",
+    "ATM 吞卡 / Card retained by an ATM\nATM 吞卡通常是为了安全（例如多次输错 PIN 或卡片读取失败）。被吞的卡会被安全销毁，不会退还。请在 App 中申请补卡，ATM 吞卡的补卡免收费用，新卡 5–7 个工作日寄到。如果担心卡片被盗用，可以先在 App 中冻结卡片。\n\nATMs retain cards for security, for example after several wrong PIN attempts or a card read error. Retained cards are securely destroyed and cannot be returned. Request a replacement in the app; it is free when an ATM kept your card, and the new card arrives in 5–7 working days. If you are worried about misuse, freeze the card in the app first."
+   ],
+   "context_relevance": 1.0,
+   "answer_relevancy": 0.859583250844126,
+   "faithfulness": 0.3333333333333333,
+   "response_groundedness": 0.5
+  },
+  {
+   "query": "Why does my card keep getting declined overseas?",
+   "answer": "Your card may be declined overseas because overseas use is not turned on, or because you have reached a spending/withdrawal limit, have insufficient balance, or the card is frozen, not activated, or expired. You can check the card status, turn on overseas use, and change limits under Cards > Card settings in the app.",
+   "contexts": [
+    "卡被拒或不能用 / Card declined or not working\n卡被拒的常见原因：余额不足、超过每日消费或取款限额、没有开通海外使用、卡片已冻结、卡片未激活或已过期。感应支付（contactless）单笔超过 SGD 200 时，需要插卡并输入 PIN。卡片芯片损坏时请申请补卡。可以在 App 的\"银行卡 > 卡片设置\"中查看状态、开通海外使用和调整限额。\n\nCommon reasons a card is declined: not enough balance, the daily spending or withdrawal limit is reached, overseas use is not turned on, the card is frozen, or the card is not activated or has expired. Contactless payments over SGD 200 need the card inserted with a PIN. If the chip is damaged, request a replacement card. You can check the card status, turn on overseas use and change limits under Cards > Card settings in the app."
+   ],
+   "context_relevance": 1.0,
+   "answer_relevancy": 0.9418300100439577,
+   "faithfulness": 1.0,
+   "response_groundedness": 1.0
+  },
+  {
+   "query": "ATM 把我的卡吃掉了",
+   "answer": "ATM 吞卡通常是为安全（例如多次输错 PIN 或卡片读取失败），被吞的卡会安全销毁、不会退还。请在 App 中申请补卡，ATM 吞卡补卡免收费用，新卡 5–7 个工作日寄到。如果担心卡片被盗用，可以先在 App 中冻结卡片。",
+   "contexts": [
+    "ATM 吞卡 / Card retained by an ATM\nATM 吞卡通常是为了安全（例如多次输错 PIN 或卡片读取失败）。被吞的卡会被安全销毁，不会退还。请在 App 中申请补卡，ATM 吞卡的补卡免收费用，新卡 5–7 个工作日寄到。如果担心卡片被盗用，可以先在 App 中冻结卡片。\n\nATMs retain cards for security, for example after several wrong PIN attempts or a card read error. Retained cards are securely destroyed and cannot be returned. Request a replacement in the app; it is free when an ATM kept your card, and the new card arrives in 5–7 working days. If you are worried about misuse, freeze the card in the app first."
+   ],
+   "context_relevance": 1.0,
+   "answer_relevancy": 0.8034497941178577,
+   "faithfulness": 1.0,
+   "response_groundedness": 1.0
+  },
+  {
+   "query": "My card expires next month, do I need to apply for a new one?",
+   "answer": "No, you do not need to apply. One month before your card expires, the bank automatically posts a new card to your registered address. The card number stays the same, but the expiry date and security code change, so activate the new card when it arrives and update merchants that charge you automatically.",
+   "contexts": [
+    "卡片即将到期 / Card about to expire\n卡片到期前一个月，我们会自动把新卡寄到您登记的地址，卡号不变，有效期和安全码（CVV）会更新。收到后请激活新卡，并在使用自动扣款的商户（如订阅服务）中更新有效期和 CVV。\n\nOne month before your card expires, we automatically post a new card to your registered address. The card number stays the same; the expiry date and security code (CVV) change. Activate the new card when it arrives and update the expiry date and CVV with merchants that charge you automatically, such as subscriptions."
+   ],
+   "context_relevance": 1.0,
+   "answer_relevancy": 0.9336850651436971,
+   "faithfulness": 1.0,
+   "response_groundedness": 1.0
+  },
+  {
+   "query": "可以给我太太办一张 supplementary card 吗？",
+   "answer": "可以，但仅限**信用卡**附属卡：您可为年满18岁的家人（包括太太）申请附属卡，首两张免年费。若您指的是**借记卡**，则不支持附属卡。请确认太太已满18岁且您要办的是信用卡附属卡。",
+   "contexts": [
+    "补发实体卡与附属卡 / Replacement and supplementary cards\n在 App 中选择\"银行卡 > 申请补卡\"即可补发实体卡，费用 SGD 15（卡片被盗并已报警则免费）。信用卡可为 18 岁以上的家人申请附属卡，首两张免年费。借记卡不提供附属卡，每个账户只能关联一张借记卡。\n\nOrder a replacement physical card under Cards > Replace card in the app; it costs SGD 15, or is free if the card was stolen and you have a police report. Credit card holders can add supplementary cards for family members aged 18 or above, with no annual fee for the first two. Debit cards have no supplementary cards; each account has one debit card."
+   ],
+   "context_relevance": 1.0,
+   "answer_relevancy": 0.9209160170796178,
+   "faithfulness": 0.625,
+   "response_groundedness": 1.0
+  },
+  {
+   "query": "Is your debit card Visa or Mastercard?",
+   "answer": "Our debit card is Visa and works at Visa merchants and ATMs worldwide. Our credit card is Mastercard.",
+   "contexts": [
+    "卡组织与受理范围 / Card networks and where cards are accepted\n借记卡为 Visa，可在全球 Visa 商户和 ATM 使用；信用卡为 Mastercard；另提供银联（UnionPay）借记卡，适合在中国大陆消费，外币交易费只有 1%。所有卡片都支持 Apple Pay 和 Google Pay。在新加坡可使用狮城银行 ATM 以及贴有 Visa、Mastercard 或银联标志的其他银行 ATM。\n\nOur debit card is Visa and works at Visa merchants and ATMs worldwide; our credit card is Mastercard. We also offer a UnionPay debit card for spending in mainland China, with a 1% foreign transaction fee. All cards work with Apple Pay and Google Pay. In Singapore you can use Lion City Bank ATMs and other banks' ATMs showing the Visa, Mastercard or UnionPay logo."
+   ],
+   "context_relevance": 1.0,
+   "answer_relevancy": 0.7392707418745954,
+   "faithfulness": 1.0,
+   "response_groundedness": 1.0
+  },
+  {
+   "query": "Can I open an account if I'm 15?",
+   "answer": "At 15, you cannot open a savings account on your own. A parent or guardian must open a joint account for you. Current accounts and credit cards require you to be 21 or above.",
+   "contexts": [
+    "开户条件 / Who can open an account\n年满 16 岁的新加坡公民、永久居民，以及持有效准证（如就业准证、学生准证）的外国人，都可以开立储蓄账户。16 岁以下需由父母或监护人开立联名账户。开立往来账户和信用卡需年满 21 岁，信用卡另需满足最低收入要求。\n\nSingapore citizens, permanent residents and foreigners holding a valid pass (such as an Employment Pass or Student's Pass) aged 16 or above can open a savings account. Under 16, a parent or guardian must open a joint account. Current accounts and credit cards require you to be 21 or above; credit cards also have a minimum income requirement."
+   ],
+   "context_relevance": 1.0,
+   "answer_relevancy": 0.8623956444861048,
+   "faithfulness": 1.0,
+   "response_groundedness": 1.0
+  },
+  {
+   "query": "开户需要什么证件？没有 Singpass 可以吗？",
+   "answer": "开户可以通过 Singpass（MyInfo）自动填写并验证资料。没有 Singpass 也可以，外国人需上传护照和准证，并拍摄一张自拍完成人脸比对。银行会按规定核实客户身份。",
+   "contexts": [
+    "身份验证 / Verifying your identity\n网上开户可以通过 Singpass（MyInfo）自动填写并验证资料，几分钟内完成。没有 Singpass 的外国人可上传护照和准证，再拍摄一张自拍完成人脸比对。根据新加坡金融管理局（MAS）关于反洗钱和反恐融资的规定，银行必须核实每位客户的身份，并在资料变更或定期复核时重新验证。\n\nWhen you open an account online, Singpass (MyInfo) fills in and verifies your details in minutes. Foreigners without Singpass can upload a passport and pass, then take a selfie for face matching. Under the Monetary Authority of Singapore (MAS) rules on anti-money laundering and countering the financing of terrorism, we must verify every customer's identity, and verify it again when details change or during periodic reviews."
+   ],
+   "context_relevance": 1.0,
+   "answer_relevancy": 0.782133049476767,
+   "faithfulness": 0.6666666666666666,
+   "response_groundedness": 1.0
+  },
+  {
+   "query": "The app keeps rejecting my selfie during verification",
+   "answer": "A common reason is that the selfie is too dark, so retake it in good light and make sure your document is still valid. After 3 failed attempts, visit any branch with your documents and a staff member will verify you in person.",
+   "contexts": [
+    "身份验证失败 / When identity verification fails\n验证失败的常见原因：证件照片模糊或反光、证件已过期、自拍光线太暗、填写的姓名与证件不一致。请在光线充足处重新拍摄并确认证件在有效期内。连续 3 次失败后，请携带证件到任何分行办理，柜台会人工核实。\n\nCommon reasons verification fails: the document photo is blurry or has glare, the document has expired, the selfie is too dark, or the name entered does not match the document. Retake the photos in good light and check that your document is still valid. After 3 failed attempts, visit any branch with your documents and a staff member will verify you in person."
+   ],
+   "context_relevance": 1.0,
+   "answer_relevancy": 0.805164894653573,
+   "faithfulness": 1.0,
+   "response_groundedness": 1.0
+  },
+  {
+   "query": "我搬家了，地址要怎么改？",
+   "answer": "您可以在 App 的“设置 > 个人资料”中修改地址，修改时需要短信验证码（OTP）确认。如果您的账户已绑定 Singpass，地址会自动同步，无需手动修改。",
+   "contexts": [
+    "修改个人资料 / Updating your personal details\n地址、手机号码和电子邮箱可以在 App 的\"设置 > 个人资料\"中修改，需要短信验证码（OTP）确认；修改手机号码时，验证码会同时发送到新旧号码。如果已绑定 Singpass，地址会自动同步。修改姓名或证件号码需携带证明文件（如结婚证书或新证件）到分行办理。\n\nYou can change your address, mobile number and email in the app under Settings > Personal details, confirmed with a one-time password (OTP); when changing your mobile number, codes are sent to both the old and new numbers. If you use Singpass, your address updates automatically. To change your name or ID number, visit a branch with supporting documents such as a marriage certificate or new ID."
+   ],
+   "context_relevance": 1.0,
+   "answer_relevancy": 0.8067940077377345,
+   "faithfulness": 1.0,
+   "response_groundedness": 1.0
+  },
+  {
+   "query": "I can't remember my internet banking password",
+   "answer": "Tap “Forgot password” on the app or internet banking login page, enter your NRIC or passport number and registered mobile number, confirm with the OTP, then set a new password. If you entered 5 wrong passwords in a row, login is locked for 24 hours, but resetting the password this way unlocks it immediately. Lion City Bank will never ask for your password or OTP by phone or SMS.",
+   "contexts": [
+    "忘记登录密码 / Forgotten login password\n在 App 或网上银行登录页面点击\"忘记密码\"，输入 NRIC 或护照号码以及注册手机号，完成短信验证码验证后即可设置新密码。连续输错密码 5 次后账户登录会被锁定 24 小时，也可以按上述步骤重设密码立即解锁。狮城银行不会通过电话或短信向您索取密码或验证码。\n\nTap \"Forgot password\" on the app or internet banking login page, enter your NRIC or passport number and registered mobile number, confirm with the OTP, and set a new password. After 5 wrong passwords in a row, login is locked for 24 hours; resetting the password as above unlocks it immediately. Lion City Bank will never ask for your password or OTP by phone or SMS."
+   ],
+   "context_relevance": 1.0,
+   "answer_relevancy": 0.689609892928584,
+   "faithfulness": 1.0,
+   "response_groundedness": 1.0
+  },
+  {
+   "query": "我想 close 我的 savings account",
+   "answer": "您可以在 App 的“设置 > 关闭账户”中申请关闭储蓄账户，或到分行办理。关闭前请先转出余额、取消 GIRO 和其他自动扣款，并还清关联信用卡欠款。销户一般在 7 个工作日内完成；若开户未满 6 个月，会收取 SGD 30。",
+   "contexts": [
+    "销户 / Closing your account\n储蓄账户可以在 App 的\"设置 > 关闭账户\"中申请关闭，或到分行办理。关闭前请先把余额转出、取消 GIRO 和其他自动扣款，并还清关联信用卡的欠款。销户一般在 7 个工作日内完成，开户 6 个月内销户收取 SGD 30。\n\nYou can close a savings account in the app under Settings > Close account, or at a branch. Before closing, transfer out the balance, cancel GIRO and other automatic payments, and pay off any linked credit card balance. Closure usually takes 7 working days. Closing an account within 6 months of opening costs SGD 30."
+   ],
+   "context_relevance": 1.0,
+   "answer_relevancy": 0.7764833630447524,
+   "faithfulness": 1.0,
+   "response_groundedness": 1.0
+  },
+  {
+   "query": "你们可以存比特币吗？",
+   "answer": "不可以。多币种账户不支持任何加密货币的存放、兑换或转账，比特币也包括在内。",
+   "contexts": [
+    "多币种账户支持的货币 / Currencies in the multi-currency account\n多币种账户支持 11 种货币：SGD、USD、CNY、MYR、EUR、GBP、AUD、JPY、HKD、THB 和 IDR。可以持有、兑换、收取和汇出这些货币。本行不支持任何加密货币的存放、兑换或转账。\n\nThe multi-currency account supports 11 currencies: SGD, USD, CNY, MYR, EUR, GBP, AUD, JPY, HKD, THB and IDR. You can hold, convert, receive and send these currencies. We do not support holding, converting or transferring any cryptocurrency."
+   ],
+   "context_relevance": 1.0,
+   "answer_relevancy": 0.8288284529315586,
+   "faithfulness": 0.375,
+   "response_groundedness": 1.0
+  },
+  {
+   "query": "FAST 转账手续费多少？",
+   "answer": "通过网上银行或 App 使用 FAST 进行新加坡本地转账免手续费；如果在分行柜台办理本地转账，那么每笔收取 SGD 5。",
+   "contexts": [
+    "本地转账费用 / Local transfer fees\n通过 PayNow、FAST 或 GIRO 进行新加坡本地转账免费，网上银行和 App 均不收手续费。在分行柜台办理本地转账每笔收取 SGD 5。\n\nLocal transfers by PayNow, FAST or GIRO are free in internet banking and the app. A local transfer made at a branch counter costs SGD 5 per transaction.",
+    "转账限额 / Transfer limits\nPayNow 和 FAST 的默认每日限额为 SGD 5,000，可在 App 的\"设置 > 转账限额\"中调整，最高 SGD 200,000。降低限额立即生效；提高限额需等待 12 小时才生效，这是防诈骗措施。海外电汇的每日限额另行设置，默认 SGD 20,000。\n\nThe default daily limit for PayNow and FAST is SGD 5,000. You can change it in the app under Settings > Transfer limits, up to SGD 200,000. Lowering the limit takes effect immediately; raising it takes effect after 12 hours as an anti-scam measure. Overseas TTs have a separate daily limit, SGD 20,000 by default."
+   ],
+   "context_relevance": 1.0,
+   "answer_relevancy": 0.814264254032436,
+   "faithfulness": 1.0,
+   "response_groundedness": 1.0
+  },
+  {
+   "query": "What if I forgot the PIN for my card?",
+   "answer": "Use Cards > Change PIN in the app or any Lion City Bank ATM to set a new PIN; no old PIN is needed there. Be careful, though: after 3 wrong PIN attempts in a row the PIN is blocked and the card cannot be used for payments or withdrawals, so if that happens, go to Cards > Unblock PIN in the app, confirm with the OTP and set a new PIN.",
+   "contexts": [
+    "ATM 吞卡 / Card retained by an ATM\nATM 吞卡通常是为了安全（例如多次输错 PIN 或卡片读取失败）。被吞的卡会被安全销毁，不会退还。请在 App 中申请补卡，ATM 吞卡的补卡免收费用，新卡 5–7 个工作日寄到。如果担心卡片被盗用，可以先在 App 中冻结卡片。\n\nATMs retain cards for security, for example after several wrong PIN attempts or a card read error. Retained cards are securely destroyed and cannot be returned. Request a replacement in the app; it is free when an ATM kept your card, and the new card arrives in 5–7 working days. If you are worried about misuse, freeze the card in the app first.",
+    "修改 PIN 与 PIN 被锁 / Changing or unblocking your PIN\n修改 PIN：在 App 的\"银行卡 > 修改 PIN\"中操作，或在狮城银行 ATM 上修改。连续输错 PIN 3 次后，PIN 会被锁定，卡片暂时不能刷卡或取款。解锁方法：在 App 中选择\"银行卡 > 解锁 PIN\"并完成 OTP 验证，解锁后需重新设置 PIN。\n\nTo change your PIN, use Cards > Change PIN in the app or any Lion City Bank ATM. After 3 wrong PIN attempts in a row, the PIN is blocked and the card cannot be used for payments or withdrawals. To unblock it, go to Cards > Unblock PIN in the app, confirm with the OTP, and set a new PIN.",
+    "卡被拒或不能用 / Card declined or not working\n卡被拒的常见原因：余额不足、超过每日消费或取款限额、没有开通海外使用、卡片已冻结、卡片未激活或已过期。感应支付（contactless）单笔超过 SGD 200 时，需要插卡并输入 PIN。卡片芯片损坏时请申请补卡。可以在 App 的\"银行卡 > 卡片设置\"中查看状态、开通海外使用和调整限额。\n\nCommon reasons a card is declined: not enough balance, the daily spending or withdrawal limit is reached, overseas use is not turned on, the card is frozen, or the card is not activated or has expired. Contactless payments over SGD 200 need the card inserted with a PIN. If the chip is damaged, request a replacement card. You can check the card status, turn on overseas use and change limits under Cards > Card settings in the app."
+   ],
+   "context_relevance": 1.0,
+   "answer_relevancy": 0.7873155152165557,
+   "faithfulness": 0.875,
+   "response_groundedness": 0.5
+  }
+ ]
+}

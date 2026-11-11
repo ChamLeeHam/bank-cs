@@ -67,4 +67,4 @@ def hybrid_search(client: MilvusClient, query: str, query_vector: list[float], t
                                     output_fields=OUTPUT_FIELDS)[0]
     except Exception as e:
         raise MilvusError("知识库检索失败", "kb_store", e)
-    return [{**hit["entity"], "score": round(hit["distance"], 4)} for hit in hits]
+    return [{**hit["entity"], "id": hit["id"], "score": round(hit["distance"], 4)} for hit in hits]

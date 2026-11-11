@@ -1,0 +1,36 @@
+{"question": "PayNow 转账要收钱吗？", "lang": "zh", "expected": ["本地转账费用"]}
+{"question": "What's the charge for sending a TT to Malaysia?", "lang": "en", "expected": ["海外电汇（TT）手续费"]}
+{"question": "你们的 exchange rate 是怎么定的？周末会不会不一样？", "lang": "mixed", "expected": ["汇率如何确定"]}
+{"question": "I paid in USD on Amazon with my Visa, why was there an extra 3.25%?", "lang": "en", "expected": ["外币兑换与外币刷卡费用"]}
+{"question": "在日本 ATM 拿钱要多少 fee？", "lang": "mixed", "expected": ["ATM 取款费用"]}
+{"question": "statement 上面有一笔看不懂的小额 charge 是什么？", "lang": "mixed", "expected": ["账单上看不懂的费用"]}
+{"question": "信用卡年费可以免吗？", "lang": "zh", "expected": ["银行卡年费与其他卡费"]}
+{"question": "What's the difference between PayNow and FAST?", "lang": "en", "expected": ["转账方式比较"]}
+{"question": "FAST transfer 一般几分钟会到？", "lang": "mixed", "expected": ["转账一般多久到账", "转账方式比较"]}
+{"question": "How do I send money to my mum's bank account in China?", "lang": "en", "expected": ["如何汇款到海外"]}
+{"question": "我朋友在美国要汇钱给我，要给他什么资料？", "lang": "zh", "expected": ["如何收款"]}
+{"question": "Why can't I add Binance as a payee?", "lang": "en", "expected": ["收款人限制"]}
+{"question": "我想一次转 SGD 10,000 给朋友，可以吗？", "lang": "zh", "expected": ["转账限额"]}
+{"question": "My transfer got returned, what usually causes that?", "lang": "en", "expected": ["转账失败的常见原因"]}
+{"question": "新卡收到了要怎么开通？", "lang": "zh", "expected": ["激活新卡"]}
+{"question": "My new card still hasn't arrived after two weeks", "lang": "en", "expected": ["新卡寄送时间"]}
+{"question": "我的 PIN 输错三次了，现在用不了", "lang": "mixed", "expected": ["修改 PIN 与 PIN 被锁"]}
+{"question": "Why does my card keep getting declined overseas?", "lang": "en", "expected": ["卡被拒或不能用"]}
+{"question": "ATM 把我的卡吃掉了", "lang": "zh", "expected": ["ATM 吞卡"]}
+{"question": "My card expires next month, do I need to apply for a new one?", "lang": "en", "expected": ["卡片即将到期"]}
+{"question": "可以给我太太办一张 supplementary card 吗？", "lang": "mixed", "expected": ["补发实体卡与附属卡"]}
+{"question": "Is your debit card Visa or Mastercard?", "lang": "en", "expected": ["卡组织与受理范围"]}
+{"question": "Can I open an account if I'm 15?", "lang": "en", "expected": ["开户条件"]}
+{"question": "开户需要什么证件？没有 Singpass 可以吗？", "lang": "zh", "expected": ["身份验证"]}
+{"question": "The app keeps rejecting my selfie during verification", "lang": "en", "expected": ["身份验证失败"]}
+{"question": "我搬家了，地址要怎么改？", "lang": "zh", "expected": ["修改个人资料"]}
+{"question": "I can't remember my internet banking password", "lang": "en", "expected": ["忘记登录密码"]}
+{"question": "我想 close 我的 savings account", "lang": "mixed", "expected": ["销户"]}
+{"question": "Can I hold Japanese yen in my account?", "lang": "en", "expected": ["多币种账户支持的货币"]}
+{"question": "你们可以存比特币吗？", "lang": "zh", "expected": ["多币种账户支持的货币", "收款人限制"]}
+{"question": "定期存款利率是多少？", "lang": "zh", "expected": null}
+{"question": "How do I apply for a home loan?", "lang": "en", "expected": null}
+{"question": "你们的分行几点开门？", "lang": "zh", "expected": null}
+{"question": "Does my credit card come with travel insurance?", "lang": "en", "expected": null}
+{"question": "那 FAST 呢？", "lang": "zh", "expected": ["本地转账费用"], "history": [["客户", "海外电汇手续费多少？"], ["客服", "每笔海外电汇（TT）收取 SGD 10 手续费，中转行和收款行可能另外扣费。"]]}
+{"question": "what if I forgot the PIN?", "lang": "en", "expected": ["修改 PIN 与 PIN 被锁"], "history": [["客户", "How do I activate my new card?"], ["客服", "Go to Cards > Activate in the app and confirm with the OTP."]]}
