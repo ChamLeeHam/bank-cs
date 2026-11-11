@@ -1,0 +1,5122 @@
+[
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "en",
+"text": "Please advise the current balance of my multi-currency account.",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.932,
+"ok1": true,
+"lang": "zh",
+"text": "我现在就要我的余额啦，为什么这么慢？",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9998,
+"ok1": true,
+"lang": "mixed",
+"text": "我想问一下我的 multi-currency account balance。",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9998,
+"ok1": true,
+"lang": "en",
+"text": "Could you kindly advise how much money is in my multi-currency account?",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "zh",
+"text": "往来账户的 SGD 余额",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "mixed",
+"text": "不要再叫我 log in，直接告诉我我的 SGD savings balance。",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "en",
+"text": "hello can u just tell me my account balance alr i've been waiting",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9998,
+"ok1": true,
+"lang": "zh",
+"text": "请尽快告知我往来账户的余额。",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "mixed",
+"text": "我的 savings 里面有多少钱？",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "en",
+"text": "whats my account balance",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9998,
+"ok1": true,
+"lang": "zh",
+"text": "请告诉我我的 SGD 往来账户里有多少钱。",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "mixed",
+"text": "我的 balance 还剩多少 lah？",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "en",
+"text": "May I request my current account balance, please?",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "zh",
+"text": "我已经问了三次了。我的往来账户余额是多少？",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "mixed",
+"text": "帮我 check 我的 current account balance。",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "en",
+"text": "how much inside my account",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "zh",
+"text": "往来账户余额多少",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9988,
+"ok1": true,
+"lang": "mixed",
+"text": "balance please，savings account，快点 lah。",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "en",
+"text": "Kindly confirm the available balance in my SGD savings account.",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "mixed",
+"text": "可以 kindly 告诉我我的 current account 里面有多少吗？",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9998,
+"ok1": true,
+"lang": "en",
+"text": "how much money left",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "zh",
+"text": "查我的余额可以吗",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "mixed",
+"text": "Good evening，请 confirm 我 multi-currency account 的 balance。",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 1.0,
+"ok1": true,
+"lang": "en",
+"text": "May I have the current balance of my savings account, please?",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9993,
+"ok1": true,
+"lang": "zh",
+"text": "你们能不能查我的多币种余额？我现在在 MRT，现在就要。",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 1.0,
+"ok1": true,
+"lang": "mixed",
+"text": "Good afternoon，请问我的 current account balance 是多少？",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "en",
+"text": "my SGD savings balance",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "zh",
+"text": "我想知道我的储蓄账户余额，谢谢",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "mixed",
+"text": "Good morning，可以 kindly 告诉我 savings account 的 balance 吗？",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9979,
+"ok1": true,
+"lang": "en",
+"text": "balance in my multi-currency",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 1.0,
+"ok1": true,
+"lang": "zh",
+"text": "麻烦你确认一下我的储蓄账户余额，谢谢。",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "mixed",
+"text": "可以帮我 check 一下，然后告诉我 current account 的 balance 吗？",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9995,
+"ok1": true,
+"lang": "en",
+"text": "my savings how much ah",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "zh",
+"text": "储蓄账户的余额",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "mixed",
+"text": "可以让我知道我的 SGD savings account 的 balance 吗？",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9982,
+"ok1": true,
+"lang": "en",
+"text": "Why is my balance still not showing? I need to know how much is in my savings account now.",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "mixed",
+"text": "pls 告诉我我的 savings account balance。",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9996,
+"ok1": true,
+"lang": "en",
+"text": "bal in savings?",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "zh",
+"text": "直接告诉我余额",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9991,
+"ok1": true,
+"lang": "mixed",
+"text": "我的钱在哪里？我的 savings account 还剩多少？",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "en",
+"text": "please tell me my current acount balance",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "zh",
+"text": "我想查一下我的储蓄账户余额，谢谢",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "mixed",
+"text": "我现在 need 我的 balance。",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "en",
+"text": "wats my balance pls",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "zh",
+"text": "告诉我我的余额",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "mixed",
+"text": "请给我 savings balance。",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9996,
+"ok1": true,
+"lang": "en",
+"text": "multi currency balance check",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "zh",
+"text": "储蓄账户余额？",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9998,
+"ok1": true,
+"lang": "mixed",
+"text": "现在要 balance please。",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9998,
+"ok1": true,
+"lang": "en",
+"text": "may i know how much is in my multi currency account",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9995,
+"ok1": true,
+"lang": "zh",
+"text": "为什么 App 一直显示错误？告诉我我的往来账户余额。",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "mixed",
+"text": "Good morning，可以 kindly 告诉我我的 savings account balance 吗？",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "en",
+"text": "how much left in savings",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.3194,
+"ok1": false,
+"lang": "zh",
+"text": "直接给我我储蓄账户里的金额可以吗？",
+"gold": "balance_inquiry",
+"pred": "transfer_howto/transfer_into_account"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "mixed",
+"text": "可以让我知道我的 current account 现在有多少吗？",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 1.0,
+"ok1": true,
+"lang": "en",
+"text": "Please advise my savings account balance, thank you.",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "zh",
+"text": "请告知我的往来账户里有多少可用余额。",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "mixed",
+"text": "请告诉我我的 savings account 的 balance。",
+"gold": "balance_inquiry",
+"pred": "balance_inquiry/check_balance"
+},
+{
+"score": 0.9551,
+"ok1": true,
+"lang": "en",
+"text": "How long can an EU transfer take?",
+"gold": "transfer_howto",
+"pred": "transfer_howto/transfer_timing"
+},
+{
+"score": 0.9354,
+"ok1": true,
+"lang": "zh",
+"text": "为什么我的转账会被拒绝？",
+"gold": "transfer_status",
+"pred": "transfer_status/declined_transfer"
+},
+{
+"score": 0.861,
+"ok1": true,
+"lang": "mixed",
+"text": "请帮我，我一直在 face 转钱给朋友的问题，因为我全部 transactions 都 failed。",
+"gold": "transfer_status",
+"pred": "transfer_status/failed_transfer"
+},
+{
+"score": 0.9971,
+"ok1": true,
+"lang": "en",
+"text": "Why does my transfer say \"pending\"?",
+"gold": "transfer_status",
+"pred": "transfer_status/pending_transfer"
+},
+{
+"score": 0.8949,
+"ok1": true,
+"lang": "zh",
+"text": "交易失败了？",
+"gold": "transfer_status",
+"pred": "transfer_status/failed_transfer"
+},
+{
+"score": 0.9817,
+"ok1": true,
+"lang": "mixed",
+"text": "我 transfer 钱之后，我的 account balance 没有 change。",
+"gold": "transfer_status",
+"pred": "transfer_status/balance_not_updated_after_bank_transfer"
+},
+{
+"score": 0.9617,
+"ok1": true,
+"lang": "en",
+"text": "I would like to know why my transfer was declined.",
+"gold": "transfer_status",
+"pred": "transfer_status/declined_transfer"
+},
+{
+"score": 0.6984,
+"ok1": true,
+"lang": "zh",
+"text": "我刚把地址从达勒姆的一个地方改到沃尔顿-昂-内兹的一个地方。我新房子有个新房东，他们还没收到我的付款，但我知道我是按时发出去的，可以帮我查一下他们收到了没有吗？",
+"gold": "transfer_status",
+"pred": "transfer_status/transfer_not_received_by_recipient"
+},
+{
+"score": 0.9767,
+"ok1": true,
+"lang": "mixed",
+"text": "我刚完成 bank transfer，balance 还没有 update。",
+"gold": "transfer_status",
+"pred": "transfer_status/balance_not_updated_after_bank_transfer"
+},
+{
+"score": 0.9816,
+"ok1": true,
+"lang": "en",
+"text": "I made a bank transfer a couple of hours ago from my UK account.  It hasn't appeared, can you check to make sure it went through?",
+"gold": "transfer_status",
+"pred": "transfer_status/balance_not_updated_after_bank_transfer"
+},
+{
+"score": 0.8592,
+"ok1": true,
+"lang": "zh",
+"text": "再查一下，你的资金可能会被拒绝。",
+"gold": "transfer_status",
+"pred": "transfer_status/declined_transfer"
+},
+{
+"score": 0.9384,
+"ok1": true,
+"lang": "mixed",
+"text": "我朋友还没有 receive 到我做的 transaction。",
+"gold": "transfer_status",
+"pred": "transfer_status/transfer_not_received_by_recipient"
+},
+{
+"score": 0.9751,
+"ok1": true,
+"lang": "en",
+"text": "I think my transfer was declined, but why?",
+"gold": "transfer_status",
+"pred": "transfer_status/declined_transfer"
+},
+{
+"score": 0.9527,
+"ok1": true,
+"lang": "zh",
+"text": "为什么我的转账失败了？",
+"gold": "transfer_status",
+"pred": "transfer_status/failed_transfer"
+},
+{
+"score": 0.9463,
+"ok1": true,
+"lang": "mixed",
+"text": "我昨天 try 在网上买东西，但一直讲 declined。今天再 try 也是一样。到底什么坏了？",
+"gold": "transfer_status",
+"pred": "transfer_status/declined_transfer"
+},
+{
+"score": 0.7389,
+"ok1": true,
+"lang": "en",
+"text": "Why couldn't I complete a transfer?",
+"gold": "transfer_status",
+"pred": "transfer_status/failed_transfer"
+},
+{
+"score": 0.9788,
+"ok1": true,
+"lang": "zh",
+"text": "我要怎样加快转账？我的转账还在处理中。",
+"gold": "transfer_status",
+"pred": "transfer_status/pending_transfer"
+},
+{
+"score": 0.5938,
+"ok1": true,
+"lang": "mixed",
+"text": "可以帮我 handle 一下我的 transfer 吗",
+"gold": "transfer_status",
+"pred": "transfer_status/balance_not_updated_after_bank_transfer"
+},
+{
+"score": 0.9374,
+"ok1": true,
+"lang": "en",
+"text": "I tried to make a transfer, but it was declined. Can you tell me why?",
+"gold": "transfer_status",
+"pred": "transfer_status/declined_transfer"
+},
+{
+"score": 0.986,
+"ok1": true,
+"lang": "zh",
+"text": "为什么转账显示处理中？",
+"gold": "transfer_status",
+"pred": "transfer_status/pending_transfer"
+},
+{
+"score": 0.9738,
+"ok1": true,
+"lang": "mixed",
+"text": "我想 transfer money 去另一个 country，可是现在只是 pending 没有 send 出去。我的 account details 是对的，please help me。",
+"gold": "transfer_status",
+"pred": "transfer_status/pending_transfer"
+},
+{
+"score": 0.8033,
+"ok1": true,
+"lang": "en",
+"text": "I tried to transfer money and it did not work.",
+"gold": "transfer_status",
+"pred": "transfer_status/failed_transfer"
+},
+{
+"score": 0.7726,
+"ok1": true,
+"lang": "zh",
+"text": "我转了钱，但收款人说还没收到。为什么会这样？",
+"gold": "transfer_status",
+"pred": "transfer_status/transfer_not_received_by_recipient"
+},
+{
+"score": 0.8904,
+"ok1": true,
+"lang": "mixed",
+"text": "我试过 make transfer，可是被 declined 了。为什么会这样？",
+"gold": "transfer_status",
+"pred": "transfer_status/declined_transfer"
+},
+{
+"score": 0.9839,
+"ok1": true,
+"lang": "en",
+"text": "I did a transfer to my account but it doesn't show up",
+"gold": "transfer_status",
+"pred": "transfer_status/balance_not_updated_after_bank_transfer"
+},
+{
+"score": 0.5111,
+"ok1": false,
+"lang": "mixed",
+"text": "我昨天想在eBay上买一支高尔夫球杆，但我的信用卡被拒了。我试了很多次，今天早上又试了一次。可以帮我查一下我的卡吗？",
+"gold": "transfer_status",
+"pred": "card_service/card_not_working"
+},
+{
+"score": 0.9797,
+"ok1": true,
+"lang": "mixed",
+"text": "我的 bank transfer 到现在还没有 show 在我的 account 里。",
+"gold": "transfer_status",
+"pred": "transfer_status/balance_not_updated_after_bank_transfer"
+},
+{
+"score": 0.9161,
+"ok1": true,
+"lang": "en",
+"text": "When will the transfer be completed?",
+"gold": "transfer_status",
+"pred": "transfer_status/pending_transfer"
+},
+{
+"score": 0.7255,
+"ok1": true,
+"lang": "zh",
+"text": "为什么我的收款人还没收到钱？",
+"gold": "transfer_status",
+"pred": "transfer_status/transfer_not_received_by_recipient"
+},
+{
+"score": 0.9728,
+"ok1": true,
+"lang": "mixed",
+"text": "跟我讲为什么我的 transfer failed 啦！",
+"gold": "transfer_status",
+"pred": "transfer_status/failed_transfer"
+},
+{
+"score": 0.835,
+"ok1": true,
+"lang": "en",
+"text": "The person I sent money to hasn't gotten it yet!",
+"gold": "transfer_status",
+"pred": "transfer_status/transfer_not_received_by_recipient"
+},
+{
+"score": 0.4996,
+"ok1": false,
+"lang": "zh",
+"text": "为什么我转不了账？",
+"gold": "transfer_status",
+"pred": "transfer_howto/beneficiary_not_allowed"
+},
+{
+"score": 0.5294,
+"ok1": false,
+"lang": "mixed",
+"text": "我好像一直做不到 successful transfer，你可以跟我讲我哪里做错了吗？",
+"gold": "transfer_status",
+"pred": "transfer_howto/beneficiary_not_allowed"
+},
+{
+"score": 0.9818,
+"ok1": true,
+"lang": "en",
+"text": "I am still waiting for a money transfer to show",
+"gold": "transfer_status",
+"pred": "transfer_status/pending_transfer"
+},
+{
+"score": 0.99,
+"ok1": true,
+"lang": "mixed",
+"text": "我从[country]转的账到哪里了？",
+"gold": "transfer_status",
+"pred": "transfer_status/balance_not_updated_after_bank_transfer"
+},
+{
+"score": 0.9283,
+"ok1": true,
+"lang": "mixed",
+"text": "我还在等这个 transaction complete。",
+"gold": "transfer_status",
+"pred": "transfer_status/pending_transfer"
+},
+{
+"score": 0.9975,
+"ok1": true,
+"lang": "en",
+"text": "How long does it take for an international transfer into my account?",
+"gold": "transfer_howto",
+"pred": "transfer_howto/transfer_timing"
+},
+{
+"score": 0.9363,
+"ok1": true,
+"lang": "zh",
+"text": "我的转账被拒了，但我知道它本来应该成功的。",
+"gold": "transfer_status",
+"pred": "transfer_status/declined_transfer"
+},
+{
+"score": 0.8465,
+"ok1": true,
+"lang": "mixed",
+"text": "为什么没有 show 我做过 balance transfer？",
+"gold": "transfer_status",
+"pred": "transfer_status/balance_not_updated_after_bank_transfer"
+},
+{
+"score": 0.9192,
+"ok1": true,
+"lang": "en",
+"text": "I transferred money yesterday, but it still isn't available?",
+"gold": "transfer_status",
+"pred": "transfer_status/balance_not_updated_after_bank_transfer"
+},
+{
+"score": 0.9343,
+"ok1": true,
+"lang": "zh",
+"text": "我的转账为什么被拒？",
+"gold": "transfer_status",
+"pred": "transfer_status/declined_transfer"
+},
+{
+"score": 0.9028,
+"ok1": true,
+"lang": "mixed",
+"text": "System 是不是 down 了？我一直在 try transfer，可是都 fail leh。",
+"gold": "transfer_status",
+"pred": "transfer_status/failed_transfer"
+},
+{
+"score": 0.9588,
+"ok1": true,
+"lang": "en",
+"text": "I have completed a transfer but it is not showing up.",
+"gold": "transfer_status",
+"pred": "transfer_status/balance_not_updated_after_bank_transfer"
+},
+{
+"score": 0.5578,
+"ok1": true,
+"lang": "zh",
+"text": "我的交易要多久才能完成？",
+"gold": "transfer_status",
+"pred": "transfer_status/pending_transfer"
+},
+{
+"score": 0.9857,
+"ok1": true,
+"lang": "mixed",
+"text": "我 transfer 了一些钱，为什么我的 balance 没有 change？",
+"gold": "transfer_status",
+"pred": "transfer_status/balance_not_updated_after_bank_transfer"
+},
+{
+"score": 0.2942,
+"ok1": false,
+"lang": "en",
+"text": "How long for money transfer to show?",
+"gold": "transfer_howto",
+"pred": "transfer_status/balance_not_updated_after_bank_transfer"
+},
+{
+"score": 0.6543,
+"ok1": true,
+"lang": "zh",
+"text": "我已经转了钱，为什么没成功？",
+"gold": "transfer_status",
+"pred": "transfer_status/failed_transfer"
+},
+{
+"score": 0.8966,
+"ok1": true,
+"lang": "mixed",
+"text": "我已经 complete 了这个 money transaction，可是 recipient 还没有 receive 到。",
+"gold": "transfer_status",
+"pred": "transfer_status/transfer_not_received_by_recipient"
+},
+{
+"score": 0.967,
+"ok1": true,
+"lang": "en",
+"text": "What is the reason my transfer was declined?",
+"gold": "transfer_status",
+"pred": "transfer_status/declined_transfer"
+},
+{
+"score": 0.8544,
+"ok1": true,
+"lang": "zh",
+"text": "我几个小时前给我朋友转了一些钱，但她还没收到。她真的很需要这笔钱。这个要多久？",
+"gold": "transfer_status",
+"pred": "transfer_status/transfer_not_received_by_recipient"
+},
+{
+"score": 0.7847,
+"ok1": true,
+"lang": "mixed",
+"text": "我 transfer 了一些钱，可是我觉得它好像 lost 在 somewhere。",
+"gold": "transfer_status",
+"pred": "transfer_status/balance_not_updated_after_bank_transfer"
+},
+{
+"score": 0.9481,
+"ok1": true,
+"lang": "en",
+"text": "My transfer did not go through.",
+"gold": "transfer_status",
+"pred": "transfer_status/failed_transfer"
+},
+{
+"score": 0.9564,
+"ok1": true,
+"lang": "zh",
+"text": "我在等一笔处理中的转账完成。",
+"gold": "transfer_status",
+"pred": "transfer_status/pending_transfer"
+},
+{
+"score": 0.9328,
+"ok1": true,
+"lang": "mixed",
+"text": "为什么我的 transfer 没有 go through？",
+"gold": "transfer_status",
+"pred": "transfer_status/failed_transfer"
+},
+{
+"score": 0.9499,
+"ok1": true,
+"lang": "en",
+"text": "I tried to make a transfer but it failed",
+"gold": "transfer_status",
+"pred": "transfer_status/failed_transfer"
+},
+{
+"score": 0.3876,
+"ok1": true,
+"lang": "zh",
+"text": "我转了一些钱，但收款人取款时遇到问题。",
+"gold": "transfer_status",
+"pred": "transfer_status/balance_not_updated_after_bank_transfer"
+},
+{
+"score": 0.9814,
+"ok1": true,
+"lang": "mixed",
+"text": "Transfer 终于 work 了，可是现在 pending 很久了。你们要我 wait 多久？这个很 urgent 的。",
+"gold": "transfer_status",
+"pred": "transfer_status/pending_transfer"
+},
+{
+"score": 0.9746,
+"ok1": true,
+"lang": "en",
+"text": "I made a transfer a few hours ago from a UK banking account.  I do not yet see the transfer.  Please check on this for me.",
+"gold": "transfer_status",
+"pred": "transfer_status/balance_not_updated_after_bank_transfer"
+},
+{
+"score": 0.7962,
+"ok1": true,
+"lang": "zh",
+"text": "我几天前转了新住处的房租，但房东说还没收到，虽然我这边显示已经完成。我核对过转过去的账号，肯定是对的。可以帮我确认这笔交易到底有没有成功吗？",
+"gold": "transfer_status",
+"pred": "transfer_status/transfer_not_received_by_recipient"
+},
+{
+"score": 0.8735,
+"ok1": true,
+"lang": "mixed",
+"text": "这个 transfer 几时会 go through？",
+"gold": "transfer_status",
+"pred": "transfer_status/pending_transfer"
+},
+{
+"score": 0.9997,
+"ok1": true,
+"lang": "en",
+"text": "Card stolen pls freeze now",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9988,
+"ok1": true,
+"lang": "zh",
+"text": "请帮帮我！我的卡被偷了！",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9982,
+"ok1": true,
+"lang": "mixed",
+"text": "我的 debit card 不见了，please block 它。",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9974,
+"ok1": true,
+"lang": "en",
+"text": "block card lost at mrt",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.999,
+"ok1": true,
+"lang": "zh",
+"text": "我要怎么报失被偷的卡？",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9947,
+"ok1": true,
+"lang": "mixed",
+"text": "我的 bags 被偷了。我需要一张 new card，不过要先 cancel 被偷的那张。",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9928,
+"ok1": true,
+"lang": "en",
+"text": "I cannot find my credit card.",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9931,
+"ok1": true,
+"lang": "zh",
+"text": "我的卡丢了该怎么办？",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9967,
+"ok1": true,
+"lang": "mixed",
+"text": "我的 debit card 丢了，请 block 它。",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9967,
+"ok1": true,
+"lang": "en",
+"text": "nric lost card freeze pls",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9993,
+"ok1": true,
+"lang": "mixed",
+"text": "Help！有人偷了我的 card！",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.999,
+"ok1": true,
+"lang": "en",
+"text": "I cant find my card, it's gone.",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9992,
+"ok1": true,
+"lang": "zh",
+"text": "我的ATM卡被偷了，帮我停卡。",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9991,
+"ok1": true,
+"lang": "mixed",
+"text": "不懂为什么我的 card 不见了。我应该怎么做？",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9985,
+"ok1": true,
+"lang": "en",
+"text": "My card was taken from me",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9993,
+"ok1": true,
+"lang": "zh",
+"text": "有人偷了我的卡。我要报失。我已经报警了，但我要怎么向你们报失？",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9988,
+"ok1": true,
+"lang": "mixed",
+"text": "Card 被偷了，马上 block 它 lah。",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.997,
+"ok1": true,
+"lang": "en",
+"text": "How do I report my card lost or stolen?",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9991,
+"ok1": true,
+"lang": "zh",
+"text": "我觉得我的卡被偷了，这种情况我可以怎么做？很紧急。",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9982,
+"ok1": true,
+"lang": "mixed",
+"text": "我的 card 不见了，please 帮我。",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9976,
+"ok1": true,
+"lang": "en",
+"text": "My card is lost! What can I do?",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9994,
+"ok1": true,
+"lang": "zh",
+"text": "我要怎么冻结被偷的卡？",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9988,
+"ok1": true,
+"lang": "mixed",
+"text": "如果我的 card 不见了，我应该怎样做？",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9977,
+"ok1": true,
+"lang": "en",
+"text": "card kena stolen block it",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9986,
+"ok1": true,
+"lang": "zh",
+"text": "卡被偷了要怎么处理？",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9951,
+"ok1": true,
+"lang": "mixed",
+"text": "今天较早的时候有人偷了我的 wallet，不确定 exact 几时，应该是在 Piccadilly Circus。你可以 check 一下有没有人试过用这张 card，然后当然要 block 它吗？",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9995,
+"ok1": true,
+"lang": "en",
+"text": "pls freeze card lost today",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9996,
+"ok1": true,
+"lang": "mixed",
+"text": "我的 card 不见了，freeze 它。",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9989,
+"ok1": true,
+"lang": "en",
+"text": "lost wallet block my card",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9988,
+"ok1": true,
+"lang": "zh",
+"text": "我的卡不见了",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9991,
+"ok1": true,
+"lang": "mixed",
+"text": "我的 card 被一个 idiot 偷了。",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.8757,
+"ok1": true,
+"lang": "en",
+"text": "I think I lost my card . I dont know how long it has been missing. Can you see if maybe someone else has been using it?",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9961,
+"ok1": true,
+"lang": "zh",
+"text": "我的卡丢了。",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.2859,
+"ok1": false,
+"lang": "mixed",
+"text": "完成 report process 需要 police report 的 copy 吗？",
+"gold": "card_lost_freeze",
+"pred": "complaint/report_lost_card"
+},
+{
+"score": 0.9981,
+"ok1": true,
+"lang": "en",
+"text": "card gone can u block",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9953,
+"ok1": true,
+"lang": "zh",
+"text": "你们能帮我找到我的卡吗？",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9989,
+"ok1": true,
+"lang": "en",
+"text": "My card is gone I think it was stolen",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9981,
+"ok1": true,
+"lang": "zh",
+"text": "我觉得我的信用卡被人偷了。",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9993,
+"ok1": true,
+"lang": "mixed",
+"text": "我的 card 被偷了要怎样 report？",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9853,
+"ok1": true,
+"lang": "en",
+"text": "I need help with a lost card",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9992,
+"ok1": true,
+"lang": "zh",
+"text": "我的卡不见了，帮我冻结它",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9967,
+"ok1": true,
+"lang": "mixed",
+"text": "Help! 我找不到我的 card。",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9926,
+"ok1": true,
+"lang": "en",
+"text": "My entire gym bag, including my wallet, was stolen out of my locker today. Everything in my wallet is gone - how do I block the card to make it can't be used?",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9987,
+"ok1": true,
+"lang": "zh",
+"text": "我找不到我的卡，觉得可能被偷了。",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9996,
+"ok1": true,
+"lang": "mixed",
+"text": "我的 card 被偷了，可以帮我 freeze 吗？",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9984,
+"ok1": true,
+"lang": "en",
+"text": "lost card freeze asap",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9976,
+"ok1": true,
+"lang": "zh",
+"text": "帮我停掉我不见的 ATM 卡",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9988,
+"ok1": true,
+"lang": "mixed",
+"text": "card 被偷了，现在帮我 freeze。",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9789,
+"ok1": true,
+"lang": "en",
+"text": "I'm in Spain and my stuff has been stolen. My card was with it and I need a new one shipped and the old one frozen.",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9927,
+"ok1": true,
+"lang": "zh",
+"text": "我的卡丢了，帮我停掉。",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9975,
+"ok1": true,
+"lang": "mixed",
+"text": "我的 card 不知道放哪里了，pls freeze now。",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9986,
+"ok1": true,
+"lang": "en",
+"text": "Oh no!  I lost my card!  Help!",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9991,
+"ok1": true,
+"lang": "mixed",
+"text": "有人偷了我的 card，我需要 help，please。",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9973,
+"ok1": true,
+"lang": "en",
+"text": "My card is lost! What do I do now?",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9813,
+"ok1": true,
+"lang": "zh",
+"text": "我的 PayNow 卡被偷了，请帮我停掉。",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9925,
+"ok1": true,
+"lang": "mixed",
+"text": "我今天不见 wallet，里面所有 credit cards 都在，可以帮我 block card 和 send replacement 吗？",
+"gold": "card_lost_freeze",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9851,
+"ok1": true,
+"lang": "en",
+"text": "Can you explain the transfer fee to me?",
+"gold": "fees_rates",
+"pred": "fees_rates/transfer_fee_charged"
+},
+{
+"score": 0.9933,
+"ok1": true,
+"lang": "zh",
+"text": "我账单上多出来的 1 欧元费用是什么？",
+"gold": "fees_rates",
+"pred": "fees_rates/extra_charge_on_statement"
+},
+{
+"score": 0.9994,
+"ok1": true,
+"lang": "mixed",
+"text": "Exchange rate 是用什么 currencies 算的？",
+"gold": "fees_rates",
+"pred": "fees_rates/exchange_rate"
+},
+{
+"score": 0.9995,
+"ok1": true,
+"lang": "en",
+"text": "Does it cost extra to exchange currencies?",
+"gold": "fees_rates",
+"pred": "fees_rates/exchange_charge"
+},
+{
+"score": 0.9998,
+"ok1": true,
+"lang": "zh",
+"text": "为什么我提现你们要收费？",
+"gold": "fees_rates",
+"pred": "fees_rates/cash_withdrawal_charge"
+},
+{
+"score": 0.9996,
+"ok1": true,
+"lang": "mixed",
+"text": "我以前 cash withdrawal 从来没有被 charge fee，几时开始变了？",
+"gold": "fees_rates",
+"pred": "fees_rates/cash_withdrawal_charge"
+},
+{
+"score": 0.9549,
+"ok1": true,
+"lang": "en",
+"text": "I had to pay in order to do a transfer",
+"gold": "fees_rates",
+"pred": "fees_rates/transfer_fee_charged"
+},
+{
+"score": 0.9791,
+"ok1": true,
+"lang": "zh",
+"text": "我的账户因为取现被扣了钱，为什么会这样？",
+"gold": "fees_rates",
+"pred": "fees_rates/cash_withdrawal_charge"
+},
+{
+"score": 0.9866,
+"ok1": true,
+"lang": "mixed",
+"text": "为什么我的 transfer 被 charge 了一个 fee leh？",
+"gold": "fees_rates",
+"pred": "fees_rates/transfer_fee_charged"
+},
+{
+"score": 0.944,
+"ok1": true,
+"lang": "en",
+"text": "Why was my transfer charged fees?",
+"gold": "fees_rates",
+"pred": "fees_rates/transfer_fee_charged"
+},
+{
+"score": 0.9995,
+"ok1": true,
+"lang": "zh",
+"text": "我要怎样查到汇率？",
+"gold": "fees_rates",
+"pred": "fees_rates/exchange_rate"
+},
+{
+"score": 0.627,
+"ok1": true,
+"lang": "mixed",
+"text": "这个 1 euro 的 fee 从哪里来的？",
+"gold": "fees_rates",
+"pred": "fees_rates/extra_charge_on_statement"
+},
+{
+"score": 0.9994,
+"ok1": true,
+"lang": "en",
+"text": "whats the exchange charge",
+"gold": "fees_rates",
+"pred": "fees_rates/exchange_charge"
+},
+{
+"score": 0.9996,
+"ok1": true,
+"lang": "zh",
+"text": "汇率是怎样计算的？",
+"gold": "fees_rates",
+"pred": "fees_rates/exchange_rate"
+},
+{
+"score": 0.9995,
+"ok1": true,
+"lang": "mixed",
+"text": "我想 exchange currencies，不过这样做会有 extra charge 吗？",
+"gold": "fees_rates",
+"pred": "fees_rates/exchange_charge"
+},
+{
+"score": 0.9994,
+"ok1": true,
+"lang": "en",
+"text": "Why would I be charged a fee for card payment?",
+"gold": "fees_rates",
+"pred": "fees_rates/card_payment_fee_charged"
+},
+{
+"score": 0.9996,
+"ok1": true,
+"lang": "mixed",
+"text": "为什么我被 overcharge 一 pound!?",
+"gold": "fees_rates",
+"pred": "fees_rates/extra_charge_on_statement"
+},
+{
+"score": 0.9989,
+"ok1": true,
+"lang": "en",
+"text": "Do you offer a discount on multiple currency exchanges?",
+"gold": "fees_rates",
+"pred": "fees_rates/exchange_charge"
+},
+{
+"score": 0.9998,
+"ok1": true,
+"lang": "zh",
+"text": "我以为提现是不用收费的",
+"gold": "fees_rates",
+"pred": "fees_rates/cash_withdrawal_charge"
+},
+{
+"score": 0.9807,
+"ok1": true,
+"lang": "mixed",
+"text": "我做 transfer 的时候有一个 extra charge。",
+"gold": "fees_rates",
+"pred": "fees_rates/transfer_fee_charged"
+},
+{
+"score": 0.9807,
+"ok1": true,
+"lang": "en",
+"text": "I was charged a fee for my transfer.",
+"gold": "fees_rates",
+"pred": "fees_rates/transfer_fee_charged"
+},
+{
+"score": 0.9995,
+"ok1": true,
+"lang": "zh",
+"text": "你们的国际汇率是多少？",
+"gold": "fees_rates",
+"pred": "fees_rates/exchange_rate"
+},
+{
+"score": 0.9995,
+"ok1": true,
+"lang": "mixed",
+"text": "Exchange rates 是根据什么来算的？",
+"gold": "fees_rates",
+"pred": "fees_rates/exchange_rate"
+},
+{
+"score": 0.998,
+"ok1": true,
+"lang": "en",
+"text": "Where do you guys acquire your exchange rate?",
+"gold": "fees_rates",
+"pred": "fees_rates/exchange_rate"
+},
+{
+"score": 0.9994,
+"ok1": true,
+"lang": "zh",
+"text": "我要去哪里查汇率？",
+"gold": "fees_rates",
+"pred": "fees_rates/exchange_rate"
+},
+{
+"score": 0.997,
+"ok1": true,
+"lang": "mixed",
+"text": "Cross currency exchange 要多少钱，还有我可以 check 看有没有任何 discounts 吗？",
+"gold": "fees_rates",
+"pred": "fees_rates/exchange_charge"
+},
+{
+"score": 0.4778,
+"ok1": false,
+"lang": "en",
+"text": "I was charged for something I didn't expect",
+"gold": "fees_rates",
+"pred": "fraud_report/card_payment_not_recognised"
+},
+{
+"score": 0.9979,
+"ok1": true,
+"lang": "zh",
+"text": "当付款有额外收费时，应该要有人通知我。我之前刚好在看 App 时，注意到有一笔跟付款有关的额外收费，之前完全没有人通知过我。",
+"gold": "fees_rates",
+"pred": "fees_rates/card_payment_fee_charged"
+},
+{
+"score": 0.9993,
+"ok1": true,
+"lang": "mixed",
+"text": "我的 card payment 被 charge 了一个 fee，为什么？",
+"gold": "fees_rates",
+"pred": "fees_rates/card_payment_fee_charged"
+},
+{
+"score": 0.9991,
+"ok1": true,
+"lang": "en",
+"text": "Why did I have to pay more when I do it with my card?",
+"gold": "fees_rates",
+"pred": "fees_rates/card_payment_fee_charged"
+},
+{
+"score": 0.9996,
+"ok1": true,
+"lang": "zh",
+"text": "为什么我的取现被收了一笔根本不该收的费用？",
+"gold": "fees_rates",
+"pred": "fees_rates/cash_withdrawal_charge"
+},
+{
+"score": 0.999,
+"ok1": true,
+"lang": "mixed",
+"text": "Exchange currencies 要多少钱？",
+"gold": "fees_rates",
+"pred": "fees_rates/exchange_charge"
+},
+{
+"score": 0.9998,
+"ok1": true,
+"lang": "en",
+"text": "Why was I charged a fee for withdrawing cash?",
+"gold": "fees_rates",
+"pred": "fees_rates/cash_withdrawal_charge"
+},
+{
+"score": 0.8084,
+"ok1": true,
+"lang": "zh",
+"text": "你好，请帮帮我，因为我转了一些钱但收款人没有收到一样的金额。他收到的少了一点。因为这个我又需要转差额。我已经转了钱，但收款人的账户只入账比较少的金额。现在我已经把差额转过去了。我觉得有点问题，可以请你们查一下吗？",
+"gold": "fees_rates",
+"pred": "fees_rates/transfer_fee_charged"
+},
+{
+"score": 0.8729,
+"ok1": true,
+"lang": "mixed",
+"text": "我 statement 里面这个 €1 fee 是什么？",
+"gold": "fees_rates",
+"pred": "fees_rates/extra_charge_on_statement"
+},
+{
+"score": 0.9986,
+"ok1": true,
+"lang": "en",
+"text": "My work sends me all over the world, can I get a discount for all the money I have to exchange?",
+"gold": "fees_rates",
+"pred": "fees_rates/exchange_charge"
+},
+{
+"score": 0.9973,
+"ok1": true,
+"lang": "zh",
+"text": "为什么我的账户因为使用 ATM 被扣钱？",
+"gold": "fees_rates",
+"pred": "fees_rates/cash_withdrawal_charge"
+},
+{
+"score": 0.998,
+"ok1": true,
+"lang": "mixed",
+"text": "我在 grocery store checkout 时发现需要 cash，所以 request 了一些。不过我看到这个 transaction 有 fee，为什么我被 charge fee？",
+"gold": "fees_rates",
+"pred": "fees_rates/cash_withdrawal_charge"
+},
+{
+"score": 0.9875,
+"ok1": true,
+"lang": "zh",
+"text": "转账费用是多少？",
+"gold": "fees_rates",
+"pred": "fees_rates/transfer_fee_charged"
+},
+{
+"score": 0.9819,
+"ok1": true,
+"lang": "mixed",
+"text": "Transfer 会 charge fees 吗？",
+"gold": "fees_rates",
+"pred": "fees_rates/transfer_fee_charged"
+},
+{
+"score": 0.9979,
+"ok1": true,
+"lang": "en",
+"text": "There is a transaction for $1 and I don't know why it was charged.",
+"gold": "fees_rates",
+"pred": "fees_rates/extra_charge_on_statement"
+},
+{
+"score": 0.999,
+"ok1": true,
+"lang": "zh",
+"text": "汇率是什么时候定的？",
+"gold": "fees_rates",
+"pred": "fees_rates/exchange_rate"
+},
+{
+"score": 0.9996,
+"ok1": true,
+"lang": "mixed",
+"text": "Exchange currencies 会被 charge 吗？",
+"gold": "fees_rates",
+"pred": "fees_rates/exchange_charge"
+},
+{
+"score": 0.7165,
+"ok1": true,
+"lang": "en",
+"text": "My statement has a dollar I have been charged showing up on it.",
+"gold": "fees_rates",
+"pred": "fees_rates/extra_charge_on_statement"
+},
+{
+"score": 0.9997,
+"ok1": true,
+"lang": "zh",
+"text": "我用卡付款为什么还被收费用？",
+"gold": "fees_rates",
+"pred": "fees_rates/card_payment_fee_charged"
+},
+{
+"score": 0.9995,
+"ok1": true,
+"lang": "mixed",
+"text": "我 notice 我的 statement 有一个 extra $1 charge，可以 tell 我为什么吗？",
+"gold": "fees_rates",
+"pred": "fees_rates/extra_charge_on_statement"
+},
+{
+"score": 0.9995,
+"ok1": true,
+"lang": "en",
+"text": "I payed with a card and was charged an extra fee",
+"gold": "fees_rates",
+"pred": "fees_rates/card_payment_fee_charged"
+},
+{
+"score": 0.9976,
+"ok1": true,
+"lang": "zh",
+"text": "为什么我的账单里多出一英镑会有费用？",
+"gold": "fees_rates",
+"pred": "fees_rates/extra_charge_on_statement"
+},
+{
+"score": 0.999,
+"ok1": true,
+"lang": "mixed",
+"text": "为什么我用 card 付款会被 charge 一个 fee？我之前从来没有 extra fee 的。",
+"gold": "fees_rates",
+"pred": "fees_rates/card_payment_fee_charged"
+},
+{
+"score": 0.9995,
+"ok1": true,
+"lang": "en",
+"text": "Why are fees charged on cash withdrawals? I went to withdraw some money earlier today after shopping. There's a fee that wasn't there before.",
+"gold": "fees_rates",
+"pred": "fees_rates/cash_withdrawal_charge"
+},
+{
+"score": 0.9204,
+"ok1": true,
+"lang": "zh",
+"text": "可以帮我查一下为什么我的账单上会有这笔额外费用吗？",
+"gold": "fees_rates",
+"pred": "fees_rates/extra_charge_on_statement"
+},
+{
+"score": 0.9994,
+"ok1": true,
+"lang": "mixed",
+"text": "我的 withdrawal 被 charge extra 了。",
+"gold": "fees_rates",
+"pred": "fees_rates/cash_withdrawal_charge"
+},
+{
+"score": 0.9984,
+"ok1": true,
+"lang": "en",
+"text": "How often do your exchange rates change",
+"gold": "fees_rates",
+"pred": "fees_rates/exchange_rate"
+},
+{
+"score": 0.991,
+"ok1": true,
+"lang": "zh",
+"text": "跨币种兑换的基础金额是多少？",
+"gold": "fees_rates",
+"pred": "fees_rates/exchange_charge"
+},
+{
+"score": 0.9938,
+"ok1": true,
+"lang": "mixed",
+"text": "用 card payment 有 fee 吗？",
+"gold": "fees_rates",
+"pred": "fees_rates/card_payment_fee_charged"
+},
+{
+"score": 0.9992,
+"ok1": true,
+"lang": "en",
+"text": "Why was I charged an extra fee when paying with my card?",
+"gold": "fees_rates",
+"pred": "fees_rates/card_payment_fee_charged"
+},
+{
+"score": 0.9959,
+"ok1": true,
+"lang": "zh",
+"text": "我换钱时会拿到什么样的外汇汇率？",
+"gold": "fees_rates",
+"pred": "fees_rates/exchange_rate"
+},
+{
+"score": 0.9985,
+"ok1": true,
+"lang": "en",
+"text": "Why couldn't I do a transfer to a beneficiary?",
+"gold": "transfer_howto",
+"pred": "transfer_howto/beneficiary_not_allowed"
+},
+{
+"score": 0.9974,
+"ok1": true,
+"lang": "zh",
+"text": "别人要怎么把钱转给我？",
+"gold": "transfer_howto",
+"pred": "transfer_howto/receiving_money"
+},
+{
+"score": 0.9995,
+"ok1": true,
+"lang": "mixed",
+"text": "我想从我另一个 bank account transfer money 进这个 account。",
+"gold": "transfer_howto",
+"pred": "transfer_howto/transfer_into_account"
+},
+{
+"score": 0.6129,
+"ok1": true,
+"lang": "en",
+"text": "When will money be available in my account?",
+"gold": "transfer_howto",
+"pred": "transfer_howto/transfer_timing"
+},
+{
+"score": 0.9986,
+"ok1": true,
+"lang": "zh",
+"text": "我想转钱进我的账户。",
+"gold": "transfer_howto",
+"pred": "transfer_howto/transfer_into_account"
+},
+{
+"score": 0.9955,
+"ok1": true,
+"lang": "mixed",
+"text": "有一个很重要的东西 from China 我需要 transfer，大概要多久？",
+"gold": "transfer_howto",
+"pred": "transfer_howto/transfer_timing"
+},
+{
+"score": 0.7471,
+"ok1": true,
+"lang": "en",
+"text": "When should I expect to see my transfer hit my account?",
+"gold": "transfer_status",
+"pred": "transfer_status/balance_not_updated_after_bank_transfer"
+},
+{
+"score": 0.9698,
+"ok1": true,
+"lang": "zh",
+"text": "我想从账户转钱来充值。需要哪些步骤？",
+"gold": "transfer_howto",
+"pred": "transfer_howto/transfer_into_account"
+},
+{
+"score": 0.6101,
+"ok1": true,
+"lang": "mixed",
+"text": "我从 Europe initiate 了一个 Bank transfer，这个要多久？",
+"gold": "transfer_status",
+"pred": "transfer_status/balance_not_updated_after_bank_transfer"
+},
+{
+"score": 0.9807,
+"ok1": true,
+"lang": "en",
+"text": "How do I do a successful transfer to an account?",
+"gold": "transfer_howto",
+"pred": "transfer_howto/transfer_into_account"
+},
+{
+"score": 0.9766,
+"ok1": true,
+"lang": "zh",
+"text": "我想用银行转账给账户充值，要怎么操作？",
+"gold": "transfer_howto",
+"pred": "transfer_howto/transfer_into_account"
+},
+{
+"score": 0.9302,
+"ok1": true,
+"lang": "mixed",
+"text": "那笔钱 transfer 不到 beneficiary。",
+"gold": "transfer_howto",
+"pred": "transfer_howto/beneficiary_not_allowed"
+},
+{
+"score": 0.5292,
+"ok1": true,
+"lang": "en",
+"text": "How long until the money is in my account?",
+"gold": "transfer_howto",
+"pred": "transfer_howto/transfer_timing"
+},
+{
+"score": 0.9996,
+"ok1": true,
+"lang": "zh",
+"text": "我要转钱进账户的话，步骤是什么？",
+"gold": "transfer_howto",
+"pred": "transfer_howto/transfer_into_account"
+},
+{
+"score": 0.9823,
+"ok1": true,
+"lang": "mixed",
+"text": "我需要一个 from China 的 fast transfer，会有多快？",
+"gold": "transfer_howto",
+"pred": "transfer_howto/transfer_timing"
+},
+{
+"score": 0.9992,
+"ok1": true,
+"lang": "en",
+"text": "How can I transfer money to my account?",
+"gold": "transfer_howto",
+"pred": "transfer_howto/transfer_into_account"
+},
+{
+"score": 0.9241,
+"ok1": false,
+"lang": "zh",
+"text": "我刚才想做的账户转账失败了。",
+"gold": "transfer_howto",
+"pred": "transfer_status/failed_transfer"
+},
+{
+"score": 0.3866,
+"ok1": true,
+"lang": "mixed",
+"text": "你们 app 没有 cryptocurrency 是什么情况 ah？",
+"gold": "transfer_howto",
+"pred": "transfer_howto/beneficiary_not_allowed"
+},
+{
+"score": 0.9978,
+"ok1": true,
+"lang": "en",
+"text": "Can I directly transfer my salary onto here?",
+"gold": "transfer_howto",
+"pred": "transfer_howto/receiving_money"
+},
+{
+"score": 0.9995,
+"ok1": true,
+"lang": "zh",
+"text": "我需要转钱进我的账户，该怎么弄？",
+"gold": "transfer_howto",
+"pred": "transfer_howto/transfer_into_account"
+},
+{
+"score": 0.9983,
+"ok1": true,
+"lang": "mixed",
+"text": "Salary 会通过这个 receive 吗？",
+"gold": "transfer_howto",
+"pred": "transfer_howto/receiving_money"
+},
+{
+"score": 0.9994,
+"ok1": true,
+"lang": "en",
+"text": "How do I transfer money to my account?",
+"gold": "transfer_howto",
+"pred": "transfer_howto/transfer_into_account"
+},
+{
+"score": 0.9955,
+"ok1": true,
+"lang": "zh",
+"text": "别人可以怎样转钱给我？",
+"gold": "transfer_howto",
+"pred": "transfer_howto/receiving_money"
+},
+{
+"score": 0.9989,
+"ok1": true,
+"lang": "mixed",
+"text": "我要怎样把我的 funds transfer 进我的 account？",
+"gold": "transfer_howto",
+"pred": "transfer_howto/transfer_into_account"
+},
+{
+"score": 0.9939,
+"ok1": true,
+"lang": "en",
+"text": "Hey I want to buy some crypto but the app doesn't allow me to! What's the issue, I really want to exchange this",
+"gold": "transfer_howto",
+"pred": "transfer_howto/beneficiary_not_allowed"
+},
+{
+"score": 0.9395,
+"ok1": true,
+"lang": "zh",
+"text": "我没法转账到账户。",
+"gold": "transfer_howto",
+"pred": "transfer_howto/beneficiary_not_allowed"
+},
+{
+"score": 0.99,
+"ok1": true,
+"lang": "mixed",
+"text": "我要做什么才可以 transfer 我的 paycheck 进我的 account？",
+"gold": "transfer_howto",
+"pred": "transfer_howto/receiving_money"
+},
+{
+"score": 0.9995,
+"ok1": true,
+"lang": "en",
+"text": "I would like to transfer some money from my other bank account into this one.",
+"gold": "transfer_howto",
+"pred": "transfer_howto/transfer_into_account"
+},
+{
+"score": 0.9991,
+"ok1": true,
+"lang": "zh",
+"text": "我需要选择英镑，薪水才能正常入账吗？",
+"gold": "transfer_howto",
+"pred": "transfer_howto/receiving_money"
+},
+{
+"score": 0.9997,
+"ok1": true,
+"lang": "mixed",
+"text": "我没有办法做 transfer 去一个 account。",
+"gold": "transfer_howto",
+"pred": "transfer_howto/beneficiary_not_allowed"
+},
+{
+"score": 0.9978,
+"ok1": true,
+"lang": "en",
+"text": "I would like to transfer funds from one account to another.",
+"gold": "transfer_howto",
+"pred": "transfer_howto/transfer_into_account"
+},
+{
+"score": 0.6775,
+"ok1": true,
+"lang": "zh",
+"text": "我以前转账都没问题，但现在遇到一个错误说不能转。为什么会这样？",
+"gold": "transfer_howto",
+"pred": "transfer_howto/beneficiary_not_allowed"
+},
+{
+"score": 0.9613,
+"ok1": true,
+"lang": "mixed",
+"text": "我在 try exchange crypto，可是不行。Tell 我怎样 fix。",
+"gold": "transfer_howto",
+"pred": "transfer_howto/beneficiary_not_allowed"
+},
+{
+"score": 0.9841,
+"ok1": true,
+"lang": "en",
+"text": "How long do I have to wait for a transfer from the US?",
+"gold": "transfer_howto",
+"pred": "transfer_howto/transfer_timing"
+},
+{
+"score": 0.8877,
+"ok1": true,
+"lang": "zh",
+"text": "我的转账要多久才会成功？",
+"gold": "transfer_status",
+"pred": "transfer_status/pending_transfer"
+},
+{
+"score": 0.9962,
+"ok1": true,
+"lang": "mixed",
+"text": "别人可以怎样 transfer money 给我？",
+"gold": "transfer_howto",
+"pred": "transfer_howto/receiving_money"
+},
+{
+"score": 0.9968,
+"ok1": true,
+"lang": "en",
+"text": "Can i deposit my salary to this account?",
+"gold": "transfer_howto",
+"pred": "transfer_howto/receiving_money"
+},
+{
+"score": 0.6984,
+"ok1": true,
+"lang": "zh",
+"text": "转账到我的账户要等多久？",
+"gold": "transfer_howto",
+"pred": "transfer_howto/transfer_timing"
+},
+{
+"score": 0.8163,
+"ok1": true,
+"lang": "mixed",
+"text": "为什么我会收到 message 说我的 transfer not possible？我之前做过没有问题。Please fix lah。",
+"gold": "transfer_howto",
+"pred": "transfer_howto/beneficiary_not_allowed"
+},
+{
+"score": 0.998,
+"ok1": true,
+"lang": "en",
+"text": "How does a transfer work?",
+"gold": "transfer_howto",
+"pred": "transfer_howto/transfer_into_account"
+},
+{
+"score": 0.9898,
+"ok1": true,
+"lang": "zh",
+"text": "为什么我不能转账到另一个账户？",
+"gold": "transfer_howto",
+"pred": "transfer_howto/beneficiary_not_allowed"
+},
+{
+"score": 0.9963,
+"ok1": true,
+"lang": "mixed",
+"text": "我要怎样通过 transfer send 我 account 的 money？",
+"gold": "transfer_howto",
+"pred": "transfer_howto/transfer_into_account"
+},
+{
+"score": 0.9994,
+"ok1": true,
+"lang": "en",
+"text": "Can I get paid in another currency?",
+"gold": "transfer_howto",
+"pred": "transfer_howto/receiving_money"
+},
+{
+"score": 0.9979,
+"ok1": true,
+"lang": "zh",
+"text": "这个可以用来收我的薪水吗？",
+"gold": "transfer_howto",
+"pred": "transfer_howto/receiving_money"
+},
+{
+"score": 0.9956,
+"ok1": true,
+"lang": "mixed",
+"text": "From China 的 urgent transfer 大概要多久？",
+"gold": "transfer_howto",
+"pred": "transfer_howto/transfer_timing"
+},
+{
+"score": 0.9951,
+"ok1": true,
+"lang": "en",
+"text": "I receive my salary in GBP. Do I need to configure this somehwere?",
+"gold": "transfer_howto",
+"pred": "transfer_howto/receiving_money"
+},
+{
+"score": 0.6229,
+"ok1": false,
+"lang": "zh",
+"text": "我有一笔加密货币兑换一直过不了，请帮我处理一下。",
+"gold": "transfer_howto",
+"pred": "transfer_status/balance_not_updated_after_bank_transfer"
+},
+{
+"score": 0.6081,
+"ok1": true,
+"lang": "mixed",
+"text": "我的 Europe transfer 要 wait 多久？",
+"gold": "transfer_status",
+"pred": "transfer_status/pending_transfer"
+},
+{
+"score": 0.9968,
+"ok1": true,
+"lang": "en",
+"text": "Can I use this to receive my salary?",
+"gold": "transfer_howto",
+"pred": "transfer_howto/receiving_money"
+},
+{
+"score": 0.9218,
+"ok1": false,
+"lang": "zh",
+"text": "可以存入英镑吗？",
+"gold": "transfer_howto",
+"pred": "account_service/fiat_currency_support"
+},
+{
+"score": 0.9889,
+"ok1": true,
+"lang": "mixed",
+"text": "我不明白怎样 top up 我的 account，可以 explain 一下 process 吗？",
+"gold": "transfer_howto",
+"pred": "transfer_howto/transfer_into_account"
+},
+{
+"score": 0.828,
+"ok1": true,
+"lang": "en",
+"text": "How long does a transfer take from the point it's sent, to the point it arrives in my account?",
+"gold": "transfer_howto",
+"pred": "transfer_howto/transfer_timing"
+},
+{
+"score": 0.9969,
+"ok1": true,
+"lang": "zh",
+"text": "你知道我能不能用这个收薪水吗？",
+"gold": "transfer_howto",
+"pred": "transfer_howto/receiving_money"
+},
+{
+"score": 0.5581,
+"ok1": true,
+"lang": "mixed",
+"text": "我 transfer 去 beneficiary 遇到问题。",
+"gold": "transfer_howto",
+"pred": "transfer_howto/beneficiary_not_allowed"
+},
+{
+"score": 0.8498,
+"ok1": true,
+"lang": "en",
+"text": "How long to I have to wait for a transfer to reach my account?",
+"gold": "transfer_howto",
+"pred": "transfer_howto/transfer_timing"
+},
+{
+"score": 0.618,
+"ok1": false,
+"lang": "zh",
+"text": "转账多久会显示在我的账户里？",
+"gold": "transfer_howto",
+"pred": "transfer_status/balance_not_updated_after_bank_transfer"
+},
+{
+"score": 0.9723,
+"ok1": true,
+"lang": "mixed",
+"text": "US transfer 的 wait 是多久？",
+"gold": "transfer_howto",
+"pred": "transfer_howto/transfer_timing"
+},
+{
+"score": 0.9973,
+"ok1": true,
+"lang": "en",
+"text": "What methods can I use to add money to my account?",
+"gold": "transfer_howto",
+"pred": "transfer_howto/transfer_into_account"
+},
+{
+"score": 0.9979,
+"ok1": true,
+"lang": "zh",
+"text": "我可以通过这个拿到薪水吗？",
+"gold": "transfer_howto",
+"pred": "transfer_howto/receiving_money"
+},
+{
+"score": 0.9783,
+"ok1": true,
+"lang": "mixed",
+"text": "为什么我现在不被 allow transfer funds？我一直收到 error message。",
+"gold": "transfer_howto",
+"pred": "transfer_howto/beneficiary_not_allowed"
+},
+{
+"score": 0.9579,
+"ok1": true,
+"lang": "en",
+"text": "Is it possible to give a second card for this account to my daughter?",
+"gold": "card_service",
+"pred": "card_service/getting_spare_card"
+},
+{
+"score": 0.9048,
+"ok1": true,
+"lang": "zh",
+"text": "你们的卡会邮寄到哪些地方？",
+"gold": "card_service",
+"pred": "card_service/order_physical_card"
+},
+{
+"score": 0.9488,
+"ok1": true,
+"lang": "mixed",
+"text": "我的 new card 要 activate 需要做什么？",
+"gold": "card_service",
+"pred": "card_service/activate_my_card"
+},
+{
+"score": 0.9986,
+"ok1": true,
+"lang": "en",
+"text": "I would like to change my pin.",
+"gold": "card_service",
+"pred": "card_service/change_pin"
+},
+{
+"score": 0.9953,
+"ok1": true,
+"lang": "zh",
+"text": "卡大概要多久才会寄到？",
+"gold": "card_service",
+"pred": "card_service/card_delivery_estimate"
+},
+{
+"score": 0.9243,
+"ok1": true,
+"lang": "mixed",
+"text": "Visa 和 Mastercard 我可以 choose 哪一个吗？",
+"gold": "card_service",
+"pred": "card_service/visa_or_mastercard"
+},
+{
+"score": 0.8867,
+"ok1": true,
+"lang": "en",
+"text": "are both visa and mastercard available to me?",
+"gold": "card_service",
+"pred": "card_service/visa_or_mastercard"
+},
+{
+"score": 0.994,
+"ok1": true,
+"lang": "zh",
+"text": "我想选一个不同的PIN。",
+"gold": "card_service",
+"pred": "card_service/change_pin"
+},
+{
+"score": 0.9996,
+"ok1": true,
+"lang": "mixed",
+"text": "这个 account 可以申请第二张 physical card 吗？",
+"gold": "card_service",
+"pred": "card_service/getting_spare_card"
+},
+{
+"score": 0.9565,
+"ok1": true,
+"lang": "en",
+"text": "How do I know why my card isn't working?",
+"gold": "card_service",
+"pred": "card_service/card_not_working"
+},
+{
+"score": 0.9957,
+"ok1": true,
+"lang": "zh",
+"text": "我的卡可以用来网上购物吗？",
+"gold": "card_service",
+"pred": "card_service/card_acceptance"
+},
+{
+"score": 0.9998,
+"ok1": true,
+"lang": "mixed",
+"text": "我的 card 是不是 anywhere 都可以用？",
+"gold": "card_service",
+"pred": "card_service/card_acceptance"
+},
+{
+"score": 0.7194,
+"ok1": true,
+"lang": "en",
+"text": "Why could I not get cash?",
+"gold": "card_service",
+"pred": "card_service/declined_cash_withdrawal"
+},
+{
+"score": 0.9628,
+"ok1": true,
+"lang": "zh",
+"text": "请给我一张Visa卡和一张Mastercard卡。",
+"gold": "card_service",
+"pred": "card_service/visa_or_mastercard"
+},
+{
+"score": 0.9938,
+"ok1": true,
+"lang": "mixed",
+"text": "我在拿 cash 的时候，card 拿不回来。",
+"gold": "card_service",
+"pred": "card_service/card_swallowed"
+},
+{
+"score": 0.9997,
+"ok1": true,
+"lang": "en",
+"text": "Where are the locations of ATMs that accept this card?",
+"gold": "card_service",
+"pred": "card_service/atm_support"
+},
+{
+"score": 0.7642,
+"ok1": true,
+"lang": "zh",
+"text": "我的新卡在哪里？我已经等了一个星期！",
+"gold": "card_service",
+"pred": "card_service/card_arrival"
+},
+{
+"score": 0.9866,
+"ok1": true,
+"lang": "mixed",
+"text": "我刚拿到 new card，但不确定要怎样 check 它的 PIN。",
+"gold": "card_service",
+"pred": "card_service/get_physical_card"
+},
+{
+"score": 0.6564,
+"ok1": true,
+"lang": "en",
+"text": "Can you let me know if Visa is among the card scheme assignments?",
+"gold": "card_service",
+"pred": "card_service/visa_or_mastercard"
+},
+{
+"score": 0.9766,
+"ok1": true,
+"lang": "zh",
+"text": "激活新卡有哪些步骤？",
+"gold": "card_service",
+"pred": "card_service/activate_my_card"
+},
+{
+"score": 0.9964,
+"ok1": true,
+"lang": "mixed",
+"text": "U.S. 的 delivery time 是多久？",
+"gold": "card_service",
+"pred": "card_service/card_delivery_estimate"
+},
+{
+"score": 0.9712,
+"ok1": true,
+"lang": "en",
+"text": "What is the tracking number for my card that was mailed?",
+"gold": "card_service",
+"pred": "card_service/card_arrival"
+},
+{
+"score": 0.9993,
+"ok1": true,
+"lang": "zh",
+"text": "如果我的卡快到期了，下一步是什么？",
+"gold": "card_service",
+"pred": "card_service/card_about_to_expire"
+},
+{
+"score": 0.9879,
+"ok1": true,
+"lang": "mixed",
+"text": "card 会不会突然 stop working leh？",
+"gold": "card_service",
+"pred": "card_service/card_not_working"
+},
+{
+"score": 0.9692,
+"ok1": true,
+"lang": "en",
+"text": "My daughter would like a card as well, how can we make this happen?",
+"gold": "card_service",
+"pred": "card_service/getting_spare_card"
+},
+{
+"score": 0.9774,
+"ok1": true,
+"lang": "zh",
+"text": "可以帮我激活我的卡吗？",
+"gold": "card_service",
+"pred": "card_service/activate_my_card"
+},
+{
+"score": 0.9025,
+"ok1": true,
+"lang": "mixed",
+"text": "请帮我 check 我的 account！我的 card 在 ATM 一直 decline，我已经试了两个不同的了！",
+"gold": "card_service",
+"pred": "card_service/card_not_working"
+},
+{
+"score": 0.9992,
+"ok1": true,
+"lang": "en",
+"text": "What can I do if contactless doesn't work?",
+"gold": "card_service",
+"pred": "card_service/contactless_not_working"
+},
+{
+"score": 0.3939,
+"ok1": true,
+"lang": "zh",
+"text": "我试了我的卡好多次，但一直都不行。",
+"gold": "card_service",
+"pred": "card_service/card_not_working"
+},
+{
+"score": 0.9995,
+"ok1": true,
+"lang": "mixed",
+"text": "我要怎样可以 ASAP 拿到 new card 来 replace 一张快 expire 的旧 card？",
+"gold": "card_service",
+"pred": "card_service/card_about_to_expire"
+},
+{
+"score": 0.986,
+"ok1": true,
+"lang": "en",
+"text": "What is the tracking number for the card you sent?",
+"gold": "card_service",
+"pred": "card_service/card_arrival"
+},
+{
+"score": 0.9915,
+"ok1": true,
+"lang": "zh",
+"text": "我要怎样使用感应付款？",
+"gold": "card_service",
+"pred": "card_service/contactless_not_working"
+},
+{
+"score": 0.9954,
+"ok1": true,
+"lang": "mixed",
+"text": "我的 card 不被 accept。",
+"gold": "card_service",
+"pred": "card_service/card_not_working"
+},
+{
+"score": 0.9985,
+"ok1": true,
+"lang": "en",
+"text": "What do I do if the ATM ate my card?",
+"gold": "card_service",
+"pred": "card_service/card_swallowed"
+},
+{
+"score": 0.9979,
+"ok1": true,
+"lang": "zh",
+"text": "我在哪里可以查看我的PIN？",
+"gold": "card_service",
+"pred": "card_service/get_physical_card"
+},
+{
+"score": 0.9923,
+"ok1": true,
+"lang": "mixed",
+"text": "如果我有这张 card，可以去哪些 ATM？",
+"gold": "card_service",
+"pred": "card_service/atm_support"
+},
+{
+"score": 0.4819,
+"ok1": true,
+"lang": "en",
+"text": "Nothing goes through on my card.",
+"gold": "card_service",
+"pred": "card_service/card_not_working"
+},
+{
+"score": 0.7758,
+"ok1": false,
+"lang": "zh",
+"text": "为什么我卡上的一笔交易被拒了？",
+"gold": "card_service",
+"pred": "transfer_status/declined_transfer"
+},
+{
+"score": 0.995,
+"ok1": true,
+"lang": "mixed",
+"text": "我 locate 不到 card 的 PIN。",
+"gold": "card_service",
+"pred": "card_service/get_physical_card"
+},
+{
+"score": 0.9997,
+"ok1": true,
+"lang": "en",
+"text": "Who accepts this card?",
+"gold": "card_service",
+"pred": "card_service/card_acceptance"
+},
+{
+"score": 0.9991,
+"ok1": true,
+"lang": "zh",
+"text": "我的卡可以用来支付什么？",
+"gold": "card_service",
+"pred": "card_service/card_acceptance"
+},
+{
+"score": 0.9996,
+"ok1": true,
+"lang": "mixed",
+"text": "有没有 ATM 的 list？",
+"gold": "card_service",
+"pred": "card_service/atm_support"
+},
+{
+"score": 0.9994,
+"ok1": true,
+"lang": "en",
+"text": "My card is about to expire. How do I get a new one?",
+"gold": "card_service",
+"pred": "card_service/card_about_to_expire"
+},
+{
+"score": 0.9845,
+"ok1": true,
+"lang": "zh",
+"text": "我的卡又没有寄到，可以给我建议吗？",
+"gold": "card_service",
+"pred": "card_service/card_arrival"
+},
+{
+"score": 0.9985,
+"ok1": true,
+"lang": "mixed",
+"text": "关于这张 card 的 PIN？",
+"gold": "card_service",
+"pred": "card_service/get_physical_card"
+},
+{
+"score": 0.6288,
+"ok1": true,
+"lang": "en",
+"text": "I attempted to get cash but was declined.",
+"gold": "card_service",
+"pred": "card_service/declined_cash_withdrawal"
+},
+{
+"score": 0.9977,
+"ok1": true,
+"lang": "zh",
+"text": "我的新卡开通了感应付款吗？",
+"gold": "card_service",
+"pred": "card_service/contactless_not_working"
+},
+{
+"score": 0.9975,
+"ok1": true,
+"lang": "mixed",
+"text": "我一个星期前 order 了 card，现在还没到。我要怎样做 ah？",
+"gold": "card_service",
+"pred": "card_service/card_arrival"
+},
+{
+"score": 0.9436,
+"ok1": true,
+"lang": "en",
+"text": "If I want a physical card, do I have to pay anything?",
+"gold": "card_service",
+"pred": "card_service/order_physical_card"
+},
+{
+"score": 0.9979,
+"ok1": true,
+"lang": "zh",
+"text": "我想设置一个新PIN。",
+"gold": "card_service",
+"pred": "card_service/change_pin"
+},
+{
+"score": 0.611,
+"ok1": true,
+"lang": "mixed",
+"text": "为什么你们一直 decline 我的 payment？我已经用这张 card 试了几次，就是 not working。",
+"gold": "card_service",
+"pred": "card_service/card_not_working"
+},
+{
+"score": 0.8333,
+"ok1": true,
+"lang": "en",
+"text": "What are the fees for a physical card?",
+"gold": "card_service",
+"pred": "card_service/order_physical_card"
+},
+{
+"score": 0.9909,
+"ok1": true,
+"lang": "zh",
+"text": "我已经用完了所有可以试PIN的次数。",
+"gold": "card_service",
+"pred": "card_service/pin_blocked"
+},
+{
+"score": 0.9366,
+"ok1": true,
+"lang": "mixed",
+"text": "我的 PIN not working，我需要 assistance。",
+"gold": "card_service",
+"pred": "card_service/pin_blocked"
+},
+{
+"score": 0.9963,
+"ok1": true,
+"lang": "en",
+"text": "I am waiting for my card to arrive.",
+"gold": "card_service",
+"pred": "card_service/card_arrival"
+},
+{
+"score": 0.9992,
+"ok1": true,
+"lang": "zh",
+"text": "我输错PIN太多次，现在被锁了。帮我解锁！",
+"gold": "card_service",
+"pred": "card_service/pin_blocked"
+},
+{
+"score": 0.7768,
+"ok1": true,
+"lang": "mixed",
+"text": "哪些 ATM 会 accept 这张 card？",
+"gold": "card_service",
+"pred": "card_service/atm_support"
+},
+{
+"score": 0.9772,
+"ok1": true,
+"lang": "en",
+"text": "The ATM didn't give me the card back!",
+"gold": "card_service",
+"pred": "card_service/card_swallowed"
+},
+{
+"score": 0.5501,
+"ok1": true,
+"lang": "zh",
+"text": "在App里哪里可以查到我的新PIN？",
+"gold": "card_service",
+"pred": "card_service/get_physical_card"
+},
+{
+"score": 0.7263,
+"ok1": true,
+"lang": "mixed",
+"text": "今天在 bus 上 NFC payment 不能用。帮帮我 leh？",
+"gold": "card_service",
+"pred": "card_service/contactless_not_working"
+},
+{
+"score": 0.9985,
+"ok1": true,
+"lang": "en",
+"text": "Please terminate my account.",
+"gold": "account_service",
+"pred": "account_service/terminate_account"
+},
+{
+"score": 0.9981,
+"ok1": true,
+"lang": "zh",
+"text": "请删除我的账户，你们的服务不达标。",
+"gold": "account_service",
+"pred": "account_service/terminate_account"
+},
+{
+"score": 0.998,
+"ok1": true,
+"lang": "mixed",
+"text": "请 show 我怎样 reset 我的 passcode。",
+"gold": "account_service",
+"pred": "account_service/passcode_forgotten"
+},
+{
+"score": 0.921,
+"ok1": true,
+"lang": "en",
+"text": "Why am I required to verify my identity?",
+"gold": "account_service",
+"pred": "account_service/why_verify_identity"
+},
+{
+"score": 0.7717,
+"ok1": false,
+"lang": "zh",
+"text": "你们有做欧元兑换吗？",
+"gold": "account_service",
+"pred": "fees_rates/exchange_rate"
+},
+{
+"score": 0.9952,
+"ok1": true,
+"lang": "mixed",
+"text": "你们 accept 换去 EUR 吗？",
+"gold": "account_service",
+"pred": "account_service/fiat_currency_support"
+},
+{
+"score": 0.6581,
+"ok1": true,
+"lang": "en",
+"text": "How do I go forth on verifying my identity?",
+"gold": "account_service",
+"pred": "account_service/unable_to_verify_identity"
+},
+{
+"score": 0.9975,
+"ok1": true,
+"lang": "zh",
+"text": "我可以用哪些法币来持有和兑换？",
+"gold": "account_service",
+"pred": "account_service/fiat_currency_support"
+},
+{
+"score": 0.9889,
+"ok1": true,
+"lang": "mixed",
+"text": "请帮我 verify 我的 id。",
+"gold": "account_service",
+"pred": "account_service/unable_to_verify_identity"
+},
+{
+"score": 0.999,
+"ok1": true,
+"lang": "en",
+"text": "I have moved.  Where can I update my details?",
+"gold": "account_service",
+"pred": "account_service/edit_personal_details"
+},
+{
+"score": 0.9854,
+"ok1": true,
+"lang": "zh",
+"text": "开账户的最低年龄是多少？",
+"gold": "account_service",
+"pred": "account_service/age_limit"
+},
+{
+"score": 0.5738,
+"ok1": true,
+"lang": "mixed",
+"text": "如果我 request 把我的 funds hold 住，你们是用哪些 currencies？",
+"gold": "account_service",
+"pred": "account_service/fiat_currency_support"
+},
+{
+"score": 0.9993,
+"ok1": true,
+"lang": "en",
+"text": "Why isn't my ID being verified?",
+"gold": "account_service",
+"pred": "account_service/unable_to_verify_identity"
+},
+{
+"score": 0.9975,
+"ok1": true,
+"lang": "zh",
+"text": "你们支持哪些法币？",
+"gold": "account_service",
+"pred": "account_service/fiat_currency_support"
+},
+{
+"score": 0.9902,
+"ok1": true,
+"lang": "mixed",
+"text": "为什么你们 need 知道那么多关于我的东西 ah？",
+"gold": "account_service",
+"pred": "account_service/why_verify_identity"
+},
+{
+"score": 0.999,
+"ok1": true,
+"lang": "en",
+"text": "How to change my address.",
+"gold": "account_service",
+"pred": "account_service/edit_personal_details"
+},
+{
+"score": 0.5446,
+"ok1": true,
+"lang": "zh",
+"text": "我要验证身份需要什么？",
+"gold": "account_service",
+"pred": "account_service/unable_to_verify_identity"
+},
+{
+"score": 0.9989,
+"ok1": true,
+"lang": "mixed",
+"text": "我的 password 不见了",
+"gold": "account_service",
+"pred": "account_service/passcode_forgotten"
+},
+{
+"score": 0.9967,
+"ok1": true,
+"lang": "en",
+"text": "I forgot my code to get into the app.",
+"gold": "account_service",
+"pred": "account_service/passcode_forgotten"
+},
+{
+"score": 0.9952,
+"ok1": true,
+"lang": "zh",
+"text": "我要怎样帮我女儿开银行户口？",
+"gold": "account_service",
+"pred": "account_service/age_limit"
+},
+{
+"score": 0.9841,
+"ok1": true,
+"lang": "mixed",
+"text": "如果我的 kids 想用你们的 service，他们要几岁才可以？",
+"gold": "account_service",
+"pred": "account_service/age_limit"
+},
+{
+"score": 0.7823,
+"ok1": true,
+"lang": "en",
+"text": "Can I still use my account, even though the identity verification has not passed yet?",
+"gold": "account_service",
+"pred": "account_service/unable_to_verify_identity"
+},
+{
+"score": 0.9964,
+"ok1": true,
+"lang": "zh",
+"text": "我最多可以持有几种货币？",
+"gold": "account_service",
+"pred": "account_service/fiat_currency_support"
+},
+{
+"score": 0.9869,
+"ok1": true,
+"lang": "mixed",
+"text": "我的 kids 要几岁才能用你们的 service？",
+"gold": "account_service",
+"pred": "account_service/age_limit"
+},
+{
+"score": 0.81,
+"ok1": true,
+"lang": "en",
+"text": "What should I do to verify my identity?",
+"gold": "account_service",
+"pred": "account_service/unable_to_verify_identity"
+},
+{
+"score": 0.5211,
+"ok1": true,
+"lang": "mixed",
+"text": "跟我讲一下 identity check 的 steps leh",
+"gold": "account_service",
+"pred": "account_service/verify_my_identity"
+},
+{
+"score": 0.998,
+"ok1": true,
+"lang": "en",
+"text": "What fiat currencies are supported for holding and exchange?",
+"gold": "account_service",
+"pred": "account_service/fiat_currency_support"
+},
+{
+"score": 0.9917,
+"ok1": true,
+"lang": "zh",
+"text": "我的孩子要几岁才能开户口？",
+"gold": "account_service",
+"pred": "account_service/age_limit"
+},
+{
+"score": 0.7605,
+"ok1": true,
+"lang": "mixed",
+"text": "我要做哪些 steps 来 verify 我的 identity？",
+"gold": "account_service",
+"pred": "account_service/unable_to_verify_identity"
+},
+{
+"score": 0.998,
+"ok1": true,
+"lang": "en",
+"text": "unhappy with you, how to delete account",
+"gold": "account_service",
+"pred": "account_service/terminate_account"
+},
+{
+"score": 0.6794,
+"ok1": true,
+"lang": "zh",
+"text": "我的身份验证要多久？",
+"gold": "account_service",
+"pred": "account_service/unable_to_verify_identity"
+},
+{
+"score": 0.8608,
+"ok1": true,
+"lang": "mixed",
+"text": "我想要 skip 掉我的 identity verification。",
+"gold": "account_service",
+"pred": "account_service/why_verify_identity"
+},
+{
+"score": 0.8274,
+"ok1": false,
+"lang": "en",
+"text": "Can I make transfers before identity verification?",
+"gold": "account_service",
+"pred": "transfer_howto/beneficiary_not_allowed"
+},
+{
+"score": 0.9994,
+"ok1": true,
+"lang": "zh",
+"text": "我需要更改我的账户资料。",
+"gold": "account_service",
+"pred": "account_service/edit_personal_details"
+},
+{
+"score": 0.998,
+"ok1": true,
+"lang": "mixed",
+"text": "我想 close 我的 account。",
+"gold": "account_service",
+"pred": "account_service/terminate_account"
+},
+{
+"score": 0.8841,
+"ok1": true,
+"lang": "en",
+"text": "Since my id hasn't been verified, when can I use my account?",
+"gold": "account_service",
+"pred": "account_service/unable_to_verify_identity"
+},
+{
+"score": 0.9421,
+"ok1": true,
+"lang": "zh",
+"text": "我可以帮我刚出生的宝宝开银行户口吗？",
+"gold": "account_service",
+"pred": "account_service/age_limit"
+},
+{
+"score": 0.9984,
+"ok1": true,
+"lang": "mixed",
+"text": "我可以 resend 我的 passcode 吗 ah？",
+"gold": "account_service",
+"pred": "account_service/passcode_forgotten"
+},
+{
+"score": 0.9679,
+"ok1": true,
+"lang": "en",
+"text": "How old does one have to be to have an account with the bank?",
+"gold": "account_service",
+"pred": "account_service/age_limit"
+},
+{
+"score": 0.9904,
+"ok1": true,
+"lang": "zh",
+"text": "如果我的密码不能用，我该怎么做？",
+"gold": "account_service",
+"pred": "account_service/passcode_forgotten"
+},
+{
+"score": 0.9976,
+"ok1": true,
+"lang": "mixed",
+"text": "你们的 system 支持 multiple currency 吗？",
+"gold": "account_service",
+"pred": "account_service/fiat_currency_support"
+},
+{
+"score": 0.9996,
+"ok1": true,
+"lang": "en",
+"text": "I need to change my name what do I do?",
+"gold": "account_service",
+"pred": "account_service/edit_personal_details"
+},
+{
+"score": 0.9464,
+"ok1": true,
+"lang": "zh",
+"text": "为什么它要我验证身份？",
+"gold": "account_service",
+"pred": "account_service/why_verify_identity"
+},
+{
+"score": 0.9989,
+"ok1": true,
+"lang": "mixed",
+"text": "不懂为什么，我在 verify 我的 identity 时遇到问题。",
+"gold": "account_service",
+"pred": "account_service/unable_to_verify_identity"
+},
+{
+"score": 0.9493,
+"ok1": true,
+"lang": "en",
+"text": "What's the process for ID verification?",
+"gold": "account_service",
+"pred": "account_service/verify_my_identity"
+},
+{
+"score": 0.9973,
+"ok1": true,
+"lang": "zh",
+"text": "我没法让 App 确认是我本人。",
+"gold": "account_service",
+"pred": "account_service/unable_to_verify_identity"
+},
+{
+"score": 0.9975,
+"ok1": true,
+"lang": "mixed",
+"text": "这个 app 不认得是我。",
+"gold": "account_service",
+"pred": "account_service/unable_to_verify_identity"
+},
+{
+"score": 0.9978,
+"ok1": true,
+"lang": "en",
+"text": "I have forgotten my password.",
+"gold": "account_service",
+"pred": "account_service/passcode_forgotten"
+},
+{
+"score": 0.9983,
+"ok1": true,
+"lang": "zh",
+"text": "我要做什么才能更改账户上的地址？",
+"gold": "account_service",
+"pred": "account_service/edit_personal_details"
+},
+{
+"score": 0.6578,
+"ok1": true,
+"lang": "mixed",
+"text": "我的 identity check 需要什么 ah？",
+"gold": "account_service",
+"pred": "account_service/unable_to_verify_identity"
+},
+{
+"score": 0.9956,
+"ok1": true,
+"lang": "en",
+"text": "I moved.  Where do I update my details?",
+"gold": "account_service",
+"pred": "account_service/edit_personal_details"
+},
+{
+"score": 0.9984,
+"ok1": true,
+"lang": "zh",
+"text": "可以告诉我怎样重置密码吗？",
+"gold": "account_service",
+"pred": "account_service/passcode_forgotten"
+},
+{
+"score": 0.9985,
+"ok1": true,
+"lang": "mixed",
+"text": "我需要你帮我 delete 我的 account。",
+"gold": "account_service",
+"pred": "account_service/terminate_account"
+},
+{
+"score": 0.9982,
+"ok1": true,
+"lang": "en",
+"text": "I am highly unsatisfied with this company and want to delete my account!",
+"gold": "account_service",
+"pred": "account_service/terminate_account"
+},
+{
+"score": 0.9987,
+"ok1": true,
+"lang": "zh",
+"text": "我想关闭账户。我不喜欢你们提供的服务。",
+"gold": "account_service",
+"pred": "account_service/terminate_account"
+},
+{
+"score": 0.9905,
+"ok1": true,
+"lang": "mixed",
+"text": "开 account 的年龄是多少？",
+"gold": "account_service",
+"pred": "account_service/age_limit"
+},
+{
+"score": 0.9993,
+"ok1": true,
+"lang": "en",
+"text": "I want to change my address.",
+"gold": "account_service",
+"pred": "account_service/edit_personal_details"
+},
+{
+"score": 0.8706,
+"ok1": true,
+"lang": "zh",
+"text": "我不喜欢要填写这么多关于我身份的资料。",
+"gold": "account_service",
+"pred": "account_service/why_verify_identity"
+},
+{
+"score": 0.9661,
+"ok1": true,
+"lang": "mixed",
+"text": "我需要 verify 我的 identity。",
+"gold": "account_service",
+"pred": "account_service/unable_to_verify_identity"
+},
+{
+"score": 0.9974,
+"ok1": false,
+"lang": "en",
+"text": "Can I freeze my card right now?",
+"gold": "fraud_report",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.9997,
+"ok1": true,
+"lang": "zh",
+"text": "我的账户有一笔我没有授权的直接扣款。",
+"gold": "fraud_report",
+"pred": "fraud_report/direct_debit_payment_not_recognised"
+},
+{
+"score": 0.9947,
+"ok1": true,
+"lang": "mixed",
+"text": "我的 card 是不是被人 access 了？app 里面有一些不是我做的 payments。",
+"gold": "fraud_report",
+"pred": "fraud_report/card_payment_not_recognised"
+},
+{
+"score": 0.9941,
+"ok1": true,
+"lang": "en",
+"text": "I just lost my wallet and I see that they are already withdrawing money from my account. How can I stop this?",
+"gold": "fraud_report",
+"pred": "fraud_report/cash_withdrawal_not_recognised"
+},
+{
+"score": 0.9632,
+"ok1": true,
+"lang": "zh",
+"text": "如果我觉得有人拿到了我的卡资料，我该怎么做？",
+"gold": "fraud_report",
+"pred": "fraud_report/compromised_card"
+},
+{
+"score": 0.9951,
+"ok1": true,
+"lang": "mixed",
+"text": "这个 card payment 不是我做的。",
+"gold": "fraud_report",
+"pred": "fraud_report/card_payment_not_recognised"
+},
+{
+"score": 0.9667,
+"ok1": false,
+"lang": "en",
+"text": "I didn't get cash from an ATM, but the app says I did",
+"gold": "fraud_report",
+"pred": "dispute_refund/wrong_amount_of_cash_received"
+},
+{
+"score": 0.9987,
+"ok1": true,
+"lang": "zh",
+"text": "我觉得有人用我的卡把钱取走了。我该怎么办？",
+"gold": "fraud_report",
+"pred": "fraud_report/cash_withdrawal_not_recognised"
+},
+{
+"score": 0.9288,
+"ok1": true,
+"lang": "mixed",
+"text": "我觉得有人不应该有我的 card numbers 的 access。",
+"gold": "fraud_report",
+"pred": "fraud_report/compromised_card"
+},
+{
+"score": 0.5988,
+"ok1": true,
+"lang": "en",
+"text": "There are a few transaction that I don't recognize, I think someone managed to get my card details and use it.",
+"gold": "fraud_report",
+"pred": "fraud_report/compromised_card"
+},
+{
+"score": 0.9543,
+"ok1": true,
+"lang": "mixed",
+"text": "我要怎样 freeze 我的 card？我觉得有人在用它做很多 online transactions lah。",
+"gold": "fraud_report",
+"pred": "fraud_report/compromised_card"
+},
+{
+"score": 0.9176,
+"ok1": true,
+"lang": "en",
+"text": "What do I do if I think my card was improperly used?",
+"gold": "fraud_report",
+"pred": "fraud_report/compromised_card"
+},
+{
+"score": 0.7257,
+"ok1": true,
+"lang": "zh",
+"text": "我有一笔还没设置过的直接扣款交易，但我想……",
+"gold": "fraud_report",
+"pred": "fraud_report/direct_debit_payment_not_recognised"
+},
+{
+"score": 0.9983,
+"ok1": true,
+"lang": "mixed",
+"text": "我有一笔 direct debit charge，我不认得。",
+"gold": "fraud_report",
+"pred": "fraud_report/direct_debit_payment_not_recognised"
+},
+{
+"score": 0.9938,
+"ok1": true,
+"lang": "en",
+"text": "There is a payment in the App that is not mine.",
+"gold": "fraud_report",
+"pred": "fraud_report/card_payment_not_recognised"
+},
+{
+"score": 0.9957,
+"ok1": true,
+"lang": "zh",
+"text": "我看到一笔不是我做的付款。",
+"gold": "fraud_report",
+"pred": "fraud_report/card_payment_not_recognised"
+},
+{
+"score": 0.6684,
+"ok1": true,
+"lang": "mixed",
+"text": "我 card 上有些 transactions 我不认得，我觉得一定有人拿到我的 card info 然后用了。",
+"gold": "fraud_report",
+"pred": "fraud_report/compromised_card"
+},
+{
+"score": 0.9998,
+"ok1": true,
+"lang": "en",
+"text": "There's a cash withdraw on my statement that I didn't make.",
+"gold": "fraud_report",
+"pred": "fraud_report/cash_withdrawal_not_recognised"
+},
+{
+"score": 0.9673,
+"ok1": false,
+"lang": "zh",
+"text": "我的账户被扣了一笔不应该有的费用。",
+"gold": "fraud_report",
+"pred": "fees_rates/extra_charge_on_statement"
+},
+{
+"score": 0.9146,
+"ok1": true,
+"lang": "mixed",
+"text": "如果我看到一笔不是我做的 payment，我应该怎样做？",
+"gold": "fraud_report",
+"pred": "fraud_report/card_payment_not_recognised"
+},
+{
+"score": 0.9819,
+"ok1": true,
+"lang": "en",
+"text": "I found an unauthorized card payment",
+"gold": "fraud_report",
+"pred": "fraud_report/card_payment_not_recognised"
+},
+{
+"score": 0.9559,
+"ok1": true,
+"lang": "zh",
+"text": "我的账户有一笔不是我做的交易。",
+"gold": "fraud_report",
+"pred": "fraud_report/direct_debit_payment_not_recognised"
+},
+{
+"score": 0.9982,
+"ok1": true,
+"lang": "mixed",
+"text": "我知道这已经非常迟了。我 check 了最近几个月的 transactions 后，发现一笔很大的 charge，我确定不是我做的。还可以 dispute 吗？",
+"gold": "fraud_report",
+"pred": "fraud_report/direct_debit_payment_not_recognised"
+},
+{
+"score": 0.9951,
+"ok1": true,
+"lang": "en",
+"text": "I don't recognise a card payment",
+"gold": "fraud_report",
+"pred": "fraud_report/card_payment_not_recognised"
+},
+{
+"score": 0.8473,
+"ok1": true,
+"lang": "zh",
+"text": "我不确定账单里的一笔提款。",
+"gold": "fraud_report",
+"pred": "fraud_report/cash_withdrawal_not_recognised"
+},
+{
+"score": 0.9987,
+"ok1": true,
+"lang": "mixed",
+"text": "为什么我的 account 会有一笔我不认得的 payment？",
+"gold": "fraud_report",
+"pred": "fraud_report/card_payment_not_recognised"
+},
+{
+"score": 0.9539,
+"ok1": false,
+"lang": "en",
+"text": "I didn't take out money from an ATM but my app statement shows that I did. How can I fix this?",
+"gold": "fraud_report",
+"pred": "dispute_refund/wrong_amount_of_cash_received"
+},
+{
+"score": 0.9998,
+"ok1": true,
+"lang": "zh",
+"text": "这笔直接扣款交易不是我做的。",
+"gold": "fraud_report",
+"pred": "fraud_report/direct_debit_payment_not_recognised"
+},
+{
+"score": 0.9967,
+"ok1": true,
+"lang": "mixed",
+"text": "app 里面有一笔 withdrawal 不是我的。",
+"gold": "fraud_report",
+"pred": "fraud_report/cash_withdrawal_not_recognised"
+},
+{
+"score": 0.9931,
+"ok1": true,
+"lang": "en",
+"text": "I think there has been a purchase made that wasn't by me.",
+"gold": "fraud_report",
+"pred": "fraud_report/card_payment_not_recognised"
+},
+{
+"score": 0.9951,
+"ok1": true,
+"lang": "zh",
+"text": "有一笔刷卡付款我不认得。",
+"gold": "fraud_report",
+"pred": "fraud_report/card_payment_not_recognised"
+},
+{
+"score": 0.9997,
+"ok1": true,
+"lang": "mixed",
+"text": "我的 account 里面有一笔 suspicious cash withdraw。",
+"gold": "fraud_report",
+"pred": "fraud_report/cash_withdrawal_not_recognised"
+},
+{
+"score": 0.9983,
+"ok1": true,
+"lang": "en",
+"text": "Even though it's late, I wanted to see about disputing a charge. I was just looking through my transactions over the past couple of months and noticed a pretty large amount that was not completed by me. Is this possibly something I can still do.",
+"gold": "fraud_report",
+"pred": "fraud_report/direct_debit_payment_not_recognised"
+},
+{
+"score": 0.9996,
+"ok1": true,
+"lang": "zh",
+"text": "我的账户有一笔未授权的500英镑现金提款。我肯定没有提过这笔钱。我需要你们帮忙。",
+"gold": "fraud_report",
+"pred": "fraud_report/cash_withdrawal_not_recognised"
+},
+{
+"score": 0.9937,
+"ok1": true,
+"lang": "mixed",
+"text": "我不确定，不过可能有人在用我的 card。",
+"gold": "fraud_report",
+"pred": "fraud_report/compromised_card"
+},
+{
+"score": 0.4422,
+"ok1": true,
+"lang": "en",
+"text": "Someone has my card number, freeze my account.",
+"gold": "fraud_report",
+"pred": "fraud_report/compromised_card"
+},
+{
+"score": 0.4976,
+"ok1": false,
+"lang": "zh",
+"text": "有人偷了我的卡。虽然我的卡还在我身上，但刚刚有人提了500英镑现金。请尽快帮我。",
+"gold": "fraud_report",
+"pred": "card_lost_freeze/lost_or_stolen_card"
+},
+{
+"score": 0.992,
+"ok1": true,
+"lang": "mixed",
+"text": "有个我不认识的人没有经过 permission 就用了我的 card。",
+"gold": "fraud_report",
+"pred": "fraud_report/compromised_card"
+},
+{
+"score": 0.9397,
+"ok1": true,
+"lang": "en",
+"text": "I have a payment I didn't do",
+"gold": "fraud_report",
+"pred": "fraud_report/card_payment_not_recognised"
+},
+{
+"score": 0.9996,
+"ok1": true,
+"lang": "zh",
+"text": "我的账单里有一笔我不认得的直接扣款。",
+"gold": "fraud_report",
+"pred": "fraud_report/direct_debit_payment_not_recognised"
+},
+{
+"score": 0.8968,
+"ok1": true,
+"lang": "mixed",
+"text": "我觉得我不在家的时候，我的 child 用了我的 card。",
+"gold": "fraud_report",
+"pred": "fraud_report/compromised_card"
+},
+{
+"score": 0.9944,
+"ok1": true,
+"lang": "en",
+"text": "Please put a freeze on my card,  I am worried there has been some payments on it and I don't know what for.",
+"gold": "fraud_report",
+"pred": "fraud_report/card_payment_not_recognised"
+},
+{
+"score": 0.6479,
+"ok1": true,
+"lang": "zh",
+"text": "我要怎么取消我的卡？我的账户有一些不是我做的扣款。",
+"gold": "fraud_report",
+"pred": "fraud_report/direct_debit_payment_not_recognised"
+},
+{
+"score": 0.5264,
+"ok1": true,
+"lang": "mixed",
+"text": "我没有 approve，为什么我的 account 会被一个 seller deduct leh？",
+"gold": "fraud_report",
+"pred": "fraud_report/direct_debit_payment_not_recognised"
+},
+{
+"score": 0.9997,
+"ok1": true,
+"lang": "en",
+"text": "There is a suspicious direct debit payment.",
+"gold": "fraud_report",
+"pred": "fraud_report/direct_debit_payment_not_recognised"
+},
+{
+"score": 0.7525,
+"ok1": true,
+"lang": "zh",
+"text": "我现在要怎样立刻阻止我的账户被诈骗？",
+"gold": "fraud_report",
+"pred": "fraud_report/compromised_card"
+},
+{
+"score": 0.9995,
+"ok1": true,
+"lang": "mixed",
+"text": "帮我一下 lah，有一笔 Direct Debit 不是我做的。",
+"gold": "fraud_report",
+"pred": "fraud_report/direct_debit_payment_not_recognised"
+},
+{
+"score": 0.9995,
+"ok1": true,
+"lang": "en",
+"text": "I am seeing in the App a some cash withdrawal that its not mine",
+"gold": "fraud_report",
+"pred": "fraud_report/cash_withdrawal_not_recognised"
+},
+{
+"score": 0.991,
+"ok1": true,
+"lang": "zh",
+"text": "我的账户有一笔扣款不是我做的。",
+"gold": "fraud_report",
+"pred": "fraud_report/direct_debit_payment_not_recognised"
+},
+{
+"score": 0.1441,
+"ok1": false,
+"lang": "mixed",
+"text": "请 freeze 我的 account，它已经被 hacked 了。",
+"gold": "fraud_report",
+"pred": "account_service/compromised_card"
+},
+{
+"score": 0.9925,
+"ok1": true,
+"lang": "en",
+"text": "There are some payments with my card that I don't know where they are coming from. Just checked today and it's been since a couple days as well! What to I do? Can I revert this retrospectively? My card needs to be frozen immediately as well!",
+"gold": "fraud_report",
+"pred": "fraud_report/card_payment_not_recognised"
+},
+{
+"score": 0.5306,
+"ok1": true,
+"lang": "zh",
+"text": "我的卡最近有一笔扣款，我确定不是我做的，因为我从没见过那个名字。可以帮我调查吗？",
+"gold": "fraud_report",
+"pred": "fraud_report/card_payment_not_recognised"
+},
+{
+"score": 0.9513,
+"ok1": true,
+"lang": "mixed",
+"text": "有一些 transactions 不是我做的，一定是别人用了我的 card。",
+"gold": "fraud_report",
+"pred": "fraud_report/compromised_card"
+},
+{
+"score": 0.9977,
+"ok1": true,
+"lang": "en",
+"text": "The app said I withdrew cash at an ATM and I didn't",
+"gold": "fraud_report",
+"pred": "fraud_report/cash_withdrawal_not_recognised"
+},
+{
+"score": 0.9998,
+"ok1": true,
+"lang": "zh",
+"text": "我发现一笔直接扣款不是我做的。",
+"gold": "fraud_report",
+"pred": "fraud_report/direct_debit_payment_not_recognised"
+},
+{
+"score": 0.9994,
+"ok1": true,
+"lang": "mixed",
+"text": "如果我在 statement 里看到一笔奇怪的 withdrawl，我该怎么办？",
+"gold": "fraud_report",
+"pred": "fraud_report/cash_withdrawal_not_recognised"
+},
+{
+"score": 0.9934,
+"ok1": true,
+"lang": "en",
+"text": "Help!  My wallet was stolen and someone is taking money out.  I need this money!  What can I do?",
+"gold": "fraud_report",
+"pred": "fraud_report/cash_withdrawal_not_recognised"
+},
+{
+"score": 0.9564,
+"ok1": true,
+"lang": "zh",
+"text": "我觉得有人在用我的卡。有一些交易不是我做的。",
+"gold": "fraud_report",
+"pred": "fraud_report/compromised_card"
+},
+{
+"score": 0.9825,
+"ok1": true,
+"lang": "mixed",
+"text": "有人拿了我的 money，但我不知道是谁 leh。",
+"gold": "fraud_report",
+"pred": "fraud_report/cash_withdrawal_not_recognised"
+},
+{
+"score": 0.999,
+"ok1": true,
+"lang": "en",
+"text": "When I got cash, my exchange rate was wrong.",
+"gold": "dispute_refund",
+"pred": "dispute_refund/wrong_exchange_rate_for_cash_withdrawal"
+},
+{
+"score": 0.9761,
+"ok1": true,
+"lang": "zh",
+"text": "我有一张重复的卡，还被扣了两次钱。我要怎么解决？",
+"gold": "dispute_refund",
+"pred": "dispute_refund/transaction_charged_twice"
+},
+{
+"score": 0.9601,
+"ok1": true,
+"lang": "mixed",
+"text": "我买东西的 return 为什么还没有 show up 在我的 account？",
+"gold": "dispute_refund",
+"pred": "dispute_refund/Refund_not_showing_up"
+},
+{
+"score": 0.9997,
+"ok1": true,
+"lang": "en",
+"text": "Can you explain your exchange rate policy? I don't think I received the correct amount of cash in my ATM transaction.",
+"gold": "dispute_refund",
+"pred": "dispute_refund/wrong_exchange_rate_for_cash_withdrawal"
+},
+{
+"score": 0.9992,
+"ok1": true,
+"lang": "zh",
+"text": "我的现金提款汇率出错了。",
+"gold": "dispute_refund",
+"pred": "dispute_refund/wrong_exchange_rate_for_cash_withdrawal"
+},
+{
+"score": 0.9996,
+"ok1": true,
+"lang": "mixed",
+"text": "我买了一个 item，可是给我的 exchange rate 不对。",
+"gold": "dispute_refund",
+"pred": "dispute_refund/card_payment_wrong_exchange_rate"
+},
+{
+"score": 0.9996,
+"ok1": true,
+"lang": "en",
+"text": "Why is the exchange rate so exorbitant? This should have been a much higher amount of cash for that to apply.",
+"gold": "dispute_refund",
+"pred": "dispute_refund/wrong_exchange_rate_for_cash_withdrawal"
+},
+{
+"score": 0.9977,
+"ok1": true,
+"lang": "zh",
+"text": "我在ATM看到这笔交易套用的汇率不对。",
+"gold": "dispute_refund",
+"pred": "dispute_refund/wrong_exchange_rate_for_cash_withdrawal"
+},
+{
+"score": 0.906,
+"ok1": true,
+"lang": "mixed",
+"text": "我的 refund 要多久才会拿到？",
+"gold": "dispute_refund",
+"pred": "dispute_refund/Refund_not_showing_up"
+},
+{
+"score": 0.9989,
+"ok1": true,
+"lang": "en",
+"text": "I didn't get the right amount at the ATM.",
+"gold": "dispute_refund",
+"pred": "dispute_refund/wrong_amount_of_cash_received"
+},
+{
+"score": 0.5949,
+"ok1": true,
+"lang": "zh",
+"text": "我的退款不见了。",
+"gold": "dispute_refund",
+"pred": "dispute_refund/Refund_not_showing_up"
+},
+{
+"score": 0.9992,
+"ok1": true,
+"lang": "mixed",
+"text": "我对我的 purchase 不满意，要怎样 cancel 这个 order？",
+"gold": "dispute_refund",
+"pred": "dispute_refund/request_refund"
+},
+{
+"score": 0.9992,
+"ok1": true,
+"lang": "en",
+"text": "I didn't receive the right amount of cash back",
+"gold": "dispute_refund",
+"pred": "dispute_refund/wrong_amount_of_cash_received"
+},
+{
+"score": 0.9991,
+"ok1": true,
+"lang": "zh",
+"text": "我最近买的东西，为什么汇率不对？",
+"gold": "dispute_refund",
+"pred": "dispute_refund/card_payment_wrong_exchange_rate"
+},
+{
+"score": 0.9501,
+"ok1": true,
+"lang": "mixed",
+"text": "Hello。我 check 了我的 transactions，看到我去 restaurant 时 card 被 double charged。我想拿回我的钱。",
+"gold": "dispute_refund",
+"pred": "dispute_refund/transaction_charged_twice"
+},
+{
+"score": 0.9979,
+"ok1": true,
+"lang": "en",
+"text": "I took out cash abroad and the exchange rate isn't correct.",
+"gold": "dispute_refund",
+"pred": "dispute_refund/wrong_exchange_rate_for_cash_withdrawal"
+},
+{
+"score": 0.997,
+"ok1": true,
+"lang": "zh",
+"text": "我的账户上好像有重复扣款。",
+"gold": "dispute_refund",
+"pred": "dispute_refund/transaction_charged_twice"
+},
+{
+"score": 0.7666,
+"ok1": false,
+"lang": "mixed",
+"text": "如果我在国外，可以在 ATM withdraw 而且没有 fees 吗？",
+"gold": "dispute_refund",
+"pred": "fees_rates/cash_withdrawal_charge"
+},
+{
+"score": 0.9991,
+"ok1": true,
+"lang": "en",
+"text": "What are my remedies if I think I was charged twice for the same expense?",
+"gold": "dispute_refund",
+"pred": "dispute_refund/transaction_charged_twice"
+},
+{
+"score": 0.999,
+"ok1": true,
+"lang": "zh",
+"text": "我觉得我这笔刷卡付款的汇率不对。",
+"gold": "dispute_refund",
+"pred": "dispute_refund/card_payment_wrong_exchange_rate"
+},
+{
+"score": 0.9997,
+"ok1": true,
+"lang": "mixed",
+"text": "我要怎样 request cash back？ATM 给我的 amount 不对，不过 app 显示的是我真正被 charge 的 amount...",
+"gold": "dispute_refund",
+"pred": "dispute_refund/wrong_amount_of_cash_received"
+},
+{
+"score": 0.9875,
+"ok1": true,
+"lang": "en",
+"text": "Help! I keep checking my account, but my refund is not showing. I requested that a seller refund my money a while back, but there is no money showing in my account. What can you do for me?",
+"gold": "dispute_refund",
+"pred": "dispute_refund/Refund_not_showing_up"
+},
+{
+"score": 0.9988,
+"ok1": true,
+"lang": "zh",
+"text": "我要的是100，但只拿到20。",
+"gold": "dispute_refund",
+"pred": "dispute_refund/wrong_amount_of_cash_received"
+},
+{
+"score": 0.9985,
+"ok1": true,
+"lang": "mixed",
+"text": "可以帮我 check 一下我是不是被 charge 两次吗？",
+"gold": "dispute_refund",
+"pred": "dispute_refund/transaction_charged_twice"
+},
+{
+"score": 0.9858,
+"ok1": true,
+"lang": "en",
+"text": "Will declined funds I tried to withdraw be returned to me?",
+"gold": "dispute_refund",
+"pred": "dispute_refund/wrong_amount_of_cash_received"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "zh",
+"text": "我想为我买的东西申请退款。",
+"gold": "dispute_refund",
+"pred": "dispute_refund/request_refund"
+},
+{
+"score": 0.9959,
+"ok1": true,
+"lang": "mixed",
+"text": "为什么 ATM 给我的 cash 少过我要求的 amount？",
+"gold": "dispute_refund",
+"pred": "dispute_refund/wrong_amount_of_cash_received"
+},
+{
+"score": 0.9736,
+"ok1": true,
+"lang": "en",
+"text": "Looks like my card payment was duplicated. I went to pay at the store earlier, got declined once,second time it works. App still stays pending for one of the payments. Can you please remove one of them as it's wrong and clearly was declined?",
+"gold": "dispute_refund",
+"pred": "dispute_refund/transaction_charged_twice"
+},
+{
+"score": 0.9721,
+"ok1": true,
+"lang": "zh",
+"text": "你好，我照你说的让卖家发起退款了，已经一个星期了，我还没收到钱。请告诉我该怎么办。",
+"gold": "dispute_refund",
+"pred": "dispute_refund/Refund_not_showing_up"
+},
+{
+"score": 0.9997,
+"ok1": true,
+"lang": "mixed",
+"text": "我有一个 item 还没收到，需要 refund。我可以直接 cancel 这个 payment 吗？我不知道要怎样做。",
+"gold": "dispute_refund",
+"pred": "dispute_refund/request_refund"
+},
+{
+"score": 0.9135,
+"ok1": true,
+"lang": "en",
+"text": "I feel like too much money was taken during my currency exchange.",
+"gold": "dispute_refund",
+"pred": "dispute_refund/wrong_exchange_rate_for_cash_withdrawal"
+},
+{
+"score": 0.998,
+"ok1": true,
+"lang": "zh",
+"text": "我要取消我之前买的东西。",
+"gold": "dispute_refund",
+"pred": "dispute_refund/request_refund"
+},
+{
+"score": 0.9998,
+"ok1": true,
+"lang": "mixed",
+"text": "可以给我 refund 吗？",
+"gold": "dispute_refund",
+"pred": "dispute_refund/request_refund"
+},
+{
+"score": 0.9867,
+"ok1": true,
+"lang": "en",
+"text": "Why is the exchange rate wrong when I purchase something abroad?",
+"gold": "dispute_refund",
+"pred": "dispute_refund/card_payment_wrong_exchange_rate"
+},
+{
+"score": 0.9998,
+"ok1": true,
+"lang": "zh",
+"text": "我用外币付了一样东西，但发现汇率不对。",
+"gold": "dispute_refund",
+"pred": "dispute_refund/card_payment_wrong_exchange_rate"
+},
+{
+"score": 0.9971,
+"ok1": true,
+"lang": "mixed",
+"text": "我应该已经收到 refund 了，可是我的 statement 里没有 show 出来。",
+"gold": "dispute_refund",
+"pred": "dispute_refund/Refund_not_showing_up"
+},
+{
+"score": 0.9986,
+"ok1": true,
+"lang": "en",
+"text": "The amount of cash I received was incorrect",
+"gold": "dispute_refund",
+"pred": "dispute_refund/wrong_amount_of_cash_received"
+},
+{
+"score": 0.9988,
+"ok1": true,
+"lang": "zh",
+"text": "ATM没有给我要求的提款金额。",
+"gold": "dispute_refund",
+"pred": "dispute_refund/wrong_amount_of_cash_received"
+},
+{
+"score": 0.9993,
+"ok1": true,
+"lang": "mixed",
+"text": "我买了这个 item，被 charge 的 amount 不对，我可以拿回 refund 吗？",
+"gold": "dispute_refund",
+"pred": "dispute_refund/request_refund"
+},
+{
+"score": 0.9552,
+"ok1": true,
+"lang": "en",
+"text": "Why is there a transaction that shows multiple times?",
+"gold": "dispute_refund",
+"pred": "dispute_refund/transaction_charged_twice"
+},
+{
+"score": 0.9886,
+"ok1": true,
+"lang": "zh",
+"text": "我上个星期六买东西时被多收了钱。我拿到的汇率对吗？",
+"gold": "dispute_refund",
+"pred": "dispute_refund/card_payment_wrong_exchange_rate"
+},
+{
+"score": 0.9956,
+"ok1": true,
+"lang": "en",
+"text": "The conversion rate on the ATM that I used with foreign currency was wrong.",
+"gold": "dispute_refund",
+"pred": "dispute_refund/wrong_exchange_rate_for_cash_withdrawal"
+},
+{
+"score": 0.9936,
+"ok1": true,
+"lang": "zh",
+"text": "我想取消一笔付款。我几天前买了东西，到现在还没收到。",
+"gold": "dispute_refund",
+"pred": "dispute_refund/request_refund"
+},
+{
+"score": 0.9993,
+"ok1": true,
+"lang": "mixed",
+"text": "Hello，我很 urgent 要拿到这个 product 的 refund。Merchant 没有帮到我，我现在可以怎样做来 ASAP 解决？",
+"gold": "dispute_refund",
+"pred": "dispute_refund/request_refund"
+},
+{
+"score": 0.9792,
+"ok1": true,
+"lang": "en",
+"text": "I requested a refund, and never received it. What can I do?",
+"gold": "dispute_refund",
+"pred": "dispute_refund/Refund_not_showing_up"
+},
+{
+"score": 0.8797,
+"ok1": true,
+"lang": "zh",
+"text": "我很确定我的兑换出问题了。我把俄罗斯卢布换成英镑，结果被收了太多钱！",
+"gold": "dispute_refund",
+"pred": "dispute_refund/card_payment_wrong_exchange_rate"
+},
+{
+"score": 0.9393,
+"ok1": true,
+"lang": "mixed",
+"text": "这个 rate 太低了。你 sure 你们用的 exchange rate 是对的吗？",
+"gold": "dispute_refund",
+"pred": "dispute_refund/card_payment_wrong_exchange_rate"
+},
+{
+"score": 0.9873,
+"ok1": true,
+"lang": "en",
+"text": "A transaction is repeated several times on my account.",
+"gold": "dispute_refund",
+"pred": "dispute_refund/transaction_charged_twice"
+},
+{
+"score": 0.9962,
+"ok1": true,
+"lang": "zh",
+"text": "退款还没出现在我的账户里",
+"gold": "dispute_refund",
+"pred": "dispute_refund/Refund_not_showing_up"
+},
+{
+"score": 0.9997,
+"ok1": true,
+"lang": "mixed",
+"text": "我 online order 的东西很久了还没到。我真的够了！把钱 refund 给我，我不要 pay 这些人。",
+"gold": "dispute_refund",
+"pred": "dispute_refund/request_refund"
+},
+{
+"score": 0.9982,
+"ok1": true,
+"lang": "en",
+"text": "Why is your exchange rate for my card payment wrong",
+"gold": "dispute_refund",
+"pred": "dispute_refund/card_payment_wrong_exchange_rate"
+},
+{
+"score": 0.9914,
+"ok1": true,
+"lang": "zh",
+"text": "我出国时需要在ATM拿到正确的外币，而且汇率要对的。",
+"gold": "dispute_refund",
+"pred": "dispute_refund/wrong_exchange_rate_for_cash_withdrawal"
+},
+{
+"score": 0.8318,
+"ok1": true,
+"lang": "mixed",
+"text": "我做了一个 currency exchange，觉得被 charge 多了，超过应该的。",
+"gold": "dispute_refund",
+"pred": "dispute_refund/card_payment_wrong_exchange_rate"
+},
+{
+"score": 0.9956,
+"ok1": true,
+"lang": "en",
+"text": "Did my refund go through? It's not on my statement.",
+"gold": "dispute_refund",
+"pred": "dispute_refund/Refund_not_showing_up"
+},
+{
+"score": 0.4845,
+"ok1": false,
+"lang": "zh",
+"text": "我转出去的钱在哪里？手机App上显示正在被提走。",
+"gold": "dispute_refund",
+"pred": "transfer_status/balance_not_updated_after_bank_transfer"
+},
+{
+"score": 0.9988,
+"ok1": true,
+"lang": "mixed",
+"text": "我从 ATM withdraw 了 cash，但收到的 amount 不对。我要 cash back，因为 app 显示的是我实际拿到的 amount。请帮我处理这个。",
+"gold": "dispute_refund",
+"pred": "dispute_refund/wrong_amount_of_cash_received"
+},
+{
+"score": 0.999,
+"ok1": true,
+"lang": "en",
+"text": "I recently got charged twice from a restaurant that I was at this week and I would like for one of those payments to be removed from my account.",
+"gold": "dispute_refund",
+"pred": "dispute_refund/transaction_charged_twice"
+},
+{
+"score": 0.9676,
+"ok1": true,
+"lang": "zh",
+"text": "为什么我在账单里看不到最近的退款？",
+"gold": "dispute_refund",
+"pred": "dispute_refund/Refund_not_showing_up"
+},
+{
+"score": 0.9806,
+"ok1": true,
+"lang": "mixed",
+"text": "为什么我的 card 有超过一个 charge？我只 pay 了一次，不是两次。这个要怎么 fix？",
+"gold": "dispute_refund",
+"pred": "dispute_refund/transaction_charged_twice"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "en",
+"text": "very rude service at branch",
+"gold": "complaint",
+"pred": "complaint/staff_attitude"
+},
+{
+"score": 0.9996,
+"ok1": true,
+"lang": "zh",
+"text": "你们员工今天很没礼貌",
+"gold": "complaint",
+"pred": "complaint/staff_attitude"
+},
+{
+"score": 0.9398,
+"ok1": true,
+"lang": "mixed",
+"text": "我还在等你们的 email reply leh",
+"gold": "complaint",
+"pred": "complaint/waiting_time"
+},
+{
+"score": 0.9993,
+"ok1": true,
+"lang": "en",
+"text": "waiting 30 mins for chat",
+"gold": "complaint",
+"pred": "complaint/waiting_time"
+},
+{
+"score": 0.9992,
+"ok1": true,
+"lang": "zh",
+"text": "App很慢，做不了GIRO",
+"gold": "complaint",
+"pred": "complaint/app_problem"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "mixed",
+"text": "你们的 officer 态度很 dismissive，又很 impatient",
+"gold": "complaint",
+"pred": "complaint/staff_attitude"
+},
+{
+"score": 0.9997,
+"ok1": true,
+"lang": "en",
+"text": "stop overcharging customers please",
+"gold": "complaint",
+"pred": "complaint/unfair_fee"
+},
+{
+"score": 0.9953,
+"ok1": true,
+"lang": "zh",
+"text": "上周发的邮件还没回复",
+"gold": "complaint",
+"pred": "complaint/waiting_time"
+},
+{
+"score": 0.9996,
+"ok1": true,
+"lang": "mixed",
+"text": "这些 charges 不公平 lah",
+"gold": "complaint",
+"pred": "complaint/unfair_fee"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "en",
+"text": "hotline staff kept cutting me off",
+"gold": "complaint",
+"pred": "complaint/staff_attitude"
+},
+{
+"score": 0.9996,
+"ok1": true,
+"lang": "zh",
+"text": "在分行排了一个小时队",
+"gold": "complaint",
+"pred": "complaint/waiting_time"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "mixed",
+"text": "打 hotline 等的时间真的太长了",
+"gold": "complaint",
+"pred": "complaint/waiting_time"
+},
+{
+"score": 0.9995,
+"ok1": true,
+"lang": "en",
+"text": "too many hidden fees",
+"gold": "complaint",
+"pred": "complaint/unfair_fee"
+},
+{
+"score": 0.9995,
+"ok1": true,
+"lang": "zh",
+"text": "App卡在加载页面",
+"gold": "complaint",
+"pred": "complaint/app_problem"
+},
+{
+"score": 0.9984,
+"ok1": true,
+"lang": "mixed",
+"text": "fees 一直起，没停过",
+"gold": "complaint",
+"pred": "complaint/unfair_fee"
+},
+{
+"score": 0.9969,
+"ok1": true,
+"lang": "en",
+"text": "staff careless with my NRIC details",
+"gold": "complaint",
+"pred": "complaint/staff_attitude"
+},
+{
+"score": 0.997,
+"ok1": true,
+"lang": "zh",
+"text": "为什么有这么多额外收费",
+"gold": "complaint",
+"pred": "complaint/unfair_fee"
+},
+{
+"score": 0.9983,
+"ok1": true,
+"lang": "mixed",
+"text": "staff 对我讲话很 down，好像看不起我",
+"gold": "complaint",
+"pred": "complaint/staff_attitude"
+},
+{
+"score": 0.9996,
+"ok1": true,
+"lang": "en",
+"text": "app crash when check balnce",
+"gold": "complaint",
+"pred": "complaint/app_problem"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "zh",
+"text": "收费真的很不合理咧",
+"gold": "complaint",
+"pred": "complaint/unfair_fee"
+},
+{
+"score": 0.9998,
+"ok1": true,
+"lang": "mixed",
+"text": "现在的 customer service 真的很慢",
+"gold": "complaint",
+"pred": "complaint/waiting_time"
+},
+{
+"score": 0.9995,
+"ok1": true,
+"lang": "en",
+"text": "internet banking not loadin",
+"gold": "complaint",
+"pred": "complaint/app_problem"
+},
+{
+"score": 0.9973,
+"ok1": true,
+"lang": "zh",
+"text": "收这么多钱不公平",
+"gold": "complaint",
+"pred": "complaint/unfair_fee"
+},
+{
+"score": 0.9998,
+"ok1": true,
+"lang": "mixed",
+"text": "staff 完全没有 listen 我讲",
+"gold": "complaint",
+"pred": "complaint/staff_attitude"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "en",
+"text": "customer service quite rude sia",
+"gold": "complaint",
+"pred": "complaint/staff_attitude"
+},
+{
+"score": 0.9996,
+"ok1": true,
+"lang": "zh",
+"text": "手机银行一直闪退咧",
+"gold": "complaint",
+"pred": "complaint/app_problem"
+},
+{
+"score": 0.999,
+"ok1": true,
+"lang": "mixed",
+"text": "PayNow 之后 app 就 hang 了",
+"gold": "complaint",
+"pred": "complaint/app_problem"
+},
+{
+"score": 0.9704,
+"ok1": true,
+"lang": "en",
+"text": "why alway log out",
+"gold": "complaint",
+"pred": "complaint/app_problem"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "zh",
+"text": "你们热线的等待时间太离谱了",
+"gold": "complaint",
+"pred": "complaint/waiting_time"
+},
+{
+"score": 0.9996,
+"ok1": true,
+"lang": "mixed",
+"text": "officer 完全 ignore 我的问题",
+"gold": "complaint",
+"pred": "complaint/staff_attitude"
+},
+{
+"score": 0.9978,
+"ok1": true,
+"lang": "en",
+"text": "live chat no response yet",
+"gold": "complaint",
+"pred": "complaint/waiting_time"
+},
+{
+"score": 0.9994,
+"ok1": true,
+"lang": "zh",
+"text": "每个月收费都这么高",
+"gold": "complaint",
+"pred": "complaint/unfair_fee"
+},
+{
+"score": 0.9998,
+"ok1": true,
+"lang": "mixed",
+"text": "bank staff 一点帮助都没有",
+"gold": "complaint",
+"pred": "complaint/staff_attitude"
+},
+{
+"score": 0.9998,
+"ok1": true,
+"lang": "en",
+"text": "unhelpful staf wasted my time",
+"gold": "complaint",
+"pred": "complaint/staff_attitude"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "mixed",
+"text": "为什么 branch 的 queue 这么慢",
+"gold": "complaint",
+"pred": "complaint/waiting_time"
+},
+{
+"score": 0.9995,
+"ok1": true,
+"lang": "en",
+"text": "app keeps freezin on iPhone",
+"gold": "complaint",
+"pred": "complaint/app_problem"
+},
+{
+"score": 0.6507,
+"ok1": true,
+"lang": "zh",
+"text": "App有问题，登录不了",
+"gold": "complaint",
+"pred": "complaint/app_problem"
+},
+{
+"score": 0.9995,
+"ok1": true,
+"lang": "mixed",
+"text": "mobile app 现在很 slow",
+"gold": "complaint",
+"pred": "complaint/app_problem"
+},
+{
+"score": 1.0,
+"ok1": true,
+"lang": "en",
+"text": "paynow issue staff so rude",
+"gold": "complaint",
+"pred": "complaint/staff_attitude"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "mixed",
+"text": "branch 的 staff 很 careless",
+"gold": "complaint",
+"pred": "complaint/staff_attitude"
+},
+{
+"score": 0.8803,
+"ok1": false,
+"lang": "en",
+"text": "ibanking log me out again",
+"gold": "complaint",
+"pred": "account_service/passcode_forgotten"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "zh",
+"text": "App又一直闪退",
+"gold": "complaint",
+"pred": "complaint/app_problem"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "mixed",
+"text": "我已经 on hold 40 mins 了",
+"gold": "complaint",
+"pred": "complaint/waiting_time"
+},
+{
+"score": 0.9997,
+"ok1": true,
+"lang": "en",
+"text": "branch queue damn long",
+"gold": "complaint",
+"pred": "complaint/waiting_time"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "zh",
+"text": "银行什么小事情都要收费",
+"gold": "complaint",
+"pred": "complaint/unfair_fee"
+},
+{
+"score": 0.9811,
+"ok1": true,
+"lang": "mixed",
+"text": "officer 对我 roll eyes",
+"gold": "complaint",
+"pred": "complaint/staff_attitude"
+},
+{
+"score": 0.9998,
+"ok1": true,
+"lang": "en",
+"text": "Your fees are too high",
+"gold": "complaint",
+"pred": "complaint/unfair_fee"
+},
+{
+"score": 0.9975,
+"ok1": true,
+"lang": "zh",
+"text": "登录页面一直卡住",
+"gold": "complaint",
+"pred": "complaint/app_problem"
+},
+{
+"score": 0.9996,
+"ok1": true,
+"lang": "mixed",
+"text": "那个 teller 真的很 unhelpful",
+"gold": "complaint",
+"pred": "complaint/staff_attitude"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "en",
+"text": "your fees very expensive leh",
+"gold": "complaint",
+"pred": "complaint/unfair_fee"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "zh",
+"text": "收费真的离谱到不行",
+"gold": "complaint",
+"pred": "complaint/unfair_fee"
+},
+{
+"score": 0.9916,
+"ok1": true,
+"lang": "mixed",
+"text": "chat 回复等超久，please",
+"gold": "complaint",
+"pred": "complaint/waiting_time"
+},
+{
+"score": 0.9975,
+"ok1": true,
+"lang": "en",
+"text": "online banking dwn again",
+"gold": "complaint",
+"pred": "complaint/app_problem"
+},
+{
+"score": 0.9998,
+"ok1": true,
+"lang": "zh",
+"text": "费用真的太多了",
+"gold": "complaint",
+"pred": "complaint/unfair_fee"
+},
+{
+"score": 0.7795,
+"ok1": false,
+"lang": "mixed",
+"text": "app 自己 log out",
+"gold": "complaint",
+"pred": "account_service/passcode_forgotten"
+},
+{
+"score": 1.0,
+"ok1": true,
+"lang": "en",
+"text": "your service charges unfair",
+"gold": "complaint",
+"pred": "complaint/unfair_fee"
+},
+{
+"score": 0.9918,
+"ok1": true,
+"lang": "zh",
+"text": "客服中心没人接电话",
+"gold": "complaint",
+"pred": "complaint/waiting_time"
+},
+{
+"score": 0.9994,
+"ok1": true,
+"lang": "mixed",
+"text": "phone queue 一直不会动的",
+"gold": "complaint",
+"pred": "complaint/waiting_time"
+},
+{
+"score": 0.9984,
+"ok1": true,
+"lang": "zh",
+"text": "现在可以买哪只股票？",
+"gold": "out_of_scope",
+"pred": "out_of_scope/investment_advice"
+},
+{
+"score": 0.9997,
+"ok1": true,
+"lang": "mixed",
+"text": "你是 robot 还是 human 啊？",
+"gold": "out_of_scope",
+"pred": "out_of_scope/chitchat"
+},
+{
+"score": 0.9998,
+"ok1": true,
+"lang": "en",
+"text": "recipe for mee goreng can",
+"gold": "out_of_scope",
+"pred": "out_of_scope/non_banking"
+},
+{
+"score": 0.9972,
+"ok1": true,
+"lang": "mixed",
+"text": "Maybank 卡迟还费用是多少？",
+"gold": "out_of_scope",
+"pred": "out_of_scope/other_company"
+},
+{
+"score": 0.9951,
+"ok1": true,
+"lang": "mixed",
+"text": "为什么我的 rice 每次都 soggy 的 leh？",
+"gold": "out_of_scope",
+"pred": "out_of_scope/non_banking"
+},
+{
+"score": 0.9998,
+"ok1": true,
+"lang": "en",
+"text": "MRT to Sentosa how ah",
+"gold": "out_of_scope",
+"pred": "out_of_scope/non_banking"
+},
+{
+"score": 0.9994,
+"ok1": true,
+"lang": "zh",
+"text": "我的 SGD 买什么基金最好？",
+"gold": "out_of_scope",
+"pred": "out_of_scope/investment_advice"
+},
+{
+"score": 0.9996,
+"ok1": true,
+"lang": "mixed",
+"text": "你平时 for fun 会做什么？",
+"gold": "out_of_scope",
+"pred": "out_of_scope/chitchat"
+},
+{
+"score": 0.9995,
+"ok1": true,
+"lang": "en",
+"text": "whats due for science homework",
+"gold": "out_of_scope",
+"pred": "out_of_scope/non_banking"
+},
+{
+"score": 0.8198,
+"ok1": true,
+"lang": "zh",
+"text": "买加密货币安全吗？",
+"gold": "out_of_scope",
+"pred": "out_of_scope/investment_advice"
+},
+{
+"score": 0.9998,
+"ok1": true,
+"lang": "mixed",
+"text": "这个 weather 热到 damn sian 啊。",
+"gold": "out_of_scope",
+"pred": "out_of_scope/chitchat"
+},
+{
+"score": 0.9994,
+"ok1": true,
+"lang": "en",
+"text": "crypto recommendation pls urgent",
+"gold": "out_of_scope",
+"pred": "out_of_scope/investment_advice"
+},
+{
+"score": 0.9978,
+"ok1": true,
+"lang": "zh",
+"text": "StarHub 合约到期续约价格多少？",
+"gold": "out_of_scope",
+"pred": "out_of_scope/other_company"
+},
+{
+"score": 0.9948,
+"ok1": true,
+"lang": "mixed",
+"text": "OCBC card 的 annual fee 可以 waive 吗？",
+"gold": "out_of_scope",
+"pred": "out_of_scope/other_company"
+},
+{
+"score": 0.9871,
+"ok1": true,
+"lang": "en",
+"text": "what homework due tomorrow ah",
+"gold": "out_of_scope",
+"pred": "out_of_scope/non_banking"
+},
+{
+"score": 0.9997,
+"ok1": true,
+"lang": "zh",
+"text": "讲点好笑的啦",
+"gold": "out_of_scope",
+"pred": "out_of_scope/chitchat"
+},
+{
+"score": 0.9995,
+"ok1": true,
+"lang": "mixed",
+"text": "boil 一个 egg 要多久？",
+"gold": "out_of_scope",
+"pred": "out_of_scope/non_banking"
+},
+{
+"score": 0.9998,
+"ok1": true,
+"lang": "en",
+"text": "where can park near Orchard",
+"gold": "out_of_scope",
+"pred": "out_of_scope/non_banking"
+},
+{
+"score": 0.9855,
+"ok1": true,
+"lang": "mixed",
+"text": "我应该买 Tesla 吗？",
+"gold": "out_of_scope",
+"pred": "out_of_scope/investment_advice"
+},
+{
+"score": 0.9997,
+"ok1": true,
+"lang": "mixed",
+"text": "Singtel plan cancel 有 fee 吗？",
+"gold": "out_of_scope",
+"pred": "out_of_scope/other_company"
+},
+{
+"score": 0.8272,
+"ok1": true,
+"lang": "en",
+"text": "where put my bonus",
+"gold": "out_of_scope",
+"pred": "out_of_scope/investment_advice"
+},
+{
+"score": 0.9992,
+"ok1": true,
+"lang": "zh",
+"text": "早安，你好吗",
+"gold": "out_of_scope",
+"pred": "out_of_scope/chitchat"
+},
+{
+"score": 0.9995,
+"ok1": true,
+"lang": "mixed",
+"text": "你晚上会 sleep 吗？",
+"gold": "out_of_scope",
+"pred": "out_of_scope/chitchat"
+},
+{
+"score": 0.9998,
+"ok1": true,
+"lang": "en",
+"text": "how are you today",
+"gold": "out_of_scope",
+"pred": "out_of_scope/chitchat"
+},
+{
+"score": 0.9991,
+"ok1": true,
+"lang": "zh",
+"text": "你叫什么名字，机器人？",
+"gold": "out_of_scope",
+"pred": "out_of_scope/chitchat"
+},
+{
+"score": 0.9998,
+"ok1": true,
+"lang": "mixed",
+"text": "有没有 joke 啊？",
+"gold": "out_of_scope",
+"pred": "out_of_scope/chitchat"
+},
+{
+"score": 0.9974,
+"ok1": true,
+"lang": "en",
+"text": "any news on today's match",
+"gold": "out_of_scope",
+"pred": "out_of_scope/non_banking"
+},
+{
+"score": 0.9962,
+"ok1": true,
+"lang": "zh",
+"text": "有什么好的单位信托吗？",
+"gold": "out_of_scope",
+"pred": "out_of_scope/investment_advice"
+},
+{
+"score": 0.9942,
+"ok1": true,
+"lang": "mixed",
+"text": "airline 的 baggage fee 多少钱？",
+"gold": "out_of_scope",
+"pred": "out_of_scope/other_company"
+},
+{
+"score": 0.9995,
+"ok1": true,
+"lang": "en",
+"text": "mrt so crowded today",
+"gold": "out_of_scope",
+"pred": "out_of_scope/chitchat"
+},
+{
+"score": 0.9978,
+"ok1": true,
+"lang": "zh",
+"text": "需要个人理财建议",
+"gold": "out_of_scope",
+"pred": "out_of_scope/investment_advice"
+},
+{
+"score": 0.9998,
+"ok1": true,
+"lang": "mixed",
+"text": "可以讲一个 joke 给我吗？",
+"gold": "out_of_scope",
+"pred": "out_of_scope/chitchat"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "en",
+"text": "help with algebra please",
+"gold": "out_of_scope",
+"pred": "out_of_scope/non_banking"
+},
+{
+"score": 0.9928,
+"ok1": true,
+"lang": "zh",
+"text": "改航班日期费用多少？",
+"gold": "out_of_scope",
+"pred": "out_of_scope/other_company"
+},
+{
+"score": 0.7043,
+"ok1": true,
+"lang": "mixed",
+"text": "哪一个 fund 可以 beat inflation？",
+"gold": "out_of_scope",
+"pred": "out_of_scope/investment_advice"
+},
+{
+"score": 0.9935,
+"ok1": true,
+"lang": "en",
+"text": "which ETF better for me",
+"gold": "out_of_scope",
+"pred": "out_of_scope/investment_advice"
+},
+{
+"score": 0.9998,
+"ok1": true,
+"lang": "zh",
+"text": "在家怎么煮叻沙？",
+"gold": "out_of_scope",
+"pred": "out_of_scope/non_banking"
+},
+{
+"score": 0.9898,
+"ok1": true,
+"lang": "mixed",
+"text": "现在买 crypto 还是等先？",
+"gold": "out_of_scope",
+"pred": "out_of_scope/investment_advice"
+},
+{
+"score": 0.9998,
+"ok1": true,
+"lang": "en",
+"text": "do you like chicken rice",
+"gold": "out_of_scope",
+"pred": "out_of_scope/chitchat"
+},
+{
+"score": 0.9989,
+"ok1": true,
+"lang": "zh",
+"text": "退休适合做什么投资？",
+"gold": "out_of_scope",
+"pred": "out_of_scope/investment_advice"
+},
+{
+"score": 0.9995,
+"ok1": true,
+"lang": "mixed",
+"text": "有 10k 可以 invest 什么？",
+"gold": "out_of_scope",
+"pred": "out_of_scope/investment_advice"
+},
+{
+"score": 0.999,
+"ok1": true,
+"lang": "en",
+"text": "UOB credit card fee waiver?",
+"gold": "out_of_scope",
+"pred": "out_of_scope/other_company"
+},
+{
+"score": 0.9994,
+"ok1": true,
+"lang": "zh",
+"text": "今天几点日落？",
+"gold": "out_of_scope",
+"pred": "out_of_scope/non_banking"
+},
+{
+"score": 0.9994,
+"ok1": true,
+"lang": "mixed",
+"text": "beginner 有 fund recommendation 吗？",
+"gold": "out_of_scope",
+"pred": "out_of_scope/investment_advice"
+},
+{
+"score": 0.8804,
+"ok1": true,
+"lang": "en",
+"text": "what's the weather today",
+"gold": "out_of_scope",
+"pred": "out_of_scope/non_banking"
+},
+{
+"score": 0.9238,
+"ok1": true,
+"lang": "zh",
+"text": "下周有什么股票贴士？",
+"gold": "out_of_scope",
+"pred": "out_of_scope/investment_advice"
+},
+{
+"score": 0.9964,
+"ok1": true,
+"lang": "mixed",
+"text": "StarHub roaming plan 多少钱？",
+"gold": "out_of_scope",
+"pred": "out_of_scope/other_company"
+},
+{
+"score": 0.9983,
+"ok1": true,
+"lang": "mixed",
+"text": "Scoot change fee 是多少？",
+"gold": "out_of_scope",
+"pred": "out_of_scope/other_company"
+},
+{
+"score": 0.9138,
+"ok1": true,
+"lang": "en",
+"text": "Can I cancel Singtel line?",
+"gold": "out_of_scope",
+"pred": "out_of_scope/other_company"
+},
+{
+"score": 0.9999,
+"ok1": true,
+"lang": "mixed",
+"text": "你可以 sing 一首 song 吗？",
+"gold": "out_of_scope",
+"pred": "out_of_scope/chitchat"
+},
+{
+"score": 0.9998,
+"ok1": true,
+"lang": "zh",
+"text": "可以给我鸡饭食谱吗？",
+"gold": "out_of_scope",
+"pred": "out_of_scope/non_banking"
+},
+{
+"score": 0.9913,
+"ok1": true,
+"lang": "mixed",
+"text": "这个 news 是真的还是 fake？",
+"gold": "out_of_scope",
+"pred": "out_of_scope/non_banking"
+},
+{
+"score": 0.9997,
+"ok1": true,
+"lang": "en",
+"text": "wheres nearest MRT station",
+"gold": "out_of_scope",
+"pred": "out_of_scope/non_banking"
+},
+{
+"score": 0.9995,
+"ok1": true,
+"lang": "zh",
+"text": "今天又下雨了咯",
+"gold": "out_of_scope",
+"pred": "out_of_scope/chitchat"
+}
+]

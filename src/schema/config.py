@@ -41,8 +41,13 @@ class Config:
     neo4j_password:str = field(default_factory=lambda: os.getenv("NEO4J_PASSWORD",""))
     neo4j_database: str = field(default_factory=lambda: os.getenv("NEO4J_DATABASE","neo4j"))
 
-    intent_threshold: float = field(default_factory=lambda: float(os.getenv("INTENT_THRESHOLD", "0.7")))
-    clarify_threshold: float = field(default_factory=lambda: float(os.getenv("CLARIFY_THRESHOLD", "0.4")))
+    intent_threshold: float = field(default_factory=lambda: float(os.getenv("INTENT_THRESHOLD", "0.5")))
+    clarify_threshold: float = field(default_factory=lambda: float(os.getenv("CLARIFY_THRESHOLD", "0.3")))
+
+    # 意图路由模型：finetuned = Qwen2.5-1.5B + LoRA；keyword = 只用关键词规则（没有 GPU / 模型时自动降级为 keyword）
+    intent_backend: str = field(default_factory=lambda: os.getenv("INTENT_BACKEND", "finetuned"))
+    intent_base_model: Path = field(default_factory=lambda: ROOT_DIR / os.getenv("INTENT_BASE_MODEL", "pretrained/Qwen2.5-1.5B-Instruct"))
+    intent_adapter: Path = field(default_factory=lambda: ROOT_DIR / os.getenv("INTENT_ADAPTER", "checkpoint/intent_lora"))
 
     #schema的配置
     schema:list = field(default_factory=lambda: [s.strip() for s in os.getenv("SCHEMA","").split(",") if s.strip()])

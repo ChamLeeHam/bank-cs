@@ -16,7 +16,8 @@ from langgraph.graph import StateGraph, END
 from langgraph.graph.state import CompiledStateGraph
 from langgraph.types import Command
 
-from src.nodes.stub_nodes import (InputGuardNode, IntentRouterNode, EntityExtractionNode, GateNode, AskBackNode,
+from src.nodes.intent_router import IntentRouterNode  # Day 3：微调模型（不可用时自动降级为关键词规则）
+from src.nodes.stub_nodes import (InputGuardNode, EntityExtractionNode, GateNode, AskBackNode,
                                   RagAnswerNode, VerifyOtpNode, AccountAgentNode, HandoffNode, RefuseNode,
                                   OutputGuardNode)
 from src.schema.state import GraphState, create_turn_input
@@ -133,7 +134,9 @@ if __name__ == '__main__':
 
     def show(result: dict) -> None:
         human = "  要求人工：是" if result.get("human_requested") else ""
-        print(f"  意图：{result.get('intent')} ({result.get('intent_score')})  分支：{result.get('route')}{human}")
+        sub = f"/{result['sub_intent']}" if result.get("sub_intent") else ""
+        print(f"  意图：{result.get('intent')}{sub} ({result.get('intent_score')}, {result.get('router_backend')})"
+              f"  分支：{result.get('route')}{human}")
         print(f"  回复：{result.get('answer')}\n")
 
     # 1.单轮消息：每条使用新的会话

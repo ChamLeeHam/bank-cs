@@ -1,7 +1,7 @@
 """
 Day 1 占位节点（stub）：用最简单的规则跑通主图的连线
 后续每个节点会被替换为 src/nodes/ 下独立文件中的真实实现：
-    intent_router     -> Day 3 微调模型（LLaMA Factory）
+    intent_router     -> Day 3 已替换：src/nodes/intent_router.py（这里的 IntentRouterNode 和 KEYWORD_RULES 作为降级方案保留）
     entity_extraction -> Day 3 实体抽取模型
     rag_answer        -> Day 4 Milvus 混合检索 + 术语图谱
     account_agent     -> Day 5 工具调用智能体（MySQL）
@@ -147,7 +147,7 @@ class GateNode(BaseNode):
             return result("handoff", "handoff")
         if score < low:
             return result("handoff", "handoff")
-        if score < high or missing:
+        if score < high or missing or state.get("intent") == "unknown":  # unknown：规则 / 模型都无法判断
             if clarify_count >= self.MAX_CLARIFY:
                 return result("handoff", "handoff")
             return result("clarify", "ask_back")
