@@ -42,8 +42,9 @@ class GraphState(TypedDict, total=False):
     blocked: bool  # 是否被拦截（如提示注入）；拦截是正常业务结果，不是异常【每轮重置】
 
     # ============== 意图（intent_router 写入） ==============
-    intent: str  # 意图标签；追问后下一轮需要沿用【跨轮保留】
-    intent_score: float  # 意图置信度 0~1【每轮重置】
+    intent: str  # 一级意图，决定分支；追问后下一轮需要沿用【跨轮保留】
+    sub_intent: str  # 二级意图（如 pin_blocked），用于 RAG 检索过滤、看板和评估，不参与分流【每轮重置】
+    intent_score: float  # 一级意图置信度 0~1【每轮重置】
     router_backend: RouterBackend  # 本轮使用的路由模型【每轮重置】
 
     # ============== 实体 ==============
@@ -90,6 +91,7 @@ PER_TURN_DEFAULTS: dict[str, Any] = {
     "lang": "en",
     "masked_question": "",
     "blocked": False,
+    "sub_intent": "",
     "intent_score": 0.0,
     "router_backend": "keyword",
     "missing_slots": [],

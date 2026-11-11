@@ -27,8 +27,8 @@ class Config:
     mysql_user:str = field(default_factory=lambda: os.getenv("MYSQL_USER","root"))
     mysql_password:str = field(default_factory=lambda: os.getenv("MYSQL_PASSWORD",""))
     mysql_port:str = field(default_factory=lambda: os.getenv("MYSQL_PORT","3306"))
-    mysql_database:str = field(default_factory=lambda: os.getenv("MYSQL_DATABASE","mall"))
-    mysql_charset:str = field(default_factory=lambda: os.getenv("MYSQL_CHARSET","utf8"))
+    mysql_database:str = field(default_factory=lambda: os.getenv("MYSQL_DATABASE","lioncity_bank"))
+    mysql_charset:str = field(default_factory=lambda: os.getenv("MYSQL_CHARSET","utf8mb4"))
 
     #NEO4J的配置
     neo4j_uri: str = field(default_factory=lambda: os.getenv("NEO4J_URI",""))

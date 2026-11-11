@@ -89,8 +89,8 @@ INSERT INTO card_transactions (txn_id, card_id, merchant, country, amount, curre
 ('CT26110006', 4, 'Sheng Siong Bedok',        'SG', 42.10,  'SGD', NOW() - INTERVAL 3 DAY,  'posted');
 
 -- 一张已关闭的示例工单（坐席工作台有数据可展示）----------------------------
-INSERT INTO tickets (session_id, customer_id, intent, priority, status, summary, agent_reply, created_at) VALUES
-('demo-seed-0001', 'C003', 'complaint', 'normal', 'closed',
+INSERT INTO tickets (session_id, customer_id, intent, sub_intent, priority, status, summary, agent_reply, created_at) VALUES
+('demo-seed-0001', 'C003', 'complaint', 'app_problem', 'normal', 'closed',
  '客户反映 App 转账页面多次闪退。',
  '您好，我们已将问题转交技术团队，最新版本 App 已修复，请更新后再试。',
  NOW() - INTERVAL 7 DAY);

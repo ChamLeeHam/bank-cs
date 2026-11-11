@@ -105,8 +105,45 @@ BANKING77_TO_INTENT: dict[str, str] = {
 GENERATE_ONLY = ["balance_inquiry", "complaint", "out_of_scope"]
 # Banking77 中太少、需要 LLM 补充的意图
 NEEDS_TOP_UP = ["card_lost_freeze"]
-# 每个意图最多使用的样本数（避免 card_service 等大类压倒小类）
+# 每个意图最多使用的样本数（避免 card_service 等大类压倒小类；意图内部按二级意图均匀抽样）
 MAX_PER_INTENT = 300
+
+# ============== 二级意图 ==============
+# 规则：
+#   1. 从 Banking77 映射来的意图：二级意图 = 原始 Banking77 标签（数据已带标签，不需要额外标注）
+#   2. Banking77 中没有的意图：在下面手动定义，LLM 按二级意图分别生成数据
+#   3. 翻译成中文 / 中英混杂的样本，沿用英文原句的二级意图
+#   4. gate 只看一级意图做分流；二级意图用于 RAG 检索过滤、数据看板和评估
+GENERATED_SUB_INTENTS: dict[str, list[str]] = {
+    "balance_inquiry": ["check_balance"],
+    "card_lost_freeze": ["lost_or_stolen_card"],  # 补充数据沿用 Banking77 的同名二级意图
+    "complaint": ["waiting_time", "staff_attitude", "app_problem", "unfair_fee", "want_human"],
+    "out_of_scope": ["investment_advice", "chitchat", "other_company", "non_banking"],
+    "greeting": ["hello"],
+}
+
+LABEL_SEP = "/"  # 微调模型的输出格式：一级意图/二级意图，如 card_service/pin_blocked
+
+
+def sub_intents_of(intent: str) -> list[str]:
+    """某个一级意图下的全部二级意图（Banking77 标签 + 手动定义，去重并保持顺序）"""
+    subs = [label for label, i in BANKING77_TO_INTENT.items() if i == intent]
+    subs += [s for s in GENERATED_SUB_INTENTS.get(intent, []) if s not in subs]
+    return subs
+
+
+def full_label(intent: str, sub_intent: str) -> str:
+    return f"{intent}{LABEL_SEP}{sub_intent}"
+
+
+def split_label(label: str) -> tuple[str, str]:
+    """把模型输出的 'card_service/pin_blocked' 拆成 (一级, 二级)；只有一级时二级为空"""
+    intent, _, sub = label.strip().partition(LABEL_SEP)
+    return intent.strip(), sub.strip()
+
+
+# 微调模型的全部输出标签
+ALL_LABELS = [full_label(i, s) for i in INTENTS for s in sub_intents_of(i)]
 
 
 def route_of(intent: str) -> str:
@@ -119,7 +156,12 @@ def required_slots(intent: str) -> list[str]:
 
 if __name__ == "__main__":
     assert set(BANKING77_TO_INTENT.values()) <= set(INTENTS), "映射到了不存在的意图"
-    print(f"{len(INTENTS)} 个意图，{len(BANKING77_TO_INTENT)} 个 Banking77 标签被使用")
+    assert set(GENERATED_SUB_INTENTS) <= set(INTENTS), "二级意图挂到了不存在的一级意图"
+    assert all(sub_intents_of(i) for i in INTENTS), "有一级意图没有任何二级意图"
+    assert split_label("card_service/pin_blocked") == ("card_service", "pin_blocked")
+    assert len(ALL_LABELS) == len(set(ALL_LABELS)), "标签重复"
+
+    print(f"{len(INTENTS)} 个一级意图，{len(ALL_LABELS)} 个二级意图（其中 {len(BANKING77_TO_INTENT)} 个来自 Banking77）")
     for name, info in INTENTS.items():
-        n = sum(1 for v in BANKING77_TO_INTENT.values() if v == name)
-        print(f"  {name:<17} {info['zh']:<6} -> {info['route']:<8} Banking77 标签 {n:>2} 个")
+        subs = sub_intents_of(name)
+        print(f"  {name:<17} -> {info['route']:<8} 二级 {len(subs):>2} 个: {', '.join(subs[:4])}{' …' if len(subs) > 4 else ''}")

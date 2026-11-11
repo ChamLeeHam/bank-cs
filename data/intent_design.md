@@ -8,6 +8,28 @@
    "TT 一般多久到账？"（一般问题 → 查知识库）和"我昨天的 TT 到了没？"（本人数据 → OTP + 账户工具）处理方式不同，所以是两个意图。
 2. 每个意图只对应一个分支（account / rag / handoff / refuse）。
 3. 标注员 5 秒内能判断出意图；判断不了就合并意图或写清边界规则。
+4. **两级意图**：一级意图（12 个）决定分支；二级意图决定细节（RAG 检索哪一节、看板统计、评估）。gate 只看一级意图。
+
+## 两级意图
+
+- **一级意图**：下面的意图表，共 12 个
+- **二级意图**：
+  - 从 Banking77 映射来的意图：二级意图 = 原始 Banking77 标签（数据自带，不需要额外标注）
+  - Banking77 中没有的意图：手动定义（见下表），LLM 按二级意图分别生成数据
+  - 翻译成中文 / 中英混杂的样本沿用英文原句的二级意图
+- **微调模型输出格式**：`一级意图/二级意图`，例如 `card_service/pin_blocked`
+  - 输出以一级意图开头，所以前几个 token 的概率就是一级意图的置信度（gate 需要的分数）
+  - 二级意图判断错但一级正确时，分支仍然正确，只影响回答细节
+
+| 一级意图 | 手动定义的二级意图 |
+|---|---|
+| balance_inquiry | check_balance |
+| card_lost_freeze | lost_or_stolen_card（与 Banking77 同名，LLM 补充的数据也用它） |
+| complaint | waiting_time（等待太久）、staff_attitude（服务态度）、app_problem（App 问题）、unfair_fee（收费不合理）、want_human（要求人工） |
+| out_of_scope | investment_advice（投资建议）、chitchat（闲聊）、other_company（其他公司）、non_banking（与银行无关） |
+| greeting | hello |
+
+**降级方案**：如果时间不够，只用一级意图训练；数据中保留了二级意图，之后可以直接补上，不需要重新标注。
 
 ## 意图表（12 个）
 

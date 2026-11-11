@@ -79,8 +79,9 @@ class IntentRouterNode(BaseNode):
         text = state.get("masked_question", "")
         for intent, pattern in KEYWORD_RULES:
             if re.search(pattern, text, re.IGNORECASE):
-                return {"intent": intent, "intent_score": 0.9, "router_backend": "keyword"}
-        return {"intent": "unknown", "intent_score": 0.5, "router_backend": "keyword"}
+                # 关键词规则只能判断一级意图；二级意图等 Day 3 微调模型输出 "一级/二级"
+                return {"intent": intent, "sub_intent": "", "intent_score": 0.9, "router_backend": "keyword"}
+        return {"intent": "unknown", "sub_intent": "", "intent_score": 0.5, "router_backend": "keyword"}
 
 
 class EntityExtractionNode(BaseNode):
