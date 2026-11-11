@@ -70,19 +70,20 @@ def main() -> None:
         return
 
     from src.utils import search_embedding_utils
-    from src.utils.bge_m3_embedding_utils import generate_dense_embedding
+    from src.utils.bge_m3_embedding_utils import generate_hybrid_embedding
     from src.utils.milvus_utils import create_kb_collection, get_milvus_client
 
-    # 1. 向量化
+    # 1. 向量化：bge-m3 同时生成稠密向量和稀疏向量
     start = time.perf_counter()
-    vectors = generate_dense_embedding([c["text"] for c in chunks])["dense"]
-    print(f"向量化完成：{len(vectors)} 条，用时 {time.perf_counter() - start:.1f}s")
+    embeddings = generate_hybrid_embedding([c["text"] for c in chunks])
+    print(f"向量化完成：{len(chunks)} 条，用时 {time.perf_counter() - start:.1f}s")
 
     # 2. 重建集合并写入
-
     client = get_milvus_client()
     create_kb_collection(client, config.kb_collection)
-    client.insert(config.kb_collection, [{**c, "dense": v} for c, v in zip(chunks, vectors)])
+    rows = [{**c, "dense_vector": dense, "sparse_vector": sparse}
+            for c, dense, sparse in zip(chunks, embeddings["dense"], embeddings["sparse"])]
+    client.insert(config.kb_collection, rows)
     client.flush(config.kb_collection)
     print(f"已写入 Milvus 集合 {config.kb_collection}：{client.get_collection_stats(config.kb_collection)['row_count']} 条")
 

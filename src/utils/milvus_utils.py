@@ -1,7 +1,7 @@
-# Milvus 向量数据库的操作：建知识库集合、混合检索（稠密向量 + BM25）
+# Milvus 向量数据库的操作：建知识库集合、混合检索（bge-m3 的稠密向量 + 稀疏向量，RRF 合并）
 import logging
 
-from pymilvus import AnnSearchRequest, DataType, Function, FunctionType, MilvusClient, RRFRanker
+from pymilvus import AnnSearchRequest, DataType, MilvusClient, RRFRanker
 
 from src.schema.config import get_config
 from src.schema.exceptions import MilvusError
@@ -9,8 +9,6 @@ from src.schema.exceptions import MilvusError
 logger = logging.getLogger(__name__)
 
 EMBED_DIM = 1024
-# jieba 分词再转小写，中英混杂的问题也能切词
-ANALYZER = {"tokenizer": "jieba", "filter": ["cnalphanumonly", "lowercase"]}
 OUTPUT_FIELDS = ["doc", "title", "section", "intent", "sub_intents", "text"]
 
 milvus_client = None
@@ -44,35 +42,42 @@ def create_kb_collection(client, collection_name):
     schema.add_field("section", DataType.VARCHAR, max_length=200)  # 章节标题
     schema.add_field("intent", DataType.VARCHAR, max_length=50)  # 一级意图
     schema.add_field("sub_intents", DataType.ARRAY, element_type=DataType.VARCHAR, max_capacity=16, max_length=60)
-    schema.add_field("text", DataType.VARCHAR, max_length=8192, enable_analyzer=True, analyzer_params=ANALYZER)
-    schema.add_field("dense", DataType.FLOAT_VECTOR, dim=EMBED_DIM)
-    schema.add_field("sparse", DataType.SPARSE_FLOAT_VECTOR)
+    schema.add_field("text", DataType.VARCHAR, max_length=8192)  # 章节内容（中英两段）
+    # 两个向量都是 bge-m3 生成的（generate_hybrid_embedding）
+    schema.add_field("dense_vector", DataType.FLOAT_VECTOR, dim=EMBED_DIM)
+    schema.add_field("sparse_vector", DataType.SPARSE_FLOAT_VECTOR)
 
-    # BM25：Milvus 根据 text 字段自动生成 sparse 向量
-    schema.add_function(Function(name="text_bm25", function_type=FunctionType.BM25,
-                                 input_field_names=["text"], output_field_names=["sparse"]))
-
-    # 索引
+    # 索引，和课程一样：稠密向量 HNSW，稀疏向量倒排索引，都用内积
     index_params = client.prepare_index_params()
-    index_params.add_index("dense", index_type="AUTOINDEX", metric_type="IP")
-    index_params.add_index("sparse", index_type="SPARSE_INVERTED_INDEX", metric_type="BM25")
+    index_params.add_index(
+        field_name="dense_vector",
+        index_name="dense_vector_index",
+        index_type="HNSW",
+        metric_type="IP",
+    )
+    index_params.add_index(
+        field_name="sparse_vector",
+        index_name="sparse_inverted_index",
+        index_type="SPARSE_INVERTED_INDEX",
+        metric_type="IP",
+        params={"inverted_index_algo": "DAAT_MAXSCORE"},
+    )
     client.create_collection(collection_name, schema=schema, index_params=index_params)
 
 
-# 3. 混合检索的两个请求：稠密向量 + BM25
-def create_hybrid_search_request(dense_vector, query_text, expr=None, limit=10):
+# 3. 混合检索的两个请求：稠密向量 + 稀疏向量
+def create_hybrid_search_request(dense_vector, sparse_vector, expr=None, limit=10):
     dense_req = AnnSearchRequest(
         data=[dense_vector],
-        anns_field="dense",
+        anns_field="dense_vector",
         param={"metric_type": "IP"},
         expr=expr,
         limit=limit,
     )
-    # BM25 直接传问题原文
     sparse_req = AnnSearchRequest(
-        data=[query_text],
-        anns_field="sparse",
-        param={"metric_type": "BM25"},
+        data=[sparse_vector],
+        anns_field="sparse_vector",
+        param={"metric_type": "IP"},
         expr=expr,
         limit=limit,
     )

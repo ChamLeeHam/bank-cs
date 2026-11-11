@@ -2,7 +2,7 @@
 import logging
 
 from src.schema.config import get_config
-from src.utils.bge_m3_embedding_utils import generate_dense_embedding
+from src.utils.bge_m3_embedding_utils import generate_hybrid_embedding
 from src.utils.milvus_utils import create_hybrid_search_request, execute_hybrid_search_request, get_milvus_client
 
 logger = logging.getLogger(__name__)
@@ -11,8 +11,8 @@ logger = logging.getLogger(__name__)
 def process(query, intent=None):
     config = get_config()
 
-    # 1. 问题转成向量
-    embeddings = generate_dense_embedding([query])
+    # 1. 问题转成混合向量 {"dense": [...], "sparse": [...]}
+    embeddings = generate_hybrid_embedding([query])
 
     # 2. 按一级意图过滤（不传就不过滤）
     filter_expr = _build_filter_expr(intent)
@@ -20,7 +20,7 @@ def process(query, intent=None):
     # 3. 构建检索请求，每一路多取一些，合并后再截取
     requests = create_hybrid_search_request(
         dense_vector=embeddings["dense"][0],
-        query_text=query,
+        sparse_vector=embeddings["sparse"][0],
         expr=filter_expr,
         limit=config.rag_candidates * 3,
     )
