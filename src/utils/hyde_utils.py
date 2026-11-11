@@ -1,5 +1,5 @@
 """
-HyDE（参考课程 03-rag/search_embedding_HyDE.py）：先让 LLM 写一段"假设性答案"，再用"问题 + 假设答案"检索
+HyDE 工具（参考课程 03-rag/search_embedding_HyDE.py）：先让 LLM 写一段"假设性答案"，再用"问题 + 假设答案"检索
 
 客户的问法（"钱汇去中国要等多久"）和知识库的写法（"海外电汇一般 1–3 个工作日到账"）用词差别大时，
 假设答案的用词更接近知识库，能找回只用问题检索不到的章节。
@@ -8,9 +8,9 @@ HyDE（参考课程 03-rag/search_embedding_HyDE.py）：先让 LLM 写一段"�
 """
 import logging
 
-from src.rag.llm import get_deepseek
+from src.utils.llm_util import get_llm_client
 
-logger = logging.getLogger("bank.rag.hyde")
+logger = logging.getLogger("bank.hyde")
 
 HYDE_PROMPT = """请为下面的银行客户问题写一段简短的参考答案，风格像银行官网 FAQ。
 客户问题：{query}
@@ -23,7 +23,7 @@ HYDE_PROMPT = """请为下面的银行客户问题写一段简短的参考答案
 
 def hyde_document(query: str) -> str | None:
     try:
-        return str(get_deepseek(0.0).invoke(HYDE_PROMPT.format(query=query)).content).strip()
+        return str(get_llm_client(0.0).invoke(HYDE_PROMPT.format(query=query)).content).strip()
     except Exception as e:
         logger.warning("HyDE 生成失败，跳过这一路检索：%s", e)
         return None

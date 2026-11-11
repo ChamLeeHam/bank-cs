@@ -1,8 +1,9 @@
 """
-本地 BGE-M3 稠密向量（1024 维，中英文同一个向量空间，所以中文问题也能检索到英文段落）
+BGE-M3 向量工具（参考课程 03-rag/utils/bge_m3_embedding_utils.py）：本地 BGE-M3 稠密向量
 
-只用 BGE-M3 的稠密向量；关键词匹配交给 Milvus 内置的 BM25（见 kb_store.py），不使用 BGE-M3 的 sparse / colbert 输出。
-客户问题只在本机计算向量，不发送到外部服务（《需求文档》P2）。
+- 1024 维，中英文在同一个向量空间，所以中文问题也能检索到英文段落
+- 只用 BGE-M3 的稠密向量；关键词匹配交给 Milvus 内置的 BM25（见 milvus_utils.py），不使用 BGE-M3 的 sparse 输出
+- 客户问题只在本机计算向量，不发送到外部服务（《需求文档》P2）
 """
 import logging
 import threading
@@ -11,7 +12,7 @@ import time
 from src.schema.config import get_config
 from src.schema.exceptions import EmbeddingError
 
-logger = logging.getLogger("bank.embedder")
+logger = logging.getLogger("bank.embedding")
 EMBED_DIM = 1024
 
 
@@ -27,7 +28,7 @@ class BgeM3Embedder:
 
         path = get_config().embed_model
         if not path.exists():
-            raise EmbeddingError(f"找不到 BGE-M3 模型：{path}", "embedder")
+            raise EmbeddingError(f"找不到 BGE-M3 模型：{path}", "bge_m3_embedding_utils")
         self.torch = torch
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
         start = time.perf_counter()
@@ -55,3 +56,13 @@ class BgeM3Embedder:
                 cls = torch.nn.functional.normalize(cls.float(), dim=-1)
             vectors += cls.cpu().tolist()
         return vectors
+
+
+def get_embedding_model() -> BgeM3Embedder:
+    """获取 BGE-M3 模型实例（单例）"""
+    return BgeM3Embedder.get()
+
+
+def generate_dense_embedding(texts: list[str]) -> list[list[float]]:
+    """生成稠密向量：每条文本一个 1024 维向量"""
+    return get_embedding_model().encode(texts)

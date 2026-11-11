@@ -1,17 +1,17 @@
 """
-问题重写（参考课程 03-rag/13-rewritten_query.py）：根据对话历史把当前问题改写成独立、指代明确的问题
+问题重写工具（参考课程 03-rag/rewritten_query.py）：根据对话历史把当前问题改写成独立、指代明确的问题
 
 例：上一轮问 "海外电汇手续费多少？"，这一轮问 "那 FAST 呢？" -> "FAST 转账的手续费是多少？"
 - 没有历史时直接返回原问题（第一轮不调用 LLM，省一次请求）
-- 只使用最近几条脱敏后的对话（state["messages"] 中只保存脱敏文本）
+- 只使用最近几条脱敏后的对话（state["messages"] 中只保存脱敏文本，见 history_utils.py）
 - 失败时返回原问题，不影响后续检索
 """
 import json
 import logging
 
-from src.rag.llm import get_deepseek
+from src.utils.llm_util import get_llm_client
 
-logger = logging.getLogger("bank.rag.rewrite")
+logger = logging.getLogger("bank.rewrite_query")
 MAX_HISTORY = 4  # 最近 2 轮（客户 + 客服）
 
 REWRITE_PROMPT = """你是银行客服系统的问题重写助手。根据历史对话，把客户的当前问题改写成一个独立、完整、指代明确的问题，用于检索知识库。
@@ -35,7 +35,7 @@ def rewrite_query(query: str, history: list[tuple[str, str]]) -> str:
         return query
     try:
         text = "\n".join(f"{role}：{content}" for role, content in history)
-        reply = get_deepseek(0.0, json_mode=True).invoke(REWRITE_PROMPT.format(history=text, query=query)).content
+        reply = get_llm_client(0.0, response_format=True).invoke(REWRITE_PROMPT.format(history=text, query=query)).content
         rewritten = str(json.loads(reply).get("rewritten_query") or "").strip()
         return rewritten or query
     except Exception as e:

@@ -23,7 +23,7 @@ uv run python src/scripts/build_kb.py --check  # 只校验文档格式
 ```
 
 - **向量**：本地 BGE-M3（`pretrained/bge-m3`），1024 维稠密向量，中英文在同一个向量空间，客户问题不发送到外部服务
-- **混合检索**（`src/rag/kb_store.py`）：稠密向量（语义）+ Milvus 内置 BM25（关键词，jieba 分词 + 小写），RRF 融合
+- **混合检索**（`src/utils/milvus_utils.py`）：稠密向量（语义）+ Milvus 内置 BM25（关键词，jieba 分词 + 小写），RRF 融合
 - **集合**：`lioncity_faq`（用 `BANK_KB_COLLECTION` 配置），不会影响 Milvus 中其他项目的集合
 
 ## RAG 流程（结构同课程 `03-rag`）
@@ -36,11 +36,11 @@ uv run python src/scripts/build_kb.py --check  # 只校验文档格式
 
 | 步骤 | 文件 | 对应课程文件 | 说明 |
 |---|---|---|---|
-| 问题重写 | `src/rag/rewrite.py` | `13-rewritten_query.py` | 结合最近 2 轮对话，"那 FAST 呢？" → "FAST 转账的手续费是多少？"；第一轮不调用 |
-| 混合检索 | `src/rag/kb_store.py` | `12-search_embedding.py` | BGE-M3 稠密 + Milvus 内置 BM25（课程用 BGE-M3 的稀疏向量，作用相同） |
-| HyDE 检索 | `src/rag/hyde.py` | `search_embedding_HyDE.py` | LLM 先写一段假设答案，用"问题 + 假设答案"再检索一次；假设答案只用于检索 |
-| 加权 RRF | `src/rag/rrf.py` | `rrf.py` | 问题检索权重 1.0，HyDE 检索权重 0.7 |
-| 精排 + 断崖截断 | `src/rag/reranker.py` | `reranker.py` | bge-reranker-base，保留 1–3 个章节；最高分 < 0.01 视为知识库中没有答案 |
+| 问题重写 | `src/utils/rewrite_query_utils.py` | `13-rewritten_query.py` | 结合最近 2 轮对话，"那 FAST 呢？" → "FAST 转账的手续费是多少？"；第一轮不调用 |
+| 混合检索 | `src/utils/milvus_utils.py`、`bge_m3_embedding_utils.py` | `12-search_embedding.py` | BGE-M3 稠密 + Milvus 内置 BM25（课程用 BGE-M3 的稀疏向量，作用相同） |
+| HyDE 检索 | `src/utils/hyde_utils.py` | `search_embedding_HyDE.py` | LLM 先写一段假设答案，用"问题 + 假设答案"再检索一次；假设答案只用于检索 |
+| 加权 RRF | `src/utils/rrf_utils.py` | `rrf.py` | 问题检索权重 1.0，HyDE 检索权重 0.7 |
+| 精排 + 断崖截断 | `src/utils/bge_rerank_utils.py` | `reranker.py` | bge-reranker-base，保留 1–3 个章节；最高分 < 0.01 视为知识库中没有答案 |
 | 生成 | `src/nodes/rag_answer.py` | `15-response.py` | 只能根据保留的章节回答，带上最近对话 |
 | 评估 | `src/scripts/eval_rag.py` | `18/20-rag_*_eval.py`、`17-ragas-eval.py` | 检索 Hit@k + RAGAS 四项指标 |
 

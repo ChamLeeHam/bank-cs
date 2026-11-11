@@ -1,5 +1,6 @@
 """
-精排（参考课程 03-rag/reranker.py）：bge-reranker-base 对"问题-章节"逐对打分，再用断崖算法决定保留几个
+reranker 工具（参考课程 03-rag/utils/bge_rerank_utils.py 和 reranker.py）：
+bge-reranker-base 对"问题-章节"逐对打分，再用断崖算法决定保留几个
 
 - 向量检索把问题和章节分别编码再比较；reranker 把问题和章节放在一起读，判断更准，但只适合对少量候选重新排序
 - 分数：模型输出经过 sigmoid 归一化到 0–1（课程用的是未归一化的分数）
@@ -13,7 +14,8 @@ import threading
 
 from src.schema.config import get_config
 
-logger = logging.getLogger("bank.rag.reranker")
+logger = logging.getLogger("bank.reranker")
+_CJK = re.compile(r"[一-鿿]")
 
 
 class BgeReranker:
@@ -39,7 +41,7 @@ class BgeReranker:
                 cls._instance = cls()
             return cls._instance
 
-    def score(self, query: str, texts: list[str]) -> list[float]:
+    def compute_score(self, query: str, texts: list[str]) -> list[float]:
         torch = self.torch
         batch = self.tokenizer([[query, t] for t in texts], padding=True, truncation=True, max_length=512,
                                return_tensors="pt").to(self.device)
@@ -48,7 +50,9 @@ class BgeReranker:
         return torch.sigmoid(logits).cpu().tolist()
 
 
-_CJK = re.compile(r"[一-鿿]")
+def get_reranker_model() -> BgeReranker:
+    """获取 reranker 模型实例（单例）"""
+    return BgeReranker.get()
 
 
 def same_language_text(query: str, chunk_text: str) -> str:
@@ -68,7 +72,7 @@ def rerank(query: str, chunks: list[dict]) -> list[dict]:
     if not chunks:
         return []
     try:
-        scores = BgeReranker.get().score(query, [same_language_text(query, c["text"]) for c in chunks])
+        scores = get_reranker_model().compute_score(query, [same_language_text(query, c["text"]) for c in chunks])
     except Exception as e:
         logger.error("精排失败，保留原检索顺序：%s", e)
         return [{**c, "rerank_score": None} for c in chunks]

@@ -60,7 +60,8 @@ def main() -> None:
     parser.add_argument("--check", action="store_true", help="只解析和校验文档")
     args = parser.parse_args()
 
-    chunks = [c for path in sorted(config.kb_dir.glob("*.md")) for c in parse_doc(path)]
+    docs = [p for p in sorted(config.kb_dir.glob("*.md")) if p.name.lower() != "readme.md"]  # README 是说明文档，不入库
+    chunks = [c for path in docs for c in parse_doc(path)]
     for doc in sorted({c["doc"] for c in chunks}):
         n = sum(c["doc"] == doc for c in chunks)
         print(f"  {doc:<18} {n} 个章节")
@@ -68,16 +69,15 @@ def main() -> None:
     if args.check:
         return
 
-    from src.rag.embedder import BgeM3Embedder
-    from src.rag.kb_store import create_collection, get_client, hybrid_search
+    from src.utils.bge_m3_embedding_utils import generate_dense_embedding
+    from src.utils.milvus_utils import create_kb_collection, get_milvus_client, hybrid_search
 
     start = time.perf_counter()
-    embedder = BgeM3Embedder.get()
-    vectors = embedder.encode([c["text"] for c in chunks])
+    vectors = generate_dense_embedding([c["text"] for c in chunks])
     print(f"向量化完成：{len(vectors)} 条，用时 {time.perf_counter() - start:.1f}s")
 
-    client = get_client()
-    create_collection(client, config.kb_collection)
+    client = get_milvus_client()
+    create_kb_collection(client, config.kb_collection)
     client.insert(config.kb_collection, [{**c, "dense": v} for c, v in zip(chunks, vectors)])
     client.flush(config.kb_collection)
     print(f"已写入 Milvus 集合 {config.kb_collection}：{client.get_collection_stats(config.kb_collection)['row_count']} 条")
@@ -86,7 +86,7 @@ def main() -> None:
     print("\n检索自测（top 2）：")
     for q in ["How much is the overseas TT fee?", "汇款到中国要几天？", "我的 PIN 被 lock 了怎么办",
               "我要怎么更新地址？", "ATM 吞了我的卡", "can I open account if I'm 15"]:
-        hits = hybrid_search(client, q, embedder.encode([q])[0], top_k=2)
+        hits = hybrid_search(client, q, generate_dense_embedding([q])[0], top_k=2)
         print(f"  {q}")
         for h in hits:
             print(f"      {h['score']:.4f}  《{h['title'].split(' / ')[0]}》{h['section']}")

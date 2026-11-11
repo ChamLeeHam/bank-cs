@@ -5,10 +5,10 @@
                                               ├-> 加权 RRF 融合 -> bge-reranker 精排 + 断崖截断 -> 生成回答 -> 数字核对 + 引用
             HyDE 检索（问题 + 假设答案）───────┘
 
-  1. 问题重写（src/rag/rewrite.py）：结合最近的对话，把"那 FAST 呢？"改成完整问题；第一轮不调用
-  2. 两路检索（src/rag/kb_store.py、hyde.py）：每路都是 Milvus 混合检索（稠密向量 + BM25，Milvus 内部 RRF）
-  3. 加权 RRF（src/rag/rrf.py）：问题检索权重 1.0，HyDE 检索权重 0.7
-  4. 精排（src/rag/reranker.py）：bge-reranker-base 打分，断崖算法保留 1–3 个章节；
+  1. 问题重写（src/utils/rewrite_query_utils.py）：结合最近的对话，把"那 FAST 呢？"改成完整问题；第一轮不调用
+  2. 两路检索（src/utils/milvus_utils.py、hyde_utils.py）：每路都是 Milvus 混合检索（稠密向量 + BM25，Milvus 内部 RRF）
+  3. 加权 RRF（src/utils/rrf_utils.py）：问题检索权重 1.0，HyDE 检索权重 0.7
+  4. 精排（src/utils/bge_rerank_utils.py）：bge-reranker-base 打分，断崖算法保留 1–3 个章节；
      最高分低于 BANK_RERANK_MIN_SCORE 时视为知识库中没有答案：不生成、不列来源，建议转人工
   5. 生成：只能根据保留的章节回答。RAG_GENERATOR=deepseek（默认，只发送脱敏后的问题 / 对话和公开 FAQ）或 local
      DeepSeek 失败时改用本地 Qwen，再失败返回资料原文
@@ -20,12 +20,11 @@
 import re
 import time
 
-from langchain_core.messages import AIMessage, HumanMessage
-
-from src.rag.rrf import weighted_rrf
 from src.schema.base import BaseNode, StateUpdate
 from src.schema.exceptions import BankAssistantError
 from src.schema.state import GraphState
+from src.utils.history_utils import format_history, history_of
+from src.utils.rrf_utils import weighted_rrf
 
 _NUMBER = re.compile(r"\d+(?:[.,]\d+)*")
 _CJK = re.compile(r"[一-鿿]")
@@ -72,18 +71,6 @@ def source_line(hits: list[dict], lang: str) -> str:
     return ("来源：" + "；".join(names)) if lang != "en" else ("Source: " + "; ".join(names))
 
 
-def history_of(state: GraphState) -> list[tuple[str, str]]:
-    """本轮之前的对话（脱敏文本）；input_guard 已把本轮问题追加到 messages 最后，所以去掉最后一条"""
-    messages = list(state.get("messages") or [])[:-1]
-    out = []
-    for m in messages:
-        if isinstance(m, HumanMessage):
-            out.append(("客户", str(m.content)))
-        elif isinstance(m, AIMessage):
-            out.append(("客服", str(m.content).split("\n\n来源：")[0].split("\n\nSource:")[0]))
-    return out
-
-
 class RagAnswerNode(BaseNode):
     name = "rag_answer"
 
@@ -96,24 +83,24 @@ class RagAnswerNode(BaseNode):
     # ---------- 1~4：检索 ----------
     def retrieve(self, question: str, history: list[tuple[str, str]]) -> tuple[str, list[dict], dict]:
         """问题重写 -> 两路检索 -> RRF -> 精排 + 断崖截断；返回 (重写后的问题, 保留的章节, 中间结果)"""
-        from src.rag.embedder import BgeM3Embedder
-        from src.rag.hyde import hyde_document
-        from src.rag.kb_store import get_client, hybrid_search
-        from src.rag.reranker import cliff_cutoff, rerank
-        from src.rag.rewrite import rewrite_query
+        from src.utils.bge_m3_embedding_utils import generate_dense_embedding
+        from src.utils.bge_rerank_utils import cliff_cutoff, rerank
+        from src.utils.hyde_utils import hyde_document
+        from src.utils.milvus_utils import get_milvus_client, hybrid_search
+        from src.utils.rewrite_query_utils import rewrite_query
 
         cfg, info, t = self.config, {}, time.perf_counter()
         query = rewrite_query(question, history) if cfg.rag_rewrite else question
         info["rewritten"], info["t_rewrite"] = query, time.perf_counter() - t
 
-        embedder, client = BgeM3Embedder.get(), get_client()
+        client = get_milvus_client()
         t = time.perf_counter()
-        direct = hybrid_search(client, query, embedder.encode([query])[0], top_k=cfg.rag_candidates)
+        direct = hybrid_search(client, query, generate_dense_embedding([query])[0], top_k=cfg.rag_candidates)
         ranked = [(direct, 1.0)]
         hyde = hyde_document(query) if cfg.rag_hyde else None
         if hyde:
             hyde_query = f"{query}\n{hyde}"
-            ranked.append((hybrid_search(client, hyde_query, embedder.encode([hyde_query])[0],
+            ranked.append((hybrid_search(client, hyde_query, generate_dense_embedding([hyde_query])[0],
                                          top_k=cfg.rag_candidates), cfg.hyde_weight))
         fused = weighted_rrf(ranked, max_result=cfg.rag_candidates)
         info.update(hyde=hyde, direct=direct, fused=fused, t_search=time.perf_counter() - t)
@@ -135,7 +122,7 @@ class RagAnswerNode(BaseNode):
             self.generators = []
             if self.config.rag_generator == "deepseek":
                 try:
-                    from src.rag.llm import DeepSeekGenerator
+                    from src.utils.llm_util import DeepSeekGenerator
                     self.generators.append(("deepseek", DeepSeekGenerator()))
                 except Exception as e:
                     self.logger.warning("DeepSeek 不可用，改用本地 Qwen：%s", e)
@@ -149,7 +136,7 @@ class RagAnswerNode(BaseNode):
     def _generate(self, question: str, docs: list[dict], history: list[tuple[str, str]], lang: str) -> tuple[str | None, str]:
         context = "\n\n".join(f"[{i}] {d['section']}\n{split_languages(d['text'])[lang] or d['text']}"
                               for i, d in enumerate(docs, 1))
-        recent = "\n".join(f"{role}：{text}" for role, text in history[-4:])[-1000:]  # 课程做法：带上最近的对话
+        recent = format_history(history)  # 课程做法：带上最近的对话
         user = f"<资料>\n{context}\n</资料>\n\n" + (f"<历史对话>\n{recent}\n</历史对话>\n\n" if recent else "") + \
                f"客户问题：{question}"
         messages = [{"role": "system", "content": SYSTEM_PROMPT[lang]}, {"role": "user", "content": user}]
