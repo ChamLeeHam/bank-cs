@@ -1,6 +1,7 @@
 # 构建整个流程图
 # 在项目根目录运行测试：uv run python -m src.schema.main_graph
 import sys
+import logging
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).parent.parent.parent
@@ -10,6 +11,7 @@ from langgraph.checkpoint.memory import InMemorySaver
 from langgraph.graph import StateGraph, END
 from langgraph.graph.state import CompiledStateGraph
 from langgraph.types import Command
+from langsmith import tracing_context
 
 from src.nodes.bank_agent import BankAgentNode
 from src.nodes.account_agent import AccountAgentNode
@@ -21,6 +23,11 @@ from src.nodes.stub_nodes import (InputGuardNode, EntityExtractionNode, GateNode
 from src.schema.config import get_config
 from src.schema.state import GraphState, create_turn_input
 from src.schema.base import setup_logging
+from src.schema.exceptions import MySQLError
+from src.utils.audit_utils import write_turn_log
+from src.utils.transfer_context import begin_transfer_resume, end_transfer_resume
+
+logger = logging.getLogger(__name__)
 
 
 # 条件边的路由函数，只读 state
@@ -31,6 +38,8 @@ def route_after_input_guard(state: GraphState) -> str:
 
 def route_after_gate(state: GraphState) -> str:
     """根据 gate 写的 route 找下一个节点"""
+    if state.get("route") == "rag" and state.get("private_input"):
+        return "ask_back"
     route_to_node = {
         # 知识库类的问题：BANK_USE_AGENT=true 交给 Bank Agent，否则用原来的 RAG
         "rag": "bank_agent" if get_config().use_agent else "rag_answer",
@@ -99,34 +108,57 @@ def _run(session_id: str, graph_input, verbose: bool = True) -> dict:
     config = {"configurable": {"thread_id": session_id}}
 
     pending = None
-    for event in _app.stream(graph_input, config):
-        for key, value in event.items():
-            if key == "__interrupt__":  # 暂停，等客户输入 OTP
-                pending = value[0].value
-                if verbose:
-                    print(f"节点：暂停，等待客户输入（{pending['type']}）")
-            elif verbose:
-                print(f"节点：{key}")
+    completed = False
+    # 账户状态和客户问题不会被 LangSmith 自动上传。
+    with tracing_context(enabled=False):
+        for event in _app.stream(graph_input, config):
+            for key, value in event.items():
+                if key == "output_guard":
+                    completed = True
+                if key == "__interrupt__":  # 暂停，等客户输入 OTP
+                    pending = value[0].value
+                    if verbose:
+                        print(f"节点：暂停，等待客户输入（{pending['type']}）")
+                elif verbose:
+                    print(f"节点：{key}")
 
     # stream 每次只给一个节点的更新，完整的状态要从 checkpointer 里取
     final_state = dict(_app.get_state(config).values)
     final_state["pending"] = pending
     if pending:  # 暂停的时候，回复就是让客户输入验证码的那句话
         final_state["answer"] = pending["message_en"] if final_state.get("lang") == "en" else pending["message_zh"]
+    if completed and not pending:
+        try:
+            write_turn_log(final_state)
+        except MySQLError as e:
+            logger.error(f"运行记录写入失败：{e}")
     return final_state
 
 
 def run_query(session_id: str, customer_id: str, question: str, verbose: bool = True) -> dict:
     """客户发来一条新消息"""
-    saved = _app.get_state({"configurable": {"thread_id": session_id}}).values
+    snapshot = _app.get_state({"configurable": {"thread_id": session_id}})
+    saved = snapshot.values
     if saved.get("customer_id") and saved["customer_id"] != customer_id:
         raise ValueError("同一个会话不能切换客户，请使用新的会话")
+    if snapshot.interrupts:
+        raise ValueError("当前对话正在等待输入，请先完成或取消当前步骤")
     turn_input = create_turn_input(session_id=session_id, customer_id=customer_id, question=question)
     return _run(session_id, turn_input, verbose)
 
 
 def resume(session_id: str, value, verbose: bool = True) -> dict:
     """客户输入了验证码，从暂停的地方继续"""
+    snapshot = _app.get_state({"configurable": {"thread_id": session_id}})
+    interruptions = snapshot.interrupts
+    if interruptions and interruptions[0].value.get("type") == "select_transfer":
+        candidates = interruptions[0].value.get("candidate_ids", [])
+        begin_transfer_resume(session_id, candidates)
+        value = {"value": value, "candidate_ids": candidates}
+        try:
+            return _run(session_id, Command(resume=value), verbose)
+        finally:
+            end_transfer_resume(session_id)
     return _run(session_id, Command(resume=value), verbose)
 
 

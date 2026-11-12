@@ -12,11 +12,18 @@ from src.schema.exceptions import MySQLError, Neo4jError
 from src.schema.state import GraphState
 from src.utils.neo4j_utils import find_attr, find_products
 from src.utils.ticket_utils import create_ticket
+from src.utils.transfer_context import transfer_ordinal, transfer_other
 
 _CJK = re.compile(r"[一-鿿]")
 _LATIN = re.compile(r"[A-Za-z]{2,}")
 _CARD_NO = re.compile(r"\b(?:\d[ -]?){12,18}\d\b")  # 卡号，13~19 位
 _NRIC = re.compile(r"\b[STFGM]\d{7}[A-Z]\b", re.IGNORECASE)  # 新加坡身份证号
+_EMAIL = re.compile(r"\b[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}\b")
+_PHONE = re.compile(r"(?<!\d)(?:\+?65[ -]?)?[689]\d{3}[ -]?\d{4}(?!\d)")
+_ACCOUNT_ID = re.compile(r"\b(?:SA|CA|MC)-\d{4}-\d{4}\b", re.IGNORECASE)
+_ACCOUNT_NUMBER = re.compile(r"((?:account(?:\s*(?:number|no\.?))?|账号|账户号码)\s*[:：#]?\s*)([\d -]{8,20})", re.IGNORECASE)
+_PRIVATE_QUESTION = re.compile(r"(?:我|本人|我的).{0,35}(?:余额|转账|汇款|转了|汇了|转给|汇给|给.{0,15}(?:钱|转|汇))|"
+                               r"\b(?:my|mine)\b.{0,50}\b(?:balance|transfer|remittance|transaction|account number)\b", re.IGNORECASE)
 _INJECTION = re.compile(r"ignore (all |the )?previous instructions|忽略(之前|以上)的?(所有)?指令|system prompt|系统提示词",
                         re.IGNORECASE)
 
@@ -78,13 +85,21 @@ class InputGuardNode(BaseNode):
         # 卡号只保留后四位
         masked = _CARD_NO.sub(lambda m: "**** " + re.sub(r"\D", "", m.group())[-4:], question)
         masked = _NRIC.sub("[NRIC]", masked)
-        return {
+        masked = _EMAIL.sub("[EMAIL]", masked)
+        masked = _ACCOUNT_ID.sub("[ACCOUNT]", masked)
+        masked = _ACCOUNT_NUMBER.sub(lambda m: m.group(1) + "[ACCOUNT]", masked)
+        masked = _PHONE.sub("[PHONE]", masked)
+        result = {
             "lang": detect_lang(question),
             "masked_question": masked,
+            "private_input": masked != question or bool(_PRIVATE_QUESTION.search(question)),
             "blocked": bool(_INJECTION.search(question)),
             "human_requested": is_human_request(masked),
             "messages": [HumanMessage(masked)],  # 对话历史里只存脱敏后的文本
         }
+        if transfer_ordinal(masked) is None and not transfer_other(masked):
+            result.update(transfer_candidates=[], transfer_customer_id="")
+        return result
 
 
 class EntityExtractionNode(BaseNode):
@@ -148,7 +163,15 @@ class GateNode(BaseNode):
         entities = state.get("entities") or {}
         missing = []  # TODO: 按意图检查必填信息，比如冻结卡需要卡号后四位
 
-        if state.get("human_requested") or score < low:
+        if state.get("human_requested"):
+            return self._result("handoff", "handoff", missing, clarify_count)
+
+        if transfer_ordinal(state.get("masked_question", "")) is not None or transfer_other(state.get("masked_question", "")):
+            if state.get("transfer_candidates") and state.get("transfer_customer_id") == state.get("customer_id"):
+                return {**self._result("answer", "account", missing, clarify_count), "intent": "transfer_status"}
+            return self._result("clarify", "ask_back", missing, clarify_count)
+
+        if score < low:
             return self._result("handoff", "handoff", missing, clarify_count)
 
         # 训练数据里没有问本行信用卡年费的句子，模型会把它当成别的银行（见 intents.py 的 OTHER_BANK_RE）
@@ -189,6 +212,9 @@ class AskBackNode(BaseNode):
 
     def process(self, state: GraphState) -> StateUpdate:
         lang = state.get("lang", "en")
+        if state.get("private_input") and state.get("route") == "rag":
+            return {"answer": pick(lang, "This may involve private account information. Please ask to check your balance or a specific transfer.",
+                                   "您的问题可能涉及私人账户资料，请说明是要查询余额还是某笔转账。")}
         return {"answer": pick(lang,
                                "Sorry, could you tell me a bit more? For example: card, transfer, fees or account balance.",
                                "不好意思，能再具体说明一下吗？例如：银行卡、转账汇款、手续费或账户余额。")}
@@ -239,8 +265,15 @@ class OutputGuardNode(BaseNode):
             answer = pick(lang, "Sorry, I can't process that request.", "抱歉，无法处理该请求。")
         answer = _CARD_NO.sub("****", answer)
         # 账户结果只返回给客户，不放进会传给外部模型的对话历史
-        history_answer = "[账户查询结果已展示]" if state.get("route") == "account" else answer
-        return {"answer": answer, "messages": [AIMessage(history_answer)]}
+        private = state.get("route") in ("account", "handoff") or state.get("private_input")
+        history_answer = "[私人业务结果已展示]" if private else answer
+        updates = []
+        if private:
+            latest_user = next((m for m in reversed(state.get("messages") or []) if isinstance(m, HumanMessage)), None)
+            if latest_user is not None and latest_user.id:
+                updates.append(HumanMessage("[私人业务问题已隐藏]", id=latest_user.id))
+        updates.append(AIMessage(history_answer))
+        return {"answer": answer, "messages": updates}
 
 
 if __name__ == "__main__":

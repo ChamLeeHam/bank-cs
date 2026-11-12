@@ -99,6 +99,18 @@ def find_transfers(customer_id, payee_ids=None, date=None, amount=None, currency
     return query(sql, params)
 
 
+def get_transfer_by_id(customer_id, transfer_id):
+    """按客户和交易编号重新读取状态。"""
+    sql = """
+        select t.transfer_id, t.transfer_type, t.amount, t.currency, t.status,
+               t.status_note_zh, t.status_note_en, t.created_at, p.nickname
+        from transfers t join payees p on t.payee_id = p.payee_id and p.customer_id = t.customer_id
+        where t.customer_id = %s and t.transfer_id = %s
+    """
+    rows = query(sql, (customer_id, transfer_id))
+    return rows[0] if rows else None
+
+
 # 3. 客户的银行卡
 def get_cards(customer_id):
     sql = """

@@ -1,6 +1,7 @@
 # GraphState：主图里各个节点之间传递的数据
 # 在项目根目录运行测试：uv run python -m src.schema.state
 import copy
+import time
 from typing import Annotated, Any, Literal, TypedDict
 
 from langchain_core.messages import AnyMessage
@@ -28,11 +29,13 @@ class GraphState(TypedDict, total=False):
 
     # 输入
     question: str  # 这一轮的原始问题，只有 input_guard 会读 [每轮]
+    turn_started_at: float | None  # 当前轮开始时间，用于记录耗时
     messages: Annotated[list[AnyMessage], add_messages]  # 对话历史，只存脱敏后的文本，追加不覆盖 [跨轮]
 
     # input_guard 写入
     lang: Lang  # 客户用的语言，决定用什么语言回复 [每轮]
     masked_question: str  # 脱敏后的问题，后面的节点都用这个 [每轮]
+    private_input: bool  # 可能包含个人账户或交易信息，不发送给外部模型
     blocked: bool  # 是否被拦截，比如提示注入 [每轮]
     human_requested: bool  # 客户是否要求转人工 [每轮]
 
@@ -58,6 +61,8 @@ class GraphState(TypedDict, total=False):
     # 账户
     otp_verified: bool  # 这个会话是否已经验证过 OTP，只能由 verify_otp 写 [跨轮]
     otp_customer_id: str  # OTP 验证对应的客户，不能跨客户复用
+    transfer_candidates: list[str]  # 最近一次已选中的候选列表，保持当时的顺序
+    transfer_customer_id: str  # 列表所属客户
     tool_calls: list[dict[str, Any]]  # 账户智能体调用了哪些工具，用来审计 [每轮]
 
     # handoff 写入
@@ -79,6 +84,8 @@ CROSS_TURN_DEFAULTS: dict[str, Any] = {
     "entities": {},
     "otp_verified": False,
     "otp_customer_id": "",
+    "transfer_candidates": [],
+    "transfer_customer_id": "",
     "ticket_id": None,
     "clarify_count": 0,
 }
@@ -86,8 +93,10 @@ CROSS_TURN_DEFAULTS: dict[str, Any] = {
 # 每一轮开始时要重置的字段
 PER_TURN_DEFAULTS: dict[str, Any] = {
     "question": "",
+    "turn_started_at": None,
     "lang": "en",
     "masked_question": "",
+    "private_input": False,
     "blocked": False,
     "human_requested": False,
     "sub_intent": "",
@@ -143,7 +152,7 @@ def create_turn_input(session_id: str, customer_id: str, question: str) -> Graph
         raise ValidationError("缺少 session_id 或 customer_id", "create_turn_input")
 
     turn: GraphState = copy.deepcopy(PER_TURN_DEFAULTS)  # deepcopy，每轮的 list 不要共用一个
-    turn.update(session_id=session_id, customer_id=customer_id, question=question)
+    turn.update(session_id=session_id, customer_id=customer_id, question=question, turn_started_at=time.time())
     return turn
 
 

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>狮城银行 · 客服演示</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark">L</span><div><strong>狮城银行</strong><span>LION CITY BANK</span></div></div>
+      <span class="demo-label"><span></span>本地演示</span>
+    </header>
+    <main class="layout">
+      <aside class="sidebar">
+        <div>
+          <p class="sidebar-label">客服服务</p>
+          <h1>你好，<br>有什么可以帮你？</h1>
+          <p class="intro">查询银行服务、账户余额或汇款进度。涉及账户的操作会先进行演示身份验证。</p>
+          <label for="customer">选择演示客户</label>
+          <select id="customer"><option value="C001">C001 · 陈伟明</option><option value="C002">C002 · Priya Nair</option><option value="C003">C003 · 林美玲</option></select>
+          <button id="new-chat" class="new-chat" type="button">开始新对话 <span aria-hidden="true">↗</span></button>
+        </div>
+        <div class="side-note"><strong>关于演示</strong><p>账户和交易均为模拟数据。冻结操作会修改本地演示数据库中的卡片状态。</p></div>
+      </aside>
+      <section class="conversation" aria-label="客服对话">
+        <div class="chat-heading"><div><h2>智能客服</h2><p>为你解答和处理日常银行问题</p></div><span class="status"><span></span>在线</span></div>
+        <div id="messages" class="messages" aria-live="polite" aria-relevant="additions"></div>
+        <div class="composer-wrap">
+          <div id="suggestions" class="suggestions"><span>试试问</span><button type="button" data-message="我给妈妈的汇款到了没有？">查询汇款进度</button><button type="button" data-message="我的账户余额还有多少？">查看账户余额</button><button type="button" data-message="PayNow 转账要手续费吗？">了解转账费用</button></div>
+          <div id="pending-actions" class="pending-actions" hidden><span>可选择一笔交易，或取消后继续提问</span><div id="transfer-options"></div><button id="cancel-selection" type="button">取消选择</button></div>
+          <form id="form" class="composer"><label class="sr-only" for="input">输入消息</label><input id="input" autocomplete="off" placeholder="输入你想了解的问题…" maxlength="2000"><button id="send" type="submit" aria-label="发送消息"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></form>
+          <p class="disclaimer">演示系统 · 请勿输入真实银行卡号或其他敏感信息</p>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="/static/app.js" defer></script>
+</body>
+</html>
