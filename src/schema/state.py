@@ -43,7 +43,7 @@ class GraphState(TypedDict, total=False):
     router_backend: RouterBackend  # 这一轮是模型判断的还是规则判断的 [每轮]
 
     # 实体
-    entities: dict[str, str]  # 抽到的实体，和上一轮的合并 [跨轮]
+    entities: dict[str, Any]  # 抽到的实体，和上一轮的合并；products、attr 只算这一轮 [跨轮]
     missing_slots: list[str]  # 还缺哪些必填信息 [每轮]
 
     # gate 写入

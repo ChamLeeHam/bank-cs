@@ -1,13 +1,16 @@
 # 还没做完的节点先用简单的规则代替，保证主图能跑通
-# 已经换成正式版本的：intent_router.py、rag_answer.py、verify_otp.py
-# 还要做的：entity_extraction、account_agent、handoff 写工单
+# 已经换成正式版本的：intent_router.py、rag_answer.py、verify_otp.py，entity_extraction 用上了术语图谱
+# 还要做的：account_agent、handoff 写工单
+# 在项目根目录运行测试：uv run python -m src.nodes.stub_nodes
 import re
 
 from langchain_core.messages import AIMessage, HumanMessage
 
 from src.intents import INTENT_ROUTES, is_human_request
 from src.schema.base import BaseNode, StateUpdate
+from src.schema.exceptions import Neo4jError
 from src.schema.state import GraphState
+from src.utils.neo4j_utils import find_attr, find_products
 
 _CJK = re.compile(r"[一-鿿]")
 _LATIN = re.compile(r"[A-Za-z]{2,}")
@@ -84,7 +87,7 @@ class InputGuardNode(BaseNode):
 
 
 class EntityExtractionNode(BaseNode):
-    """先用正则抽卡号后四位和金额。出错也不影响主流程"""
+    """用正则抽卡号后四位和金额，用术语图谱找产品和属性。出错也不影响主流程"""
     name = "entity_extraction"
     fail_soft = True
 
@@ -92,16 +95,32 @@ class EntityExtractionNode(BaseNode):
         text = state.get("masked_question", "")
         found = {}
 
-        m = re.search(r"(?:尾号|ending|\*{4}\s?)(\d{4})", text, re.IGNORECASE)
+        # 1. 卡号后四位："尾号 7730"、"ending 7730"、"**** 7730"
+        m = re.search(r"(?:尾号|ending|\*{4})\s*(\d{4})", text, re.IGNORECASE)
         if m:
             found["card_last4"] = m.group(1)
 
+        # 2. 金额："SGD 500"、"$500"、"500 块"
         m = re.search(r"(?:S?\$|SGD\s?)(\d+(?:\.\d+)?)|(\d+(?:\.\d+)?)\s?(?:块|新币|元|SGD|dollars?)", text, re.IGNORECASE)
         if m:
             found["amount"] = m.group(1) or m.group(2)
 
-        # 和上一轮抽到的实体合并
+        # 3. 从术语图谱里找客户说的是哪个产品、问的是哪个属性
+        # Neo4j 连不上的话只跳过这一步，前面抽到的卡号和金额还在
+        try:
+            products = [p["product_id"] for p in find_products(text)]
+            if products:
+                found["products"] = products
+            attr = find_attr(text)
+            if attr:
+                found["attr"] = attr
+        except Neo4jError as e:
+            self.logger.warning(f"术语图谱查不了，这一轮先不用：{e}")
+
+        # 4. 和上一轮抽到的实体合并：卡号留着，产品和属性只算这一轮的，先把上一轮的去掉
         entities = dict(state.get("entities") or {})
+        entities.pop("products", None)
+        entities.pop("attr", None)
         entities.update(found)
         return {"entities": entities}
 
@@ -203,3 +222,20 @@ class OutputGuardNode(BaseNode):
             answer = pick(lang, "Sorry, I can't process that request.", "抱歉，无法处理该请求。")
         answer = _CARD_NO.sub("****", answer)
         return {"answer": answer, "messages": [AIMessage(answer)]}
+
+
+if __name__ == "__main__":
+    from src.schema.state import create_default_state
+
+    # 实体抽取：第二个参数是上一轮留下来的 entities
+    node = EntityExtractionNode()
+    tests = [
+        ("冻结我的信用卡尾号 7730", {}),
+        ("汇钱回家要几天？", {"products": ["mastercard_credit"], "card_last4": "7730"}),  # 卡号留着，产品换成这一轮的
+        ("我想激活新卡", {"products": ["overseas_tt"], "attr": "arrival_time", "card_last4": "7730"}),  # 上一轮的产品去掉
+        ("PayNow 和 FAST 哪个限额高", {}),
+        ("ending 4821 我要转 SGD 500", {}),
+    ]
+    for question, last_entities in tests:
+        state = create_default_state(masked_question=question, entities=last_entities)
+        print(f"{question}\n    -> {node(state)['entities']}")
