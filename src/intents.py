@@ -141,6 +141,21 @@ def is_human_request(text: str) -> bool:
     return bool(HUMAN_REQUEST_RE.search(text or ""))
 
 
+# 别的银行的名字，gate 用来判断"信用卡年费"问的是不是本行
+# 训练数据里提到信用卡年费的句子都带着别的银行（HSBC、OCBC…），标的是 out_of_scope/other_company，
+# 模型就学成了"信用卡 + 年费 = 别的银行"。没提别的银行、图谱又找到了本行的产品，就是问本行
+# 生成数据的脚本里也有一份（build_intent_dataset.py 的 _OTHER_BANK），那份不改，免得重新生成的数据变了
+OTHER_BANK_RE = re.compile(
+    r"\b(POSB|DBS|OCBC|UOB|Citi\w*|HSBC|Maybank|Standard Chartered|Revolut|CIMB|RHB|Trust Bank|GXS|MariBank|Amex|"
+    r"American Express)\b|星展|华侨银行|大华银行|汇丰|花旗|渣打|马来亚银行|联昌",
+    re.IGNORECASE,
+)
+
+
+def mentions_other_bank(text: str) -> bool:
+    return bool(OTHER_BANK_RE.search(text or ""))
+
+
 def sub_intents_of(intent: str) -> list[str]:
     """一个一级意图下面所有的二级意图"""
     subs = [label for label, i in BANKING77_TO_INTENT.items() if i == intent]

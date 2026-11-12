@@ -6,7 +6,7 @@ import re
 
 from langchain_core.messages import AIMessage, HumanMessage
 
-from src.intents import INTENT_ROUTES, is_human_request
+from src.intents import INTENT_ROUTES, is_human_request, mentions_other_bank
 from src.schema.base import BaseNode, StateUpdate
 from src.schema.exceptions import Neo4jError
 from src.schema.state import GraphState
@@ -130,8 +130,10 @@ class GateNode(BaseNode):
     决定走哪个分支：
     1. 客户要求转人工，转人工
     2. 置信度太低，转人工
-    3. 置信度一般或者缺信息，追问；已经连续追问 2 次了就转人工
-    4. 其他情况按意图走对应的分支
+    3. 模型说是别的银行，但是没提别的银行、术语图谱又找到了本行的产品，按知识库问题回答
+    4. 置信度一般或者缺信息，追问；已经连续追问 2 次了就转人工
+       不过知识库类的意图，图谱已经找到了产品和属性，问题就够清楚了，直接回答
+    5. 其他情况按意图走对应的分支
     """
     name = "gate"
     MAX_CLARIFY = 2
@@ -139,19 +141,33 @@ class GateNode(BaseNode):
     def process(self, state: GraphState) -> StateUpdate:
         high = self.config.intent_threshold
         low = self.config.clarify_threshold
+        intent = state.get("intent", "")
         score = state.get("intent_score", 0.0)
         clarify_count = state.get("clarify_count", 0)
+        entities = state.get("entities") or {}
         missing = []  # TODO: 按意图检查必填信息，比如冻结卡需要卡号后四位
 
         if state.get("human_requested") or score < low:
             return self._result("handoff", "handoff", missing, clarify_count)
 
-        if score < high or missing or state.get("intent") == "unknown":
+        # 训练数据里没有问本行信用卡年费的句子，模型会把它当成别的银行（见 intents.py 的 OTHER_BANK_RE）
+        if (intent == "out_of_scope" and state.get("sub_intent") == "other_company" and entities.get("products")
+                and not mentions_other_bank(state.get("masked_question", ""))):
+            self.log_step(self.name, "模型说是别的银行，但图谱找到了本行的产品，按知识库问题回答")
+            return self._result("answer", "rag", missing, clarify_count)
+
+        # 训练数据里也没有问转账限额的句子，这种问题模型的置信度会偏低
+        graph_hit = entities.get("products") and entities.get("attr")
+        if score < high and graph_hit and INTENT_ROUTES.get(intent) == "rag":
+            self.log_step(self.name, "置信度一般，但图谱找到了产品和属性，直接回答")
+            return self._result("answer", "rag", missing, clarify_count)
+
+        if score < high or missing or intent == "unknown":
             if clarify_count >= self.MAX_CLARIFY:
                 return self._result("handoff", "handoff", missing, clarify_count)
             return self._result("clarify", "ask_back", missing, clarify_count)
 
-        route = INTENT_ROUTES.get(state.get("intent", ""), "rag")
+        route = INTENT_ROUTES.get(intent, "rag")
         if route == "refuse":
             decision = "refuse"
         elif route == "handoff":
