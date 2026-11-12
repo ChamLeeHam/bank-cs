@@ -1,0 +1,74 @@
+{
+  "id": "bankTicketDemo01",
+  "name": "狮城银行 - 工单分流演示",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "fd300e4a-302e-4c95-864d-76dd9a6043a1",
+      "name": "手动测试",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [-620, -80]
+    },
+    {
+      "parameters": {
+        "rule": {"interval": [{"field": "minutes", "minutesInterval": 5}]}
+      },
+      "id": "61ab06e0-5fb4-40f6-a83d-644574bb4b52",
+      "name": "定时检查（工作流启用后生效）",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [-620, 120]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT ticket_id, intent, sub_intent, priority, status, created_at\nFROM tickets\nWHERE status = 'open'\nORDER BY CASE WHEN priority = 'urgent' THEN 0 ELSE 1 END, created_at, ticket_id\nLIMIT 50",
+        "options": {}
+      },
+      "id": "cb87a3a1-7090-4b18-bf17-e3c0c65c9517",
+      "name": "读取待处理工单",
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.4,
+      "credentials": {"mySql": {"id": "bankMysqlDemo01", "name": "狮城银行演示 MySQL"}},
+      "position": [-350, 20],
+      "alwaysOutputData": false,
+      "notesInFlow": true,
+      "notes": "使用演示 MySQL 凭据。只读取工单元数据，不读取客户消息。"
+    },
+    {
+      "parameters": {
+        "jsCode": "const tickets = $input.all().map(({json}) => ({ticket_id: json.ticket_id, intent: json.intent, sub_intent: json.sub_intent ?? null, priority: json.priority, created_at: json.created_at}));\nreturn [{json: {urgent: tickets.filter(t => t.priority === 'urgent'), normal: tickets.filter(t => t.priority !== 'urgent'), count: tickets.length, notification_status: 'not_sent', note: '演示流程：尚未接入通知渠道，也不会更改工单状态。'}}];"
+      },
+      "id": "9f46d0ae-4e69-4c14-9df2-f2dfb46b2787",
+      "name": "按优先级整理（未发送）",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-80, 20],
+      "notesInFlow": true,
+      "notes": "先查看结果；接入通知前需处理重复发送和送达确认。"
+    },
+    {
+      "parameters": {
+        "content": "## 工单分流演示\n\n1. 在 MySQL 节点配置演示数据库凭据。\n2. 手动执行，查看紧急和普通工单。\n3. 本流程不发送消息、不修改工单。\n4. 尚未实现去重和送达确认，请保持停用。",
+        "height": 260,
+        "width": 410,
+        "color": 5
+      },
+      "id": "19433608-7afa-4a09-94ad-b01d0c338c02",
+      "name": "使用说明",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [-620, -400]
+    }
+  ],
+  "connections": {
+    "手动测试": {"main": [[{"node": "读取待处理工单", "type": "main", "index": 0}]]},
+    "定时检查（工作流启用后生效）": {"main": [[{"node": "读取待处理工单", "type": "main", "index": 0}]]},
+    "读取待处理工单": {"main": [[{"node": "按优先级整理（未发送）", "type": "main", "index": 0}]]}
+  },
+  "settings": {"executionOrder": "v1", "timezone": "Asia/Singapore", "saveDataSuccessExecution": "none", "saveDataErrorExecution": "none"},
+  "active": false,
+  "pinData": {},
+  "tags": []
+}

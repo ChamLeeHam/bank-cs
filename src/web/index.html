@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>狮城银行 · 客服演示</title>
-  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="/static/style.css?v=20261112-tickets">
 </head>
 <body>
   <div class="app">
@@ -25,7 +25,7 @@
         <div class="side-note"><strong>关于演示</strong><p>账户和交易均为模拟数据。冻结操作会修改本地演示数据库中的卡片状态。</p></div>
       </aside>
       <section class="conversation" aria-label="客服对话">
-        <div class="chat-heading"><div><h2>智能客服</h2><p>为你解答和处理日常银行问题</p></div><span class="status"><span></span>在线</span></div>
+        <div class="chat-heading"><div><h2>智能客服</h2><p>为你解答和处理日常银行问题</p></div><div class="chat-actions"><button id="my-tickets" class="my-tickets" type="button">我的工单</button><span class="status"><span></span>在线</span></div></div>
         <div id="messages" class="messages" aria-live="polite" aria-relevant="additions"></div>
         <div class="composer-wrap">
           <div id="suggestions" class="suggestions"><span>试试问</span><button type="button" data-message="我给妈妈的汇款到了没有？">查询汇款进度</button><button type="button" data-message="我的账户余额还有多少？">查看账户余额</button><button type="button" data-message="PayNow 转账要手续费吗？">了解转账费用</button></div>
@@ -36,6 +36,13 @@
       </section>
     </main>
   </div>
-  <script src="/static/app.js" defer></script>
+  <dialog id="ticket-dialog" class="ticket-dialog" aria-labelledby="ticket-title">
+    <div class="ticket-dialog-heading"><div><h2 id="ticket-title">我的工单</h2><p>查看当前演示客户的工单状态和坐席回复</p></div><button id="ticket-close" class="ticket-dialog-close" type="button" aria-label="关闭">×</button></div>
+    <div id="ticket-verify" hidden><p class="ticket-hint">请先输入 6 位演示验证码，验证后查看工单。</p><form id="ticket-verify-form"><label class="sr-only" for="ticket-otp">演示验证码</label><input id="ticket-otp" type="password" inputmode="numeric" autocomplete="one-time-code" minlength="6" maxlength="6" pattern="[0-9]{6}" required placeholder="6 位演示验证码"><button type="submit">验证并查看</button></form></div>
+    <p id="ticket-feedback" class="ticket-hint" role="status" aria-live="polite"></p>
+    <div id="customer-ticket-list" class="customer-ticket-list"></div>
+    <div class="ticket-dialog-footer"><span>仅展示当前演示客户的工单</span><button id="ticket-refresh" type="button">刷新工单</button></div>
+  </dialog>
+  <script src="/static/app.js?v=20261112-tickets" defer></script>
 </body>
 </html>

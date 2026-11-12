@@ -8,6 +8,11 @@ const suggestions = document.querySelector('#suggestions');
 const pendingActions = document.querySelector('#pending-actions');
 const transferOptions = document.querySelector('#transfer-options');
 const cancelSelection = document.querySelector('#cancel-selection');
+const ticketDialog = document.querySelector('#ticket-dialog');
+const ticketVerify = document.querySelector('#ticket-verify');
+const ticketOtp = document.querySelector('#ticket-otp');
+const ticketFeedback = document.querySelector('#ticket-feedback');
+const customerTicketList = document.querySelector('#customer-ticket-list');
 let sessionId = null;
 let pending = null;
 let busy = false;
@@ -112,6 +117,9 @@ async function streamReply(url, body, bubble) {
 async function newChat() {
   setBusy(true);
   try {
+    if (ticketDialog.open) ticketDialog.close();
+    ticketOtp.value = '';
+    customerTicketList.replaceChildren();
     const data = await request('/api/sessions', {customer_id: customer.value});
     sessionId = data.session_id;
     messages.replaceChildren();
@@ -125,6 +133,70 @@ async function newChat() {
     input.focus();
   }
 }
+
+function renderTickets(tickets) {
+  customerTicketList.replaceChildren();
+  if (!tickets.length) {
+    ticketFeedback.textContent = '当前演示客户还没有工单。';
+    return;
+  }
+  ticketFeedback.textContent = `共 ${tickets.length} 条工单（最多显示最近 50 条）。`;
+  for (const ticket of tickets) {
+    const item = document.createElement('article'); item.className = 'customer-ticket';
+    const heading = document.createElement('div'); heading.className = 'customer-ticket-heading';
+    const number = document.createElement('strong'); number.textContent = `工单 #${ticket.ticket_id}`;
+    const status = document.createElement('span');
+    status.textContent = ({open:'等待处理', replied:'已有回复', closed:'已关闭'})[ticket.status] || '状态未知';
+    heading.append(number, status);
+    const created = document.createElement('p'); created.className = 'customer-ticket-time';
+    created.textContent = `创建时间：${String(ticket.created_at || '').replace('T', ' ').slice(0, 16) || '—'}`;
+    const answer = document.createElement('p'); answer.className = 'customer-ticket-answer';
+    answer.textContent = ticket.agent_reply || (ticket.status === 'closed' ? '工单已关闭，暂无坐席回复。' : '暂无坐席回复，请稍后刷新查看。');
+    item.append(heading, created, answer); customerTicketList.append(item);
+  }
+}
+
+async function loadCustomerTickets() {
+  if (!sessionId) { ticketFeedback.textContent = '会话不可用，请重新开始对话。'; return; }
+  const currentSession = sessionId;
+  ticketFeedback.textContent = '正在读取…';
+  customerTicketList.replaceChildren();
+  try {
+    const response = await fetch(`/api/sessions/${currentSession}/tickets`, {cache:'no-store'});
+    const data = await response.json();
+    if (currentSession !== sessionId) return;
+    if (response.status === 403) {
+      ticketVerify.hidden = false;
+      ticketFeedback.textContent = '';
+      ticketOtp.focus();
+      return;
+    }
+    if (!response.ok) throw new Error(data.detail || '工单暂时无法读取。');
+    ticketVerify.hidden = true;
+    renderTickets(data.tickets);
+  } catch (error) { ticketFeedback.textContent = error.message; }
+}
+
+document.querySelector('#my-tickets').addEventListener('click', () => {
+  ticketVerify.hidden = true; ticketOtp.value = '';
+  if (!ticketDialog.open) ticketDialog.showModal();
+  loadCustomerTickets();
+});
+document.querySelector('#ticket-close').addEventListener('click', () => ticketDialog.close());
+document.querySelector('#ticket-refresh').addEventListener('click', loadCustomerTickets);
+document.querySelector('#ticket-verify-form').addEventListener('submit', async event => {
+  event.preventDefault();
+  const button = event.currentTarget.querySelector('button'); button.disabled = true;
+  ticketFeedback.textContent = '正在验证…';
+  try {
+    const response = await fetch(`/api/sessions/${sessionId}/tickets/verify`, {method:'POST',
+      headers:{'Content-Type':'application/json'}, body:JSON.stringify({code:ticketOtp.value})});
+    const data = await response.json(); ticketOtp.value = '';
+    if (!response.ok) throw new Error(typeof data.detail === 'string' ? data.detail : '请输入 6 位验证码。');
+    await loadCustomerTickets();
+  } catch (error) { ticketFeedback.textContent = error.message; }
+  finally { button.disabled = false; }
+});
 
 async function submit(text) {
   if (busy || !sessionId || !text.trim()) return;

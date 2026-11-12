@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>工单工作台 · 狮城银行演示</title>
+  <link rel="stylesheet" href="/static/style.css?v=20261112-tickets">
+  <link rel="stylesheet" href="/static/agent.css?v=20261112-auth">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark">L</span><div><strong>狮城银行</strong><span>LION CITY BANK</span></div></div>
+    <div class="top-actions"><button id="logout" class="logout-link" type="button" hidden>退出登录</button><span class="demo-label"><span></span>本地演示</span></div>
+  </header>
+  <main id="auth-panel" class="auth-panel" hidden>
+    <div class="auth-content">
+      <h1 id="auth-title">坐席登录</h1>
+      <p id="auth-intro">请输入本机演示账号和密码。</p>
+      <form id="auth-form">
+        <label for="username">账号</label>
+        <input id="username" name="username" autocomplete="username" required minlength="3" maxlength="32" pattern="[A-Za-z0-9_.-]+" placeholder="输入坐席账号">
+        <label for="password">密码</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" required maxlength="128" placeholder="输入密码">
+        <p id="auth-help" class="auth-help">账号和密码仅用于此本地演示。</p>
+        <p id="auth-error" class="auth-error" role="alert"></p>
+        <button id="auth-submit" class="button-primary" type="submit">登录</button>
+      </form>
+    </div>
+  </main>
+  <main id="workspace" class="workspace" hidden>
+    <div class="workspace-heading"><div><h1>工单工作台</h1><p>查看待处理问题，记录坐席处理结果。</p></div><button id="refresh" class="button-secondary" type="button">刷新工单</button></div>
+    <div class="notice">演示环境 · 回复保存在本地数据库，客户验证后可主动查看，系统不会主动发送。</div>
+    <div class="workspace-body">
+      <section class="ticket-list" aria-label="工单列表">
+        <div class="list-heading"><div><h2>工单列表</h2><p id="count">正在加载…</p></div></div>
+        <div class="filters">
+          <label>状态<select id="status-filter"><option value="">全部状态</option><option value="open">待处理</option><option value="replied">已记录回复</option><option value="closed">已关闭</option></select></label>
+          <label>优先级<select id="priority-filter"><option value="">全部优先级</option><option value="urgent">紧急</option><option value="normal">普通</option></select></label>
+        </div>
+        <div id="list" class="list" aria-live="polite"></div>
+      </section>
+      <section class="detail" aria-label="工单详情">
+        <div id="empty-detail" class="empty-detail"><span class="empty-mark">+</span><h2>选择一条工单</h2><p>在左侧选择工单，查看客户描述并记录处理结果。</p></div>
+        <div id="detail-content" hidden>
+          <div class="detail-heading"><div><p id="detail-id" class="detail-id"></p><h2 id="detail-title"></h2></div><span id="detail-priority" class="tag"></span></div>
+          <div class="detail-meta"><div><span>客户</span><strong id="detail-customer"></strong></div><div><span>当前状态</span><strong id="detail-status"></strong></div><div><span>创建时间</span><strong id="detail-created"></strong></div></div>
+          <div class="detail-section"><h3>客户描述与验证情况</h3><p id="detail-summary" class="summary"></p></div>
+          <div class="detail-section"><label for="reply">坐席处理回复</label><p class="field-help">客户验证后可主动查看，请填写适合展示给客户的内容。</p><textarea id="reply" rows="5" maxlength="2000" placeholder="输入回复客户的内容…"></textarea></div>
+          <p id="feedback" class="feedback" role="status" aria-live="polite"></p>
+          <div class="detail-actions"><button id="save" class="button-primary" type="button">保存回复</button><button id="close" class="button-secondary" type="button">关闭工单</button></div>
+        </div>
+      </section>
+    </div>
+  </main>
+  <script src="/static/agent.js?v=20261112-auth" defer></script>
+</body>
+</html>

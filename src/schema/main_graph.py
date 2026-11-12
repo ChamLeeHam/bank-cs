@@ -103,6 +103,13 @@ def create_query_graph() -> CompiledStateGraph:
 _app = create_query_graph()
 
 
+def is_customer_verified(session_id: str, customer_id: str) -> bool:
+    """只复用本会话、同一客户已经完成的演示验证。"""
+    state = _app.get_state({"configurable": {"thread_id": session_id}}).values
+    return bool(state.get("customer_id") == customer_id and state.get("otp_verified")
+                and state.get("otp_customer_id") == customer_id)
+
+
 def _run(session_id: str, graph_input, verbose: bool = True) -> dict:
     """运行图，打印经过的节点，返回这一轮结束后的状态"""
     config = {"configurable": {"thread_id": session_id}}
