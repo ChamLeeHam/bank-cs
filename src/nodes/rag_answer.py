@@ -1,14 +1,17 @@
 # 知识库问答节点
-# 流程：问题重写 -> 混合检索 + HyDE 检索 -> RRF 合并 -> reranker 精排 -> 生成回答
+# 实体抽取找到了产品和属性（比如"电汇手续费"），先直接用术语图谱回答
+# 其他问题走 RAG：问题重写 -> 混合检索 + HyDE 检索 -> RRF 合并 -> reranker 精排 -> 生成回答
 # 每一步都在 src/utils 里，这个节点只负责按顺序调用
+# 在项目根目录运行测试：uv run python -m src.nodes.rag_answer
 import time
 
 from src.schema.base import BaseNode, StateUpdate
-from src.schema.exceptions import BankAssistantError
+from src.schema.exceptions import BankAssistantError, Neo4jError
 from src.schema.state import GraphState
 from src.utils import (hyde_utils, reranker_utils, response_utils, rewrite_query_utils, rrf_utils,
                        search_embedding_utils)
 from src.utils.history_utils import history_of
+from src.utils.neo4j_utils import get_product_attr, get_product_names
 
 NOT_FOUND = {
     "zh": "抱歉，我们的资料中没有这个问题的答案。如需进一步帮助，可以回复“转人工”联系人工客服。",
@@ -30,12 +33,52 @@ class RagAnswerNode(BaseNode):
     def process(self, state: GraphState) -> StateUpdate:
         self.log_step(self.name, "开始执行知识库问答")
         lang = "en" if state.get("lang") == "en" else "zh"  # 中英混杂的用中文回答
-        return self.answer(state.get("masked_question", ""), history_of(state), lang)
+        entities = state.get("entities") or {}
 
-    def answer(self, question, history, lang):
+        # 1. 产品和属性都清楚，直接用术语图谱回答
+        graph_result = self._answer_from_graph(entities, lang)
+        if graph_result:
+            self.last_run = {"generator": "graph"}
+            self.log_step(self.name, "用术语图谱回答")
+            return graph_result
+
+        # 2. 其他情况走 RAG，找到了产品就把产品名加到检索里
+        return self.answer(state.get("masked_question", ""), history_of(state), lang, entities.get("products"))
+
+    def _answer_from_graph(self, entities, lang):
+        """产品和属性都清楚的话，直接用术语图谱里的值回答；有一个查不到就返回 None，走正常的 RAG"""
+        product_ids, attr = entities.get("products"), entities.get("attr")
+        if not product_ids or not attr:
+            return None
+        try:
+            results = [get_product_attr(pid, attr) for pid in product_ids]
+        except Neo4jError as e:
+            self.logger.warning(f"术语图谱查不了，用知识库回答：{e}")
+            return None
+        if not all(results):
+            return None  # 比如"银联卡年费"：银联卡没有年费这一项，交给 RAG
+
+        # 一个产品一行，两个以上产品（PayNow 和 FAST）每行前面加 "- "
+        if lang == "en":
+            lines = [f"{r['name_en']} for {r['product_en']}: {r['value_en']}" for r in results]
+            source = "Source: product data (knowledge graph)"
+        else:
+            # 产品名是英文结尾的（PayNow）中间加个空格
+            lines = [f"{r['product_zh']}{' ' if r['product_zh'][-1].isascii() else ''}的{r['name_zh']}：{r['value_zh']}"
+                     for r in results]
+            source = "来源：产品资料（术语图谱）"
+        if len(lines) > 1:
+            lines = [f"- {line}" for line in lines]
+        answer = "\n".join(lines) + f"\n\n{source}"
+
+        sources = [{"doc": "neo4j", "title": "术语图谱 / Product graph", "section": r["product_zh"], "rerank_score": None}
+                   for r in results]
+        return {"answer": answer, "sources": sources, "search_query": ""}
+
+    def answer(self, question, history, lang, products=None):
         # 1~4. 检索
         try:
-            rewritten_query, docs, info = self.retrieve(question, history)
+            rewritten_query, docs, info = self.retrieve(question, history, products)
         except BankAssistantError as e:
             self.logger.error(f"知识库不可用：{e}")
             return {"answer": KB_DOWN[lang], "sources": [], "search_query": question, "error": str(e)}
@@ -58,8 +101,8 @@ class RagAnswerNode(BaseNode):
         answer = f"{answer}\n\n{self._source_line(docs, lang)}"
         return {"answer": answer, "sources": sources, "search_query": rewritten_query}
 
-    def retrieve(self, question, history):
-        """返回 (重写后的问题, 保留下来的块, 中间结果)"""
+    def retrieve(self, question, history, products=None):
+        """返回 (重写后的问题, 保留下来的块, 中间结果)；products 是实体抽取找到的产品 ID"""
         cfg = self.config
         info = {}
 
@@ -73,9 +116,20 @@ class RagAnswerNode(BaseNode):
         info["t_rewrite"] = time.perf_counter() - start
         self.log_step(self.name, "1. 问题重写完成")
 
+        # 实体抽取找到了产品，把正式的产品名加到检索的问题里（"汇钱回家" -> 加上 "海外电汇 Overseas TT"）
+        # 只用在混合检索；HyDE 和精排还是用客户原来的问题
+        search_query = rewritten_query
+        if products:
+            try:
+                names = " ".join(f"{p['name_zh']} {p['name_en']}" for p in get_product_names(products))
+                search_query = f"{rewritten_query} {names}"
+            except Neo4jError as e:
+                self.logger.warning(f"取不到产品名，检索不加产品名：{e}")
+        info["search_query"] = search_query
+
         # 2. 两路检索
         start = time.perf_counter()
-        embedding_chunks = search_embedding_utils.process(rewritten_query)["embedding_chunks"]
+        embedding_chunks = search_embedding_utils.process(search_query)["embedding_chunks"]
         if cfg.rag_hyde:
             hyde_result = hyde_utils.process(rewritten_query)
         else:
@@ -146,3 +200,23 @@ if __name__ == "__main__":
         print("    精排：", [(c["section"].split(" / ")[0], c["rerank_score"]) for c in run.get("reranked", [])[:4]])
         print(f"    保留：{len(run.get('kept', []))} 个\n{r['answer']}")
         history += [("客户", q), ("客服", r["answer"].split("\n\n")[0])]
+
+    # 2. 实体抽取找到了产品和属性，走 process()，和主图里一样
+    from src.schema.state import create_default_state
+
+    print("\n===== 术语图谱")
+    for q, lang, entities in [
+        ("汇钱回家要几天？", "zh", {"products": ["overseas_tt"], "attr": "arrival_time"}),
+        ("What's the annual fee for the credit card?", "en", {"products": ["mastercard_credit"], "attr": "annual_fee"}),
+        ("PayNow 和 FAST 哪个限额高", "zh", {"products": ["paynow", "fast"], "attr": "daily_limit"}),
+        ("银联卡年费多少", "zh", {"products": ["unionpay_debit"], "attr": "annual_fee"}),  # 图谱里没有，走 RAG
+        ("汇钱回家安全吗？", "zh", {"products": ["overseas_tt"]}),  # 没有属性，走 RAG，检索加上产品名
+    ]:
+        start = time.perf_counter()
+        r = node.process(create_default_state(masked_question=q, lang=lang, entities=entities))
+        ms = (time.perf_counter() - start) * 1000
+        run = node.last_run
+        print(f"\n=== {q} ({ms:.0f} ms, {run.get('generator')})")
+        if run.get("search_query"):
+            print(f"    检索用的问题：{run['search_query']}")
+        print(r["answer"])

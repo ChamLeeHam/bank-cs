@@ -35,6 +35,23 @@ def get_neo4j_driver():
         logger.error(f"neo4j客户端创建失败：{e}")
         raise Neo4jError(f"无法连接 Neo4j：{config.neo4j_uri}", "neo4j_utils", e)
 
+
+def run_cypher(cypher, parameters=None):
+    """执行 Cypher，返回 records。查询出错（比如 Neo4j 中途停了）也统一变成 Neo4jError，调用的地方只要接这一种"""
+    try:
+        records, _, _ = get_neo4j_driver().execute_query(
+            cypher,
+            parameters_=parameters or {},
+            database_=get_config().neo4j_database
+        )
+        return records
+    except Neo4jError:
+        raise
+    except Exception as e:
+        logger.error(f"Cypher 查询失败：{e}")
+        raise Neo4jError("Neo4j 查询失败", "neo4j_utils", e)
+
+
 def load_alias_cache():
     global alias_cache
     # 第一步: 已经读过了就直接返回
@@ -46,10 +63,7 @@ def load_alias_cache():
         RETURN al.name AS alias, p.product_id AS product_id, p.name_zh AS name_zh, p.name_en AS name_en
     """
     # 第三步：执行查询并获取 records
-    records, _, _ = get_neo4j_driver().execute_query(
-        cypher,
-        database_=get_config().neo4j_database
-    )
+    records = run_cypher(cypher)
     # 第四步：将 Neo4j 数据转换为字典
     cache = {}
     for record in records:
@@ -116,6 +130,7 @@ def find_attr(text):
     for attr_key, keywords in ATTR_KEYWORDS.items():
         if any(word in text for word in keywords):
             return attr_key
+    return None
 
 def get_product_attr(product_id, attr_key):
     cypher = """
@@ -124,19 +139,20 @@ def get_product_attr(product_id, attr_key):
                a.name_zh AS name_zh, a.name_en AS name_en, a.value_zh AS value_zh, a.value_en AS value_en
     """
     # 1. 执行查询
-    records, _, _ = get_neo4j_driver().execute_query(
-        cypher,
-        parameters_={
-            "product_id": product_id,
-            "attr_key": attr_key
-        },
-        database_=get_config().neo4j_database
-    )
+    records = run_cypher(cypher, {"product_id": product_id, "attr_key": attr_key})
     # 2. 没查到（records 是空的）就返回 None
     if not records:
         return None
     # 3. 查到了就返回第一条，转成字典：dict(records[0])
     return dict(records[0])
+
+
+def get_product_names(product_ids):
+    """产品 ID 转成名字：[{"product_id", "name_zh", "name_en"}, ...]，用别名缓存里的数据，不用再查 Neo4j"""
+    products = {}
+    for product in load_alias_cache().values():
+        products[product["product_id"]] = product  # 同一个产品有好几个别名，存一次就够了
+    return [products[pid] for pid in product_ids if pid in products]
 
 if __name__ == "__main__":
     # 1. 能不能连上 Neo4j
