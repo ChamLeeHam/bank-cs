@@ -2,7 +2,7 @@
 title: 账户服务 / Account services
 intent: account_service
 ---
-<!-- 狮城银行（演示）Lion City Bank (Demo)。本文件中的所有规则和时间均为虚构，仅用于演示。 -->
+<!-- 狮城银行（演示）Lion City Bank (Demo)。本行自己的规则和时间是虚构的；存款保险、紧急冻结这些新加坡的规定参考了 MAS、SDIC 的公开资料。 -->
 
 ## 开户条件 / Who can open an account
 <!-- sub_intents: age_limit -->
@@ -45,3 +45,18 @@ You can close a savings account in the app under Settings > Close account, or at
 多币种账户支持 11 种货币：SGD、USD、CNY、MYR、EUR、GBP、AUD、JPY、HKD、THB 和 IDR。可以持有、兑换、收取和汇出这些货币。本行不支持任何加密货币的存放、兑换或转账。
 
 The multi-currency account supports 11 currencies: SGD, USD, CNY, MYR, EUR, GBP, AUD, JPY, HKD, THB and IDR. You can hold, convert, receive and send these currencies. We do not support holding, converting or transferring any cryptocurrency.
+
+## 存款保险 / Deposit insurance
+狮城银行是新加坡存款保险计划的成员。根据新加坡存款保险公司（SDIC）的规定，每位存款人在同一家银行的新元存款最多受保 SGD 100,000，储蓄账户、往来账户和定期存款里的新元合起来计算，不是每个账户各保 SGD 100,000。外币存款（包括多币种账户里的外币）、结构性存款和投资产品不在保障范围内。存款保险自动生效，客户不需要申请，也不用自己付费。
+
+Lion City Bank is a member of Singapore's Deposit Insurance Scheme. Under the Singapore Deposit Insurance Corporation (SDIC) rules, each depositor's Singapore-dollar deposits at one bank are insured up to SGD 100,000 in total. Savings, current and fixed deposit balances in SGD are added together; the limit is not per account. Foreign currency deposits (including foreign currencies in a multi-currency account), structured deposits and investment products are not covered. Coverage is automatic: you do not need to apply or pay for it.
+
+## 紧急冻结账户 / Emergency lock for all accounts
+如果怀疑账户被别人盗用，比如点了可疑链接、把验证码告诉了别人，或者手机被远程控制，可以在 App 的"设置 > 安全 > 紧急冻结"一键冻结，也可以拨打 24 小时客服热线。冻结后，所有账户的网上转账、借记卡和信用卡交易、ATM 取款都会马上停止。解冻需要本人带证件到分行，或者打客服热线完成身份验证后申请。这个功能是按新加坡金融管理局（MAS）的防诈骗要求提供的。
+
+If you think someone else is using your account, for example after tapping a suspicious link, sharing an OTP or finding your phone remotely controlled, use Settings > Security > Emergency lock in the app, or call our 24-hour hotline. The lock immediately stops online transfers, debit and credit card transactions and ATM withdrawals on all your accounts. To unlock, visit a branch with your ID, or call the hotline and pass identity verification. We provide this feature under the Monetary Authority of Singapore (MAS) anti-scam requirements.
+
+## 资金锁 / Money Lock
+资金锁可以把储蓄账户里的一部分钱锁起来，锁住的钱不能通过网上银行或 App 转出，就算手机或账户被盗用也转不走。可以在 App 的"账户 > 资金锁"设置，最少锁 SGD 1,000。锁住的钱还在原来的账户里，余额照常显示，利息照常计算。解锁只能由本人带证件到分行办理，不能在网上解锁。
+
+Money Lock sets aside part of your savings account balance so it cannot be transferred out through internet banking or the app, even if your phone or account is compromised. Set it up in the app under Accounts > Money Lock, with a minimum of SGD 1,000. Locked money stays in the same account, still shows in your balance and still earns interest. To unlock it, you must visit a branch in person with your ID; it cannot be unlocked online.

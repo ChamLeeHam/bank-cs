@@ -2,7 +2,7 @@
 title: 转账与收款指南 / Transfer and receiving guide
 intent: transfer_howto
 ---
-<!-- 狮城银行（演示）Lion City Bank (Demo)。本文件中的所有规则、限额和时间均为虚构，仅用于演示。 -->
+<!-- 狮城银行（演示）Lion City Bank (Demo)。本行自己的规则、限额和时间是虚构的；PayNow 昵称的变化参考了新加坡银行公会（ABS）的公开资料。 -->
 
 ## 转账方式比较 / Ways to transfer money
 <!-- sub_intents: transfer_into_account, receiving_money -->
@@ -45,3 +45,9 @@ The default daily limit for PayNow and FAST is SGD 5,000. You can change it in t
 常见原因包括：收款人姓名与账号不符、收款银行代码或 SWIFT 代码错误、超过每日转账限额、账户余额不足，以及转账正在进行例行合规审核。被退回的款项一般在 3–5 个工作日内退回您的账户，手续费可能不退。想了解您某一笔转账为什么失败，可以登录后让我们查询该笔转账。
 
 Common reasons include: the payee name does not match the account number, the bank code or SWIFT code is wrong, the daily transfer limit was exceeded, the balance was not enough, or the transfer is under routine compliance review. Returned funds usually come back to your account within 3–5 working days; the transfer fee may not be refunded. To find out why one of your own transfers failed, log in and ask us to check that transfer.
+
+## PayNow 收款人名字的显示 / How PayNow shows the payee's name
+<!-- sub_intents: transfer_into_account -->
+用 PayNow 转账时，确认之前 App 会显示收款人登记的名字，其中一部分字母会被隐藏。请核对名字和您要转的人是不是一致，对不上就不要转。为了防止冒名诈骗，新加坡银行公会（ABS）从 2026 年 6 月 6 日起取消了个人客户的 PayNow 昵称功能，以前设置的昵称不会再显示，现在只显示部分隐藏的登记名字。
+
+When you pay by PayNow, the app shows the payee's registered name, partly masked, before you confirm. Check that the name matches the person you mean to pay, and do not continue if it does not. To prevent impersonation scams, the Association of Banks in Singapore (ABS) removed the PayNow nickname feature for individual customers from 6 June 2026. Nicknames set before are no longer shown; only the partly masked registered name appears.

@@ -28,6 +28,11 @@
 {"question": "我想 close 我的 savings account", "lang": "mixed", "expected": ["销户"]}
 {"question": "Can I hold Japanese yen in my account?", "lang": "en", "expected": ["多币种账户支持的货币"]}
 {"question": "你们可以存比特币吗？", "lang": "zh", "expected": ["多币种账户支持的货币", "收款人限制"]}
+{"question": "我在你们银行存了 15 万新币，如果银行倒闭能拿回多少？", "lang": "zh", "expected": ["存款保险"]}
+{"question": "Is the USD in my multi-currency account covered by deposit insurance?", "lang": "en", "expected": ["存款保险"]}
+{"question": "我手机好像被黑了，可以马上把所有账户都 freeze 吗？", "lang": "mixed", "expected": ["紧急冻结账户"]}
+{"question": "How can I lock part of my savings so it can't be transferred out online?", "lang": "en", "expected": ["资金锁"]}
+{"question": "PayNow 转账的时候为什么看不到对方的 nickname 了？", "lang": "mixed", "expected": ["PayNow 收款人名字的显示"]}
 {"question": "定期存款利率是多少？", "lang": "zh", "expected": null}
 {"question": "How do I apply for a home loan?", "lang": "en", "expected": null}
 {"question": "你们的分行几点开门？", "lang": "zh", "expected": null}
