@@ -2,6 +2,7 @@
 # 这两个工具只返回公开的资料（FAQ、产品图谱），可以发给 DeepSeek
 # 账户的工具在后面加，账户数据不会发给 DeepSeek
 # 在项目根目录运行测试：uv run python -m src.nodes.agent_tools
+import hashlib
 import logging
 from typing import Literal
 
@@ -15,6 +16,12 @@ logger = logging.getLogger(__name__)
 
 # 检索直接用 rag_answer 节点里的 retrieve()，不用再写一遍；只创建一次
 _rag = RagAnswerNode()
+
+
+def faq_source_id(doc, section):
+    """同一章节多次检索时使用相同的来源编号。"""
+    value = f"{doc}\n{section}".encode("utf-8")
+    return hashlib.sha256(value).hexdigest()[:12]
 
 
 # 1. 知识库检索
@@ -36,7 +43,8 @@ def search_faq(query: str):
     parts = []
     for i, d in enumerate(docs, 1):
         body = d["text"].split("\n", 1)[-1]  # 第一行是章节标题，后面才是正文
-        parts.append(f"【{i}】《{d['title']}》{d['section']}\n{body}")
+        source_id = faq_source_id(d["doc"], d["section"])
+        parts.append(f"【{i}】[FAQ:{source_id}]《{d['title']}》{d['section']}\n{body}")
     content = "\n\n".join(parts)
     sources = [{"doc": d["doc"], "title": d["title"], "section": d["section"], "rerank_score": d["rerank_score"]}
                for d in docs]
@@ -87,8 +95,8 @@ if __name__ == "__main__":
     # 1. 像 Agent 那样调用：传一个 tool_call，返回 ToolMessage，content 给 DeepSeek，artifact 留在本地
     msg = search_faq.invoke({"name": "search_faq", "args": {"query": "PayNow 转账要手续费吗？"},
                              "id": "test-1", "type": "tool_call"})
-    print("===== search_faq content（发给 DeepSeek 的）\n", msg.content[:500])
-    print("===== search_faq artifact（留在本地的）\n", msg.artifact)
+    print("===== search_faq content\n", msg.content[:500])
+    print("===== search_faq artifact\n", msg.artifact)
 
     print("\n===== 知识库里没有的：", search_faq.invoke({"query": "定期存款利率是多少？"}))
 

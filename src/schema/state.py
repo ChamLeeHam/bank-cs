@@ -57,6 +57,7 @@ class GraphState(TypedDict, total=False):
 
     # 账户
     otp_verified: bool  # 这个会话是否已经验证过 OTP，只能由 verify_otp 写 [跨轮]
+    otp_customer_id: str  # OTP 验证对应的客户，不能跨客户复用
     tool_calls: list[dict[str, Any]]  # 账户智能体调用了哪些工具，用来审计 [每轮]
 
     # handoff 写入
@@ -77,6 +78,7 @@ CROSS_TURN_DEFAULTS: dict[str, Any] = {
     "intent": "",
     "entities": {},
     "otp_verified": False,
+    "otp_customer_id": "",
     "ticket_id": None,
     "clarify_count": 0,
 }

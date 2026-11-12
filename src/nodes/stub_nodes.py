@@ -193,14 +193,6 @@ class AskBackNode(BaseNode):
                                "不好意思，能再具体说明一下吗？例如：银行卡、转账汇款、手续费或账户余额。")}
 
 
-class AccountAgentNode(BaseNode):
-    name = "account_agent"
-
-    def process(self, state: GraphState) -> StateUpdate:
-        return {"answer": f"[账户智能体待实现] intent={state.get('intent')} entities={state.get('entities')}",
-                "tool_calls": []}
-
-
 class HandoffNode(BaseNode):
     name = "handoff"
 
@@ -209,8 +201,8 @@ class HandoffNode(BaseNode):
         lang = state.get("lang", "en")
         return {"priority": "urgent" if urgent else "normal",
                 "ticket_id": None,  # TODO: 写入 MySQL 的 tickets 表，再通知 n8n
-                "answer": pick(lang, "I've passed this to a human agent. They will contact you shortly.",
-                               "已为您转接人工客服，稍后会有专人联系您。")}
+                "answer": pick(lang, "I can't connect you to a human agent here yet. Please contact the bank directly.",
+                               "目前无法在这里转接人工客服，请直接联系银行客服。")}
 
 
 class RefuseNode(BaseNode):
@@ -237,7 +229,9 @@ class OutputGuardNode(BaseNode):
         if state.get("blocked"):
             answer = pick(lang, "Sorry, I can't process that request.", "抱歉，无法处理该请求。")
         answer = _CARD_NO.sub("****", answer)
-        return {"answer": answer, "messages": [AIMessage(answer)]}
+        # 账户结果只返回给客户，不放进会传给外部模型的对话历史
+        history_answer = "[账户查询结果已展示]" if state.get("route") == "account" else answer
+        return {"answer": answer, "messages": [AIMessage(history_answer)]}
 
 
 if __name__ == "__main__":

@@ -20,7 +20,7 @@ class VerifyOtpNode(BaseNode):
     name = "verify_otp"
 
     def process(self, state: GraphState) -> StateUpdate:
-        if state.get("otp_verified"):
+        if state.get("otp_verified") and state.get("otp_customer_id") == state.get("customer_id"):
             return {}
         lang = state.get("lang", "en")
 
@@ -38,8 +38,8 @@ class VerifyOtpNode(BaseNode):
 
         for attempt in range(MAX_TRIES):
             if attempt == 0:
-                message = {"en": "For your security, please enter the 6-digit OTP sent to your phone.",
-                           "zh": "为了您的账户安全，请输入发送到您手机的 6 位验证码。"}
+                message = {"en": "This is a demo. Please enter the 6-digit demo verification code.",
+                           "zh": "这是演示流程，请输入 6 位演示验证码。"}
             else:
                 left = MAX_TRIES - attempt
                 message = {"en": f"The OTP is incorrect. Please try again ({left} tries left).",
@@ -48,7 +48,7 @@ class VerifyOtpNode(BaseNode):
             code = interrupt({"type": "otp", "message_en": message["en"], "message_zh": message["zh"]})
             if str(code).strip() == row["demo_otp"]:
                 self.log_step(self.name, f"验证通过，第 {attempt + 1} 次")
-                return {"otp_verified": True}
+                return {"otp_verified": True, "otp_customer_id": state.get("customer_id")}
 
         self.log_step(self.name, "验证失败，次数用完")
         return {"otp_verified": False,

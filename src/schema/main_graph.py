@@ -12,11 +12,12 @@ from langgraph.graph.state import CompiledStateGraph
 from langgraph.types import Command
 
 from src.nodes.bank_agent import BankAgentNode
+from src.nodes.account_agent import AccountAgentNode
 from src.nodes.intent_router import IntentRouterNode
 from src.nodes.rag_answer import RagAnswerNode
 from src.nodes.verify_otp import VerifyOtpNode
 from src.nodes.stub_nodes import (InputGuardNode, EntityExtractionNode, GateNode, AskBackNode,
-                                  AccountAgentNode, HandoffNode, RefuseNode, OutputGuardNode)
+                                  HandoffNode, RefuseNode, OutputGuardNode)
 from src.schema.config import get_config
 from src.schema.state import GraphState, create_turn_input
 from src.schema.base import setup_logging
@@ -117,6 +118,9 @@ def _run(session_id: str, graph_input, verbose: bool = True) -> dict:
 
 def run_query(session_id: str, customer_id: str, question: str, verbose: bool = True) -> dict:
     """客户发来一条新消息"""
+    saved = _app.get_state({"configurable": {"thread_id": session_id}}).values
+    if saved.get("customer_id") and saved["customer_id"] != customer_id:
+        raise ValueError("同一个会话不能切换客户，请使用新的会话")
     turn_input = create_turn_input(session_id=session_id, customer_id=customer_id, question=question)
     return _run(session_id, turn_input, verbose)
 

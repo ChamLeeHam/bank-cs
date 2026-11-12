@@ -2,12 +2,13 @@
 # 外面的 LangGraph 还是安全和规则这一层：脱敏、意图、转人工、拒答都在 Agent 前面做完
 # 出错（比如 DeepSeek 连不上）就退回原来的 rag_answer
 # 在项目根目录运行测试：uv run python -m src.nodes.bank_agent
+import re
 import time
 
 from langchain.agents import create_agent
 from langchain_core.messages import AIMessage, ToolMessage
 
-from src.nodes.agent_tools import get_product_info, search_faq
+from src.nodes.agent_tools import faq_source_id, get_product_info, search_faq
 from src.nodes.rag_answer import RagAnswerNode
 from src.schema.base import BaseNode, StateUpdate
 from src.schema.state import GraphState
@@ -21,10 +22,14 @@ GRAPH_SOURCE = {"doc": "neo4j", "title": "术语图谱 / Product graph", "sectio
 SYSTEM_PROMPT = """你是狮城银行（Lion City Bank）的 AI 客服。
 1. 只根据工具查到的资料回答，资料里没有的不要自己编，特别是数字
 2. 问具体产品的手续费、限额、到账时间、年费，先用 get_product_info；其他问题用 search_faq
-3. 一个问题问了好几件事，可以调用好几次工具
+3. 只查询客户实际问的内容；先用一次检索，资料足够回答就停止，不要自行增加费用、时间或其他问题
+   只有客户问了多件事，或者已有资料不足以回答客户的问题，才继续调用工具
 4. 客户用英文就用英文回答，中文或者中英混杂就用中文回答
-5. 回答简短清楚，不用写"根据资料"这种话，不用自己写来源
-6. 不提供投资建议"""
+5. 只回答客户问的内容，不要加入无关的情况；回答简短清楚，不用写"根据资料"这种话，不用自己写来源名称
+6. 使用 FAQ 资料回答时，在回答末尾原样写出实际使用的每个章节编号，例如 [FAQ:123456abcdef]；不要写没有用到的编号
+7. 不提供投资建议"""
+
+FAQ_CITATION = re.compile(r"\[FAQ:([0-9a-f]{12})\]", re.IGNORECASE)
 
 bank_agent = None
 
@@ -65,8 +70,24 @@ class BankAgentNode(BaseNode):
         tool_calls = [{"tool": c["name"], "args": c["args"]} for m in ai_messages for c in m.tool_calls]
 
         # search_faq 的 artifact 是 FAQ 章节；get_product_info 的是查到资料的产品，查到了才加"产品资料"
-        faq_sources = [s for m in tool_results if m.name == "search_faq" and m.artifact for s in m.artifact]
+        faq_sources = []
+        seen = set()
+        for m in tool_results:
+            if m.name == "search_faq" and m.artifact:
+                for source in m.artifact:
+                    key = (source["doc"], source["title"], source["section"])
+                    if key not in seen:
+                        seen.add(key)
+                        faq_sources.append(source)
+        cited = {source_id.lower() for source_id in FAQ_CITATION.findall(answer)}
+        answer = FAQ_CITATION.sub("", answer).strip()
+        selected = [s for s in faq_sources if faq_source_id(s["doc"], s["section"]) in cited]
         used_graph = any(m.name == "get_product_info" and m.artifact for m in tool_results)
+        if faq_sources and not selected and not used_graph:
+            self.logger.warning("Agent 没有标明有效的 FAQ 来源，用原来的 RAG 回答")
+            self.last_run = {"tool_calls": tool_calls, "fallback": "sources"}
+            return self.fallback.process(state)
+        faq_sources = selected
         sources = faq_sources + ([GRAPH_SOURCE] if used_graph else [])
 
         # 没有回答，或者回答里的数字不在工具查到的资料里，就用原来的 RAG（和 response_utils 里的检查一样）
