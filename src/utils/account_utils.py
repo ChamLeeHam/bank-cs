@@ -4,6 +4,8 @@
 # 在项目根目录运行测试：uv run python -m src.utils.account_utils
 import logging
 import re
+from datetime import datetime, timedelta, timezone
+from decimal import Decimal
 
 from src.utils.mysql_utils import execute, query
 
@@ -38,6 +40,61 @@ def get_recent_transfers(customer_id, payee_ids=None, days=30, limit=5):
         sql += f" and t.payee_id in ({placeholders})"
         params += list(payee_ids)
     sql += " order by t.created_at desc limit %s"
+    params.append(limit)
+    return query(sql, params)
+
+
+def transfer_filters(text, today=None):
+    """识别明确的日期和金额；不使用上一轮留下的实体。"""
+    text = text or ""
+    today = today or datetime.now(timezone(timedelta(hours=8))).date()
+    date = None
+    m = re.search(r"(?<!\d)(\d{4})[-/年](\d{1,2})[-/月](\d{1,2})日?(?!\d)", text)
+    if m:
+        from datetime import date as date_type
+        date = date_type(*map(int, m.groups()))
+    elif re.search(r"前天|the day before yesterday", text, re.I):
+        date = today - timedelta(days=2)
+    elif re.search(r"昨天|yesterday", text, re.I):
+        date = today - timedelta(days=1)
+    elif re.search(r"今天|today", text, re.I):
+        date = today
+    elif re.search(r"上周|上星期|上个月|last week|last month|\d{1,2}月\d{1,2}[日号]?|"
+                   r"(?<!\d)\d{1,2}[/-]\d{1,2}(?!\d)", text, re.I):
+        raise ValueError("unsupported date")
+
+    m = re.search(r"(?:(S\$|\$|SGD|USD|CNY)\s*([\d,]+(?:\.\d{1,2})?))|"
+                  r"(?:([\d,]+(?:\.\d{1,2})?)\s*(新币|块|元|SGD|USD|CNY|dollars?))", text, re.I)
+    amount = Decimal((m.group(2) or m.group(3)).replace(",", "")) if m else None
+    unit = (m.group(1) or m.group(4)).upper() if m else ""
+    currency = {"S$": "SGD", "新币": "SGD", "SGD": "SGD", "USD": "USD", "CNY": "CNY"}.get(unit)
+    return {"date": date, "amount": amount, "currency": currency}
+
+
+def find_transfers(customer_id, payee_ids=None, date=None, amount=None, currency=None, limit=51):
+    """所有筛选都在数据库执行，避免只查最近几笔后漏掉匹配记录。"""
+    sql = """
+        select t.transfer_id, t.transfer_type, t.amount, t.currency, t.status,
+               t.status_note_zh, t.status_note_en, t.created_at, p.nickname
+        from transfers t join payees p on t.payee_id = p.payee_id and p.customer_id = t.customer_id
+        where t.customer_id = %s
+    """
+    params = [customer_id]
+    if payee_ids:
+        sql += " and t.payee_id in (" + ", ".join(["%s"] * len(payee_ids)) + ")"
+        params.extend(payee_ids)
+    if date:
+        sql += " and t.created_at >= %s and t.created_at < %s"
+        params.extend([date, date + timedelta(days=1)])
+    else:
+        sql += " and t.created_at >= NOW() - INTERVAL 30 DAY"
+    if amount is not None:
+        sql += " and t.amount = %s"
+        params.append(amount)
+    if currency:
+        sql += " and t.currency = %s"
+        params.append(currency)
+    sql += " order by t.created_at desc, t.transfer_id limit %s"
     params.append(limit)
     return query(sql, params)
 

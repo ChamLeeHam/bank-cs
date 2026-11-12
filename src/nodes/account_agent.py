@@ -1,11 +1,14 @@
 # 账户查询：验证 OTP 后在本地读取和整理数据，不把账户资料发给模型
+import re
+
 from langgraph.types import interrupt
 
 from src.nodes.stub_nodes import pick
 from src.schema.base import BaseNode, StateUpdate
 from src.schema.exceptions import MySQLError
 from src.schema.state import GraphState
-from src.utils.account_utils import find_payees, freeze_card, get_accounts, get_cards, get_recent_transfers
+from src.utils.account_utils import (find_payees, find_transfers, freeze_card, get_accounts, get_cards,
+                                     transfer_filters)
 
 
 class AccountAgentNode(BaseNode):
@@ -30,21 +33,7 @@ class AccountAgentNode(BaseNode):
                 return {"answer": answer, "tool_calls": [{"tool": "get_accounts"}]}
 
             if intent == "transfer_status":
-                payees = find_payees(customer_id, state.get("masked_question", ""))
-                rows = get_recent_transfers(customer_id, [p["payee_id"] for p in payees] if payees else None)
-                if not rows:
-                    answer = pick(lang, "No matching transfers were found in the last 30 days.",
-                                  "最近 30 天没有找到符合条件的转账。")
-                else:
-                    lines = []
-                    for r in rows:
-                        note = r["status_note_en"] if lang == "en" else r["status_note_zh"]
-                        line = (f"{r['created_at']:%Y-%m-%d %H:%M} · {r['nickname']} · "
-                                f"{r['currency']} {r['amount']} · {r['status']}")
-                        lines.append(line + (f" ({note})" if note else ""))
-                    answer = pick(lang, "Recent transfers in the last 30 days (up to 5):\n",
-                                  "最近 30 天的转账（最多 5 笔）：\n") + "\n".join(lines)
-                return {"answer": answer, "tool_calls": [{"tool": "find_payees"}, {"tool": "get_recent_transfers"}]}
+                return self._transfer_status(state, customer_id, lang)
 
             if intent == "card_lost_freeze":
                 return self._freeze_card(state, customer_id, lang)
@@ -55,6 +44,55 @@ class AccountAgentNode(BaseNode):
             self.logger.error(f"账户查询失败：{e}")
             return {"answer": pick(lang, "Account information is unavailable right now. Please try again later.",
                                    "账户资料暂时无法查询，请稍后再试。"), "tool_calls": []}
+
+    def _transfer_status(self, state, customer_id, lang):
+        text = state.get("masked_question", "")
+        calls = [{"tool": "find_payees"}, {"tool": "find_transfers"}]
+        try:
+            filters = transfer_filters(text)
+        except ValueError:
+            return {"answer": pick(lang, "Please provide a date as YYYY-MM-DD, today or yesterday.",
+                                   "请提供具体日期（如 2026-11-12），或说今天、昨天、前天。"), "tool_calls": []}
+        payees = find_payees(customer_id, text)
+        # 指明了收款人但没有匹配上时，不能改查其他收款人的交易并当成答案
+        named = re.search(r"给.{1,20}?(?:的|转账|汇款|转了|汇了)|"
+                          r"\bto\s+(?!arrive\b|reach\b|receive\b|be\b)\S+", text, re.I)
+        if named and not payees:
+            return {"answer": pick(lang, "I couldn't match that recipient. Please check their saved nickname.",
+                                   "没有匹配到该收款人，请核对已保存的收款人昵称。"),
+                    "tool_calls": [{"tool": "find_payees"}]}
+        rows = find_transfers(customer_id, [p["payee_id"] for p in payees] if payees else None, **filters)
+        if not rows:
+            period = "the specified date" if filters["date"] else "the last 30 days"
+            answer = pick(lang, f"No matching transfers were found in {period}.",
+                          "指定日期没有找到符合条件的转账。" if filters["date"] else "最近 30 天没有找到符合条件的转账。")
+            return {"answer": answer, "tool_calls": calls}
+        if len(rows) > 50:
+            return {"answer": pick(lang, "There are too many matches. Please provide a date or amount.",
+                                   "符合条件的转账太多，请提供具体日期或金额。"), "tool_calls": calls}
+
+        if len(rows) > 1:
+            options = "\n".join(f"{r['transfer_id']} · {r['created_at']:%Y-%m-%d} · {r['nickname']} · "
+                                f"{r['currency']} {r['amount']}" for r in rows)
+            for attempt in range(2):
+                prompt_zh = ("找到多笔转账，请输入要查询的交易编号：" if not attempt else "编号不匹配，请再输入一次交易编号：")
+                prompt_en = ("Multiple transfers match. Enter the transaction reference:" if not attempt
+                             else "That reference did not match. Enter it again:")
+                reply = str(interrupt({"type": "select_transfer", "message_zh": f"{prompt_zh}\n{options}",
+                                       "message_en": f"{prompt_en}\n{options}"})).strip()
+                selected = next((r for r in rows if r["transfer_id"].lower() == reply.lower()), None)
+                if selected:
+                    rows = [selected]
+                    break
+            else:
+                return {"answer": pick(lang, "I couldn't identify the transfer. Please start a new request.",
+                                       "无法确定是哪笔转账，请重新发起查询。"), "tool_calls": calls}
+
+        r = rows[0]
+        note = r["status_note_en"] if lang == "en" else r["status_note_zh"]
+        line = (f"{r['transfer_id']} · {r['created_at']:%Y-%m-%d %H:%M} · {r['nickname']} · "
+                f"{r['currency']} {r['amount']} · {r['status']}")
+        return {"answer": line + (f"\n{note}" if note else ""), "tool_calls": calls}
 
     def _freeze_card(self, state, customer_id, lang):
         cards = get_cards(customer_id)

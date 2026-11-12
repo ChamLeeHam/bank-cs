@@ -8,9 +8,10 @@ from langchain_core.messages import AIMessage, HumanMessage
 
 from src.intents import INTENT_ROUTES, is_human_request, mentions_other_bank
 from src.schema.base import BaseNode, StateUpdate
-from src.schema.exceptions import Neo4jError
+from src.schema.exceptions import MySQLError, Neo4jError
 from src.schema.state import GraphState
 from src.utils.neo4j_utils import find_attr, find_products
+from src.utils.ticket_utils import create_ticket
 
 _CJK = re.compile(r"[一-鿿]")
 _LATIN = re.compile(r"[A-Za-z]{2,}")
@@ -199,10 +200,18 @@ class HandoffNode(BaseNode):
     def process(self, state: GraphState) -> StateUpdate:
         urgent = state.get("intent") == "fraud_report"
         lang = state.get("lang", "en")
-        return {"priority": "urgent" if urgent else "normal",
-                "ticket_id": None,  # TODO: 写入 MySQL 的 tickets 表，再通知 n8n
-                "answer": pick(lang, "I can't connect you to a human agent here yet. Please contact the bank directly.",
-                               "目前无法在这里转接人工客服，请直接联系银行客服。")}
+        priority = "urgent" if urgent else "normal"
+        try:
+            ticket_id = create_ticket(state, priority)
+        except (MySQLError, ValueError) as e:
+            self.logger.error(f"人工工单创建失败：{e}")
+            return {"priority": priority, "ticket_id": None,
+                    "answer": pick(lang, "I couldn't create a support ticket. Please contact the bank directly.",
+                                   "暂时无法创建人工工单，请直接联系银行客服。")}
+        return {"priority": priority, "ticket_id": ticket_id,
+                "answer": pick(lang, f"A support ticket has been created (#{ticket_id}). "
+                                     "Human-agent notification is not yet available; please contact the bank directly.",
+                               f"已创建人工工单（编号 {ticket_id}）。目前尚未接通人工通知，请直接联系银行客服。")}
 
 
 class RefuseNode(BaseNode):
