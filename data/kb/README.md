@@ -45,6 +45,72 @@ Milvus 里两个向量各建一个索引（dense_vector 用 HNSW，sparse_vector
 但稀疏向量那一层会用随机参数，检索结果就不对了，所以 get_bge_m3_embedding_model() 会先检查这两个文件。
 集合名是 lioncity_faq（BANK_KB_COLLECTION），和 Milvus 里其他项目的集合分开。
 
+## 银行官网的 PDF（MinerU）
+
+为了试一下真实的银行文档，从银行官网下载了几个 PDF 放在 data/kb/pdf（DBS 的收费表、Citi 的信用卡说明和争议 FAQ）。
+这些是真实银行的资料，不是狮城银行的，所以单独放在 bank_pdf_docs 集合（BANK_PDF_COLLECTION），
+不放进 lioncity_faq，客服回答不会用到。PDF 的版权是银行的，PDF 和 MinerU 的输出都不提交（.gitignore）。
+
+步骤：
+
+1. 在终端手动运行 MinerU（装在课程的 conda 环境里），PDF 的解析不放在 Python 里：
+   ```bash
+   & "E:\Conda\envs\rag\Scripts\mineru.exe" -p data\kb\pdf -o data\kb\mineru_output -b pipeline -l ch
+   ```
+2. `src/utils/mineru_utils.py`：找到 MinerU 生成的 .md，补回小节标题，清洗
+3. `src/utils/md_split_utils.py`：切块，大表格拆开并带上表头（切块的核心代码来自课程的 07-md_split_by_handler.py）
+4. `uv run python src/scripts/build_kb.py --pdf`：bge-m3 生成稠密和稀疏向量，写进 bank_pdf_docs
+
+MinerU 输出的 .md 要先清洗：去掉 `<sub>` `<sup>` 标签、HTML 实体（`&#x27;`）、`S\$30` 这种转义，去掉封面和目录。
+还有两个问题是看了 DBS 的输出才发现的：
+
+- 有的小节标题印在页眉上，MinerU 会把页眉当成 header 丢掉，不写进 .md。
+  `_content_list.json` 里还有，只出现一次的页眉就是小节标题（每页都有的"DBS Live more, Bank less"不要），放回那一页的开头。
+- 表格前面的一行短文字（比如 Cheque Services）其实是表格的标题，改成三级标题。
+
+DBS 收费表的标题从 6 个变成 11 个。第 03 节的标题只在目录里出现过，找不回来。
+
+切块：课程的切块代码表格不会拆开，但是 DBS 的表格最长有 4,600 多字符，超过上限。
+大表格按行拆成几个小表格，每个都带上表头；一行就超长的宽表格（每列是一种账户）再按列拆，每个都留着第一列（行名）。
+这样每一块单独拿出来也看得懂。上限是 1,500 字符，HTML 表格的标签很占字数，reranker 也只看前 512 个 token。
+### MinerU 认错的表格
+
+把 DBS 收费表的 12 个表格和 PDF 原文一页一页对了一遍，有 6 个认错了。它们的共同点是格子里还套着小表格，
+MinerU 把小表格拆开以后，数字放到了别的表头下面：
+
+| 表格 | 问题 |
+|---|---|
+| 01 节账户费用 | 外币最低余额的小表套在里面，币种（AUD、CAD…）排到了 Account Types 下面 |
+| 03 节账户费用 | Service Charge 一格被拆成了好几行 |
+| Account Service Fees | 对账单和审计确认的小表套在里面，费用排到了销户费下面 |
+| Local Remittances | 大表是对的，最后一格 PayNow 的小表乱了 |
+| Cross Border Remittances | 一格里的几条说明被拆成了几行 |
+| Cheque Services | 套了 6 个小表，认成了 17 列 |
+
+这 6 个表格写在 md_split_utils.py 的 UNVERIFIED_TABLES 里，入库的时候去掉，换成一句"解析有误，核对之前没有收录"。
+用表格里一段只有它才有的文字来认，MinerU 重新解析以后认不出来会有警告。核对改好以后从这里删掉就会重新入库。
+另外 6 个表格（02 节账户、Specialised Businesses、Cashier's Order、存取款、柜台费、DBS IDEAL）和原文对得上。
+
+去掉以后 DBS 收费表切成 16 块，最长 1,462 字符。
+
+### 检查
+
+提交前检查了 5 项，都通过了：
+
+1. lioncity_faq 没受影响：还是 33 条，只有 4 个 FAQ 文档，第一步混合检索的指标和上面一样（75.7% / 89.2% / 0.827）
+2. MinerU 的输出能读出来、切好块，块里没有未核对表格的内容，6 处都换成了说明
+3. bge-m3 同时生成了 1024 维的稠密向量和稀疏向量，集合里两个向量都存了
+4. PDF 的 16 块都在 bank_pdf_docs，lioncity_faq 里没有 DBS 的内容
+5. bank_pdf_docs 的混合检索加精排：5 个问题（开户费、硬币存款、本票、柜台费、DBS IDEAL 令牌）都找到了对的小节和数字；
+   问支票本的时候，10 个候选里都没有 Cheque Services 表格的数字
+
+"coin deposit charge" 混合检索排在第 4，精排以后排到了第 1。数据少的时候 RRF 的分数很接近，精排很有用。
+
+还存在的问题：
+
+- 表格里有的单词粘在一起（AccountTypes）或者认错字（àverage），没法用规则修。
+- 第 03 节的标题找不回来，这一节的内容算在第 02 节下面。
+
 ## 回答一个问题的流程
 
 ```

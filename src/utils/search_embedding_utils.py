@@ -8,8 +8,10 @@ from src.utils.milvus_utils import create_hybrid_search_request, execute_hybrid_
 logger = logging.getLogger(__name__)
 
 
-def process(query, intent=None):
+def process(query, intent=None, collection_name=None):
+    """collection_name 不传就查狮城银行的 FAQ（kb_collection）"""
     config = get_config()
+    collection_name = collection_name or config.kb_collection
 
     # 1. 问题转成混合向量 {"dense": [...], "sparse": [...]}
     embeddings = generate_hybrid_embedding([query])
@@ -29,7 +31,7 @@ def process(query, intent=None):
     client = get_milvus_client()
     result = execute_hybrid_search_request(
         client=client,
-        collection_name=config.kb_collection,
+        collection_name=collection_name,
         requests=requests,
         limit=config.rag_candidates,
     )

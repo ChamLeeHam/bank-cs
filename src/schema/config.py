@@ -15,6 +15,7 @@ class Config:
     data_dir: Path = ROOT_DIR / "data"    #数据目录
     log_dir: Path = ROOT_DIR / "logs" # 日志目录
     checkpoint_dir: Path = ROOT_DIR / "checkpoint"   #checkpoint目录
+    mineru_output_dir: Path = field(default_factory=lambda: ROOT_DIR / os.getenv("MINERU_OUTPUT_DIR", "data/kb/mineru_output"))
 
 
     # 定义项目配置信息
@@ -54,6 +55,8 @@ class Config:
     milvus_uri: str = field(default_factory=lambda: os.getenv("MILVUS_URL", "http://localhost:19530"))
     milvus_token: str = field(default_factory=lambda: os.getenv("MILVUS_TOKEN", ""))
     kb_collection: str = field(default_factory=lambda: os.getenv("BANK_KB_COLLECTION", "lioncity_faq"))
+    # 银行官网下载的 PDF（MinerU 解析）放在另一个集合，是真实银行的资料，不和狮城银行的 FAQ 混在一起
+    pdf_collection: str = field(default_factory=lambda: os.getenv("BANK_PDF_COLLECTION", "bank_pdf_docs"))
     kb_dir: Path = field(default_factory=lambda: ROOT_DIR / os.getenv("BANK_KB_DIR", "data/kb"))
     embed_model: Path = field(default_factory=lambda: ROOT_DIR / os.getenv("EMBED_MODEL", "pretrained/bge-m3"))
     kb_top_k: int = field(default_factory=lambda: int(os.getenv("BANK_KB_TOP_K", "3")))

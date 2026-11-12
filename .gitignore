@@ -12,3 +12,7 @@ data/raw/
 # Day 2: LLM response cache and trial output (rebuild with build_intent_dataset.py)
 data/intent/cache/
 data/intent/trial/
+
+# 银行官网下载的 PDF（版权属于各银行，只在本地测试）和 MinerU 的输出
+data/kb/pdf/
+data/kb/mineru_output/
