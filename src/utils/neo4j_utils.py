@@ -147,6 +147,18 @@ def get_product_attr(product_id, attr_key):
     return dict(records[0])
 
 
+def get_product_attrs(product_id):
+    """一个产品的所有属性，[{"product_zh", "product_en", "name_zh", "name_en", "value_zh", "value_en"}, ...]"""
+    cypher = """
+        MATCH (p:BankProduct {product_id: $product_id})-[:Have]->(a:BankAttr)
+        RETURN p.name_zh AS product_zh, p.name_en AS product_en,
+               a.name_zh AS name_zh, a.name_en AS name_en, a.value_zh AS value_zh, a.value_en AS value_en
+        ORDER BY a.attr_key
+    """
+    records = run_cypher(cypher, {"product_id": product_id})
+    return [dict(r) for r in records]
+
+
 def get_product_names(product_ids):
     """产品 ID 转成名字：[{"product_id", "name_zh", "name_en"}, ...]，用别名缓存里的数据，不用再查 Neo4j"""
     products = {}

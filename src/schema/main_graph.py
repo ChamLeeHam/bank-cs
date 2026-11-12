@@ -11,11 +11,13 @@ from langgraph.graph import StateGraph, END
 from langgraph.graph.state import CompiledStateGraph
 from langgraph.types import Command
 
+from src.nodes.bank_agent import BankAgentNode
 from src.nodes.intent_router import IntentRouterNode
 from src.nodes.rag_answer import RagAnswerNode
 from src.nodes.verify_otp import VerifyOtpNode
 from src.nodes.stub_nodes import (InputGuardNode, EntityExtractionNode, GateNode, AskBackNode,
                                   AccountAgentNode, HandoffNode, RefuseNode, OutputGuardNode)
+from src.schema.config import get_config
 from src.schema.state import GraphState, create_turn_input
 from src.schema.base import setup_logging
 
@@ -29,7 +31,8 @@ def route_after_input_guard(state: GraphState) -> str:
 def route_after_gate(state: GraphState) -> str:
     """根据 gate 写的 route 找下一个节点"""
     route_to_node = {
-        "rag": "rag_answer",
+        # 知识库类的问题：BANK_USE_AGENT=true 交给 Bank Agent，否则用原来的 RAG
+        "rag": "bank_agent" if get_config().use_agent else "rag_answer",
         "account": "verify_otp",  # 账户的问题要先验证 OTP
         "handoff": "handoff",
         "refuse": "refuse",
@@ -55,6 +58,7 @@ def create_query_graph() -> CompiledStateGraph:
         "gate": GateNode(),
         "ask_back": AskBackNode(),
         "rag_answer": RagAnswerNode(),
+        "bank_agent": BankAgentNode(),
         "verify_otp": VerifyOtpNode(),
         "account_agent": AccountAgentNode(),
         "handoff": HandoffNode(),
@@ -72,10 +76,11 @@ def create_query_graph() -> CompiledStateGraph:
     workflow.add_edge("intent_router", "entity_extraction")
     workflow.add_edge("entity_extraction", "gate")
     workflow.add_conditional_edges("gate", route_after_gate,
-                                   ["rag_answer", "verify_otp", "handoff", "refuse", "ask_back"])
+                                   ["rag_answer", "bank_agent", "verify_otp", "handoff", "refuse", "ask_back"])
     workflow.add_conditional_edges("verify_otp", route_after_verify_otp, ["account_agent", "output_guard"])
     workflow.add_edge("ask_back", "output_guard")
     workflow.add_edge("rag_answer", "output_guard")
+    workflow.add_edge("bank_agent", "output_guard")
     workflow.add_edge("account_agent", "output_guard")
     workflow.add_edge("handoff", "output_guard")
     workflow.add_edge("refuse", "output_guard")

@@ -62,6 +62,8 @@ class Config:
     kb_top_k: int = field(default_factory=lambda: int(os.getenv("BANK_KB_TOP_K", "3")))
     # 用哪个模型生成回答：deepseek 或者 local（本地 Qwen）
     rag_generator: str = field(default_factory=lambda: os.getenv("RAG_GENERATOR", "deepseek"))
+    # true：知识库类的问题交给 Bank Agent（DeepSeek 自己选工具）；false：用原来固定的 RAG 流程
+    use_agent: bool = field(default_factory=lambda: os.getenv("BANK_USE_AGENT", "false").lower() == "true")
 
     # RAG 的参数，加 BANK_ 前缀是因为 .env 里已经有别的项目的 RERANKER_* 配置
     rag_rewrite: bool = field(default_factory=lambda: os.getenv("BANK_RAG_REWRITE", "true").lower() == "true")
