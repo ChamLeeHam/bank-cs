@@ -1,4 +1,5 @@
 """本机演示接口：uv run uvicorn src.api:app --host 127.0.0.1 --port 8001"""
+import os
 import logging
 import json
 import ipaddress
@@ -18,7 +19,12 @@ from pydantic import BaseModel, Field
 
 from src.schema.main_graph import is_customer_verified, resume, run_query
 from src.schema.exceptions import MySQLError
-from src.utils.ticket_utils import list_customer_tickets, list_tickets, update_ticket
+from src.utils.ticket_utils import (
+    claim_ticket_notification,
+    list_customer_tickets,
+    list_tickets,
+    update_ticket,
+)
 from src.utils.mysql_utils import query_one
 from src.utils import agent_auth
 
@@ -92,6 +98,31 @@ def require_agent(request: Request):
     if not agent_auth.is_authenticated(request.cookies.get("agent_session")):
         raise HTTPException(status_code=401, detail="请先登录坐席账号。")
     return True
+
+@app.post("/api/internal/tickets/{ticket_id}/claim-notification")
+def claim_notification(ticket_id: int, request: Request):
+    """供本机 n8n 认领待通知工单。"""
+    require_local(request)
+
+    token = os.getenv("N8N_INTERNAL_TOKEN", "")
+    supplied = request.headers.get("X-Internal-Token", "")
+
+    if not token:
+        raise HTTPException(status_code=503, detail="内部接口令牌未配置。")
+
+    if not hmac.compare_digest(supplied, token):
+        raise HTTPException(status_code=401, detail="内部接口认证失败。")
+
+    if ticket_id <= 0:
+        raise HTTPException(status_code=400, detail="工单编号无效。")
+
+    try:
+        claimed = claim_ticket_notification(ticket_id)
+    except MySQLError:
+        logger.exception("认领通知工单失败")
+        raise HTTPException(status_code=503, detail="暂时无法认领工单。")
+
+    return {"ticket_id": ticket_id, "claimed": claimed}
 
 
 def _set_agent_cookie(response: Response, token: str, request: Request):

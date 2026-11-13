@@ -11,14 +11,27 @@ def create_ticket(state, priority):
     summary = "\n".join(f"客户：{q}" for q in questions if q)
     summary += f"\n身份验证：{'已通过' if verified else '未通过'}"
     sql = """
-        insert into tickets (session_id, customer_id, intent, sub_intent, priority, summary)
-        values (%s, %s, %s, %s, %s, %s)
+        insert into tickets (session_id, customer_id, intent, sub_intent, priority, summary, notification_status)
+        values (%s, %s, %s, %s, %s, %s, 'pending')
     """
     result = execute(sql, (state.get("session_id"), state.get("customer_id"), state.get("intent") or "unknown",
                            state.get("sub_intent") or None, priority, summary))
     if result["rowcount"] != 1 or not result["lastrowid"]:
         raise ValueError("工单没有创建成功")
     return result["lastrowid"]
+
+def claim_ticket_notification(ticket_id):
+    """尝试认领一张待通知工单；只有一个执行者能认领成功。"""
+    sql = """
+        update tickets
+        set notification_status = 'processing',
+            notification_claimed_at = NOW(),
+            notification_alerted_at = NULL
+        where ticket_id = %s
+          and notification_status = 'pending'
+    """
+    result = execute(sql, (ticket_id,))
+    return result["rowcount"] == 1
 
 
 def list_tickets(status=None, priority=None, limit=100):

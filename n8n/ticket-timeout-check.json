@@ -1,0 +1,107 @@
+{
+  "name": "工单通知超时检查",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -352,
+        -48
+      ],
+      "id": "aea41f43-89c5-46c5-8350-de7552867d9f",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT ticket_id, notification_status,\n       notification_claimed_at, notification_attempts\nFROM tickets\nWHERE notification_status = 'processing'\n  AND notification_alerted_at IS NULL\n  AND (\n      notification_claimed_at IS NULL\n      OR notification_claimed_at < NOW() - INTERVAL 10 MINUTE\n  )\nORDER BY notification_claimed_at, ticket_id;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.5,
+      "position": [
+        -128,
+        -48
+      ],
+      "id": "1d4c987c-5bc7-44a1-8358-ec417cf55f8d",
+      "name": "Execute a SQL query"
+    },
+    {
+      "parameters": {
+        "fromEmail": "sender@example.com",
+        "toEmail": "recipient@example.com",
+        "subject": "=【人工核对】工单 #{{ $json.ticket_id }} 通知处理超时",
+        "html": "=<p>有一张工单的通知长时间处于处理中，请人工核对。</p>\n<p>工单编号：{{ $json.ticket_id }}</p>\n<p>认领时间：{{ $json.notification_claimed_at }}</p>\n<p>请检查 n8n 执行记录和收件箱，确认原通知是否已经发送。</p>\n<p>核对前请勿直接重发。</p>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        96,
+        -48
+      ],
+      "id": "302f80ac-65f6-4cb7-b5f3-451349fba88a",
+      "name": "Send an Email",
+      "webhookId": "1220ebd3-a130-4af3-b5ee-26baacc22e50"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE tickets\nSET notification_alerted_at = NOW()\nWHERE ticket_id = $1\n  AND notification_status = 'processing'\n  AND notification_alerted_at IS NULL\n  AND notification_claimed_at <=> $2;",
+        "options": {
+          "queryReplacement": "={{ [\n  $('Execute a SQL query').item.json.ticket_id,\n  $('Execute a SQL query').item.json.notification_claimed_at\n] }}"
+        }
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.5,
+      "position": [
+        320,
+        -48
+      ],
+      "id": "2a31d983-85f1-4974-9206-f67712d5f434",
+      "name": "Execute a SQL query1"
+    }
+  ],
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Execute a SQL query",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute a SQL query": {
+      "main": [
+        [
+          {
+            "node": "Send an Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send an Email": {
+      "main": [
+        [
+          {
+            "node": "Execute a SQL query1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "active": false
+}

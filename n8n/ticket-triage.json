@@ -1,5 +1,4 @@
 {
-  "id": "bankTicketDemo01",
   "name": "狮城银行 - 工单分流演示",
   "nodes": [
     {
@@ -8,49 +7,66 @@
       "name": "手动测试",
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
-      "position": [-620, -80]
+      "position": [
+        -624,
+        -80
+      ]
     },
     {
       "parameters": {
-        "rule": {"interval": [{"field": "minutes", "minutesInterval": 5}]}
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes"
+            }
+          ]
+        }
       },
       "id": "61ab06e0-5fb4-40f6-a83d-644574bb4b52",
       "name": "定时检查（工作流启用后生效）",
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
-      "position": [-620, 120]
+      "position": [
+        -624,
+        128
+      ]
     },
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT ticket_id, intent, sub_intent, priority, status, created_at\nFROM tickets\nWHERE status = 'open'\nORDER BY CASE WHEN priority = 'urgent' THEN 0 ELSE 1 END, created_at, ticket_id\nLIMIT 50",
+        "query": "SELECT ticket_id, intent, priority, status,\n       notification_status, created_at\nFROM tickets\nWHERE notification_status = 'pending'\nORDER BY created_at ASC, ticket_id ASC\nLIMIT 20;",
         "options": {}
       },
       "id": "cb87a3a1-7090-4b18-bf17-e3c0c65c9517",
       "name": "读取待处理工单",
       "type": "n8n-nodes-base.mySql",
       "typeVersion": 2.4,
-      "credentials": {"mySql": {"id": "bankMysqlDemo01", "name": "狮城银行演示 MySQL"}},
-      "position": [-350, 20],
+      "position": [
+        -352,
+        32
+      ],
       "alwaysOutputData": false,
       "notesInFlow": true,
       "notes": "使用演示 MySQL 凭据。只读取工单元数据，不读取客户消息。"
     },
     {
       "parameters": {
-        "jsCode": "const tickets = $input.all().map(({json}) => ({ticket_id: json.ticket_id, intent: json.intent, sub_intent: json.sub_intent ?? null, priority: json.priority, created_at: json.created_at}));\nreturn [{json: {urgent: tickets.filter(t => t.priority === 'urgent'), normal: tickets.filter(t => t.priority !== 'urgent'), count: tickets.length, notification_status: 'not_sent', note: '演示流程：尚未接入通知渠道，也不会更改工单状态。'}}];"
+        "jsCode": "return $input.all().map(({ json }, index) => ({\n  json: {\n    ticket_id: json.ticket_id,\n    intent: json.intent,\n    priority: json.priority,\n    status: json.status,\n    notification_status: json.notification_status,\n    created_at: json.created_at,\n    message: `新工单 #${json.ticket_id}，类型：${json.intent}，优先级：${json.priority}。请登录工单工作台查看。`,\n  },\n  pairedItem: { item: index },\n}));"
       },
       "id": "9f46d0ae-4e69-4c14-9df2-f2dfb46b2787",
       "name": "按优先级整理（未发送）",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [-80, 20],
+      "position": [
+        -80,
+        32
+      ],
       "notesInFlow": true,
       "notes": "先查看结果；接入通知前需处理重复发送和送达确认。"
     },
     {
       "parameters": {
-        "content": "## 工单分流演示\n\n1. 在 MySQL 节点配置演示数据库凭据。\n2. 手动执行，查看紧急和普通工单。\n3. 本流程不发送消息、不修改工单。\n4. 尚未实现去重和送达确认，请保持停用。",
+        "content": "## 工单通知演示\n1. 导入后重新配置 MySQL、SMTP 和内部接口凭证。\n2. 填写发件人与收件邮箱。\n3. 手动测试会发送邮件并更新数据库。\n4. 定时触发保持关闭，避免重复发送。",
         "height": 260,
         "width": 410,
         "color": 5
@@ -59,16 +75,266 @@
       "name": "使用说明",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
-      "position": [-620, -400]
+      "position": [
+        -624,
+        -400
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "4f5ec449-274e-45fb-a0b9-0422f5752035",
+              "name": "ticket_id",
+              "value": "={{ $json.ticket_id }}",
+              "type": "number"
+            },
+            {
+              "id": "11115dd2-e46a-4151-aac6-3e48943530db",
+              "name": "result",
+              "value": "simulated",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "include": "selected",
+        "includeFields": "intent,priority,message",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        144,
+        32
+      ],
+      "id": "87eb0be6-59e1-47c4-b9e0-8513e210e4db",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "fromEmail": "sender@example.com",
+        "toEmail": "recipient@example.com",
+        "subject": "=【工单通知】新工单 #{{ $('Edit Fields').item.json.ticket_id }}",
+        "html": "=<p>有一条新的客户工单：</p>\n<p>工单编号：{{ $('Edit Fields').item.json.ticket_id }}</p>\n<p>类型：{{ $('Edit Fields').item.json.intent }}</p>\n<p>优先级：{{ $('Edit Fields').item.json.priority }}</p>\n<p>请登录工单工作台查看详情。</p>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        752,
+        -176
+      ],
+      "id": "9d041f07-f357-442d-bc02-1f60372aba36",
+      "name": "Send an Email",
+      "webhookId": "2de5b421-cf0b-4751-af71-7acf7eebe2dd",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE tickets\nSET notification_status = 'sent',\n    notification_attempts = notification_attempts + 1,\n    notified_at = NOW()\nWHERE ticket_id = $1\n  AND notification_status = 'processing';",
+        "options": {
+          "queryReplacement": "={{ [ $('Edit Fields').item.json.ticket_id ] }}"
+        }
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.5,
+      "position": [
+        1104,
+        -336
+      ],
+      "id": "170737b6-ec85-4b75-8e8a-9adec77b992b",
+      "name": "Execute a SQL query"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE tickets\nSET notification_status = 'pending'\nWHERE ticket_id = 11\n  AND notification_status = 'failed';",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.5,
+      "position": [
+        160,
+        400
+      ],
+      "id": "3d7cce46-8835-47ad-aa0e-40916547f420",
+      "name": "Execute a SQL query2"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE tickets\nSET notification_status = 'failed',\n    notification_attempts = notification_attempts + 1\nWHERE ticket_id = $1\n  AND notification_status = 'processing';",
+        "options": {
+          "queryReplacement": "={{ [ $('Edit Fields').item.json.ticket_id ] }}"
+        }
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.5,
+      "position": [
+        1120,
+        -112
+      ],
+      "id": "50279035-582b-4423-8a3c-67b07b8e4635",
+      "name": "Execute a SQL query1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=http://127.0.0.1:8002/api/internal/tickets/{{ $json.ticket_id }}/claim-notification",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        320,
+        32
+      ],
+      "id": "f01bd91c-4dd6-42d6-a218-0b3920926f95",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "ff73f6f8-4c86-4016-9ede-f9eecb4049b5",
+              "leftValue": "={{ $json.claimed }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        544,
+        32
+      ],
+      "id": "7c1561f5-4b6f-4a64-8f2a-4c492bbc7103",
+      "name": "If"
     }
   ],
   "connections": {
-    "手动测试": {"main": [[{"node": "读取待处理工单", "type": "main", "index": 0}]]},
-    "定时检查（工作流启用后生效）": {"main": [[{"node": "读取待处理工单", "type": "main", "index": 0}]]},
-    "读取待处理工单": {"main": [[{"node": "按优先级整理（未发送）", "type": "main", "index": 0}]]}
+    "手动测试": {
+      "main": [
+        [
+          {
+            "node": "读取待处理工单",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "定时检查（工作流启用后生效）": {
+      "main": [
+        [
+          {
+            "node": "读取待处理工单",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "读取待处理工单": {
+      "main": [
+        [
+          {
+            "node": "按优先级整理（未发送）",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "按优先级整理（未发送）": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send an Email": {
+      "main": [
+        [
+          {
+            "node": "Execute a SQL query",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Execute a SQL query1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Send an Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
   },
-  "settings": {"executionOrder": "v1", "timezone": "Asia/Singapore", "saveDataSuccessExecution": "none", "saveDataErrorExecution": "none"},
-  "active": false,
-  "pinData": {},
-  "tags": []
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Singapore",
+    "saveDataSuccessExecution": "none",
+    "saveDataErrorExecution": "none",
+    "binaryMode": "separate"
+  },
+  "active": false
 }

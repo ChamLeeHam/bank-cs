@@ -26,6 +26,14 @@ _PRIVATE_QUESTION = re.compile(r"(?:我|本人|我的).{0,35}(?:余额|转账|�
                                r"\b(?:my|mine)\b.{0,50}\b(?:balance|transfer|remittance|transaction|account number)\b", re.IGNORECASE)
 _INJECTION = re.compile(r"ignore (all |the )?previous instructions|忽略(之前|以上)的?(所有)?指令|system prompt|系统提示词",
                         re.IGNORECASE)
+_COMPLAINT_REQUEST = re.compile(
+    r"\s*(?:我要投诉|我想投诉|我要提出投诉|我想提出投诉|i (?:want|would like) to (?:make a complaint|complain))[。.!！?？\s]*",
+    re.IGNORECASE,
+)
+_COMPLAINT_HOWTO = re.compile(
+    r"\s*(?:怎么投诉|如何投诉|怎样投诉|how (?:do|can) i (?:make a complaint|complain))[。.!！?？\s]*",
+    re.IGNORECASE,
+)
 
 # 关键词规则，模型用不了的时候用。按顺序匹配，排在前面的优先
 KEYWORD_RULES = [
@@ -166,6 +174,15 @@ class GateNode(BaseNode):
         if state.get("human_requested"):
             return self._result("handoff", "handoff", missing, clarify_count)
 
+        text = state.get("masked_question", "")
+        # 只匹配完整短句，避免把含盗刷等其他信息的消息误判成普通投诉。
+        if _COMPLAINT_REQUEST.fullmatch(text):
+            return {**self._result("handoff", "handoff", missing, clarify_count),
+                    "intent": "complaint", "sub_intent": ""}
+        if _COMPLAINT_HOWTO.fullmatch(text):
+            return {**self._result("clarify", "ask_back", missing, clarify_count),
+                    "intent": "complaint", "sub_intent": ""}
+
         if transfer_ordinal(state.get("masked_question", "")) is not None or transfer_other(state.get("masked_question", "")):
             if state.get("transfer_candidates") and state.get("transfer_customer_id") == state.get("customer_id"):
                 return {**self._result("answer", "account", missing, clarify_count), "intent": "transfer_status"}
@@ -215,6 +232,12 @@ class AskBackNode(BaseNode):
         if state.get("private_input") and state.get("route") == "rag":
             return {"answer": pick(lang, "This may involve private account information. Please ask to check your balance or a specific transfer.",
                                    "您的问题可能涉及私人账户资料，请说明是要查询余额还是某笔转账。")}
+        if _COMPLAINT_HOWTO.fullmatch(state.get("masked_question", "")):
+            return {"answer": pick(lang, "You can tell me what happened and ask to speak to an agent so I can create a support ticket.",
+                                   "您可以告诉我发生了什么，并提出转人工，我会为您创建工单。")}
+        if state.get("intent") == "complaint":
+            return {"answer": pick(lang, "Could you tell me what you would like to complain about?",
+                                   "请问您想投诉什么问题？可以告诉我具体情况。")}
         return {"answer": pick(lang,
                                "Sorry, could you tell me a bit more? For example: card, transfer, fees or account balance.",
                                "不好意思，能再具体说明一下吗？例如：银行卡、转账汇款、手续费或账户余额。")}
