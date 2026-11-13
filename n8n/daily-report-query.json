@@ -1,0 +1,79 @@
+{
+  "name": "子流程 - 查询客服日报",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -368,
+        -32
+      ],
+      "id": "724d043f-5e99-407b-884f-bf8911cb83f2",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT\n    DATE_FORMAT(CURDATE() - INTERVAL 1 DAY, '%Y-%m-%d') AS report_date,\n    COUNT(*) AS session_count,\n    COALESCE(SUM(has_handoff), 0) AS handoff_sessions,\n    ROUND(\n        COALESCE(SUM(has_handoff) / NULLIF(COUNT(*), 0) * 100, 0),\n        2\n    ) AS handoff_percentage,\n    ROUND(COALESCE(AVG(clarification_count), 0), 2)\n        AS avg_clarifications,\n    COALESCE(SUM(has_self_service), 0) AS self_service_sessions\nFROM (\n    SELECT\n        session_id,\n        MAX(CASE WHEN route = 'handoff' THEN 1 ELSE 0 END)\n            AS has_handoff,\n        SUM(CASE WHEN route = 'ask_back' THEN 1 ELSE 0 END)\n            AS clarification_count,\n        MAX(CASE WHEN route IN ('rag', 'account') THEN 1 ELSE 0 END)\n            AS has_self_service\n    FROM turn_log\n    WHERE created_at >= CURDATE() - INTERVAL 1 DAY\n      AND created_at < CURDATE()\n    GROUP BY session_id\n) AS daily_sessions;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.5,
+      "position": [
+        -144,
+        -32
+      ],
+      "id": "7aaca0ac-bd87-4246-999d-799a46681c5b",
+      "name": "Execute a SQL query"
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -400,
+        144
+      ],
+      "id": "d6ca85fc-d8a5-4f4a-80ee-d4b1303df253",
+      "name": "When Executed by Another Workflow"
+    }
+  ],
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Execute a SQL query",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute a SQL query": {
+      "main": [
+        []
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Execute a SQL query",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "active": false
+}

@@ -1,0 +1,92 @@
+{
+  "name": "主流程 - 客服日报",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -352,
+        -48
+      ],
+      "id": "720455e4-463b-49fe-a3b5-e4692801806d",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "WLuU3MH4uT5mnc0g",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/WLuU3MH4uT5mnc0g",
+          "cachedResultName": "子流程 - 查询客服日报"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        -128,
+        -48
+      ],
+      "id": "8aa645dd-788d-4cf8-8658-c93f240f175c",
+      "name": "Call '子流程 - 查询客服日报'"
+    },
+    {
+      "parameters": {
+        "fromEmail": "sender@example.com",
+        "toEmail": "recipient@example.com",
+        "subject": "【测试】客服每日统计",
+        "html": "=<h3>客服每日统计（测试数据）</h3>\n<p>统计日期：{{ $json.report_date }}</p>\n<p>会话数：{{ $json.session_count }}</p>\n<p>转人工会话数：{{ $json.handoff_sessions }}</p>\n<p>转人工会话比例：{{ $json.handoff_percentage }}%</p>\n<p>平均追问次数：{{ $json.avg_clarifications }} 次/会话</p>\n<p>进入自助回答分支的会话数：{{ $json.self_service_sessions }}</p>\n<p>注：进入自助分支不代表问题已解决；自助和转人工会话可能重叠。</p>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        96,
+        -48
+      ],
+      "id": "54a49f60-c227-46bb-b216-925cbc16e95c",
+      "name": "Send an Email",
+      "webhookId": "291c9ad7-71c4-4a6f-9735-56a30554552c"
+    }
+  ],
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Call '子流程 - 查询客服日报'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call '子流程 - 查询客服日报'": {
+      "main": [
+        [
+          {
+            "node": "Send an Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "active": false
+}
