@@ -1,0 +1,53 @@
+{
+  "name": "子流程 - 查询待通知工单（测试）",
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "c4ddb926-1967-4e3a-aed5-80a6fb32c230",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT ticket_id, intent, priority, status,\n       notification_status, created_at\nFROM tickets\nWHERE notification_status = 'pending'\nORDER BY created_at ASC, ticket_id ASC\nLIMIT 20;",
+        "options": {}
+      },
+      "id": "49671bc6-54f9-44f6-8901-c0d8e75b491d",
+      "name": "读取待处理工单",
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.4,
+      "position": [
+        250,
+        0
+      ],
+      "alwaysOutputData": false,
+      "notesInFlow": true,
+      "notes": "使用演示 MySQL 凭据。只读取工单元数据，不读取客户消息。"
+    }
+  ],
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "读取待处理工单",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "active": false
+}

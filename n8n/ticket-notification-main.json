@@ -1,0 +1,285 @@
+{
+  "name": "主流程 - 工单通知（测试）",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "928a2af5-c342-4621-af99-d7468b4bfc3f",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "bcQuery20261113a",
+          "mode": "list",
+          "cachedResultName": "子流程 - 查询待通知工单（测试）",
+          "cachedResultUrl": "/workflow/bcQuery20261113a"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        250,
+        0
+      ],
+      "id": "2573920a-afbf-4ec7-8818-1de9b40d5db7",
+      "name": "调用待通知工单查询"
+    },
+    {
+      "parameters": {
+        "jsCode": "return $input.all().map(({ json }, index) => ({\n  json: {\n    ticket_id: json.ticket_id,\n    intent: json.intent,\n    priority: json.priority,\n    status: json.status,\n    notification_status: json.notification_status,\n    created_at: json.created_at,\n    message: `新工单 #${json.ticket_id}，类型：${json.intent}，优先级：${json.priority}。请登录工单工作台查看。`,\n  },\n  pairedItem: { item: index },\n}));"
+      },
+      "id": "e4e27701-0ea9-4e61-807c-ab804d79a5d6",
+      "name": "按优先级整理（未发送）",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        570,
+        32
+      ],
+      "notesInFlow": true,
+      "notes": "先查看结果；接入通知前需处理重复发送和送达确认。"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "4f5ec449-274e-45fb-a0b9-0422f5752035",
+              "name": "ticket_id",
+              "value": "={{ $json.ticket_id }}",
+              "type": "number"
+            },
+            {
+              "id": "11115dd2-e46a-4151-aac6-3e48943530db",
+              "name": "result",
+              "value": "simulated",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "include": "selected",
+        "includeFields": "intent,priority,message",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        794,
+        32
+      ],
+      "id": "d031c2c3-6402-4319-b738-eb7bc10fdcf3",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "fromEmail": "sender@example.com",
+        "toEmail": "recipient@example.com",
+        "subject": "=【工单通知】新工单 #{{ $('Edit Fields').item.json.ticket_id }}",
+        "html": "=<p>有一条新的客户工单：</p>\n<p>工单编号：{{ $('Edit Fields').item.json.ticket_id }}</p>\n<p>类型：{{ $('Edit Fields').item.json.intent }}</p>\n<p>优先级：{{ $('Edit Fields').item.json.priority }}</p>\n<p>请登录工单工作台查看详情。</p>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        1402,
+        -176
+      ],
+      "id": "c329923e-b7a1-452f-aee8-eed9058478ed",
+      "name": "Send an Email",
+      "webhookId": "2de5b421-cf0b-4751-af71-7acf7eebe2dd",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE tickets\nSET notification_status = 'sent',\n    notification_attempts = notification_attempts + 1,\n    notified_at = NOW()\nWHERE ticket_id = $1\n  AND notification_status = 'processing';",
+        "options": {
+          "queryReplacement": "={{ [ $('Edit Fields').item.json.ticket_id ] }}"
+        }
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.5,
+      "position": [
+        1754,
+        -336
+      ],
+      "id": "f37e9b44-04b1-4bbf-8af8-dc114007cf20",
+      "name": "Execute a SQL query"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE tickets\nSET notification_status = 'failed',\n    notification_attempts = notification_attempts + 1\nWHERE ticket_id = $1\n  AND notification_status = 'processing';",
+        "options": {
+          "queryReplacement": "={{ [ $('Edit Fields').item.json.ticket_id ] }}"
+        }
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.5,
+      "position": [
+        1770,
+        -112
+      ],
+      "id": "8fe9453e-ccde-4cda-9654-c137a0bd8bab",
+      "name": "Execute a SQL query1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=http://127.0.0.1:8002/api/internal/tickets/{{ $json.ticket_id }}/claim-notification",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        970,
+        32
+      ],
+      "id": "c1f30ad0-1814-45d6-8dde-781e41985568",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "ff73f6f8-4c86-4016-9ede-f9eecb4049b5",
+              "leftValue": "={{ $json.claimed }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1194,
+        32
+      ],
+      "id": "25aee8f6-c10b-4e3e-a2c0-85b84e7cdfe0",
+      "name": "If"
+    }
+  ],
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "调用待通知工单查询",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "调用待通知工单查询": {
+      "main": [
+        [
+          {
+            "node": "按优先级整理（未发送）",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "按优先级整理（未发送）": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send an Email": {
+      "main": [
+        [
+          {
+            "node": "Execute a SQL query",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Execute a SQL query1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Send an Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "active": false
+}

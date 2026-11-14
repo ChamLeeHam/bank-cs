@@ -1,0 +1,154 @@
+{
+  "name": "主流程 - 工单通知及结果汇总（候选版）",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "c73118fd-2414-4c03-b916-885c737ac8d5",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "bcQuery20261113a",
+          "mode": "list"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {},
+        "mode": "once"
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        250,
+        0
+      ],
+      "id": "2d46afb7-76d8-4266-99d7-fd7baafd1c43",
+      "name": "调用待通知工单查询"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "bcLoopSendProd01",
+          "mode": "list"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {},
+        "mode": "once"
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        750,
+        100
+      ],
+      "id": "2fe940c3-8cae-496e-898f-ebbe6360a13c",
+      "name": "调用工单认领与通知"
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        500,
+        0
+      ],
+      "id": "c56e094d-d121-4723-bab8-eb08097c3166",
+      "name": "逐条处理工单"
+    },
+    {
+      "parameters": {
+        "jsCode": "const results = $input.all().map(({json}) => ({ticket_id: json.ticket_id, notification_status: json.notification_status, notification_attempts: json.notification_attempts}));\nreturn [{json: {total: results.length, sent: results.filter(r => r.notification_status === 'sent').length, failed: results.filter(r => r.notification_status === 'failed').length, other: results.filter(r => !['sent','failed'].includes(r.notification_status)).length, results}}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1000,
+        -150
+      ],
+      "id": "e3f9c0da-1c67-4d7a-987a-f6c127291c40",
+      "name": "汇总实际通知状态"
+    }
+  ],
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "调用待通知工单查询",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "调用待通知工单查询": {
+      "main": [
+        [
+          {
+            "node": "逐条处理工单",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "逐条处理工单": {
+      "main": [
+        [
+          {
+            "node": "汇总实际通知状态",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "调用工单认领与通知",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "调用工单认领与通知": {
+      "main": [
+        [
+          {
+            "node": "逐条处理工单",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "active": false
+}

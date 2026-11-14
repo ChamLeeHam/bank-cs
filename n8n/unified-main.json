@@ -1,0 +1,338 @@
+{
+  "name": "银行客服自动化 - 统一入口（测试）",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "ffe7be99-c8e0-438e-bbf0-3d88a8b4c1fe",
+      "name": "手动启动总控"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1e4c9c6f-ecfb-4872-82a1-7153e78db1c5",
+              "name": "task",
+              "value": "preview",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        230,
+        0
+      ],
+      "id": "5d697ae8-c766-48d5-aa57-1cadca824f30",
+      "name": "选择任务"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "5b1aeb4a-6b5f-4e21-8196-aeb5b25fc524",
+              "leftValue": "={{ $json.task }}",
+              "rightValue": "notify",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        470,
+        0
+      ],
+      "id": "01c5304a-e17c-4a51-9e20-e1bc17cff279",
+      "name": "是否执行工单通知"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "bcUnifiedTicket1",
+          "mode": "list",
+          "cachedResultName": "总控子流程 - 工单通知"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {},
+        "mode": "once"
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        470,
+        220
+      ],
+      "id": "d44245ab-94a2-45d5-ac66-ccfaca67a9af",
+      "name": "调用总控子流程 - 工单通知"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "b16f9d9a-eee6-4cbb-8ad2-c61c3ebf7a1e",
+              "leftValue": "={{ $json.task }}",
+              "rightValue": "timeout",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        710,
+        0
+      ],
+      "id": "625e4fce-cf24-4636-8dcf-3957848552bc",
+      "name": "是否执行超时核对"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "bcUnifiedTimeout",
+          "mode": "list",
+          "cachedResultName": "总控子流程 - 超时核对"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {},
+        "mode": "once"
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        710,
+        220
+      ],
+      "id": "125d1ec2-07f5-4dcf-a214-b7554f406144",
+      "name": "调用总控子流程 - 超时核对"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "76fd7eb5-45aa-4010-8219-7b0527b4415f",
+              "leftValue": "={{ $json.task }}",
+              "rightValue": "daily",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        950,
+        0
+      ],
+      "id": "b16dc5de-d92e-4659-b819-389ea9437e26",
+      "name": "是否发送日报"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "bcUnifiedDaily01",
+          "mode": "list",
+          "cachedResultName": "总控子流程 - 日报"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {},
+        "mode": "once"
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        950,
+        220
+      ],
+      "id": "8a0c7951-843e-4a66-9279-4b615181c7b0",
+      "name": "调用总控子流程 - 日报"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT COUNT(*) AS total_tickets, COALESCE(SUM(notification_status = 'pending'),0) AS pending, COALESCE(SUM(notification_status = 'processing'),0) AS processing, COALESCE(SUM(notification_status = 'failed'),0) AS failed FROM tickets;",
+        "options": {}
+      },
+      "id": "0cbea0e7-b8e3-42e6-8e4d-d54ae8c87e25",
+      "name": "只读查看工单状态",
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.4,
+      "position": [
+        1190,
+        0
+      ],
+      "alwaysOutputData": false,
+      "notesInFlow": true,
+      "notes": "使用演示 MySQL 凭据。只读取工单元数据，不读取客户消息。"
+    },
+    {
+      "parameters": {
+        "content": "## 银行客服自动化总控（停用）\n在“选择任务”设置 task：\n- preview：只读查看状态（默认）\n- notify：认领并发送工单邮件\n- timeout：发送超时人工核对提醒\n- daily：发送前一天日报\n\n后三项会实际发送邮件；保持停用，定时功能尚未配置。",
+        "height": 280,
+        "width": 480
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        -340
+      ],
+      "id": "c710baf2-46c6-4286-9e06-526538e660f0",
+      "name": "使用说明"
+    }
+  ],
+  "connections": {
+    "手动启动总控": {
+      "main": [
+        [
+          {
+            "node": "选择任务",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "选择任务": {
+      "main": [
+        [
+          {
+            "node": "是否执行工单通知",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "是否执行工单通知": {
+      "main": [
+        [
+          {
+            "node": "调用总控子流程 - 工单通知",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "是否执行超时核对",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "是否执行超时核对": {
+      "main": [
+        [
+          {
+            "node": "调用总控子流程 - 超时核对",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "是否发送日报",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "是否发送日报": {
+      "main": [
+        [
+          {
+            "node": "调用总控子流程 - 日报",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "只读查看工单状态",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Shanghai"
+  },
+  "active": false
+}

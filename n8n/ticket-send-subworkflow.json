@@ -1,0 +1,248 @@
+{
+  "name": "子流程 - 工单认领与通知（测试）",
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "f4caa6b3-6a60-418a-8360-b42a140db0f3",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "jsCode": "return $input.all().map(({ json }, index) => ({\n  json: {\n    ticket_id: json.ticket_id,\n    intent: json.intent,\n    priority: json.priority,\n    status: json.status,\n    notification_status: json.notification_status,\n    created_at: json.created_at,\n    message: `新工单 #${json.ticket_id}，类型：${json.intent}，优先级：${json.priority}。请登录工单工作台查看。`,\n  },\n  pairedItem: { item: index },\n}));"
+      },
+      "id": "2f7e509e-27ef-4807-a3a4-366208075f58",
+      "name": "按优先级整理（未发送）",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        250,
+        0
+      ],
+      "notesInFlow": true,
+      "notes": "先查看结果；接入通知前需处理重复发送和送达确认。"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "4f5ec449-274e-45fb-a0b9-0422f5752035",
+              "name": "ticket_id",
+              "value": "={{ $json.ticket_id }}",
+              "type": "number"
+            },
+            {
+              "id": "11115dd2-e46a-4151-aac6-3e48943530db",
+              "name": "result",
+              "value": "simulated",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "include": "selected",
+        "includeFields": "intent,priority,message",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        470,
+        0
+      ],
+      "id": "4ae1362b-093f-4964-a5e5-b4ec2fd11d89",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "fromEmail": "sender@example.com",
+        "toEmail": "recipient@example.com",
+        "subject": "=【工单通知】新工单 #{{ $('Edit Fields').item.json.ticket_id }}",
+        "html": "=<p>有一条新的客户工单：</p>\n<p>工单编号：{{ $('Edit Fields').item.json.ticket_id }}</p>\n<p>类型：{{ $('Edit Fields').item.json.intent }}</p>\n<p>优先级：{{ $('Edit Fields').item.json.priority }}</p>\n<p>请登录工单工作台查看详情。</p>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        690,
+        0
+      ],
+      "id": "46b19056-b5e9-4620-8bf3-591770227684",
+      "name": "Send an Email",
+      "webhookId": "2de5b421-cf0b-4751-af71-7acf7eebe2dd",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE tickets\nSET notification_status = 'sent',\n    notification_attempts = notification_attempts + 1,\n    notified_at = NOW()\nWHERE ticket_id = $1\n  AND notification_status = 'processing';",
+        "options": {
+          "queryReplacement": "={{ [ $('Edit Fields').item.json.ticket_id ] }}"
+        }
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.5,
+      "position": [
+        910,
+        -120
+      ],
+      "id": "960351ac-2ded-4c85-9cca-d3219df9b256",
+      "name": "Execute a SQL query"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "UPDATE tickets\nSET notification_status = 'failed',\n    notification_attempts = notification_attempts + 1\nWHERE ticket_id = $1\n  AND notification_status = 'processing';",
+        "options": {
+          "queryReplacement": "={{ [ $('Edit Fields').item.json.ticket_id ] }}"
+        }
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.5,
+      "position": [
+        1130,
+        120
+      ],
+      "id": "f96e9699-ac28-43da-b6fe-1e8cba61c75e",
+      "name": "Execute a SQL query1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=http://127.0.0.1:8002/api/internal/tickets/{{ $json.ticket_id }}/claim-notification",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        1350,
+        0
+      ],
+      "id": "33eb3c0e-2f5a-43a1-aa80-1e14367d5258",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "ff73f6f8-4c86-4016-9ede-f9eecb4049b5",
+              "leftValue": "={{ $json.claimed }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1570,
+        0
+      ],
+      "id": "2984c3d0-1ca2-4d27-96bb-2847cb3f0fbd",
+      "name": "If"
+    }
+  ],
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "按优先级整理（未发送）",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "按优先级整理（未发送）": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send an Email": {
+      "main": [
+        [
+          {
+            "node": "Execute a SQL query",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Execute a SQL query1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Send an Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "active": false
+}
