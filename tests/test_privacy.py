@@ -3,7 +3,7 @@ import unittest
 from langchain_core.messages import HumanMessage
 from langgraph.graph.message import add_messages
 
-from src.nodes.stub_nodes import InputGuardNode, OutputGuardNode
+from src.nodes.stub_nodes import InputGuardNode, OutputGuardNode, GateNode, AskBackNode
 from src.schema.state import create_default_state
 from src.schema.main_graph import route_after_gate
 from src.utils.history_utils import history_of
@@ -15,6 +15,14 @@ class PrivacyTests(unittest.TestCase):
         masked = InputGuardNode().process(state)["masked_question"]
         for private in ("91234567", "SA-1001-0001", "abc@example.com"):
             self.assertNotIn(private, masked)
+
+    def test_account_number_with_copula_is_private(self):
+        for question in ("我的账户号码是 123456789012，请问费用是多少？",
+                         "账号为 123456789012", "account number is 123456789012"):
+            with self.subTest(question=question):
+                result = InputGuardNode().process(create_default_state(question=question))
+                self.assertNotIn("123456789012", result["masked_question"])
+                self.assertTrue(result["private_input"])
 
     def test_account_history_excludes_question_and_answer(self):
         state = create_default_state(route="account", messages=[HumanMessage("我给妈妈转了 SGD 500", id="u1")],
@@ -33,6 +41,14 @@ class PrivacyTests(unittest.TestCase):
         state["route"] = "rag"  # 即使意图识别误分类，也不调用公开问答模型
         self.assertTrue(state["private_input"])
         self.assertEqual(route_after_gate(state), "ask_back")
+
+    def test_private_rag_is_recorded_as_clarification(self):
+        state = create_default_state(question="我的账户号码是 123456789012，请问费用是多少？",
+                                     intent="fees_rates", intent_score=0.99)
+        state.update(InputGuardNode().process(state))
+        state.update(GateNode().process(state))
+        self.assertEqual((state["decision"], state["route"]), ("clarify", "ask_back"))
+        self.assertIn("私人账户", AskBackNode().process(state)["answer"])
 
 
 if __name__ == "__main__":

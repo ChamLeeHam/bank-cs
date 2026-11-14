@@ -10,8 +10,10 @@ from src.schema.exceptions import BankAssistantError, Neo4jError
 from src.schema.state import GraphState
 from src.utils import (hyde_utils, reranker_utils, response_utils, rewrite_query_utils, rrf_utils,
                        search_embedding_utils)
-from src.utils.history_utils import history_of
+from src.utils.history_utils import (annual_fee_followup, history_of, replacement_fee_stolen_followup,
+                                    statement_fee_followup, stolen_card_clarification)
 from src.utils.neo4j_utils import get_product_attr, get_product_names
+from src.utils.scope_utils import unsupported_scope_reason
 
 NOT_FOUND = {
     "zh": "抱歉，我们的资料中没有这个问题的答案。如需进一步帮助，可以回复“转人工”联系人工客服。",
@@ -33,6 +35,23 @@ class RagAnswerNode(BaseNode):
     def process(self, state: GraphState) -> StateUpdate:
         self.log_step(self.name, "开始执行知识库问答")
         lang = "en" if state.get("lang") == "en" else "zh"  # 中英混杂的用中文回答
+        question = state.get("masked_question", "")
+        history = history_of(state)
+        matched, fee = statement_fee_followup(question, history)
+        if matched and not fee:
+            return {"answer": "抱歉，我无法确定您指的是哪一项费用，请告诉我费用名称。", "sources": [], "search_query": ""}
+        if matched:
+            question = f"{fee}是什么？"
+        question = annual_fee_followup(question, history) or question
+        replacement_question = replacement_fee_stolen_followup(question, history)
+        question = replacement_question or question
+        if stolen_card_clarification(question, history) == "info":
+            question = "银行卡被盗后如何处理？"
+        scope_rejected = unsupported_scope_reason(question)
+        if scope_rejected:
+            self.last_run = {"generator": "none", "scope_rejected": scope_rejected}
+            return {"answer": NOT_FOUND[lang], "sources": [], "search_query": question}
+
         entities = state.get("entities") or {}
 
         # 1. 产品和属性都清楚，直接用术语图谱回答
@@ -43,7 +62,10 @@ class RagAnswerNode(BaseNode):
             return graph_result
 
         # 2. 其他情况走 RAG，找到了产品就把产品名加到检索里
-        return self.answer(state.get("masked_question", ""), history_of(state), lang, entities.get("products"))
+        result = self.answer(question, history, lang, entities.get("products"), state.get("sub_intent"))
+        if replacement_question:
+            result["answer"] += "\n\n如果您的卡已被盗，请尽快冻结卡片；如需协助冻结，请告诉我。"
+        return result
 
     def _answer_from_graph(self, entities, lang):
         """产品和属性都清楚的话，直接用术语图谱里的值回答；有一个查不到就返回 None，走正常的 RAG"""
@@ -75,7 +97,7 @@ class RagAnswerNode(BaseNode):
                    for r in results]
         return {"answer": answer, "sources": sources, "search_query": ""}
 
-    def answer(self, question, history, lang, products=None):
+    def answer(self, question, history, lang, products=None, sub_intent=None):
         # 1~4. 检索
         try:
             rewritten_query, docs, info = self.retrieve(question, history, products)
@@ -88,10 +110,34 @@ class RagAnswerNode(BaseNode):
             self.last_run = {**info, "generator": "none"}
             return {"answer": NOT_FOUND[lang], "sources": [], "search_query": rewritten_query}
 
+        if response_utils.is_pin_unblock_question(question):
+            passage = response_utils.pin_unblock_source(docs, lang)
+            if not passage:
+                self.last_run = {**info, "generator": "none"}
+                return {"answer": NOT_FOUND[lang], "sources": [], "search_query": rewritten_query}
+            answer, doc = passage
+            self.last_run = {**info, "generator": "source_text"}
+            source = {"doc": doc["doc"], "title": doc["title"], "section": doc["section"],
+                      "rerank_score": doc["rerank_score"]}
+            return {"answer": f"{answer}\n\n{self._source_line([doc], lang)}", "sources": [source],
+                    "search_query": rewritten_query}
+
+        if sub_intent == "extra_charge_on_statement":
+            result = response_utils.statement_charge_answer(docs, lang)
+            if result:
+                answer, doc = result
+                self.last_run = {**info, "generator": "grounded_template"}
+                source = {"doc": doc["doc"], "title": doc["title"], "section": doc["section"],
+                          "rerank_score": doc["rerank_score"]}
+                return {"answer": f"{answer}\n\n{self._source_line([doc], lang)}", "sources": [source],
+                        "search_query": rewritten_query}
+
         # 5. 生成回答，失败的话直接用资料原文
         start = time.perf_counter()
         response = response_utils.process(rewritten_query, history, docs, lang)
         answer = response["answer"] or self._source_text(docs[0], lang)
+        if not response["answer"]:
+            docs = docs[:1]  # 使用原文回退时，只引用实际展示的章节
         self.last_run = {**info, "generator": response["generator"], "t_generate": time.perf_counter() - start}
         self.log_step(self.name, f"5. 回答生成完成：{response['generator']}")
 
@@ -105,6 +151,13 @@ class RagAnswerNode(BaseNode):
         """返回 (重写后的问题, 保留下来的块, 中间结果)；products 是实体抽取找到的产品 ID"""
         cfg = self.config
         info = {}
+
+        # 知识库未覆盖的业务类型直接拒答，避免被相邻账户资料误召回。
+        scope_rejected = unsupported_scope_reason(question)
+        if scope_rejected:
+            info.update({"rewritten": question, "search_query": question,
+                         "scope_rejected": scope_rejected, "best_score": None})
+            return question, [], info
 
         # 1. 问题重写
         start = time.perf_counter()
@@ -130,7 +183,7 @@ class RagAnswerNode(BaseNode):
         # 2. 两路检索
         start = time.perf_counter()
         embedding_chunks = search_embedding_utils.process(search_query)["embedding_chunks"]
-        if cfg.rag_hyde:
+        if cfg.rag_hyde and not response_utils.is_pin_unblock_question(question):
             hyde_result = hyde_utils.process(rewritten_query)
         else:
             hyde_result = {"hyde_doc": None, "embedding_chunks": []}

@@ -13,7 +13,7 @@ from src.schema.exceptions import ValidationError
 Lang = Literal["en", "zh", "mixed"]
 RouterBackend = Literal["finetuned", "llm", "keyword"]
 Decision = Literal["answer", "clarify", "handoff", "refuse"]
-Route = Literal["rag", "account", "handoff", "refuse", "ask_back"]
+Route = Literal["rag", "account", "handoff", "refuse", "greeting", "ask_back"]
 Priority = Literal["normal", "urgent"]
 
 
@@ -43,6 +43,7 @@ class GraphState(TypedDict, total=False):
     intent: str  # 一级意图，决定走哪个分支，追问后下一轮还要用 [跨轮]
     sub_intent: str  # 二级意图，比如 pin_blocked [每轮]
     intent_score: float  # 一级意图的置信度 [每轮]
+    fraud_signal: Literal["none", "reported", "hypothetical"]
     router_backend: RouterBackend  # 这一轮是模型判断的还是规则判断的 [每轮]
 
     # 实体
@@ -61,6 +62,7 @@ class GraphState(TypedDict, total=False):
     # 账户
     otp_verified: bool  # 这个会话是否已经验证过 OTP，只能由 verify_otp 写 [跨轮]
     otp_customer_id: str  # OTP 验证对应的客户，不能跨客户复用
+    otp_locked: bool  # 本会话连续输错达到上限后锁定账户查询 [跨轮]
     transfer_candidates: list[str]  # 最近一次已选中的候选列表，保持当时的顺序
     transfer_customer_id: str  # 列表所属客户
     tool_calls: list[dict[str, Any]]  # 账户智能体调用了哪些工具，用来审计 [每轮]
@@ -84,6 +86,7 @@ CROSS_TURN_DEFAULTS: dict[str, Any] = {
     "entities": {},
     "otp_verified": False,
     "otp_customer_id": "",
+    "otp_locked": False,
     "transfer_candidates": [],
     "transfer_customer_id": "",
     "ticket_id": None,
@@ -101,6 +104,7 @@ PER_TURN_DEFAULTS: dict[str, Any] = {
     "human_requested": False,
     "sub_intent": "",
     "intent_score": 0.0,
+    "fraud_signal": "none",
     "router_backend": "keyword",
     "missing_slots": [],
     "decision": None,

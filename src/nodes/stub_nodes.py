@@ -13,6 +13,9 @@ from src.schema.state import GraphState
 from src.utils.neo4j_utils import find_attr, find_products
 from src.utils.ticket_utils import create_ticket
 from src.utils.transfer_context import transfer_ordinal, transfer_other
+from src.utils.history_utils import (fraud_general_followup, history_of, negated_fraud_limit_question,
+                                    replacement_fee_stolen_followup, stolen_card_hypothetical)
+from src.utils.fraud_context import fraud_context
 
 _CJK = re.compile(r"[一-鿿]")
 _LATIN = re.compile(r"[A-Za-z]{2,}")
@@ -21,7 +24,7 @@ _NRIC = re.compile(r"\b[STFGM]\d{7}[A-Z]\b", re.IGNORECASE)  # 新加坡身份�
 _EMAIL = re.compile(r"\b[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}\b")
 _PHONE = re.compile(r"(?<!\d)(?:\+?65[ -]?)?[689]\d{3}[ -]?\d{4}(?!\d)")
 _ACCOUNT_ID = re.compile(r"\b(?:SA|CA|MC)-\d{4}-\d{4}\b", re.IGNORECASE)
-_ACCOUNT_NUMBER = re.compile(r"((?:account(?:\s*(?:number|no\.?))?|账号|账户号码)\s*[:：#]?\s*)([\d -]{8,20})", re.IGNORECASE)
+_ACCOUNT_NUMBER = re.compile(r"((?:account(?:\s*(?:number|no\.?))?|账号|账户号码)\s*(?:是|为|is)?\s*[:：#]?\s*)([\d -]{8,20})", re.IGNORECASE)
 _PRIVATE_QUESTION = re.compile(r"(?:我|本人|我的).{0,35}(?:余额|转账|汇款|转了|汇了|转给|汇给|给.{0,15}(?:钱|转|汇))|"
                                r"\b(?:my|mine)\b.{0,50}\b(?:balance|transfer|remittance|transaction|account number)\b", re.IGNORECASE)
 _INJECTION = re.compile(r"ignore (all |the )?previous instructions|忽略(之前|以上)的?(所有)?指令|system prompt|系统提示词",
@@ -32,6 +35,13 @@ _COMPLAINT_REQUEST = re.compile(
 )
 _COMPLAINT_HOWTO = re.compile(
     r"\s*(?:怎么投诉|如何投诉|怎样投诉|how (?:do|can) i (?:make a complaint|complain))[。.!！?？\s]*",
+    re.IGNORECASE,
+)
+_LIMIT_REQUEST = re.compile(
+    r"(?:额度|限额).{0,12}(?:怎么|如何|调整|修改|提高|降低|设置)|"
+    r"(?:怎么|如何|调整|修改|提高|降低|设置).{0,12}(?:额度|限额)|"
+    r"\b(?:how (?:can|do) i |how to |change |adjust |increase |decrease |raise |lower ).{0,25}\blimit\b|"
+    r"\blimit\b.{0,20}\b(?:change|adjust|increase|decrease|raise|lower)\b",
     re.IGNORECASE,
 )
 
@@ -171,10 +181,18 @@ class GateNode(BaseNode):
         entities = state.get("entities") or {}
         missing = []  # TODO: 按意图检查必填信息，比如冻结卡需要卡号后四位
 
+        text = state.get("masked_question", "")
+        fraud_signal = state.get("fraud_signal") or "none"
+        if fraud_signal == "reported" or (intent == "fraud_report" and fraud_context(text)[0] == "reported"):
+            return {**self._result("handoff", "handoff", missing, clarify_count),
+                    "intent": "fraud_report", "fraud_signal": "reported"}
+
         if state.get("human_requested"):
+            if intent == "fraud_report":
+                return {**self._result("handoff", "handoff", missing, clarify_count),
+                        "intent": "unknown", "sub_intent": ""}
             return self._result("handoff", "handoff", missing, clarify_count)
 
-        text = state.get("masked_question", "")
         # 只匹配完整短句，避免把含盗刷等其他信息的消息误判成普通投诉。
         if _COMPLAINT_REQUEST.fullmatch(text):
             return {**self._result("handoff", "handoff", missing, clarify_count),
@@ -182,6 +200,15 @@ class GateNode(BaseNode):
         if _COMPLAINT_HOWTO.fullmatch(text):
             return {**self._result("clarify", "ask_back", missing, clarify_count),
                     "intent": "complaint", "sub_intent": ""}
+
+        if fraud_signal == "hypothetical" or intent == "fraud_report":
+            return self._result("clarify", "ask_back", missing, clarify_count)
+
+        if fraud_general_followup(text, history_of(state)) or negated_fraud_limit_question(text):
+            return self._result("clarify", "ask_back", missing, clarify_count)
+
+        if stolen_card_hypothetical(text) and not replacement_fee_stolen_followup(text, history_of(state)):
+            return self._result("clarify", "ask_back", missing, clarify_count)
 
         if transfer_ordinal(state.get("masked_question", "")) is not None or transfer_other(state.get("masked_question", "")):
             if state.get("transfer_candidates") and state.get("transfer_customer_id") == state.get("customer_id"):
@@ -195,12 +222,16 @@ class GateNode(BaseNode):
         if (intent == "out_of_scope" and state.get("sub_intent") == "other_company" and entities.get("products")
                 and not mentions_other_bank(state.get("masked_question", ""))):
             self.log_step(self.name, "模型说是别的银行，但图谱找到了本行的产品，按知识库问题回答")
+            if state.get("private_input"):
+                return self._result("clarify", "ask_back", missing, clarify_count)
             return self._result("answer", "rag", missing, clarify_count)
 
         # 训练数据里也没有问转账限额的句子，这种问题模型的置信度会偏低
         graph_hit = entities.get("products") and entities.get("attr")
         if score < high and graph_hit and INTENT_ROUTES.get(intent) == "rag":
             self.log_step(self.name, "置信度一般，但图谱找到了产品和属性，直接回答")
+            if state.get("private_input"):
+                return self._result("clarify", "ask_back", missing, clarify_count)
             return self._result("answer", "rag", missing, clarify_count)
 
         if score < high or missing or intent == "unknown":
@@ -209,6 +240,8 @@ class GateNode(BaseNode):
             return self._result("clarify", "ask_back", missing, clarify_count)
 
         route = INTENT_ROUTES.get(intent, "rag")
+        if route == "rag" and state.get("private_input"):
+            return self._result("clarify", "ask_back", missing, clarify_count)
         if route == "refuse":
             decision = "refuse"
         elif route == "handoff":
@@ -229,7 +262,19 @@ class AskBackNode(BaseNode):
 
     def process(self, state: GraphState) -> StateUpdate:
         lang = state.get("lang", "en")
-        if state.get("private_input") and state.get("route") == "rag":
+        if state.get("fraud_signal") == "hypothetical" or state.get("intent") == "fraud_report":
+            return {"answer": pick(lang,
+                "If you notice an unauthorized transaction, freeze your card in the bank's official app or contact the bank through an official emergency channel. Has this happened to you, or are you asking generally?",
+                "如果发现非本人交易，请通过银行官方 App 冻结卡片，或通过银行官方紧急渠道联系银行。请问这是已经发生，还是您在了解一般处理方法？")}
+        if fraud_general_followup(state.get("masked_question", ""), history_of(state)):
+            return {"answer": pick(lang,
+                "Understood. If an unauthorized transaction occurs, freeze your card through the bank's official app and contact the bank through an official channel.",
+                "明白了。如果日后发现非本人交易，请通过银行官方 App 冻结卡片，并通过银行官方渠道联系银行。")}
+        if negated_fraud_limit_question(state.get("masked_question", "")):
+            return {"answer": "明白，您想了解额度调整。请问您指信用卡额度，还是转账或消费限额？我可以先帮您查询一般说明。"}
+        if stolen_card_hypothetical(state.get("masked_question", "")):
+            return {"answer": "如果卡片已被盗，请尽快冻结。您是想了解被盗后的处理方法，还是需要我协助冻结银行卡？"}
+        if state.get("private_input") and state.get("route") in ("rag", "ask_back"):
             return {"answer": pick(lang, "This may involve private account information. Please ask to check your balance or a specific transfer.",
                                    "您的问题可能涉及私人账户资料，请说明是要查询余额还是某笔转账。")}
         if _COMPLAINT_HOWTO.fullmatch(state.get("masked_question", "")):
@@ -250,17 +295,26 @@ class HandoffNode(BaseNode):
         urgent = state.get("intent") == "fraud_report"
         lang = state.get("lang", "en")
         priority = "urgent" if urgent else "normal"
+        guidance = ""
+        if urgent:
+            guidance = pick(lang,
+                " If your card may have been compromised, freeze it using the bank's official app or contact the bank through an official emergency channel. This does not mean the card has been frozen.",
+                " 如果您的卡可能已被盗用，请通过银行官方 App 尽快冻结卡片，或通过银行官方紧急渠道联系银行。目前卡片并未因创建工单而自动冻结。")
+            if _LIMIT_REQUEST.search(state.get("masked_question", "")):
+                guidance += pick(lang,
+                    " Once the urgent issue is addressed, you can ask me again about your limit.",
+                    " 紧急问题处理后，您可以再告诉我您想了解的额度问题。")
         try:
             ticket_id = create_ticket(state, priority)
         except (MySQLError, ValueError) as e:
             self.logger.error(f"人工工单创建失败：{e}")
             return {"priority": priority, "ticket_id": None,
                     "answer": pick(lang, "I couldn't create a support ticket. Please contact the bank directly.",
-                                   "暂时无法创建人工工单，请直接联系银行客服。")}
+                                   "暂时无法创建人工工单，请直接联系银行客服。") + guidance}
         return {"priority": priority, "ticket_id": ticket_id,
                 "answer": pick(lang, f"A support ticket has been created (#{ticket_id}). "
                                      "Human-agent notification is not yet available; please contact the bank directly.",
-                               f"已创建人工工单（编号 {ticket_id}）。目前尚未接通人工通知，请直接联系银行客服。")}
+                               f"已创建人工工单（编号 {ticket_id}）。目前尚未接通人工通知，请直接联系银行客服。") + guidance}
 
 
 class RefuseNode(BaseNode):
@@ -272,6 +326,14 @@ class RefuseNode(BaseNode):
             # 欢迎语里说明是 AI 客服
             return {"answer": pick(lang, "Hello! I'm Lion City Bank's AI assistant. How can I help you today?",
                                    "您好！我是狮城银行 AI 客服，请问有什么可以帮您？")}
+        text = state.get("masked_question", "")
+        investment = state.get("sub_intent") == "investment_advice" or re.search(
+            r"投资|股票|基金|理财建议|加密货币|比特币|\b(?:invest(?:ment|ing)?|stocks?|shares?|crypto|bitcoin)\b",
+            text, re.IGNORECASE)
+        if not investment:
+            return {"answer": pick(lang,
+                                   "Sorry, I can only help with banking questions, such as cards, transfers, fees and accounts.",
+                                   "抱歉，我只能帮助处理银行业务问题，例如银行卡、转账、手续费和账户查询。")}
         return {"answer": pick(lang,
                                "Sorry, I can't help with that. I can't give investment advice, but I can help with cards, transfers, fees and your account.",
                                "抱歉，这个问题我无法回答，也不能提供投资建议。我可以帮您处理银行卡、转账、手续费和账户相关的问题。")}

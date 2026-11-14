@@ -13,7 +13,7 @@ from src.nodes.rag_answer import RagAnswerNode
 from src.schema.base import BaseNode, StateUpdate
 from src.schema.state import GraphState
 from src.utils.llm_util import get_llm_client
-from src.utils.response_utils import _has_invented_numbers
+from src.utils.response_utils import _has_invented_numbers, is_pin_unblock_question
 
 TOOLS = [search_faq, get_product_info]
 MAX_HISTORY = 6  # 最近几条消息给 Agent
@@ -52,6 +52,8 @@ class BankAgentNode(BaseNode):
 
     def process(self, state: GraphState) -> StateUpdate:
         lang = "en" if state.get("lang") == "en" else "zh"
+        if is_pin_unblock_question(state.get("masked_question", "")):
+            return self.fallback.process(state)
         # state["messages"] 里已经有这一轮的问题了（input_guard 加的），而且是脱敏过的
         messages = (state.get("messages") or [])[-MAX_HISTORY:]
         try:

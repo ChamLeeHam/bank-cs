@@ -1,5 +1,5 @@
 # 根据问题和检索到的块生成回答
-# 默认用 DeepSeek，失败了用本地 Qwen；都不行就返回 None，由节点直接给出资料原文
+# 默认用 DeepSeek，失败时返回 None，由节点直接给出资料原文
 import logging
 import re
 
@@ -12,6 +12,48 @@ logger = logging.getLogger(__name__)
 _NUMBER = re.compile(r"\d+(?:[.,]\d+)*")
 _CJK = re.compile(r"[一-鿿]")
 _LIST_MARKER = re.compile(r"^\s*(?:\d+[.、)）]|\[\d+\])\s*", re.MULTILINE)  # 列表编号，比如 "1." "2、"
+_PIN_BLOCKED = re.compile(r"(?:\bpin\b|密码).{0,40}(?:锁|解锁|lock|unblock|unlock)|(?:锁|解锁|lock|unblock|unlock).{0,40}(?:\bpin\b|密码)", re.IGNORECASE)
+
+
+def is_pin_unblock_question(question):
+    """PIN 锁定和解锁需要区分于普通修改 PIN。"""
+    return bool(_PIN_BLOCKED.search(question))
+
+
+def pin_unblock_source(docs, lang):
+    """从检索到的原文取出锁定和解锁段，避免生成时混入修改 PIN 的步骤。"""
+    marker = "After 3 wrong PIN" if lang == "en" else "连续输错 PIN"
+    for doc in docs:
+        body = split_languages(doc["text"].split("\n", 1)[-1])[lang]
+        index = body.lower().find(marker.lower())
+        if index >= 0:
+            return body[index:].strip(), doc
+    return None
+
+
+def statement_charge_answer(docs, lang):
+    """用对应 FAQ 给出谨慎的账单费用说明，不把常见项目说成该笔交易的确定原因。"""
+    for doc in docs:
+        section = doc.get("section", "").lower()
+        sub_intents = doc.get("sub_intents") or []
+        if "extra_charge_on_statement" not in sub_intents and "unfamiliar charges on your statement" not in section:
+            continue
+
+        if lang == "en":
+            answer = (
+                "I can’t identify the exact charge from that description alone. Please open the transaction in the app "
+                "to check its fee type; common items include foreign transaction, ATM, annual, replacement-card, or "
+                "late-payment fees. If you didn’t make the transaction, freeze your card and report it as fraud; "
+                "if you think a fee was applied incorrectly, ask a human agent to review it."
+            )
+        else:
+            answer = (
+                "仅凭这段描述还无法确认具体是哪项费用。请在 App 点开该笔交易查看费用类型；常见项目包括外币交易费、"
+                "ATM 费用、年费、补卡费或逾期还款费。如果这笔交易不是您本人操作，请立即冻结卡片并举报盗刷；"
+                "如果您认为费用收错了，可以申请人工客服核查。"
+            )
+        return answer, doc
+    return None
 
 ANSWER_PROMPT = {
     "zh": """你是狮城银行的客服助手，只能根据<资料>回答客户的问题。
@@ -77,11 +119,12 @@ def _get_generators():
     generators = []
     if get_config().rag_generator == "deepseek":
         generators.append(("deepseek", chat))
-    try:
-        from src.nodes.intent_router import chat as local_chat
-        generators.append(("local", local_chat))
-    except Exception as e:
-        logger.warning(f"本地 Qwen 不可用：{e}")
+    else:
+        try:
+            from src.nodes.intent_router import chat as local_chat
+            generators.append(("local", local_chat))
+        except Exception as e:
+            logger.warning(f"本地 Qwen 不可用：{e}")
     return generators
 
 

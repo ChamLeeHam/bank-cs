@@ -18,15 +18,20 @@ New and replacement cards are sent by registered mail to your Singapore address 
 
 ## 修改 PIN 与 PIN 被锁 / Changing or unblocking your PIN
 <!-- sub_intents: change_pin, pin_blocked -->
-修改 PIN：在 App 的"银行卡 > 修改 PIN"中操作，或在狮城银行 ATM 上修改。连续输错 PIN 3 次后，PIN 会被锁定，卡片暂时不能刷卡或取款。解锁方法：在 App 中选择"银行卡 > 解锁 PIN"并完成 OTP 验证，解锁后需重新设置 PIN。
+忘记 PIN 时，可在 App 的"银行卡 > 修改 PIN"中重新设置，或在狮城银行 ATM 上修改。连续输错 PIN 3 次后，PIN 会被锁定，卡片暂时不能刷卡或取款。解锁方法：在 App 中选择"银行卡 > 解锁 PIN"并完成 OTP 验证，解锁后需重新设置 PIN。
 
-To change your PIN, use Cards > Change PIN in the app or any Lion City Bank ATM. After 3 wrong PIN attempts in a row, the PIN is blocked and the card cannot be used for payments or withdrawals. To unblock it, go to Cards > Unblock PIN in the app, confirm with the OTP, and set a new PIN.
+If you have forgotten your PIN, reset it under Cards > Change PIN in the app or at any Lion City Bank ATM. After 3 wrong PIN attempts in a row, the PIN is blocked and the card cannot be used for payments or withdrawals. To unblock it, go to Cards > Unblock PIN in the app, confirm with the OTP, and set a new PIN.
 
 ## 卡被拒或不能用 / Card declined or not working
 <!-- sub_intents: card_not_working, declined_card_payment, declined_cash_withdrawal, contactless_not_working -->
 卡被拒的常见原因：余额不足、超过每日消费或取款限额、没有开通海外使用、卡片已冻结、卡片未激活或已过期。感应支付（contactless）单笔超过 SGD 200 时，需要插卡并输入 PIN。卡片芯片损坏时请申请补卡。可以在 App 的"银行卡 > 卡片设置"中查看状态、开通海外使用和调整限额。
 
 Common reasons a card is declined: not enough balance, the daily spending or withdrawal limit is reached, overseas use is not turned on, the card is frozen, or the card is not activated or has expired. Contactless payments over SGD 200 need the card inserted with a PIN. If the chip is damaged, request a replacement card. You can check the card status, turn on overseas use and change limits under Cards > Card settings in the app.
+
+## 银行卡丢失或被盗 / Lost or stolen card
+如果银行卡丢失或被盗，请立即在 App 中冻结卡片，避免继续被使用；然后在 App 的“银行卡 > 申请补卡”中申请补发。如果发现不认识的交易，请通过银行 App 的官方客服入口尽快报告。若同时怀疑账户或手机被盗用，请使用“设置 > 安全 > 紧急冻结”冻结所有账户，或通过官方渠道联系银行。
+
+If your card is lost or stolen, freeze it immediately in the app to prevent further use, then request a replacement under Cards > Replace card. If you see a transaction you do not recognise, report it promptly through the official in-app support channel. If you also suspect that your account or phone has been compromised, use Settings > Security > Emergency lock to lock all accounts, or contact the bank through an official channel.
 
 ## ATM 吞卡 / Card retained by an ATM
 <!-- sub_intents: card_swallowed -->
@@ -51,3 +56,21 @@ Order a replacement physical card under Cards > Replace card in the app; it cost
 借记卡为 Visa，可在全球 Visa 商户和 ATM 使用；信用卡为 Mastercard；另提供银联（UnionPay）借记卡，适合在中国大陆消费，外币交易费只有 1%。所有卡片都支持 Apple Pay 和 Google Pay。在新加坡可使用狮城银行 ATM 以及贴有 Visa、Mastercard 或银联标志的其他银行 ATM。
 
 Our debit card is Visa and works at Visa merchants and ATMs worldwide; our credit card is Mastercard. We also offer a UnionPay debit card for spending in mainland China, with a 1% foreign transaction fee. All cards work with Apple Pay and Google Pay. In Singapore you can use Lion City Bank ATMs and other banks' ATMs showing the Visa, Mastercard or UnionPay logo.
+
+## 网购付款被拒先检查什么 / First checks when an online card payment is declined
+<!-- sub_intents: declined_card_payment, card_not_working -->
+先检查卡片是否已激活、未过期且未冻结，账户可用余额或信用额度是否足够，以及网购或海外交易功能是否开启。再次付款前，核对商户名称和金额，并确认没有重复的待处理授权；不要把 OTP 告诉商户或来电者。如果这些项目都正常仍被拒，请通过银行 App 的官方客服入口查询具体拒绝原因。
+
+First check that the card is activated, unexpired and not frozen; that you have enough available balance or credit; and that online or overseas use is enabled. Before trying again, verify the merchant and amount and check for a duplicate pending authorisation. Never tell an OTP to a merchant or caller. If these checks do not explain the decline, contact the bank through its official in-app support channel for the specific reason.
+
+## 订阅扣款在换卡后失败 / Subscription payments fail after replacing a card
+<!-- sub_intents: card_not_working, card_about_to_expire -->
+换卡或卡片到期后，自动续费可能因卡号、有效期或安全码更新而失败。请在可信的商户 App 或官网更新付款资料，并检查订阅是否仍有效；不要通过邮件或短信中的陌生链接输入卡资料。若商户显示已扣款但服务未续订，先查看银行交易状态和商户订单记录，再联系商户或发卡机构。
+
+After a card is replaced or expires, a recurring payment may fail because the card number, expiry date or security code has changed. Update the payment details in the merchant's trusted app or website and check that the subscription is still active. Do not enter card details through an unfamiliar link in an email or text. If the merchant says it charged you but the service did not renew, check the bank transaction status and merchant order record, then contact the merchant or issuer.
+
+## 卡片预授权与最终入账金额不同 / Card authorisation differs from the final amount
+<!-- sub_intents: card_not_working, extra_charge_on_statement -->
+酒店、租车、加油站或部分线上商户可能先发起一笔预授权，最终结算金额确认后才入账；预授权期间，可用余额或额度可能暂时减少。预授权何时释放、显示多久以及最终金额如何确认由商户和发卡机构决定。若同一笔交易长期显示待处理或金额不符，请准备交易日期、金额和参考号联系银行查询；不要仅因待处理记录就重复付款。
+
+Hotels, car-rental companies, petrol stations and some online merchants may place an authorisation first and submit the final amount later. While it is pending, your available balance or credit may be temporarily reduced. The merchant and issuer determine when the hold is released, how long it appears and how the final amount is settled. If the same transaction remains pending unusually long or the amount is wrong, contact your bank with the date, amount and reference; do not pay again just because it is pending.

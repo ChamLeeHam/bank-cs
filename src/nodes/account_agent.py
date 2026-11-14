@@ -7,7 +7,7 @@ from src.nodes.stub_nodes import pick
 from src.schema.base import BaseNode, StateUpdate
 from src.schema.exceptions import MySQLError
 from src.schema.state import GraphState
-from src.utils.account_utils import (find_payees, find_transfers, freeze_card, get_accounts, get_cards, get_transfer_by_id,
+from src.utils.account_utils import (find_payees, find_transfers, freeze_card, get_accounts, get_cards, get_latest_card_transaction, get_transfer_by_id,
                                      transfer_filters)
 from src.utils.transfer_context import pending_transfer_ids, transfer_ordinal, transfer_other
 
@@ -38,6 +38,21 @@ class AccountAgentNode(BaseNode):
 
         intent = state.get("intent")
         try:
+            if intent == "card_transaction_inquiry":
+                row = get_latest_card_transaction(customer_id)
+                if not row:
+                    answer = pick(lang, "I couldn't find a card transaction on your account.", "没有找到您银行卡的交易记录。")
+                else:
+                    status = {"posted": ("已入账", "posted"), "pending": ("处理中", "pending"),
+                              "reversed": ("已撤销", "reversed")}.get(row["status"], (row["status"], row["status"]))
+                    when = row["txn_time"].strftime("%Y-%m-%d %H:%M")
+                    answer = pick(lang,
+                                  f"Your latest card transaction: {row['merchant']}, {row['currency']} {row['amount']}, "
+                                  f"{when}, {status[1]} (card ending {row['last4']}).",
+                                  f"您最近一笔银行卡交易：{row['merchant']}，{row['currency']} {row['amount']}，"
+                                  f"时间 {when}，状态{status[0]}（卡尾号 {row['last4']}）。")
+                return {"answer": answer, "tool_calls": [{"tool": "get_latest_card_transaction"}]}
+
             if intent == "balance_inquiry":
                 rows = get_accounts(customer_id)
                 text = state.get("masked_question", "")

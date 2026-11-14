@@ -1,0 +1,18 @@
+{"question":"PayNow 转账通常会收取手续费吗？","lang":"zh","expected":["本地转账费用"]}
+{"question":"海外电汇有哪些常见手续费？","lang":"zh","expected":["海外电汇（TT）手续费"]}
+{"question":"FAST 转账一般多久到账？","lang":"zh","expected":["转账一般多久到账"]}
+{"question":"狮城银行支持哪些卡组织？","lang":"zh","expected":["卡组织与受理范围"]}
+{"question":"外币兑换和海外刷卡会收取哪些费用？","lang":"zh","expected":["外币兑换与外币刷卡费用"]}
+{"question":"银行卡到期前会自动续发吗？","lang":"zh","expected":["卡片即将到期"]}
+{"question":"What's the usual fee for an overseas TT?","lang":"en","expected":["海外电汇（TT）手续费"]}
+{"question":"How does a Visa foreign currency transaction fee work?","lang":"en","expected":["外币兑换与外币刷卡费用"]}
+{"question":"What is the difference between PayNow and FAST?","lang":"en","expected":["转账方式比较"]}
+{"question":"What are the fees for withdrawing cash overseas?","lang":"en","expected":["ATM 取款费用"]}
+{"question":"Which card networks does Lion City Bank support?","lang":"en","expected":["卡组织与受理范围"]}
+{"question":"How long does an overseas TT usually take?","lang":"en","expected":["转账一般多久到账"]}
+{"question":"你们的 exchange rate 周末会不会调整？","lang":"mixed","expected":["汇率如何确定"]}
+{"question":"海外 ATM 取款的 standard fee 是多少？","lang":"mixed","expected":["ATM 取款费用"]}
+{"question":"FAST transfer 通常多久到账？","lang":"mixed","expected":["转账一般多久到账","转账方式比较"]}
+{"question":"credit card supplementary card 申请有什么条件？","lang":"mixed","expected":["补发实体卡与附属卡"]}
+{"question":"PayNow transfer 有手续费吗？","lang":"mixed","expected":["本地转账费用"]}
+{"question":"海外刷卡的 foreign currency fee 怎么算？","lang":"mixed","expected":["外币兑换与外币刷卡费用"]}

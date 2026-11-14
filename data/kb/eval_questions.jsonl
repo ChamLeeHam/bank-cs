@@ -1,5 +1,6 @@
 {"question": "PayNow 转账要收钱吗？", "lang": "zh", "expected": ["本地转账费用"]}
 {"question": "What's the charge for sending a TT to Malaysia?", "lang": "en", "expected": ["海外电汇（TT）手续费"]}
+{"question": "Is the overseas TT fee different if I send money to Malaysia?", "lang": "en", "expected": ["海外电汇（TT）手续费"]}
 {"question": "你们的 exchange rate 是怎么定的？周末会不会不一样？", "lang": "mixed", "expected": ["汇率如何确定"]}
 {"question": "I paid in USD on Amazon with my Visa, why was there an extra 3.25%?", "lang": "en", "expected": ["外币兑换与外币刷卡费用"]}
 {"question": "在日本 ATM 拿钱要多少 fee？", "lang": "mixed", "expected": ["ATM 取款费用"]}
@@ -9,6 +10,7 @@
 {"question": "FAST transfer 一般几分钟会到？", "lang": "mixed", "expected": ["转账一般多久到账", "转账方式比较"]}
 {"question": "How do I send money to my mum's bank account in China?", "lang": "en", "expected": ["如何汇款到海外"]}
 {"question": "我朋友在美国要汇钱给我，要给他什么资料？", "lang": "zh", "expected": ["如何收款"]}
+{"question": "My friend in the US wants to wire money to my Lion City account. What bank details should I give them?", "lang": "en", "expected": ["如何收款"]}
 {"question": "Why can't I add Binance as a payee?", "lang": "en", "expected": ["收款人限制"]}
 {"question": "我想一次转 SGD 10,000 给朋友，可以吗？", "lang": "zh", "expected": ["转账限额"]}
 {"question": "My transfer got returned, what usually causes that?", "lang": "en", "expected": ["转账失败的常见原因"]}
@@ -27,6 +29,7 @@
 {"question": "I can't remember my internet banking password", "lang": "en", "expected": ["忘记登录密码"]}
 {"question": "我想 close 我的 savings account", "lang": "mixed", "expected": ["销户"]}
 {"question": "Can I hold Japanese yen in my account?", "lang": "en", "expected": ["多币种账户支持的货币"]}
+{"question": "Do you support holding JPY (Japanese yen)?", "lang": "en", "expected": ["多币种账户支持的货币"]}
 {"question": "你们可以存比特币吗？", "lang": "zh", "expected": ["多币种账户支持的货币", "收款人限制"]}
 {"question": "我在你们银行存了 15 万新币，如果银行倒闭能拿回多少？", "lang": "zh", "expected": ["存款保险"]}
 {"question": "Is the USD in my multi-currency account covered by deposit insurance?", "lang": "en", "expected": ["存款保险"]}
@@ -39,3 +42,4 @@
 {"question": "Does my credit card come with travel insurance?", "lang": "en", "expected": null}
 {"question": "那 FAST 呢？", "lang": "zh", "expected": ["本地转账费用"], "history": [["客户", "海外电汇手续费多少？"], ["客服", "每笔海外电汇（TT）收取 SGD 10 手续费，中转行和收款行可能另外扣费。"]]}
 {"question": "what if I forgot the PIN?", "lang": "en", "expected": ["修改 PIN 与 PIN 被锁"], "history": [["客户", "How do I activate my new card?"], ["客服", "Go to Cards > Activate in the app and confirm with the OTP."]]}
+{"question": "Does Lion City Bank offer mortgages or home loans?", "lang": "en", "expected": null}

@@ -46,6 +46,7 @@ def route_after_gate(state: GraphState) -> str:
         "account": "verify_otp",  # 账户的问题要先验证 OTP
         "handoff": "handoff",
         "refuse": "refuse",
+        "greeting": "refuse",  # 复用固定回复节点，业务路由仍标记为问候
         "ask_back": "ask_back",
     }
     return route_to_node.get(state.get("route") or "", "ask_back")

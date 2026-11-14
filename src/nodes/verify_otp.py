@@ -24,6 +24,13 @@ class VerifyOtpNode(BaseNode):
             return {}
         lang = state.get("lang", "en")
 
+        # 输错次数锁定保存在图的跨轮状态里，不能通过重新问一次账户问题重置。
+        if state.get("otp_locked"):
+            return {"otp_verified": False,
+                    "answer": pick(lang, "The OTP is incorrect too many times, so I can't access your account. "
+                                         "Please contact us by phone.",
+                                   "验证码错误次数太多，无法查询账户信息，请致电客服。")}
+
         # 注意：恢复的时候这个节点会从头再跑一遍，所以 interrupt 之前只能读数据，不能写数据
         try:
             row = query_one("SELECT demo_otp FROM customers WHERE customer_id = %s", (state.get("customer_id"),))
@@ -51,7 +58,7 @@ class VerifyOtpNode(BaseNode):
                 return {"otp_verified": True, "otp_customer_id": state.get("customer_id")}
 
         self.log_step(self.name, "验证失败，次数用完")
-        return {"otp_verified": False,
+        return {"otp_verified": False, "otp_locked": True,
                 "answer": pick(lang, "The OTP is incorrect too many times, so I can't access your account. "
                                      "Please contact us by phone.",
                                "验证码错误次数太多，无法查询账户信息，请致电客服。")}

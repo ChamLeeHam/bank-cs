@@ -7,10 +7,10 @@
 
 | 文件 | 一级意图 | 章节数 | 内容 |
 |---|---|---|---|
-| fees_rates.md | fees_rates | 7 | 转账手续费、汇率、外币刷卡费、ATM 费用、账单上的费用、卡的年费 |
-| transfer_guide.md | transfer_howto | 8 | 转账方式、到账时间、怎么汇款到海外、怎么收款、收款人限制、限额、转账失败的原因、PayNow 收款人名字的显示 |
-| card_services.md | card_service | 8 | 激活、寄卡、PIN、卡被拒、ATM 吞卡、卡到期、补卡、Visa 还是 Mastercard |
-| account_services.md | account_service | 10 | 开户条件、身份验证、改资料、忘记密码、销户、多币种账户、存款保险、紧急冻结账户、资金锁 |
+| fees_rates.md | fees_rates | 11 | 转账手续费、汇率、外币刷卡费、ATM 费用、账单费用、信用卡还款、DCC、借记卡与信用卡区别 |
+| transfer_guide.md | transfer_howto | 17 | 转账方式与时效、海外汇款与收款、PayNow 标识/二维码/误转、FAST、GIRO/eGIRO、MEPS+ |
+| card_services.md | card_service | 12 | 激活、寄卡、PIN、卡被拒、银行卡丢失或被盗、ATM 吞卡、卡到期、补卡、网购失败、订阅扣款、预授权 |
+| account_services.md | account_service | 13 | 开户、身份验证、改资料、忘记密码、销户、多币种、存款保险、紧急冻结、资金锁、安全核验 |
 
 ### 参考的公开资料
 
@@ -24,8 +24,19 @@
 | 资金锁 | 新加坡的银行有类似的功能（Money Lock），锁住的钱不能在网上转出 | 最少锁 SGD 1,000、只能到分行解锁 | 新闻报道、ABS 的数据 |
 | PayNow 收款人名字的显示 | ABS 从 2026 年 6 月 6 日起取消个人客户的 PayNow 昵称 | 无 | 银行发给客户的通知 |
 
-诈骗、不明交易、争议退款、投诉这些资料也找到了（比如 MAS 的 E-Payments 用户保护指引、共同责任框架、FIDReC），
-但是这几种意图现在直接转人工，不会走知识库，所以还没有写进来。
+本轮在前次 4 节基础上，再新增 15 节中英双语内容，总计 52 节。新增主题包括 PayNow 标识与 QR、FAST/GIRO/eGIRO/MEPS+ 的使用场景、信用卡还款与 DCC、网购拒付、换卡后的订阅扣款、预授权，以及身份核验和可疑联络的安全处理。它们不新增狮城银行演示产品的费率、限额或承诺时限；通用信息和虚构演示规则在文中明确区分。盗刷、争议退款和投诉仍由现有流程转人工，新增知识不会改变分流策略。
+
+新增章节参考的公开资料（以自己的话概述）：
+
+| 主题 | 来源 |
+|---|---|
+| PayNow 转错收款人、联系收款人和银行 | [ABS PayNow press release](https://www.abs.org.sg/docs/library/paynow-pressrelease.pdf)、[ABS PayNow](https://www.abs.org.sg/e-payments/pay-now) |
+| FAST 与 GIRO 的用途和一般处理方式 | [ABS FAST fact sheet](https://www.abs.org.sg/docs/library/2024-06-28-fast-fact-sheet.pdf)、[ABS GIRO](https://www.abs.org.sg/e-payments/giro) |
+| 外币信用卡消费、未授权交易应尽快报告 | [MoneySense: Understanding credit cards](https://www.moneysense.gov.sg/understanding-credit-cards/)、[MoneySense: 4 tips to stay safe when using e-payments](https://www.moneysense.gov.sg/4-tips-to-stay-safe-when-using-e-payments/) |
+| PayNow 标识、QR/SGQR、FAST、GIRO 与 MEPS+ 适用场景 | [ABS PayNow](https://www.abs.org.sg/e-payments/pay-now)、[ABS e-payment comparison table](https://www.abs.org.sg/docs/library/production-copy-e-payment-solutions-comparison-table_v1-1.pdf)、[ABS FAST](https://www.abs.org.sg/e-payments/fast)、[ABS GIRO](https://www.abs.org.sg/e-payments/giro) |
+| eGIRO 授权建立、信用卡利息与 DCC | [ABS eGIRO](https://www.abs.org.sg/e-payments/eGIRO)、[MoneySense: Credit card interest and charges](https://www.moneysense.gov.sg/understanding-credit-card-interest-and-charges/)、[MoneySense: Understanding credit cards](https://www.moneysense.gov.sg/understanding-credit-cards/) |
+
+通用安全提示：对不明入账不要自行转给来电者指定的账户；从银行官方 App 或银行卡上的联系方式联系银行。涉及未授权交易时，应尽快报告银行。相关意图目前由人工处理，知识库新增说明暂不改变分流策略。
 
 每个文件开头写 title 和 intent。每个 "## " 章节是一块，中文一段、英文一段放在一起。
 `<!-- sub_intents: ... -->` 写这一节对应哪些二级意图，build_kb.py 会检查这些标签是不是存在。

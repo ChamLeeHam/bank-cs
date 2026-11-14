@@ -13,6 +13,10 @@ from src.nodes.stub_nodes import KEYWORD_RULES, router_text
 from src.schema.base import BaseNode, StateUpdate
 from src.schema.config import get_config
 from src.schema.state import GraphState
+from src.utils.fraud_context import fraud_context
+from src.utils.history_utils import (annual_fee_followup, fraud_confirmed_followup, fraud_general_followup, history_of,
+                                    negated_fraud_limit_question, replacement_fee_stolen_followup,
+                                    statement_fee_followup, stolen_card_clarification)
 
 logger = logging.getLogger(__name__)
 
@@ -22,6 +26,51 @@ GREETING_RE = re.compile(r"^(hi|hello|hey|你好|您好|哈喽|早安|早上好|
 FILLER_RE = re.compile(r"^(嗯+|啊+|哦+|呃+|那个|就是那个|这个|是的|对|好的?|ok(ay)?|hmm+|um+|yes|no|\?+|？+)[!！.。,，?？~\s]*$",
                        re.IGNORECASE)
 UNKNOWN_SCORE = 0.5  # 判断不了的时候给 0.5，gate 会去追问
+
+# 账单上的一般费用询问应先走知识库；明确表示非本人交易、盗刷或费用错误时，
+# 不应用这条规则覆盖模型的风险分类。
+_STATEMENT_RE = re.compile(r"\bstatement\b|账单|月结单", re.IGNORECASE)
+_STATEMENT_CHARGE_RE = re.compile(r"\b(?:charge|fee|small charge|small fee)\b|扣费|费用|扣款", re.IGNORECASE)
+_STATEMENT_EXPLANATION_RE = re.compile(
+    r"看不懂|不明白|不清楚|什么意思|是什么|什么费用|哪种费用|解释一下|what(?:'s| is)?|"
+    r"what does .{1,30} mean|not sure what|don't understand|do not understand|can you explain|why is there",
+    re.IGNORECASE,
+)
+_STATEMENT_RISK_RE = re.compile(
+    r"不是我|非本人|不是本人|未经授权|盗刷|可疑|不认识|没(?:有)?做过|重复扣|扣了两次|扣错|多扣|收错|金额不对|退款|"
+    r"\b(?:not mine|unauthori[sz]ed|fraud|suspicious|stolen|don't recognize|do not recognize|"
+    r"never made|didn't make|did not make|charged twice|double charged|duplicate charge|wrong amount|"
+    r"charged by mistake|refund)\b",
+    re.IGNORECASE,
+)
+_LATEST_CARD_TRANSACTION_RE = re.compile(
+    r"\b(?:my|mine)\s+(?:last|latest|most recent)\s+card\s+(?:transaction|payment)\b|"
+    r"(?:我的|本人)(?:最近一?|上一|最后一)(?:笔|次)?(?:银行卡|信用卡|借记卡|卡片)(?:交易|消费)",
+    re.IGNORECASE,
+)
+_DISPUTE_PATTERNS = (
+    ("transaction_charged_twice", re.compile(
+        r"\b(?:charged twice|double[- ]charged|charged two times|charged more than once|duplicate charge)\b|"
+        r"重复扣款|重复收费|(?:被)?扣了两次|扣款两次", re.IGNORECASE)),
+    ("Refund_not_showing_up", re.compile(
+        r"\brefund\b.{0,35}\b(?:not|never|hasn't|has not|didn't|did not)\b.{0,20}\b(?:arriv\w*|show\w* up|appear\w*|receiv\w*|credit\w*)\b|"
+        r"\brefund\b.{0,25}\b(?:missing|not showing up)\b|"
+        r"退款.{0,8}(?:未到账|没到账|未收到|没收到|还没到)", re.IGNORECASE)),
+    ("transaction_dispute", re.compile(
+        r"\bchargebacks?\b|\bdisput(?:e|ed|ing)\b.{0,25}\b(?:card|credit card|bank|transaction|payment|charge)\b|"
+        r"\b(?:wrong amount|incorrect amount|amount is wrong)\b.{0,25}\b(?:charge|payment|transaction|card|cash)\b|"
+        r"拒付|交易争议|交易不认可|金额不符|金额不对|多扣了?钱", re.IGNORECASE)),
+)
+
+
+def _general_statement_charge_question(text):
+    """识别只是在询问账单常见费用类型的问题，排除疑似非本人或错误扣款。"""
+    return (
+        bool(_STATEMENT_RE.search(text))
+        and bool(_STATEMENT_CHARGE_RE.search(text))
+        and bool(_STATEMENT_EXPLANATION_RE.search(text))
+        and not _STATEMENT_RISK_RE.search(text)
+    )
 
 _intent_model = None
 _intent_tokenizer = None
@@ -103,21 +152,71 @@ class IntentRouterNode(BaseNode):
     def process(self, state: GraphState) -> StateUpdate:
         self.log_step(self.name, "开始识别意图")
         current = state.get("masked_question", "").strip()
+        history = history_of(state)
+        signal, topic = fraud_context(current)
+        if signal == "reported" or fraud_confirmed_followup(current, history):
+            return {"intent": "fraud_report", "sub_intent": "", "intent_score": 0.99,
+                    "router_backend": "keyword", "fraud_signal": "reported"}
+        if signal == "hypothetical":
+            return {"intent": "unknown", "sub_intent": "", "intent_score": UNKNOWN_SCORE,
+                    "router_backend": "keyword", "fraud_signal": "hypothetical"}
 
         # 1. 规则：问候、没有内容的消息
         if GREETING_RE.match(current):
             return {"intent": "greeting", "sub_intent": "hello", "intent_score": 0.95, "router_backend": "keyword"}
+        if fraud_general_followup(current, history) or negated_fraud_limit_question(current) or not topic:
+            return {"intent": "unknown", "sub_intent": "", "intent_score": UNKNOWN_SCORE, "router_backend": "keyword"}
         if FILLER_RE.match(current):
             return {"intent": "unknown", "sub_intent": "", "intent_score": UNKNOWN_SCORE, "router_backend": "keyword"}
 
+        # 只把否认之后的业务问题交给分类器，避免否定词被重新识别为盗刷。
+        joined = router_text(state) if topic == current else topic
+        current = topic
+        for sub_intent, pattern in _DISPUTE_PATTERNS:
+            if pattern.search(current):
+                self.log_step(self.name, "检测到明确的交易争议，按争议退款意图转人工")
+                return {
+                    "intent": "dispute_refund",
+                    "sub_intent": sub_intent,
+                    "intent_score": 0.99,
+                    "router_backend": "keyword",
+                }
+
+        if (_LATEST_CARD_TRANSACTION_RE.search(current)
+                and not re.search(r"冻结|挂失|盗刷|争议|退款|freeze|block|stolen|fraud|disput|refund", current, re.IGNORECASE)):
+            return {"intent": "card_transaction_inquiry", "sub_intent": "", "intent_score": 0.99,
+                    "router_backend": "keyword"}
+
+        choice = stolen_card_clarification(current, history_of(state))
+        if choice:
+            return {"intent": "card_lost_freeze" if choice == "freeze" else "card_service",
+                    "sub_intent": "", "intent_score": 0.99, "router_backend": "keyword"}
+        matched, _ = statement_fee_followup(current, history_of(state))
+        if matched:
+            return {"intent": "fees_rates", "sub_intent": "", "intent_score": 0.99, "router_backend": "keyword"}
+        if annual_fee_followup(current, history_of(state)):
+            return {"intent": "fees_rates", "sub_intent": "", "intent_score": 0.99, "router_backend": "keyword"}
+        if replacement_fee_stolen_followup(current, history_of(state)):
+            return {"intent": "fees_rates", "sub_intent": "", "intent_score": 0.99, "router_backend": "keyword"}
+
+        # “statement 上有一笔看不懂的小额 charge 是什么”属于一般费用知识查询。
+        # 明确的非本人交易、盗刷、重复/错误扣款等仍留给风险意图分类。
+        if _general_statement_charge_question(current):
+            self.log_step(self.name, "账单费用解释问题，按费用 FAQ 路由")
+            return {
+                "intent": "fees_rates",
+                "sub_intent": "extra_charge_on_statement",
+                "intent_score": 0.99,
+                "router_backend": "keyword",
+            }
+
         # 2. 模型用不了，用关键词
         if not self._model_ready():
-            intent, score = keyword_intent(router_text(state))
+            intent, score = keyword_intent(joined)
             return {"intent": intent, "sub_intent": "", "intent_score": score, "router_backend": "keyword"}
 
         # 3. 先只看这一条消息。如果上一轮是追问、这一条又不太确定，就和上一条消息拼起来再判断一次
         result = self._classify(current)
-        joined = router_text(state)
         if joined != current and result["intent_score"] < self.config.intent_threshold:
             with_context = self._classify(joined)
             if with_context["intent_score"] > result["intent_score"]:

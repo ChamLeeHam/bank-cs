@@ -23,6 +23,18 @@ def get_accounts(customer_id):
     return query(sql, (customer_id,))
 
 
+def get_latest_card_transaction(customer_id):
+    """只查当前客户本人银行卡的最近一笔交易。"""
+    sql = """
+        select t.txn_id, t.merchant, t.amount, t.currency, t.txn_time, t.status, c.last4
+        from card_transactions t join cards c on c.card_id = t.card_id
+        where c.customer_id = %s
+        order by t.txn_time desc, t.txn_id desc limit 1
+    """
+    rows = query(sql, (customer_id,))
+    return rows[0] if rows else None
+
+
 # 2. 最近的转账，可以只看汇给某几个收款人的
 def get_recent_transfers(customer_id, payee_ids=None, days=30, limit=5):
     sql = """

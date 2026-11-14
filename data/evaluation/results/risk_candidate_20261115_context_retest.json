@@ -1,0 +1,886 @@
+{
+  "dataset_sha256": "8711128d8477d728234f1bc29209e7e0d6db39dace626f5baba4c1bacf1e6d93",
+  "dataset": "D:\\大模型\\bank-cs\\data\\evaluation\\risk_candidate_20261115.jsonl",
+  "predictions": [
+    {
+      "id": "risk-001",
+      "category": "fraud",
+      "lang": "zh",
+      "text": "我发现信用卡里有一笔不是我本人支付的网购。",
+      "expected_fraud": true,
+      "expected_handoff": true,
+      "qwen": {
+        "intent": "fraud_report",
+        "route": "handoff",
+        "priority": "urgent",
+        "backend": "keyword",
+        "score": 0.99
+      },
+      "jev": {
+        "intent": "fraud_report",
+        "route": "handoff",
+        "priority": "urgent",
+        "backend": "keyword",
+        "score": 0.99
+      }
+    },
+    {
+      "id": "risk-002",
+      "category": "fraud",
+      "lang": "zh",
+      "text": "账单上出现我从未授权的商户扣款，请立刻处理。",
+      "expected_fraud": true,
+      "expected_handoff": true,
+      "qwen": {
+        "intent": "fraud_report",
+        "route": "handoff",
+        "priority": "urgent",
+        "backend": "keyword",
+        "score": 0.99
+      },
+      "jev": {
+        "intent": "fraud_report",
+        "route": "handoff",
+        "priority": "urgent",
+        "backend": "keyword",
+        "score": 0.99
+      }
+    },
+    {
+      "id": "risk-003",
+      "category": "fraud",
+      "lang": "zh",
+      "text": "刚发现银行卡被人盗刷了，还想了解转账限额。",
+      "expected_fraud": true,
+      "expected_handoff": true,
+      "qwen": {
+        "intent": "fraud_report",
+        "route": "handoff",
+        "priority": "urgent",
+        "backend": "keyword",
+        "score": 0.99
+      },
+      "jev": {
+        "intent": "fraud_report",
+        "route": "handoff",
+        "priority": "urgent",
+        "backend": "keyword",
+        "score": 0.99
+      }
+    },
+    {
+      "id": "risk-004",
+      "category": "fraud",
+      "lang": "zh",
+      "text": "我的卡一直在身边，但别人从 ATM 提走了钱。",
+      "expected_fraud": true,
+      "expected_handoff": true,
+      "qwen": {
+        "intent": "fraud_report",
+        "route": "handoff",
+        "priority": "urgent",
+        "backend": "keyword",
+        "score": 0.99
+      },
+      "jev": {
+        "intent": "fraud_report",
+        "route": "handoff",
+        "priority": "urgent",
+        "backend": "keyword",
+        "score": 0.99
+      }
+    },
+    {
+      "id": "risk-005",
+      "category": "fraud",
+      "lang": "en",
+      "text": "A card payment appeared that I never authorized; please help.",
+      "expected_fraud": true,
+      "expected_handoff": true,
+      "qwen": {
+        "intent": "fraud_report",
+        "route": "handoff",
+        "priority": "urgent",
+        "backend": "keyword",
+        "score": 0.99
+      },
+      "jev": {
+        "intent": "fraud_report",
+        "route": "handoff",
+        "priority": "urgent",
+        "backend": "keyword",
+        "score": 0.99
+      }
+    },
+    {
+      "id": "risk-006",
+      "category": "fraud",
+      "lang": "en",
+      "text": "I see a cash withdrawal on my account, but I did not withdraw any cash.",
+      "expected_fraud": true,
+      "expected_handoff": true,
+      "qwen": {
+        "intent": "fraud_report",
+        "route": "handoff",
+        "priority": "urgent",
+        "backend": "keyword",
+        "score": 0.99
+      },
+      "jev": {
+        "intent": "fraud_report",
+        "route": "handoff",
+        "priority": "urgent",
+        "backend": "keyword",
+        "score": 0.99
+      }
+    },
+    {
+      "id": "risk-007",
+      "category": "fraud",
+      "lang": "en",
+      "text": "Someone used my card without permission, and I also want to ask about my limit.",
+      "expected_fraud": true,
+      "expected_handoff": true,
+      "qwen": {
+        "intent": "fraud_report",
+        "route": "handoff",
+        "priority": "urgent",
+        "backend": "keyword",
+        "score": 0.99
+      },
+      "jev": {
+        "intent": "fraud_report",
+        "route": "handoff",
+        "priority": "urgent",
+        "backend": "keyword",
+        "score": 0.99
+      }
+    },
+    {
+      "id": "risk-008",
+      "category": "fraud",
+      "lang": "en",
+      "text": "There is a purchase on my card that I am sure I never made.",
+      "expected_fraud": true,
+      "expected_handoff": true,
+      "qwen": {
+        "intent": "fraud_report",
+        "route": "handoff",
+        "priority": "urgent",
+        "backend": "keyword",
+        "score": 0.99
+      },
+      "jev": {
+        "intent": "fraud_report",
+        "route": "handoff",
+        "priority": "urgent",
+        "backend": "keyword",
+        "score": 0.99
+      }
+    },
+    {
+      "id": "risk-009",
+      "category": "fraud",
+      "lang": "mixed",
+      "text": "我的 statement 有个 transaction 不是我做的，帮我查一下。",
+      "expected_fraud": true,
+      "expected_handoff": true,
+      "qwen": {
+        "intent": "fraud_report",
+        "route": "handoff",
+        "priority": "urgent",
+        "backend": "keyword",
+        "score": 0.99
+      },
+      "jev": {
+        "intent": "fraud_report",
+        "route": "handoff",
+        "priority": "urgent",
+        "backend": "keyword",
+        "score": 0.99
+      }
+    },
+    {
+      "id": "risk-010",
+      "category": "fraud",
+      "lang": "mixed",
+      "text": "这笔 card payment 未经我授权，please transfer me to an agent.",
+      "expected_fraud": true,
+      "expected_handoff": true,
+      "qwen": {
+        "intent": "fraud_report",
+        "route": "handoff",
+        "priority": "urgent",
+        "backend": "keyword",
+        "score": 0.99
+      },
+      "jev": {
+        "intent": "fraud_report",
+        "route": "handoff",
+        "priority": "urgent",
+        "backend": "keyword",
+        "score": 0.99
+      }
+    },
+    {
+      "id": "risk-011",
+      "category": "fraud",
+      "lang": "mixed",
+      "text": "我的 card 被盗刷了，同时想问一下 spending limit 怎么设。",
+      "expected_fraud": true,
+      "expected_handoff": true,
+      "qwen": {
+        "intent": "fraud_report",
+        "route": "handoff",
+        "priority": "urgent",
+        "backend": "keyword",
+        "score": 0.99
+      },
+      "jev": {
+        "intent": "fraud_report",
+        "route": "handoff",
+        "priority": "urgent",
+        "backend": "keyword",
+        "score": 0.99
+      }
+    },
+    {
+      "id": "risk-012",
+      "category": "fraud",
+      "lang": "zh",
+      "text": "我刚才不是说卡丢了，但这笔交易确实不是我做的。",
+      "expected_fraud": true,
+      "expected_handoff": true,
+      "qwen": {
+        "intent": "fraud_report",
+        "route": "handoff",
+        "priority": "urgent",
+        "backend": "keyword",
+        "score": 0.99
+      },
+      "jev": {
+        "intent": "fraud_report",
+        "route": "handoff",
+        "priority": "urgent",
+        "backend": "keyword",
+        "score": 0.99
+      }
+    },
+    {
+      "id": "risk-013",
+      "category": "fraud",
+      "lang": "zh",
+      "text": "我没在那家店买过东西，信用卡却出现那家店的消费。",
+      "expected_fraud": true,
+      "expected_handoff": true,
+      "qwen": {
+        "intent": "fraud_report",
+        "route": "handoff",
+        "priority": "urgent",
+        "backend": "keyword",
+        "score": 0.99
+      },
+      "jev": {
+        "intent": "fraud_report",
+        "route": "handoff",
+        "priority": "urgent",
+        "backend": "keyword",
+        "score": 0.99
+      }
+    },
+    {
+      "id": "risk-014",
+      "category": "fraud",
+      "lang": "en",
+      "text": "I did not lose my card, but someone else made this payment using it.",
+      "expected_fraud": true,
+      "expected_handoff": true,
+      "qwen": {
+        "intent": "fraud_report",
+        "route": "handoff",
+        "priority": "urgent",
+        "backend": "keyword",
+        "score": 0.99
+      },
+      "jev": {
+        "intent": "fraud_report",
+        "route": "handoff",
+        "priority": "urgent",
+        "backend": "keyword",
+        "score": 0.99
+      }
+    },
+    {
+      "id": "risk-015",
+      "category": "fraud",
+      "lang": "mixed",
+      "text": "这笔扣款 not authorized by me，可以帮我处理并告诉我年费吗？",
+      "expected_fraud": true,
+      "expected_handoff": true,
+      "qwen": {
+        "intent": "fraud_report",
+        "route": "handoff",
+        "priority": "urgent",
+        "backend": "keyword",
+        "score": 0.99
+      },
+      "jev": {
+        "intent": "fraud_report",
+        "route": "handoff",
+        "priority": "urgent",
+        "backend": "keyword",
+        "score": 0.99
+      }
+    },
+    {
+      "id": "risk-016",
+      "category": "fraud",
+      "lang": "zh",
+      "text": "我本人没有在凌晨进行那笔卡消费，请转人工。",
+      "expected_fraud": true,
+      "expected_handoff": true,
+      "qwen": {
+        "intent": "fraud_report",
+        "route": "handoff",
+        "priority": "urgent",
+        "backend": "keyword",
+        "score": 0.99
+      },
+      "jev": {
+        "intent": "fraud_report",
+        "route": "handoff",
+        "priority": "urgent",
+        "backend": "keyword",
+        "score": 0.99
+      }
+    },
+    {
+      "id": "risk-017",
+      "category": "dispute",
+      "lang": "zh",
+      "text": "我本人买的东西只付了一次，但账上出现两笔相同扣款。",
+      "expected_fraud": false,
+      "expected_handoff": true,
+      "qwen": {
+        "intent": "dispute_refund",
+        "route": "handoff",
+        "priority": null,
+        "backend": "finetuned",
+        "score": 0.9942
+      },
+      "jev": {
+        "intent": "dispute_refund",
+        "route": "handoff",
+        "priority": null,
+        "backend": "jev",
+        "score": 1
+      }
+    },
+    {
+      "id": "risk-018",
+      "category": "dispute",
+      "lang": "zh",
+      "text": "商家已确认退款，可是我的信用卡仍未收到退款。",
+      "expected_fraud": false,
+      "expected_handoff": true,
+      "qwen": {
+        "intent": "dispute_refund",
+        "route": "handoff",
+        "priority": null,
+        "backend": "finetuned",
+        "score": 0.9926
+      },
+      "jev": {
+        "intent": "dispute_refund",
+        "route": "handoff",
+        "priority": null,
+        "backend": "jev",
+        "score": 1
+      }
+    },
+    {
+      "id": "risk-019",
+      "category": "dispute",
+      "lang": "en",
+      "text": "I made this payment, but the shop charged the amount twice.",
+      "expected_fraud": false,
+      "expected_handoff": true,
+      "qwen": {
+        "intent": "dispute_refund",
+        "route": "handoff",
+        "priority": null,
+        "backend": "finetuned",
+        "score": 0.9992
+      },
+      "jev": {
+        "intent": "dispute_refund",
+        "route": "handoff",
+        "priority": null,
+        "backend": "jev",
+        "score": 1
+      }
+    },
+    {
+      "id": "risk-020",
+      "category": "dispute",
+      "lang": "en",
+      "text": "The merchant promised a refund last week, but it has not arrived.",
+      "expected_fraud": false,
+      "expected_handoff": true,
+      "qwen": {
+        "intent": "dispute_refund",
+        "route": "handoff",
+        "priority": null,
+        "backend": "keyword",
+        "score": 0.99
+      },
+      "jev": {
+        "intent": "dispute_refund",
+        "route": "handoff",
+        "priority": null,
+        "backend": "keyword",
+        "score": 0.99
+      }
+    },
+    {
+      "id": "risk-021",
+      "category": "dispute",
+      "lang": "mixed",
+      "text": "这笔是我本人刷的，但是 billed twice，帮我解决。",
+      "expected_fraud": false,
+      "expected_handoff": true,
+      "qwen": {
+        "intent": "dispute_refund",
+        "route": "handoff",
+        "priority": null,
+        "backend": "finetuned",
+        "score": 0.9996
+      },
+      "jev": {
+        "intent": "dispute_refund",
+        "route": "handoff",
+        "priority": null,
+        "backend": "jev",
+        "score": 1
+      }
+    },
+    {
+      "id": "risk-022",
+      "category": "dispute",
+      "lang": "mixed",
+      "text": "merchant 已经处理 refund，可我还没收到退款。",
+      "expected_fraud": false,
+      "expected_handoff": true,
+      "qwen": {
+        "intent": "dispute_refund",
+        "route": "handoff",
+        "priority": null,
+        "backend": "finetuned",
+        "score": 0.9941
+      },
+      "jev": {
+        "intent": "dispute_refund",
+        "route": "handoff",
+        "priority": null,
+        "backend": "jev",
+        "score": 1
+      }
+    },
+    {
+      "id": "risk-023",
+      "category": "dispute",
+      "lang": "zh",
+      "text": "我取款时 ATM 没有吐钞，但账户已经扣钱了。",
+      "expected_fraud": false,
+      "expected_handoff": true,
+      "qwen": {
+        "intent": "dispute_refund",
+        "route": "handoff",
+        "priority": null,
+        "backend": "finetuned",
+        "score": 0.9977
+      },
+      "jev": {
+        "intent": "dispute_refund",
+        "route": "handoff",
+        "priority": null,
+        "backend": "jev",
+        "score": 0.97
+      }
+    },
+    {
+      "id": "risk-024",
+      "category": "dispute",
+      "lang": "en",
+      "text": "I withdrew cash myself, but the ATM gave me less than it deducted.",
+      "expected_fraud": false,
+      "expected_handoff": true,
+      "qwen": {
+        "intent": "dispute_refund",
+        "route": "handoff",
+        "priority": null,
+        "backend": "finetuned",
+        "score": 0.9988
+      },
+      "jev": {
+        "intent": "dispute_refund",
+        "route": "handoff",
+        "priority": null,
+        "backend": "jev",
+        "score": 0.99
+      }
+    },
+    {
+      "id": "risk-025",
+      "category": "hypothetical",
+      "lang": "zh",
+      "text": "假如以后发现银行卡有未授权消费，应该先做什么？",
+      "expected_fraud": false,
+      "expected_handoff": false,
+      "qwen": {
+        "intent": "unknown",
+        "route": "ask_back",
+        "priority": null,
+        "backend": "keyword",
+        "score": 0.5
+      },
+      "jev": {
+        "intent": "unknown",
+        "route": "ask_back",
+        "priority": null,
+        "backend": "keyword",
+        "score": 0.5
+      }
+    },
+    {
+      "id": "risk-026",
+      "category": "hypothetical",
+      "lang": "zh",
+      "text": "只是了解一下，如果信用卡被盗用一般如何处理？",
+      "expected_fraud": false,
+      "expected_handoff": false,
+      "qwen": {
+        "intent": "unknown",
+        "route": "ask_back",
+        "priority": null,
+        "backend": "keyword",
+        "score": 0.5
+      },
+      "jev": {
+        "intent": "unknown",
+        "route": "ask_back",
+        "priority": null,
+        "backend": "keyword",
+        "score": 0.5
+      }
+    },
+    {
+      "id": "risk-027",
+      "category": "hypothetical",
+      "lang": "en",
+      "text": "What steps should a customer take if a card is ever used without permission?",
+      "expected_fraud": false,
+      "expected_handoff": false,
+      "qwen": {
+        "intent": "unknown",
+        "route": "ask_back",
+        "priority": null,
+        "backend": "keyword",
+        "score": 0.5
+      },
+      "jev": {
+        "intent": "unknown",
+        "route": "ask_back",
+        "priority": null,
+        "backend": "keyword",
+        "score": 0.5
+      }
+    },
+    {
+      "id": "risk-028",
+      "category": "hypothetical",
+      "lang": "en",
+      "text": "For future reference, how should I report an unauthorized card payment?",
+      "expected_fraud": false,
+      "expected_handoff": false,
+      "qwen": {
+        "intent": "unknown",
+        "route": "ask_back",
+        "priority": null,
+        "backend": "keyword",
+        "score": 0.5
+      },
+      "jev": {
+        "intent": "unknown",
+        "route": "ask_back",
+        "priority": null,
+        "backend": "keyword",
+        "score": 0.5
+      }
+    },
+    {
+      "id": "risk-029",
+      "category": "hypothetical",
+      "lang": "mixed",
+      "text": "假设以后 card 被盗刷，要先联系谁？",
+      "expected_fraud": false,
+      "expected_handoff": false,
+      "qwen": {
+        "intent": "unknown",
+        "route": "ask_back",
+        "priority": null,
+        "backend": "keyword",
+        "score": 0.5
+      },
+      "jev": {
+        "intent": "unknown",
+        "route": "ask_back",
+        "priority": null,
+        "backend": "keyword",
+        "score": 0.5
+      }
+    },
+    {
+      "id": "risk-030",
+      "category": "hypothetical",
+      "lang": "mixed",
+      "text": "我在了解一下，如果有 unauthorized transaction 应该怎么做？",
+      "expected_fraud": false,
+      "expected_handoff": false,
+      "qwen": {
+        "intent": "unknown",
+        "route": "ask_back",
+        "priority": null,
+        "backend": "keyword",
+        "score": 0.5
+      },
+      "jev": {
+        "intent": "unknown",
+        "route": "ask_back",
+        "priority": null,
+        "backend": "keyword",
+        "score": 0.5
+      }
+    },
+    {
+      "id": "risk-031",
+      "category": "hypothetical",
+      "lang": "zh",
+      "text": "请问如果借记卡被盗刷了应该如何处理？",
+      "expected_fraud": false,
+      "expected_handoff": false,
+      "qwen": {
+        "intent": "unknown",
+        "route": "ask_back",
+        "priority": null,
+        "backend": "keyword",
+        "score": 0.5
+      },
+      "jev": {
+        "intent": "unknown",
+        "route": "ask_back",
+        "priority": null,
+        "backend": "keyword",
+        "score": 0.5
+      }
+    },
+    {
+      "id": "risk-032",
+      "category": "hypothetical",
+      "lang": "en",
+      "text": "What should I do if my card is used fraudulently?",
+      "expected_fraud": false,
+      "expected_handoff": false,
+      "qwen": {
+        "intent": "unknown",
+        "route": "ask_back",
+        "priority": null,
+        "backend": "keyword",
+        "score": 0.5
+      },
+      "jev": {
+        "intent": "unknown",
+        "route": "ask_back",
+        "priority": null,
+        "backend": "keyword",
+        "score": 0.5
+      }
+    },
+    {
+      "id": "risk-033",
+      "category": "negation",
+      "lang": "zh",
+      "text": "没有发生盗刷，我只是想知道信用卡年费。",
+      "expected_fraud": false,
+      "expected_handoff": false,
+      "qwen": {
+        "intent": "out_of_scope",
+        "route": "rag",
+        "priority": null,
+        "backend": "finetuned",
+        "score": 0.9839
+      },
+      "jev": {
+        "intent": "fees_rates",
+        "route": "rag",
+        "priority": null,
+        "backend": "jev",
+        "score": 1
+      }
+    },
+    {
+      "id": "risk-034",
+      "category": "negation",
+      "lang": "zh",
+      "text": "我的信用卡没有被盗用，只想查询补卡费用。",
+      "expected_fraud": false,
+      "expected_handoff": false,
+      "qwen": {
+        "intent": "card_service",
+        "route": "rag",
+        "priority": null,
+        "backend": "finetuned",
+        "score": 0.8873
+      },
+      "jev": {
+        "intent": "fees_rates",
+        "route": "rag",
+        "priority": null,
+        "backend": "jev",
+        "score": 0.77
+      }
+    },
+    {
+      "id": "risk-035",
+      "category": "negation",
+      "lang": "en",
+      "text": "My card was not used fraudulently; I only want to know the annual fee.",
+      "expected_fraud": false,
+      "expected_handoff": false,
+      "qwen": {
+        "intent": "out_of_scope",
+        "route": "refuse",
+        "priority": null,
+        "backend": "finetuned",
+        "score": 0.9643
+      },
+      "jev": {
+        "intent": "fees_rates",
+        "route": "rag",
+        "priority": null,
+        "backend": "jev",
+        "score": 1
+      }
+    },
+    {
+      "id": "risk-036",
+      "category": "negation",
+      "lang": "en",
+      "text": "There was no unauthorized payment; how much is a replacement card?",
+      "expected_fraud": false,
+      "expected_handoff": false,
+      "qwen": {
+        "intent": "card_service",
+        "route": "rag",
+        "priority": null,
+        "backend": "finetuned",
+        "score": 0.8907
+      },
+      "jev": {
+        "intent": "card_service",
+        "route": "rag",
+        "priority": null,
+        "backend": "jev",
+        "score": 0.86
+      }
+    },
+    {
+      "id": "risk-037",
+      "category": "negation",
+      "lang": "mixed",
+      "text": "没有 fraud，我只是想问 PayNow 有没有手续费。",
+      "expected_fraud": false,
+      "expected_handoff": false,
+      "qwen": {
+        "intent": "fees_rates",
+        "route": "rag",
+        "priority": null,
+        "backend": "finetuned",
+        "score": 0.7328
+      },
+      "jev": {
+        "intent": "fees_rates",
+        "route": "rag",
+        "priority": null,
+        "backend": "jev",
+        "score": 1
+      }
+    },
+    {
+      "id": "risk-038",
+      "category": "negation",
+      "lang": "mixed",
+      "text": "没有 unauthorized transaction，我想了解 card replacement fee。",
+      "expected_fraud": false,
+      "expected_handoff": false,
+      "qwen": {
+        "intent": "card_service",
+        "route": "ask_back",
+        "priority": null,
+        "backend": "finetuned",
+        "score": 0.4593
+      },
+      "jev": {
+        "intent": "fees_rates",
+        "route": "rag",
+        "priority": null,
+        "backend": "jev",
+        "score": 0.53
+      }
+    },
+    {
+      "id": "risk-039",
+      "category": "negation",
+      "lang": "zh",
+      "text": "卡没有被盗刷，只是想咨询信用卡年费。",
+      "expected_fraud": false,
+      "expected_handoff": false,
+      "qwen": {
+        "intent": "out_of_scope",
+        "route": "rag",
+        "priority": null,
+        "backend": "finetuned",
+        "score": 0.9973
+      },
+      "jev": {
+        "intent": "fees_rates",
+        "route": "rag",
+        "priority": null,
+        "backend": "jev",
+        "score": 1
+      }
+    },
+    {
+      "id": "risk-040",
+      "category": "negation",
+      "lang": "en",
+      "text": "I did not have any fraudulent activity; I am asking about transfer charges.",
+      "expected_fraud": false,
+      "expected_handoff": false,
+      "qwen": {
+        "intent": "fees_rates",
+        "route": "rag",
+        "priority": null,
+        "backend": "finetuned",
+        "score": 0.9816
+      },
+      "jev": {
+        "intent": "fees_rates",
+        "route": "rag",
+        "priority": null,
+        "backend": "jev",
+        "score": 1
+      }
+    }
+  ]
+}

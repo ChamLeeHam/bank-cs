@@ -11,6 +11,8 @@ INTENTS: dict[str, dict] = {
                         "desc": "查询本人某笔转账/汇款是否到账、为什么失败（有多笔时由账户智能体追问）"},
     "card_lost_freeze": {"zh": "挂失冻结", "route": "account", "slots": ["card_last4"],
                          "desc": "银行卡丢失/被盗，需要冻结"},
+    "card_transaction_inquiry": {"zh": "最近银行卡交易", "route": "account", "slots": [],
+                                 "desc": "查询本人最近一笔银行卡交易"},
     # rag：一般性的问题，查知识库
     "fees_rates": {"zh": "费用汇率", "route": "rag", "slots": [],
                    "desc": "手续费、汇率、为什么收费"},
@@ -27,10 +29,10 @@ INTENTS: dict[str, dict] = {
                        "desc": "本人做的交易但有问题：重复扣款、退款未到、金额或汇率不对"},
     "complaint": {"zh": "投诉", "route": "handoff", "slots": [],
                   "desc": "主要表达不满（是否要求转人工由 human_requested 单独判断，不是意图）"},
-    # refuse：拒答或者欢迎语
+    # refuse：拒答；greeting：欢迎语（复用固定回复节点）
     "out_of_scope": {"zh": "超出范围", "route": "refuse", "slots": [],
                      "desc": "投资建议、闲聊、其他公司、与银行业务无关"},
-    "greeting": {"zh": "问候", "route": "refuse", "slots": [],
+    "greeting": {"zh": "问候", "route": "greeting", "slots": [],
                  "desc": "打招呼（用规则识别，不需要训练数据）"},
 }
 

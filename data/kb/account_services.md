@@ -42,9 +42,9 @@ You can close a savings account in the app under Settings > Close account, or at
 
 ## 多币种账户支持的货币 / Currencies in the multi-currency account
 <!-- sub_intents: fiat_currency_support -->
-多币种账户支持 11 种货币：SGD、USD、CNY、MYR、EUR、GBP、AUD、JPY、HKD、THB 和 IDR。可以持有、兑换、收取和汇出这些货币。本行不支持任何加密货币的存放、兑换或转账。
+多币种账户支持 11 种货币：SGD、USD、CNY、MYR、EUR、GBP、AUD、JPY（日元；Japanese yen / JPY）、HKD、THB 和 IDR。可以持有、兑换、收取和汇出这些货币。因此，您可以在账户中持有日元（Japanese yen）。本行不支持任何加密货币的存放、兑换或转账。
 
-The multi-currency account supports 11 currencies: SGD, USD, CNY, MYR, EUR, GBP, AUD, JPY, HKD, THB and IDR. You can hold, convert, receive and send these currencies. We do not support holding, converting or transferring any cryptocurrency.
+The multi-currency account supports 11 currencies: SGD, USD, CNY, MYR, EUR, GBP, AUD, JPY (Japanese yen), HKD, THB and IDR. You can hold, convert, receive and send Japanese yen (JPY) in the account. We do not support holding, converting or transferring any cryptocurrency.
 
 ## 存款保险 / Deposit insurance
 狮城银行是新加坡存款保险计划的成员。根据新加坡存款保险公司（SDIC）的规定，每位存款人在同一家银行的新元存款最多受保 SGD 100,000，储蓄账户、往来账户和定期存款里的新元合起来计算，不是每个账户各保 SGD 100,000。外币存款（包括多币种账户里的外币）、结构性存款和投资产品不在保障范围内。存款保险自动生效，客户不需要申请，也不用自己付费。
@@ -60,3 +60,20 @@ If you think someone else is using your account, for example after tapping a sus
 资金锁可以把储蓄账户里的一部分钱锁起来，锁住的钱不能通过网上银行或 App 转出，就算手机或账户被盗用也转不走。可以在 App 的"账户 > 资金锁"设置，最少锁 SGD 1,000。锁住的钱还在原来的账户里，余额照常显示，利息照常计算。解锁只能由本人带证件到分行办理，不能在网上解锁。
 
 Money Lock sets aside part of your savings account balance so it cannot be transferred out through internet banking or the app, even if your phone or account is compromised. Set it up in the app under Accounts > Money Lock, with a minimum of SGD 1,000. Locked money stays in the same account, still shows in your balance and still earns interest. To unlock it, you must visit a branch in person with your ID; it cannot be unlocked online.
+
+## 银行为何要求补充身份资料 / Why a bank may ask for more identity details
+<!-- sub_intents: why_verify_identity, verify_my_identity -->
+银行可能在开户、更新资料或定期复核时要求确认身份、地址、职业或资金用途，以履行客户尽职调查和反洗钱义务。收到请求时，请先通过银行官方 App、官网或银行卡背面的电话确认请求是否真实；不要回复陌生短信、邮件或来电并提供密码、完整卡号或 OTP。所需材料和审核时间取决于银行及个案。
+
+A bank may ask you to confirm your identity, address, occupation or purpose of funds when opening an account, updating details or completing a periodic review. This can form part of customer due diligence and anti-money-laundering checks. Verify the request through the bank's official app, website or the phone number on your card. Do not reply to an unfamiliar text, email or caller with your password, full card number or OTP. Required documents and review times depend on the bank and case.
+
+## 收到可疑银行短信或电话怎么办 / What to do about a suspicious bank message or call
+<!-- sub_intents: passcode_forgotten, verify_my_identity -->
+不要点击可疑短信或邮件中的登录链接，也不要向任何来电者提供密码、PIN 或 OTP。请自行打开银行 App，或使用银行卡背面、官网公布的联系方式联系银行核实。若已经输入了登录资料、分享验证码或发现未经授权的交易，应立即通过官方渠道联系银行并说明情况；需要冻结账户或报告损失时，按银行和警方的指引处理。
+
+Do not open a login link in a suspicious text or email, and never give a caller your password, PIN or OTP. Open your bank's app yourself or use the contact details printed on your card or published on its official website to check the message. If you have entered login details, shared an OTP or noticed an unauthorised transaction, contact the bank immediately through an official channel. Follow the bank's and police's instructions if you need to lock the account or report a loss.
+
+## 存款保险是按账户还是按银行计算 / Is deposit insurance per account or per bank
+新加坡存款保险的保障额度通常按存款人和成员机构合并计算，不是每个账户分别计算。符合条件的新元存款可能纳入保障；外币存款、投资产品等不应假设受保。开户前或需要确认具体产品资格时，请查看新加坡存款保险公司（SDIC）的最新说明和成员机构名单；狮城银行是演示名称，不代表真实的 SDIC 成员银行。
+
+Singapore deposit-insurance coverage is generally aggregated by depositor and member institution, rather than applied separately to every account. Eligible SGD deposits may qualify; do not assume foreign-currency deposits or investment products are covered. Check the latest Singapore Deposit Insurance Corporation (SDIC) guidance and member list for a specific product. Lion City Bank is a demo name and is not represented as a real SDIC member bank.
