@@ -55,7 +55,9 @@ class ApiTests(unittest.TestCase):
         self.assertEqual(events[0]['type'], 'status')
         self.assertEqual(''.join(e['text'] for e in events if e['type'] == 'delta'),
                          '这是一条经过检查的演示回复，内容比较长。')
-        self.assertEqual(events[-1], {'type': 'done', 'pending': 'otp'})
+        self.assertEqual(events[-1]['type'], 'done')
+        self.assertEqual(events[-1]['pending'], 'otp')
+        self.assertEqual(events[-1]['sources'], [])
         self.assertEqual(sessions[session]['pending'], 'otp')
 
 

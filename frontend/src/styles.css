@@ -109,6 +109,8 @@ input::placeholder, textarea::placeholder { color: #75666b; }
 .user .bubble { background: var(--red-dark); border-color: var(--red-dark); color: white; }
 .sources { display: flex; gap: 7px; color: var(--muted); font-size: .79rem; border-top: 1px solid var(--line); margin-top: 9px; padding-top: 8px; }
 .sources svg { flex: none; margin-top: 3px; }
+.sources > div { display: flex; flex-wrap: wrap; gap: 3px 12px; min-width: 0; }
+.sources span { overflow-wrap: anywhere; }
 .pending { margin-bottom: 9px; font-size: .84rem; color: var(--red-dark); }
 .pending > div, .detail-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 7px; }
 .pending button { white-space: normal; text-align: left; }

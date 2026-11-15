@@ -13,10 +13,11 @@ from src.utils import (hyde_utils, reranker_utils, response_utils, rewrite_query
                        search_embedding_utils)
 from src.utils.fraud_context import fraud_dispute_comparison_question, unfamiliar_merchant_name_question
 from src.utils.history_utils import (annual_fee_followup, fraud_general_followup, history_of, replacement_fee_stolen_followup,
-                                    statement_fee_followup, stolen_card_clarification)
+                                    needs_context_rewrite, statement_fee_followup, stolen_card_clarification)
 from src.utils.neo4j_utils import get_product_attr, get_product_names
 from src.utils.reference_bank_utils import is_reference_policy_question, resolve_reference_bank
 from src.utils.scope_utils import unsupported_scope_reason
+from src.utils.query_expansion_utils import expand_card_delivery_query
 
 NOT_FOUND = {
     "zh": "抱歉，我们的资料中没有这个问题的答案。如需进一步帮助，可以回复“转人工”联系人工客服。",
@@ -43,7 +44,7 @@ class RagAnswerNode(BaseNode):
     def process(self, state: GraphState) -> StateUpdate:
         self.log_step(self.name, "开始执行知识库问答")
         lang = "en" if state.get("lang") == "en" else "zh"  # 中英混杂的用中文回答
-        question = state.get("masked_question", "")
+        question = state.get("resolved_question") or state.get("masked_question", "")
         history = history_of(state)
         reference_bank = resolve_reference_bank(question, history)
         if not is_reference_policy_question(question, reference_bank):
@@ -139,7 +140,8 @@ class RagAnswerNode(BaseNode):
             self.last_run = {**info, "generator": "source_text"}
             source = {"doc": doc["doc"], "title": doc["title"], "section": doc["section"],
                       "rerank_score": doc["rerank_score"]}
-            return {"answer": f"{answer}\n\n{self._source_line([doc], lang)}", "sources": [source],
+            source["label"] = self._source_label(doc, lang)
+            return {"answer": answer, "sources": [source],
                     "search_query": rewritten_query}
 
         if sub_intent == "extra_charge_on_statement":
@@ -149,7 +151,8 @@ class RagAnswerNode(BaseNode):
                 self.last_run = {**info, "generator": "grounded_template"}
                 source = {"doc": doc["doc"], "title": doc["title"], "section": doc["section"],
                           "rerank_score": doc["rerank_score"]}
-                return {"answer": f"{answer}\n\n{self._source_line([doc], lang)}", "sources": [source],
+                source["label"] = self._source_label(doc, lang)
+                return {"answer": answer, "sources": [source],
                         "search_query": rewritten_query}
 
         # 5. 生成回答，失败的话直接用资料原文
@@ -158,19 +161,36 @@ class RagAnswerNode(BaseNode):
         answer = response["answer"] or (NOT_FOUND[lang] if reference_bank else self._source_text(docs[0], lang))
         if not response["answer"]:
             docs = docs[:1] if not reference_bank else []  # 不直接向客户回显原始参考银行文档
-        self.last_run = {**info, "generator": response["generator"], "t_generate": time.perf_counter() - start}
+        self.last_run = {**info, "generator": response["generator"], "t_generate": time.perf_counter() - start,
+                         "generation_calls": response.get("generation_attempts", 0),
+                         "citations_valid": response.get("citations_valid"),
+                         "used_sources": response.get("used_sources", [])}
         self.log_step(self.name, f"5. 回答生成完成：{response['generator']}")
 
-        # 6. 加上来源
-        sources = [{"doc": d["doc"], "title": d["title"], "section": d["section"], "rerank_score": d["rerank_score"]}
-                   for d in docs]
-        answer = f"{answer}\n\n{self._source_line(docs, lang, reference_bank)}"
+        # 6. 只展示生成结果标注为实际依据的来源。
+        if response.get("citations_valid"):
+            used_indices = response.get("used_sources", [])
+        else:
+            used_indices = list(range(1, len(docs) + 1))
+        if not response["answer"]:
+            used_indices = list(range(1, len(docs) + 1))
+        used_docs = [docs[index - 1] for index in used_indices if 1 <= index <= len(docs)]
+        sources = [{"doc": d["doc"], "title": d["title"], "section": d["section"],
+                    "rerank_score": d["rerank_score"], "label": self._source_label(d, lang, reference_bank)}
+                   for d in used_docs]
         if reference_bank:
             for source in sources:
                 source.update(adapted_from=reference_bank["key"], demo_policy=True)
         return {"answer": answer, "sources": sources, "search_query": rewritten_query}
 
-    def retrieve(self, question, history, products=None, reference_bank=None):
+    def retrieve(self, question, history, products=None, reference_bank=None, strategy=None):
+        """检索入口。adaptive 先直检，证据不足才重写/HyDE；legacy 保留旧流程供 A/B 对比。"""
+        adaptive = self.config.rag_adaptive_retrieval if strategy is None else strategy == "adaptive"
+        if adaptive:
+            return self._retrieve_adaptive(question, history, products, reference_bank)
+        return self._retrieve_legacy(question, history, products, reference_bank)
+
+    def _retrieve_legacy(self, question, history, products=None, reference_bank=None):
         """返回 (重写后的问题, 保留下来的块, 中间结果)；products 是实体抽取找到的产品 ID"""
         cfg = self.config
         reference_bank = reference_bank or resolve_reference_bank(question, history)
@@ -239,13 +259,139 @@ class RagAnswerNode(BaseNode):
         info["kept"] = docs
         info["best_score"] = best_score
         info["t_rerank"] = time.perf_counter() - start
+        info["used_rewrite"] = rewritten_query != question
+        info["used_hyde"] = bool(hyde_result["hyde_doc"])
         self.log_step(self.name, f"4. 精排完成，保留 {len(docs)} 个，最高分 {best_score}")
         return rewritten_query, docs, info
+
+    def _retrieve_adaptive(self, question, history, products=None, reference_bank=None):
+        """减少普通问答的模型调用；必要时按上下文重写，再以 HyDE 兜底。"""
+        cfg = self.config
+        reference_bank = reference_bank or resolve_reference_bank(question, history)
+        if not is_reference_policy_question(question, reference_bank):
+            reference_bank = None
+        scope_rejected = unsupported_scope_reason(question)
+        if scope_rejected and not reference_bank:
+            return question, [], {"rewritten": question, "search_query": question,
+                                  "scope_rejected": scope_rejected, "best_score": None,
+                                  "used_rewrite": False, "used_hyde": False}
+
+        info = {"rewritten": question, "used_rewrite": False, "used_hyde": False,
+                "used_query_expansion": False}
+        search_query = question
+        if products:
+            try:
+                names = " ".join(f"{p['name_zh']} {p['name_en']}" for p in get_product_names(products))
+                search_query = f"{question} {names}"
+            except Neo4jError as e:
+                self.logger.warning(f"取不到产品名，检索不加产品名：{e}")
+        info["search_query"] = search_query
+
+        def search(query):
+            if reference_bank:
+                return search_embedding_utils.process(
+                    query, collection_name=cfg.kb_collection, doc_prefix=reference_bank["doc_prefix"]
+                )["embedding_chunks"]
+            return search_embedding_utils.process(query)["embedding_chunks"]
+
+        def rank(query, chunks):
+            result = reranker_utils.process(query, chunks)
+            sorted_docs = result["sorted_chunks"]
+            docs = result["reranker_chunks"]
+            best = sorted_docs[0]["rerank_score"] if sorted_docs else None
+            if best is not None and best < cfg.rerank_min_score:
+                docs = []
+            return docs, sorted_docs, best
+
+        t_search = t_rerank = t_rewrite = 0.0
+        started = time.perf_counter()
+        direct_chunks = search(search_query)
+        t_search += time.perf_counter() - started
+        started = time.perf_counter()
+        docs, sorted_docs, best_score = rank(question, direct_chunks)
+        t_rerank += time.perf_counter() - started
+        info.update({"direct": direct_chunks, "fused": direct_chunks, "reranked": sorted_docs,
+                     "kept": docs, "best_score": best_score})
+
+        def enough(score, found):
+            return bool(found) and score is not None and score >= cfg.rag_direct_min_score
+
+        context_dependent = needs_context_rewrite(question, history)
+        if not reference_bank and context_dependent and cfg.rag_rewrite:
+            started = time.perf_counter()
+            rewritten = rewrite_query_utils.process(question, history)["rewritten_query"]
+            t_rewrite += time.perf_counter() - started
+            if rewritten and rewritten != question:
+                info["used_rewrite"] = True
+                info["rewritten"] = rewritten
+                info["search_query"] = rewritten
+                started = time.perf_counter()
+                rewritten_chunks = search(rewritten)
+                t_search += time.perf_counter() - started
+                started = time.perf_counter()
+                rewritten_docs, rewritten_sorted, rewritten_score = rank(rewritten, rewritten_chunks)
+                t_rerank += time.perf_counter() - started
+                if rewritten_score is not None and (context_dependent or best_score is None or rewritten_score > best_score):
+                    docs, sorted_docs, best_score = rewritten_docs, rewritten_sorted, rewritten_score
+                    direct_chunks = rewritten_chunks
+                    info.update({"direct": rewritten_chunks, "fused": rewritten_chunks})
+                info.update({"reranked": sorted_docs, "kept": docs, "best_score": best_score})
+
+        # The FAQ section exists, but colloquial "new card has not arrived" phrasing can
+        # miss it in the first-pass candidates. Add the KB's canonical delivery terms
+        # before spending another LLM call on HyDE.
+        expansion_query = expand_card_delivery_query(info["rewritten"])
+        if not reference_bank and expansion_query and not enough(best_score, docs):
+            started = time.perf_counter()
+            expanded_chunks = search(expansion_query)
+            t_search += time.perf_counter() - started
+            started = time.perf_counter()
+            expanded_docs, expanded_sorted, expanded_score = rank(expansion_query, expanded_chunks)
+            t_rerank += time.perf_counter() - started
+            if expanded_score is not None and (best_score is None or expanded_score > best_score):
+                docs, sorted_docs, best_score = expanded_docs, expanded_sorted, expanded_score
+                direct_chunks = expanded_chunks
+                info.update({"direct": expanded_chunks, "fused": expanded_chunks,
+                             "reranked": sorted_docs, "kept": docs, "best_score": best_score,
+                             "search_query": expansion_query, "expanded_query": expansion_query,
+                             "used_query_expansion": True})
+
+        if (not enough(best_score, docs) and not reference_bank and cfg.rag_hyde
+                and not response_utils.is_pin_unblock_question(question)):
+            hyde_query = info["rewritten"]
+            started = time.perf_counter()
+            hyde_result = hyde_utils.process(hyde_query)
+            t_search += time.perf_counter() - started
+            info["used_hyde"] = bool(hyde_result["hyde_doc"])
+            info["hyde"] = hyde_result["hyde_doc"]
+            hyde_chunks = hyde_result["embedding_chunks"]
+            if hyde_chunks:
+                fused = rrf_utils.process(direct_chunks, hyde_chunks)["rrf_chunks"]
+                started = time.perf_counter()
+                hyde_docs, hyde_sorted, hyde_score = rank(hyde_query, fused)
+                t_rerank += time.perf_counter() - started
+                if hyde_score is not None and (best_score is None or hyde_score > best_score):
+                    docs, sorted_docs, best_score = hyde_docs, hyde_sorted, hyde_score
+                info.update({"hyde_direct": hyde_chunks, "fused": fused, "reranked": sorted_docs,
+                             "kept": docs, "best_score": best_score})
+
+        info["t_rewrite"] = t_rewrite
+        info["t_search"] = t_search
+        info["t_rerank"] = t_rerank
+        info["search_query"] = info.get("search_query", search_query)
+        self.log_step(self.name, f"自适应检索完成：重写={info['used_rewrite']}，扩展={info['used_query_expansion']}，"
+                                  f"HyDE={info['used_hyde']}，保留 {len(docs)} 个，最高分 {best_score}")
+        return info["rewritten"], docs, info
 
     @staticmethod
     def _source_text(doc, lang):
         body = doc["text"].split("\n", 1)[-1]
         return response_utils.split_languages(body)[lang] or body
+
+    @staticmethod
+    def _source_label(doc, lang, reference_bank=None):
+        line = RagAnswerNode._source_line([doc], lang, reference_bank)
+        return line.removeprefix("来源：").removeprefix("Source:").strip()
 
     @staticmethod
     def _source_line(docs, lang, reference_bank=None):

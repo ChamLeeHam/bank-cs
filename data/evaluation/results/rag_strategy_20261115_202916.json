@@ -1,0 +1,1500 @@
+{
+  "count": 45,
+  "warmup": {
+    "warmed": [
+      "intent",
+      "embedding",
+      "reranker",
+      "deepseek"
+    ],
+    "failed": [],
+    "elapsed_seconds": 17.302092700003413
+  },
+  "strategies": {
+    "legacy": {
+      "successful": 45,
+      "errors": 0,
+      "expected_source_recall": 0.975,
+      "mean_latency_ms": 3381.61,
+      "p50_latency_ms": 3219.63,
+      "p95_latency_ms": 5615.55,
+      "rewrite_calls": 2,
+      "hyde_calls": 43,
+      "details": [
+        {
+          "question": "PayNow 转账要收钱吗？",
+          "expected": [
+            "本地转账费用"
+          ],
+          "retrieved": [
+            "An unexpected PayNow payment",
+            "How to receive money",
+            "Local transfer fees",
+            "如何收款",
+            "收到不明的 PayNow 转账",
+            "本地转账费用"
+          ],
+          "source_hit": true,
+          "latency_ms": 3435.5,
+          "best_score": 0.9912,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "What's the charge for sending a TT to Malaysia?",
+          "expected": [
+            "海外电汇（TT）手续费"
+          ],
+          "retrieved": [
+            "Overseas telegraphic transfer (TT) fees",
+            "海外电汇（TT）手续费"
+          ],
+          "source_hit": true,
+          "latency_ms": 3336.8,
+          "best_score": 0.9922,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "Is the overseas TT fee different if I send money to Malaysia?",
+          "expected": [
+            "海外电汇（TT）手续费"
+          ],
+          "retrieved": [
+            "Overseas telegraphic transfer (TT) fees",
+            "海外电汇（TT）手续费"
+          ],
+          "source_hit": true,
+          "latency_ms": 2684.14,
+          "best_score": 0.9983,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "你们的 exchange rate 是怎么定的？周末会不会不一样？",
+          "expected": [
+            "汇率如何确定"
+          ],
+          "retrieved": [
+            "How exchange rates are set",
+            "汇率如何确定"
+          ],
+          "source_hit": true,
+          "latency_ms": 5015.29,
+          "best_score": 0.8481,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "I paid in USD on Amazon with my Visa, why was there an extra 3.25%?",
+          "expected": [
+            "外币兑换与外币刷卡费用"
+          ],
+          "retrieved": [
+            "ATM withdrawal fees",
+            "ATM 取款费用",
+            "Currency conversion and foreign currency card fees",
+            "Unfamiliar charges on your statement",
+            "外币兑换与外币刷卡费用",
+            "账单上看不懂的费用"
+          ],
+          "source_hit": true,
+          "latency_ms": 3199.01,
+          "best_score": 0.0612,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "在日本 ATM 拿钱要多少 fee？",
+          "expected": [
+            "ATM 取款费用"
+          ],
+          "retrieved": [
+            "ATM withdrawal fees",
+            "ATM 取款费用"
+          ],
+          "source_hit": true,
+          "latency_ms": 5606.47,
+          "best_score": 0.4341,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "statement 上面有一笔看不懂的小额 charge 是什么？",
+          "expected": [
+            "账单上看不懂的费用"
+          ],
+          "retrieved": [
+            "Unfamiliar charges on your statement",
+            "账单上看不懂的费用"
+          ],
+          "source_hit": true,
+          "latency_ms": 3063.62,
+          "best_score": 0.9915,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "信用卡年费可以免吗？",
+          "expected": [
+            "银行卡年费与其他卡费"
+          ],
+          "retrieved": [
+            "Card annual fees and other card fees",
+            "银行卡年费与其他卡费"
+          ],
+          "source_hit": true,
+          "latency_ms": 2590.63,
+          "best_score": 0.9963,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "What's the difference between PayNow and FAST?",
+          "expected": [
+            "转账方式比较"
+          ],
+          "retrieved": [
+            "Ways to transfer money",
+            "转账方式比较"
+          ],
+          "source_hit": true,
+          "latency_ms": 3397.61,
+          "best_score": 0.8907,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "FAST transfer 一般几分钟会到？",
+          "expected": [
+            "转账一般多久到账",
+            "转账方式比较"
+          ],
+          "retrieved": [
+            "How long transfers take",
+            "Ways to transfer money",
+            "转账一般多久到账",
+            "转账方式比较"
+          ],
+          "source_hit": true,
+          "latency_ms": 2164.54,
+          "best_score": 0.9869,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "How do I send money to my mum's bank account in China?",
+          "expected": [
+            "如何汇款到海外"
+          ],
+          "retrieved": [
+            "How to send money overseas",
+            "如何汇款到海外"
+          ],
+          "source_hit": true,
+          "latency_ms": 5615.55,
+          "best_score": 0.0155,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "我朋友在美国要汇钱给我，要给他什么资料？",
+          "expected": [
+            "如何收款"
+          ],
+          "retrieved": [
+            "How to receive money",
+            "如何收款"
+          ],
+          "source_hit": true,
+          "latency_ms": 3816.77,
+          "best_score": 0.9315,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "My friend in the US wants to wire money to my Lion City account. What bank details should I give them?",
+          "expected": [
+            "如何收款"
+          ],
+          "retrieved": [
+            "How to receive money",
+            "如何收款"
+          ],
+          "source_hit": true,
+          "latency_ms": 3489.34,
+          "best_score": 0.995,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "Why can't I add Binance as a payee?",
+          "expected": [
+            "收款人限制"
+          ],
+          "retrieved": [
+            "Payee restrictions",
+            "收款人限制"
+          ],
+          "source_hit": true,
+          "latency_ms": 3532.96,
+          "best_score": 0.1813,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "我想一次转 SGD 10,000 给朋友，可以吗？",
+          "expected": [
+            "转账限额"
+          ],
+          "retrieved": [
+            "Payee restrictions",
+            "Transfer limits",
+            "收款人限制",
+            "转账限额"
+          ],
+          "source_hit": true,
+          "latency_ms": 3351.3,
+          "best_score": 0.966,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "My transfer got returned, what usually causes that?",
+          "expected": [
+            "转账失败的常见原因"
+          ],
+          "retrieved": [
+            "Common reasons a transfer fails",
+            "转账失败的常见原因"
+          ],
+          "source_hit": true,
+          "latency_ms": 3219.63,
+          "best_score": 0.7759,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "新卡收到了要怎么开通？",
+          "expected": [
+            "激活新卡"
+          ],
+          "retrieved": [
+            "Activating a new card",
+            "Card about to expire",
+            "卡片即将到期",
+            "激活新卡"
+          ],
+          "source_hit": true,
+          "latency_ms": 4304.14,
+          "best_score": 0.9913,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "My new card still hasn't arrived after two weeks",
+          "expected": [
+            "新卡寄送时间"
+          ],
+          "retrieved": [
+            "ATM 吞卡",
+            "Activating a new card",
+            "Card retained by an ATM",
+            "Pending authorisation versus a posted transaction",
+            "待处理交易和已入账交易有什么不同",
+            "激活新卡"
+          ],
+          "source_hit": false,
+          "latency_ms": 2713.33,
+          "best_score": 0.2053,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "我的 PIN 输错三次了，现在用不了",
+          "expected": [
+            "修改 PIN 与 PIN 被锁"
+          ],
+          "retrieved": [
+            "ATM 吞卡",
+            "Card retained by an ATM",
+            "Changing or unblocking your PIN",
+            "Forgotten login password",
+            "修改 PIN 与 PIN 被锁",
+            "忘记登录密码"
+          ],
+          "source_hit": true,
+          "latency_ms": 2106.11,
+          "best_score": 0.9931,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "Why does my card keep getting declined overseas?",
+          "expected": [
+            "卡被拒或不能用"
+          ],
+          "retrieved": [
+            "Card declined or not working",
+            "卡被拒或不能用"
+          ],
+          "source_hit": true,
+          "latency_ms": 8047.3,
+          "best_score": 0.9978,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "ATM 把我的卡吃掉了",
+          "expected": [
+            "ATM 吞卡"
+          ],
+          "retrieved": [
+            "ATM 吞卡",
+            "Card retained by an ATM"
+          ],
+          "source_hit": true,
+          "latency_ms": 3105.12,
+          "best_score": 0.9611,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "My card expires next month, do I need to apply for a new one?",
+          "expected": [
+            "卡片即将到期"
+          ],
+          "retrieved": [
+            "Card about to expire",
+            "卡片即将到期"
+          ],
+          "source_hit": true,
+          "latency_ms": 2768.39,
+          "best_score": 0.7734,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "可以给我太太办一张 supplementary card 吗？",
+          "expected": [
+            "补发实体卡与附属卡"
+          ],
+          "retrieved": [
+            "Replacement and supplementary cards",
+            "补发实体卡与附属卡"
+          ],
+          "source_hit": true,
+          "latency_ms": 2221.05,
+          "best_score": 0.0698,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "Is your debit card Visa or Mastercard?",
+          "expected": [
+            "卡组织与受理范围"
+          ],
+          "retrieved": [
+            "Card networks and where cards are accepted",
+            "卡组织与受理范围"
+          ],
+          "source_hit": true,
+          "latency_ms": 3598.26,
+          "best_score": 0.8876,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "Can I open an account if I'm 15?",
+          "expected": [
+            "开户条件"
+          ],
+          "retrieved": [
+            "Who can open an account",
+            "开户条件"
+          ],
+          "source_hit": true,
+          "latency_ms": 3260.32,
+          "best_score": 0.0454,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "开户需要什么证件？没有 Singpass 可以吗？",
+          "expected": [
+            "身份验证"
+          ],
+          "retrieved": [
+            "Verifying your identity",
+            "身份验证"
+          ],
+          "source_hit": true,
+          "latency_ms": 2927.26,
+          "best_score": 0.9988,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "The app keeps rejecting my selfie during verification",
+          "expected": [
+            "身份验证失败"
+          ],
+          "retrieved": [
+            "When identity verification fails",
+            "身份验证失败"
+          ],
+          "source_hit": true,
+          "latency_ms": 2940.53,
+          "best_score": 0.0133,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "我搬家了，地址要怎么改？",
+          "expected": [
+            "修改个人资料"
+          ],
+          "retrieved": [
+            "Updating your personal details",
+            "修改个人资料"
+          ],
+          "source_hit": true,
+          "latency_ms": 3191.3,
+          "best_score": 0.2903,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "I can't remember my internet banking password",
+          "expected": [
+            "忘记登录密码"
+          ],
+          "retrieved": [
+            "Forgotten login password",
+            "忘记登录密码"
+          ],
+          "source_hit": true,
+          "latency_ms": 2455.75,
+          "best_score": 0.9753,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "我想 close 我的 savings account",
+          "expected": [
+            "销户"
+          ],
+          "retrieved": [
+            "Closing your account",
+            "销户"
+          ],
+          "source_hit": true,
+          "latency_ms": 2816.01,
+          "best_score": 0.9958,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "Can I hold Japanese yen in my account?",
+          "expected": [
+            "多币种账户支持的货币"
+          ],
+          "retrieved": [
+            "Currencies in the multi-currency account",
+            "多币种账户支持的货币"
+          ],
+          "source_hit": true,
+          "latency_ms": 2779.83,
+          "best_score": 0.9944,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "Do you support holding JPY (Japanese yen)?",
+          "expected": [
+            "多币种账户支持的货币"
+          ],
+          "retrieved": [
+            "Currencies in the multi-currency account",
+            "多币种账户支持的货币"
+          ],
+          "source_hit": true,
+          "latency_ms": 3593.81,
+          "best_score": 0.9969,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "你们可以存比特币吗？",
+          "expected": [
+            "多币种账户支持的货币",
+            "收款人限制"
+          ],
+          "retrieved": [
+            "Currencies in the multi-currency account",
+            "多币种账户支持的货币"
+          ],
+          "source_hit": true,
+          "latency_ms": 2061.47,
+          "best_score": 0.04,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "我在你们银行存了 15 万新币，如果银行倒闭能拿回多少？",
+          "expected": [
+            "存款保险"
+          ],
+          "retrieved": [
+            "Deposit insurance",
+            "Unfamiliar charges on your statement",
+            "存款保险",
+            "账单上看不懂的费用"
+          ],
+          "source_hit": true,
+          "latency_ms": 5716.36,
+          "best_score": 0.0694,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "Is the USD in my multi-currency account covered by deposit insurance?",
+          "expected": [
+            "存款保险"
+          ],
+          "retrieved": [
+            "Deposit insurance",
+            "存款保险"
+          ],
+          "source_hit": true,
+          "latency_ms": 3035.71,
+          "best_score": 0.9601,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "我手机好像被黑了，可以马上把所有账户都 freeze 吗？",
+          "expected": [
+            "紧急冻结账户"
+          ],
+          "retrieved": [
+            "Emergency lock for all accounts",
+            "紧急冻结账户"
+          ],
+          "source_hit": true,
+          "latency_ms": 3338.07,
+          "best_score": 0.934,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "How can I lock part of my savings so it can't be transferred out online?",
+          "expected": [
+            "资金锁"
+          ],
+          "retrieved": [
+            "Money Lock",
+            "资金锁"
+          ],
+          "source_hit": true,
+          "latency_ms": 4032.52,
+          "best_score": 0.9978,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "PayNow 转账的时候为什么看不到对方的 nickname 了？",
+          "expected": [
+            "PayNow 收款人名字的显示"
+          ],
+          "retrieved": [
+            "An unexpected PayNow payment",
+            "How PayNow shows the payee's name",
+            "PayNow 收款人名字的显示",
+            "收到不明的 PayNow 转账"
+          ],
+          "source_hit": true,
+          "latency_ms": 4589.19,
+          "best_score": 0.9991,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "定期存款利率是多少？",
+          "expected": [],
+          "retrieved": [],
+          "source_hit": null,
+          "latency_ms": 3015.73,
+          "best_score": 0.0029,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "How do I apply for a home loan?",
+          "expected": [],
+          "retrieved": [],
+          "source_hit": null,
+          "latency_ms": 0.06,
+          "best_score": null,
+          "used_rewrite": false,
+          "used_hyde": false,
+          "error": null
+        },
+        {
+          "question": "你们的分行几点开门？",
+          "expected": [],
+          "retrieved": [],
+          "source_hit": null,
+          "latency_ms": 4708.97,
+          "best_score": 0.0027,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "Does my credit card come with travel insurance?",
+          "expected": [],
+          "retrieved": [],
+          "source_hit": null,
+          "latency_ms": 4792.61,
+          "best_score": 0.0014,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "那 FAST 呢？",
+          "expected": [
+            "本地转账费用"
+          ],
+          "retrieved": [
+            "Local transfer fees",
+            "Transfer limits",
+            "本地转账费用",
+            "转账限额"
+          ],
+          "source_hit": true,
+          "latency_ms": 3150.87,
+          "best_score": 0.3005,
+          "used_rewrite": true,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "what if I forgot the PIN?",
+          "expected": [
+            "修改 PIN 与 PIN 被锁"
+          ],
+          "retrieved": [
+            "ATM 吞卡",
+            "Activating a new card",
+            "Card retained by an ATM",
+            "Changing or unblocking your PIN",
+            "修改 PIN 与 PIN 被锁",
+            "激活新卡"
+          ],
+          "source_hit": true,
+          "latency_ms": 3383.25,
+          "best_score": 0.9398,
+          "used_rewrite": true,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "Does Lion City Bank offer mortgages or home loans?",
+          "expected": [],
+          "retrieved": [],
+          "source_hit": null,
+          "latency_ms": 0.04,
+          "best_score": null,
+          "used_rewrite": false,
+          "used_hyde": false,
+          "error": null
+        }
+      ]
+    },
+    "adaptive": {
+      "successful": 45,
+      "errors": 0,
+      "expected_source_recall": 0.975,
+      "mean_latency_ms": 1090.46,
+      "p50_latency_ms": 105.39,
+      "p95_latency_ms": 4192.16,
+      "rewrite_calls": 1,
+      "hyde_calls": 13,
+      "details": [
+        {
+          "question": "PayNow 转账要收钱吗？",
+          "expected": [
+            "本地转账费用"
+          ],
+          "retrieved": [
+            "An unexpected PayNow payment",
+            "How to receive money",
+            "Local transfer fees",
+            "如何收款",
+            "收到不明的 PayNow 转账",
+            "本地转账费用"
+          ],
+          "source_hit": true,
+          "latency_ms": 228.9,
+          "best_score": 0.9912,
+          "used_rewrite": false,
+          "used_hyde": false,
+          "error": null
+        },
+        {
+          "question": "What's the charge for sending a TT to Malaysia?",
+          "expected": [
+            "海外电汇（TT）手续费"
+          ],
+          "retrieved": [
+            "Overseas telegraphic transfer (TT) fees",
+            "海外电汇（TT）手续费"
+          ],
+          "source_hit": true,
+          "latency_ms": 81.88,
+          "best_score": 0.9922,
+          "used_rewrite": false,
+          "used_hyde": false,
+          "error": null
+        },
+        {
+          "question": "Is the overseas TT fee different if I send money to Malaysia?",
+          "expected": [
+            "海外电汇（TT）手续费"
+          ],
+          "retrieved": [
+            "Overseas telegraphic transfer (TT) fees",
+            "海外电汇（TT）手续费"
+          ],
+          "source_hit": true,
+          "latency_ms": 87.48,
+          "best_score": 0.9983,
+          "used_rewrite": false,
+          "used_hyde": false,
+          "error": null
+        },
+        {
+          "question": "你们的 exchange rate 是怎么定的？周末会不会不一样？",
+          "expected": [
+            "汇率如何确定"
+          ],
+          "retrieved": [
+            "How exchange rates are set",
+            "汇率如何确定"
+          ],
+          "source_hit": true,
+          "latency_ms": 82.86,
+          "best_score": 0.8481,
+          "used_rewrite": false,
+          "used_hyde": false,
+          "error": null
+        },
+        {
+          "question": "I paid in USD on Amazon with my Visa, why was there an extra 3.25%?",
+          "expected": [
+            "外币兑换与外币刷卡费用"
+          ],
+          "retrieved": [
+            "ATM withdrawal fees",
+            "ATM 取款费用",
+            "Currency conversion and foreign currency card fees",
+            "Unfamiliar charges on your statement",
+            "外币兑换与外币刷卡费用",
+            "账单上看不懂的费用"
+          ],
+          "source_hit": true,
+          "latency_ms": 5047.19,
+          "best_score": 0.0612,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "在日本 ATM 拿钱要多少 fee？",
+          "expected": [
+            "ATM 取款费用"
+          ],
+          "retrieved": [
+            "ATM withdrawal fees",
+            "ATM 取款费用"
+          ],
+          "source_hit": true,
+          "latency_ms": 77.91,
+          "best_score": 0.4341,
+          "used_rewrite": false,
+          "used_hyde": false,
+          "error": null
+        },
+        {
+          "question": "statement 上面有一笔看不懂的小额 charge 是什么？",
+          "expected": [
+            "账单上看不懂的费用"
+          ],
+          "retrieved": [
+            "Unfamiliar charges on your statement",
+            "账单上看不懂的费用"
+          ],
+          "source_hit": true,
+          "latency_ms": 81.73,
+          "best_score": 0.9915,
+          "used_rewrite": false,
+          "used_hyde": false,
+          "error": null
+        },
+        {
+          "question": "信用卡年费可以免吗？",
+          "expected": [
+            "银行卡年费与其他卡费"
+          ],
+          "retrieved": [
+            "Card annual fees and other card fees",
+            "银行卡年费与其他卡费"
+          ],
+          "source_hit": true,
+          "latency_ms": 76.01,
+          "best_score": 0.9963,
+          "used_rewrite": false,
+          "used_hyde": false,
+          "error": null
+        },
+        {
+          "question": "What's the difference between PayNow and FAST?",
+          "expected": [
+            "转账方式比较"
+          ],
+          "retrieved": [
+            "Ways to transfer money",
+            "转账方式比较"
+          ],
+          "source_hit": true,
+          "latency_ms": 78.85,
+          "best_score": 0.8907,
+          "used_rewrite": false,
+          "used_hyde": false,
+          "error": null
+        },
+        {
+          "question": "FAST transfer 一般几分钟会到？",
+          "expected": [
+            "转账一般多久到账",
+            "转账方式比较"
+          ],
+          "retrieved": [
+            "How long transfers take",
+            "Ways to transfer money",
+            "转账一般多久到账",
+            "转账方式比较"
+          ],
+          "source_hit": true,
+          "latency_ms": 116.59,
+          "best_score": 0.9869,
+          "used_rewrite": false,
+          "used_hyde": false,
+          "error": null
+        },
+        {
+          "question": "How do I send money to my mum's bank account in China?",
+          "expected": [
+            "如何汇款到海外"
+          ],
+          "retrieved": [
+            "How to send money overseas",
+            "如何汇款到海外"
+          ],
+          "source_hit": true,
+          "latency_ms": 4192.16,
+          "best_score": 0.0155,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "我朋友在美国要汇钱给我，要给他什么资料？",
+          "expected": [
+            "如何收款"
+          ],
+          "retrieved": [
+            "How to receive money",
+            "如何收款"
+          ],
+          "source_hit": true,
+          "latency_ms": 116.97,
+          "best_score": 0.9315,
+          "used_rewrite": false,
+          "used_hyde": false,
+          "error": null
+        },
+        {
+          "question": "My friend in the US wants to wire money to my Lion City account. What bank details should I give them?",
+          "expected": [
+            "如何收款"
+          ],
+          "retrieved": [
+            "How to receive money",
+            "如何收款"
+          ],
+          "source_hit": true,
+          "latency_ms": 105.39,
+          "best_score": 0.995,
+          "used_rewrite": false,
+          "used_hyde": false,
+          "error": null
+        },
+        {
+          "question": "Why can't I add Binance as a payee?",
+          "expected": [
+            "收款人限制"
+          ],
+          "retrieved": [
+            "Payee restrictions",
+            "收款人限制"
+          ],
+          "source_hit": true,
+          "latency_ms": 2998.72,
+          "best_score": 0.1813,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "我想一次转 SGD 10,000 给朋友，可以吗？",
+          "expected": [
+            "转账限额"
+          ],
+          "retrieved": [
+            "Payee restrictions",
+            "Transfer limits",
+            "收款人限制",
+            "转账限额"
+          ],
+          "source_hit": true,
+          "latency_ms": 99.54,
+          "best_score": 0.966,
+          "used_rewrite": false,
+          "used_hyde": false,
+          "error": null
+        },
+        {
+          "question": "My transfer got returned, what usually causes that?",
+          "expected": [
+            "转账失败的常见原因"
+          ],
+          "retrieved": [
+            "Common reasons a transfer fails",
+            "转账失败的常见原因"
+          ],
+          "source_hit": true,
+          "latency_ms": 90.52,
+          "best_score": 0.7759,
+          "used_rewrite": false,
+          "used_hyde": false,
+          "error": null
+        },
+        {
+          "question": "新卡收到了要怎么开通？",
+          "expected": [
+            "激活新卡"
+          ],
+          "retrieved": [
+            "Activating a new card",
+            "Card about to expire",
+            "卡片即将到期",
+            "激活新卡"
+          ],
+          "source_hit": true,
+          "latency_ms": 94.04,
+          "best_score": 0.9913,
+          "used_rewrite": false,
+          "used_hyde": false,
+          "error": null
+        },
+        {
+          "question": "My new card still hasn't arrived after two weeks",
+          "expected": [
+            "新卡寄送时间"
+          ],
+          "retrieved": [
+            "ATM 吞卡",
+            "Activating a new card",
+            "Card retained by an ATM",
+            "Pending authorisation versus a posted transaction",
+            "待处理交易和已入账交易有什么不同",
+            "激活新卡"
+          ],
+          "source_hit": false,
+          "latency_ms": 3024.41,
+          "best_score": 0.2053,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "我的 PIN 输错三次了，现在用不了",
+          "expected": [
+            "修改 PIN 与 PIN 被锁"
+          ],
+          "retrieved": [
+            "ATM 吞卡",
+            "Card retained by an ATM",
+            "Changing or unblocking your PIN",
+            "Forgotten login password",
+            "修改 PIN 与 PIN 被锁",
+            "忘记登录密码"
+          ],
+          "source_hit": true,
+          "latency_ms": 139.2,
+          "best_score": 0.9931,
+          "used_rewrite": false,
+          "used_hyde": false,
+          "error": null
+        },
+        {
+          "question": "Why does my card keep getting declined overseas?",
+          "expected": [
+            "卡被拒或不能用"
+          ],
+          "retrieved": [
+            "Card declined or not working",
+            "卡被拒或不能用"
+          ],
+          "source_hit": true,
+          "latency_ms": 111.66,
+          "best_score": 0.9978,
+          "used_rewrite": false,
+          "used_hyde": false,
+          "error": null
+        },
+        {
+          "question": "ATM 把我的卡吃掉了",
+          "expected": [
+            "ATM 吞卡"
+          ],
+          "retrieved": [
+            "ATM 吞卡",
+            "Card retained by an ATM"
+          ],
+          "source_hit": true,
+          "latency_ms": 88.52,
+          "best_score": 0.9611,
+          "used_rewrite": false,
+          "used_hyde": false,
+          "error": null
+        },
+        {
+          "question": "My card expires next month, do I need to apply for a new one?",
+          "expected": [
+            "卡片即将到期"
+          ],
+          "retrieved": [
+            "Card about to expire",
+            "卡片即将到期"
+          ],
+          "source_hit": true,
+          "latency_ms": 81.62,
+          "best_score": 0.7734,
+          "used_rewrite": false,
+          "used_hyde": false,
+          "error": null
+        },
+        {
+          "question": "可以给我太太办一张 supplementary card 吗？",
+          "expected": [
+            "补发实体卡与附属卡"
+          ],
+          "retrieved": [
+            "Replacement and supplementary cards",
+            "补发实体卡与附属卡"
+          ],
+          "source_hit": true,
+          "latency_ms": 2735.95,
+          "best_score": 0.0698,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "Is your debit card Visa or Mastercard?",
+          "expected": [
+            "卡组织与受理范围"
+          ],
+          "retrieved": [
+            "Card networks and where cards are accepted",
+            "卡组织与受理范围"
+          ],
+          "source_hit": true,
+          "latency_ms": 88.7,
+          "best_score": 0.8876,
+          "used_rewrite": false,
+          "used_hyde": false,
+          "error": null
+        },
+        {
+          "question": "Can I open an account if I'm 15?",
+          "expected": [
+            "开户条件"
+          ],
+          "retrieved": [
+            "Who can open an account",
+            "开户条件"
+          ],
+          "source_hit": true,
+          "latency_ms": 3264.35,
+          "best_score": 0.0454,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "开户需要什么证件？没有 Singpass 可以吗？",
+          "expected": [
+            "身份验证"
+          ],
+          "retrieved": [
+            "Verifying your identity",
+            "身份验证"
+          ],
+          "source_hit": true,
+          "latency_ms": 93.06,
+          "best_score": 0.9988,
+          "used_rewrite": false,
+          "used_hyde": false,
+          "error": null
+        },
+        {
+          "question": "The app keeps rejecting my selfie during verification",
+          "expected": [
+            "身份验证失败"
+          ],
+          "retrieved": [
+            "When identity verification fails",
+            "身份验证失败"
+          ],
+          "source_hit": true,
+          "latency_ms": 4891.51,
+          "best_score": 0.0133,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "我搬家了，地址要怎么改？",
+          "expected": [
+            "修改个人资料"
+          ],
+          "retrieved": [
+            "Updating your personal details",
+            "修改个人资料"
+          ],
+          "source_hit": true,
+          "latency_ms": 2347.31,
+          "best_score": 0.2903,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "I can't remember my internet banking password",
+          "expected": [
+            "忘记登录密码"
+          ],
+          "retrieved": [
+            "Forgotten login password",
+            "忘记登录密码"
+          ],
+          "source_hit": true,
+          "latency_ms": 98.5,
+          "best_score": 0.9753,
+          "used_rewrite": false,
+          "used_hyde": false,
+          "error": null
+        },
+        {
+          "question": "我想 close 我的 savings account",
+          "expected": [
+            "销户"
+          ],
+          "retrieved": [
+            "Closing your account",
+            "销户"
+          ],
+          "source_hit": true,
+          "latency_ms": 102.89,
+          "best_score": 0.9958,
+          "used_rewrite": false,
+          "used_hyde": false,
+          "error": null
+        },
+        {
+          "question": "Can I hold Japanese yen in my account?",
+          "expected": [
+            "多币种账户支持的货币"
+          ],
+          "retrieved": [
+            "Currencies in the multi-currency account",
+            "多币种账户支持的货币"
+          ],
+          "source_hit": true,
+          "latency_ms": 106.83,
+          "best_score": 0.9944,
+          "used_rewrite": false,
+          "used_hyde": false,
+          "error": null
+        },
+        {
+          "question": "Do you support holding JPY (Japanese yen)?",
+          "expected": [
+            "多币种账户支持的货币"
+          ],
+          "retrieved": [
+            "Currencies in the multi-currency account",
+            "多币种账户支持的货币"
+          ],
+          "source_hit": true,
+          "latency_ms": 158.81,
+          "best_score": 0.9969,
+          "used_rewrite": false,
+          "used_hyde": false,
+          "error": null
+        },
+        {
+          "question": "你们可以存比特币吗？",
+          "expected": [
+            "多币种账户支持的货币",
+            "收款人限制"
+          ],
+          "retrieved": [
+            "Currencies in the multi-currency account",
+            "多币种账户支持的货币"
+          ],
+          "source_hit": true,
+          "latency_ms": 2563.56,
+          "best_score": 0.04,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "我在你们银行存了 15 万新币，如果银行倒闭能拿回多少？",
+          "expected": [
+            "存款保险"
+          ],
+          "retrieved": [
+            "Deposit insurance",
+            "Unfamiliar charges on your statement",
+            "存款保险",
+            "账单上看不懂的费用"
+          ],
+          "source_hit": true,
+          "latency_ms": 3991.53,
+          "best_score": 0.0694,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "Is the USD in my multi-currency account covered by deposit insurance?",
+          "expected": [
+            "存款保险"
+          ],
+          "retrieved": [
+            "Deposit insurance",
+            "存款保险"
+          ],
+          "source_hit": true,
+          "latency_ms": 115.32,
+          "best_score": 0.9601,
+          "used_rewrite": false,
+          "used_hyde": false,
+          "error": null
+        },
+        {
+          "question": "我手机好像被黑了，可以马上把所有账户都 freeze 吗？",
+          "expected": [
+            "紧急冻结账户"
+          ],
+          "retrieved": [
+            "Emergency lock for all accounts",
+            "紧急冻结账户"
+          ],
+          "source_hit": true,
+          "latency_ms": 85.29,
+          "best_score": 0.934,
+          "used_rewrite": false,
+          "used_hyde": false,
+          "error": null
+        },
+        {
+          "question": "How can I lock part of my savings so it can't be transferred out online?",
+          "expected": [
+            "资金锁"
+          ],
+          "retrieved": [
+            "Money Lock",
+            "资金锁"
+          ],
+          "source_hit": true,
+          "latency_ms": 83.92,
+          "best_score": 0.9978,
+          "used_rewrite": false,
+          "used_hyde": false,
+          "error": null
+        },
+        {
+          "question": "PayNow 转账的时候为什么看不到对方的 nickname 了？",
+          "expected": [
+            "PayNow 收款人名字的显示"
+          ],
+          "retrieved": [
+            "An unexpected PayNow payment",
+            "How PayNow shows the payee's name",
+            "PayNow 收款人名字的显示",
+            "收到不明的 PayNow 转账"
+          ],
+          "source_hit": true,
+          "latency_ms": 101.41,
+          "best_score": 0.9991,
+          "used_rewrite": false,
+          "used_hyde": false,
+          "error": null
+        },
+        {
+          "question": "定期存款利率是多少？",
+          "expected": [],
+          "retrieved": [],
+          "source_hit": null,
+          "latency_ms": 3129.28,
+          "best_score": 0.0029,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "How do I apply for a home loan?",
+          "expected": [],
+          "retrieved": [],
+          "source_hit": null,
+          "latency_ms": 0.03,
+          "best_score": null,
+          "used_rewrite": false,
+          "used_hyde": false,
+          "error": null
+        },
+        {
+          "question": "你们的分行几点开门？",
+          "expected": [],
+          "retrieved": [],
+          "source_hit": null,
+          "latency_ms": 2658.4,
+          "best_score": 0.0027,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "Does my credit card come with travel insurance?",
+          "expected": [],
+          "retrieved": [],
+          "source_hit": null,
+          "latency_ms": 4023.57,
+          "best_score": 0.0014,
+          "used_rewrite": false,
+          "used_hyde": true,
+          "error": null
+        },
+        {
+          "question": "那 FAST 呢？",
+          "expected": [
+            "本地转账费用"
+          ],
+          "retrieved": [
+            "Local transfer fees",
+            "Transfer limits",
+            "Ways to transfer money",
+            "本地转账费用",
+            "转账方式比较",
+            "转账限额"
+          ],
+          "source_hit": true,
+          "latency_ms": 1223.61,
+          "best_score": 0.9086,
+          "used_rewrite": true,
+          "used_hyde": false,
+          "error": null
+        },
+        {
+          "question": "what if I forgot the PIN?",
+          "expected": [
+            "修改 PIN 与 PIN 被锁"
+          ],
+          "retrieved": [
+            "ATM 吞卡",
+            "Card retained by an ATM",
+            "Changing or unblocking your PIN",
+            "First steps if your card may be compromised",
+            "修改 PIN 与 PIN 被锁",
+            "怀疑银行卡被盗用时先做什么"
+          ],
+          "source_hit": true,
+          "latency_ms": 104.72,
+          "best_score": 0.9487,
+          "used_rewrite": false,
+          "used_hyde": false,
+          "error": null
+        },
+        {
+          "question": "Does Lion City Bank offer mortgages or home loans?",
+          "expected": [],
+          "retrieved": [],
+          "source_hit": null,
+          "latency_ms": 0.05,
+          "best_score": null,
+          "used_rewrite": false,
+          "used_hyde": false,
+          "error": null
+        }
+      ]
+    }
+  },
+  "source_differences": []
+}

@@ -1,11 +1,13 @@
 """本机演示接口：uv run uvicorn src.api:app --host 127.0.0.1 --port 8001"""
 import os
+import asyncio
 import logging
 import json
 import ipaddress
 import hmac
 import re
 import threading
+from contextlib import asynccontextmanager
 from typing import Literal
 from pathlib import Path
 from uuid import uuid4
@@ -36,7 +38,21 @@ from src.intents import is_human_request
 from src.utils.fraud_context import fraud_context
 from src.utils import agent_auth
 
-app = FastAPI(title="狮城银行客服演示")
+@asynccontextmanager
+async def lifespan(_app):
+    from src.schema.config import get_config
+
+    if get_config().startup_warmup:
+        try:
+            from src.utils.startup_warmup import warmup_runtime
+
+            await asyncio.to_thread(warmup_runtime)
+        except Exception:
+            logger.exception("服务启动预热异常，继续启动服务")
+    yield
+
+
+app = FastAPI(title="狮城银行客服演示", lifespan=lifespan)
 logger = logging.getLogger(__name__)
 WEB_DIR = Path(__file__).parent / "web"
 app.mount("/static", StaticFiles(directory=WEB_DIR), name="static")
@@ -596,7 +612,8 @@ def send_message(session_id: str, request: Message):
                 result = run_query(session_id, session["customer_id"], message, verbose=False)
         pending = result.get("pending") or {}
         session["pending"] = pending.get("type")
-        return {"answer": result.get("answer", ""), "pending": session["pending"]}
+        return {"answer": result.get("answer", ""), "pending": session["pending"],
+                "sources": result.get("sources") or []}
     except Exception:
         logger.exception("演示会话处理失败")
         raise HTTPException(status_code=500, detail="处理失败，请检查本地服务后重试。")
@@ -620,7 +637,7 @@ def stream_message(session_id: str, request: Message):
         answer = result["answer"] or "暂时没有收到回复，请重试。"
         for start in range(0, len(answer), 12):
             yield event({"type": "delta", "text": answer[start:start + 12]})
-        yield event({"type": "done", "pending": result["pending"]})
+        yield event({"type": "done", "pending": result["pending"], "sources": result.get("sources") or []})
 
     return StreamingResponse(generate(), media_type="application/x-ndjson",
                              headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"})

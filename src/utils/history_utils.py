@@ -5,6 +5,23 @@ import re
 
 SOURCE_MARKERS = ("\n\n来源：", "\n\nSource:")
 _STOLEN_CARD_HYPOTHETICAL = re.compile(r"(?:那|请问)?如果(?:银行卡|卡片|卡)(?:被偷|被盗|被人偷)(?:了)?(?:呢|的话呢|怎么办)?[？?。！!\s]*")
+_CONTEXT_DEPENDENT_QUERY = re.compile(
+    r"^(?:那|这个|那这个|它|这笔|这个费用|第[一二三四五六七八九1-9]+(?:个|项)|"
+    r"what about|and (?:that|this|it|the third)|the third one|that one|how about)",
+    re.IGNORECASE,
+)
+
+
+def needs_context_rewrite(question, history):
+    """只对有历史且明显省略/指代上文的短追问调用 LLM 重写。"""
+    if not history:
+        return False
+    text = question.strip()
+    if len(text) > 80:
+        return False
+    return bool(_CONTEXT_DEPENDENT_QUERY.search(text)) or bool(
+        re.fullmatch(r"(?:还有呢|然后呢|呢|那呢|what about it|and then)[？?。！!\s]*", text, re.IGNORECASE)
+    )
 
 
 def stolen_card_hypothetical(question):

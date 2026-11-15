@@ -1,0 +1,1068 @@
+{
+  "created_at": "2026-11-15T21:35:14",
+  "collection": "lioncity_bank_knowledge",
+  "generator": "deepseek",
+  "count": 45,
+  "success_count": 36,
+  "error_count": 9,
+  "answerable_count": 31,
+  "expected_source_recall": 0.967741935483871,
+  "mean_citation_precision": 0.9838709677419355,
+  "citation_format_valid_rate": 1,
+  "candidate_sources_total": 39,
+  "displayed_sources_total": 31,
+  "source_reduction_rate": 0.20512820512820518,
+  "mean_latency_ms": 2794.09,
+  "p50_latency_ms": 2032.42,
+  "p95_latency_ms": 6240.92,
+  "details": [
+    {
+      "id": null,
+      "question": "PayNow 转账要收钱吗？",
+      "expected": [
+        "本地转账费用"
+      ],
+      "candidate_sources": [
+        "An unexpected PayNow payment",
+        "How to receive money",
+        "Local transfer fees",
+        "如何收款",
+        "收到不明的 PayNow 转账",
+        "本地转账费用"
+      ],
+      "displayed_sources": [
+        "Local transfer fees",
+        "本地转账费用"
+      ],
+      "candidate_count": 3,
+      "displayed_count": 1,
+      "source_hit": true,
+      "citation_precision": 1.0,
+      "citations_valid": true,
+      "generator": "deepseek",
+      "used_rewrite": false,
+      "used_hyde": false,
+      "latency_ms": 8858.68,
+      "error": null
+    },
+    {
+      "id": null,
+      "question": "What's the charge for sending a TT to Malaysia?",
+      "expected": [
+        "海外电汇（TT）手续费"
+      ],
+      "candidate_sources": [
+        "Overseas telegraphic transfer (TT) fees",
+        "海外电汇（TT）手续费"
+      ],
+      "displayed_sources": [
+        "Overseas telegraphic transfer (TT) fees",
+        "海外电汇（TT）手续费"
+      ],
+      "candidate_count": 1,
+      "displayed_count": 1,
+      "source_hit": true,
+      "citation_precision": 1.0,
+      "citations_valid": true,
+      "generator": "deepseek",
+      "used_rewrite": false,
+      "used_hyde": false,
+      "latency_ms": 1926.5,
+      "error": null
+    },
+    {
+      "id": null,
+      "question": "Is the overseas TT fee different if I send money to Malaysia?",
+      "expected": [
+        "海外电汇（TT）手续费"
+      ],
+      "candidate_sources": [
+        "Overseas telegraphic transfer (TT) fees",
+        "海外电汇（TT）手续费"
+      ],
+      "displayed_sources": [
+        "Overseas telegraphic transfer (TT) fees",
+        "海外电汇（TT）手续费"
+      ],
+      "candidate_count": 1,
+      "displayed_count": 1,
+      "source_hit": true,
+      "citation_precision": 1.0,
+      "citations_valid": true,
+      "generator": "deepseek",
+      "used_rewrite": false,
+      "used_hyde": false,
+      "latency_ms": 1377.63,
+      "error": null
+    },
+    {
+      "id": null,
+      "question": "你们的 exchange rate 是怎么定的？周末会不会不一样？",
+      "expected": [
+        "汇率如何确定"
+      ],
+      "candidate_sources": [],
+      "displayed_sources": [],
+      "candidate_count": 0,
+      "displayed_count": 0,
+      "source_hit": false,
+      "citation_precision": 1.0,
+      "citations_valid": null,
+      "generator": null,
+      "used_rewrite": false,
+      "used_hyde": false,
+      "latency_ms": 166.9,
+      "error": "KeyError: 'mixed'"
+    },
+    {
+      "id": null,
+      "question": "I paid in USD on Amazon with my Visa, why was there an extra 3.25%?",
+      "expected": [
+        "外币兑换与外币刷卡费用"
+      ],
+      "candidate_sources": [
+        "Currency conversion and foreign currency card fees",
+        "外币兑换与外币刷卡费用"
+      ],
+      "displayed_sources": [
+        "Currency conversion and foreign currency card fees",
+        "外币兑换与外币刷卡费用"
+      ],
+      "candidate_count": 1,
+      "displayed_count": 1,
+      "source_hit": true,
+      "citation_precision": 1.0,
+      "citations_valid": true,
+      "generator": "deepseek",
+      "used_rewrite": false,
+      "used_hyde": true,
+      "latency_ms": 6148.84,
+      "error": null
+    },
+    {
+      "id": null,
+      "question": "在日本 ATM 拿钱要多少 fee？",
+      "expected": [
+        "ATM 取款费用"
+      ],
+      "candidate_sources": [],
+      "displayed_sources": [],
+      "candidate_count": 0,
+      "displayed_count": 0,
+      "source_hit": false,
+      "citation_precision": 1.0,
+      "citations_valid": null,
+      "generator": null,
+      "used_rewrite": false,
+      "used_hyde": false,
+      "latency_ms": 107.74,
+      "error": "KeyError: 'mixed'"
+    },
+    {
+      "id": null,
+      "question": "statement 上面有一笔看不懂的小额 charge 是什么？",
+      "expected": [
+        "账单上看不懂的费用"
+      ],
+      "candidate_sources": [],
+      "displayed_sources": [],
+      "candidate_count": 0,
+      "displayed_count": 0,
+      "source_hit": false,
+      "citation_precision": 1.0,
+      "citations_valid": null,
+      "generator": null,
+      "used_rewrite": false,
+      "used_hyde": false,
+      "latency_ms": 147.55,
+      "error": "KeyError: 'mixed'"
+    },
+    {
+      "id": null,
+      "question": "信用卡年费可以免吗？",
+      "expected": [
+        "银行卡年费与其他卡费"
+      ],
+      "candidate_sources": [
+        "Card annual fees and other card fees",
+        "银行卡年费与其他卡费"
+      ],
+      "displayed_sources": [
+        "Card annual fees and other card fees",
+        "银行卡年费与其他卡费"
+      ],
+      "candidate_count": 1,
+      "displayed_count": 1,
+      "source_hit": true,
+      "citation_precision": 1.0,
+      "citations_valid": true,
+      "generator": "deepseek",
+      "used_rewrite": false,
+      "used_hyde": false,
+      "latency_ms": 1119.8,
+      "error": null
+    },
+    {
+      "id": null,
+      "question": "What's the difference between PayNow and FAST?",
+      "expected": [
+        "转账方式比较"
+      ],
+      "candidate_sources": [
+        "Ways to transfer money",
+        "转账方式比较"
+      ],
+      "displayed_sources": [
+        "Ways to transfer money",
+        "转账方式比较"
+      ],
+      "candidate_count": 1,
+      "displayed_count": 1,
+      "source_hit": true,
+      "citation_precision": 1.0,
+      "citations_valid": true,
+      "generator": "deepseek",
+      "used_rewrite": false,
+      "used_hyde": false,
+      "latency_ms": 1413.84,
+      "error": null
+    },
+    {
+      "id": null,
+      "question": "FAST transfer 一般几分钟会到？",
+      "expected": [
+        "转账一般多久到账",
+        "转账方式比较"
+      ],
+      "candidate_sources": [],
+      "displayed_sources": [],
+      "candidate_count": 0,
+      "displayed_count": 0,
+      "source_hit": false,
+      "citation_precision": 1.0,
+      "citations_valid": null,
+      "generator": null,
+      "used_rewrite": false,
+      "used_hyde": false,
+      "latency_ms": 142.67,
+      "error": "KeyError: 'mixed'"
+    },
+    {
+      "id": null,
+      "question": "How do I send money to my mum's bank account in China?",
+      "expected": [
+        "如何汇款到海外"
+      ],
+      "candidate_sources": [
+        "How to send money overseas",
+        "如何汇款到海外"
+      ],
+      "displayed_sources": [
+        "How to send money overseas",
+        "如何汇款到海外"
+      ],
+      "candidate_count": 1,
+      "displayed_count": 1,
+      "source_hit": true,
+      "citation_precision": 1.0,
+      "citations_valid": true,
+      "generator": "deepseek",
+      "used_rewrite": false,
+      "used_hyde": true,
+      "latency_ms": 6240.92,
+      "error": null
+    },
+    {
+      "id": null,
+      "question": "我朋友在美国要汇钱给我，要给他什么资料？",
+      "expected": [
+        "如何收款"
+      ],
+      "candidate_sources": [
+        "How to receive money",
+        "如何收款"
+      ],
+      "displayed_sources": [
+        "How to receive money",
+        "如何收款"
+      ],
+      "candidate_count": 1,
+      "displayed_count": 1,
+      "source_hit": true,
+      "citation_precision": 1.0,
+      "citations_valid": true,
+      "generator": "deepseek",
+      "used_rewrite": false,
+      "used_hyde": false,
+      "latency_ms": 1392.45,
+      "error": null
+    },
+    {
+      "id": null,
+      "question": "My friend in the US wants to wire money to my Lion City account. What bank details should I give them?",
+      "expected": [
+        "如何收款"
+      ],
+      "candidate_sources": [
+        "How to receive money",
+        "如何收款"
+      ],
+      "displayed_sources": [
+        "How to receive money",
+        "如何收款"
+      ],
+      "candidate_count": 1,
+      "displayed_count": 1,
+      "source_hit": true,
+      "citation_precision": 1.0,
+      "citations_valid": true,
+      "generator": "deepseek",
+      "used_rewrite": false,
+      "used_hyde": false,
+      "latency_ms": 1157.82,
+      "error": null
+    },
+    {
+      "id": null,
+      "question": "Why can't I add Binance as a payee?",
+      "expected": [
+        "收款人限制"
+      ],
+      "candidate_sources": [
+        "Payee restrictions",
+        "收款人限制"
+      ],
+      "displayed_sources": [
+        "Payee restrictions",
+        "收款人限制"
+      ],
+      "candidate_count": 1,
+      "displayed_count": 1,
+      "source_hit": true,
+      "citation_precision": 1.0,
+      "citations_valid": true,
+      "generator": "deepseek",
+      "used_rewrite": false,
+      "used_hyde": true,
+      "latency_ms": 4132.43,
+      "error": null
+    },
+    {
+      "id": null,
+      "question": "我想一次转 SGD 10,000 给朋友，可以吗？",
+      "expected": [
+        "转账限额"
+      ],
+      "candidate_sources": [
+        "Payee restrictions",
+        "Transfer limits",
+        "收款人限制",
+        "转账限额"
+      ],
+      "displayed_sources": [
+        "Payee restrictions",
+        "Transfer limits",
+        "收款人限制",
+        "转账限额"
+      ],
+      "candidate_count": 2,
+      "displayed_count": 2,
+      "source_hit": true,
+      "citation_precision": 0.5,
+      "citations_valid": true,
+      "generator": "deepseek",
+      "used_rewrite": false,
+      "used_hyde": false,
+      "latency_ms": 3533.04,
+      "error": null
+    },
+    {
+      "id": null,
+      "question": "My transfer got returned, what usually causes that?",
+      "expected": [
+        "转账失败的常见原因"
+      ],
+      "candidate_sources": [
+        "Common reasons a transfer fails",
+        "转账失败的常见原因"
+      ],
+      "displayed_sources": [
+        "Common reasons a transfer fails",
+        "转账失败的常见原因"
+      ],
+      "candidate_count": 1,
+      "displayed_count": 1,
+      "source_hit": true,
+      "citation_precision": 1.0,
+      "citations_valid": true,
+      "generator": "deepseek",
+      "used_rewrite": false,
+      "used_hyde": false,
+      "latency_ms": 1395.59,
+      "error": null
+    },
+    {
+      "id": null,
+      "question": "新卡收到了要怎么开通？",
+      "expected": [
+        "激活新卡"
+      ],
+      "candidate_sources": [
+        "Activating a new card",
+        "Card about to expire",
+        "卡片即将到期",
+        "激活新卡"
+      ],
+      "displayed_sources": [
+        "Activating a new card",
+        "激活新卡"
+      ],
+      "candidate_count": 2,
+      "displayed_count": 1,
+      "source_hit": true,
+      "citation_precision": 1.0,
+      "citations_valid": true,
+      "generator": "deepseek",
+      "used_rewrite": false,
+      "used_hyde": false,
+      "latency_ms": 2213.12,
+      "error": null
+    },
+    {
+      "id": null,
+      "question": "My new card still hasn't arrived after two weeks",
+      "expected": [
+        "新卡寄送时间"
+      ],
+      "candidate_sources": [
+        "Activating a new card",
+        "Pending authorisation versus a posted transaction",
+        "待处理交易和已入账交易有什么不同",
+        "激活新卡"
+      ],
+      "displayed_sources": [],
+      "candidate_count": 2,
+      "displayed_count": 0,
+      "source_hit": false,
+      "citation_precision": 1.0,
+      "citations_valid": true,
+      "generator": "deepseek",
+      "used_rewrite": false,
+      "used_hyde": true,
+      "latency_ms": 4497.87,
+      "error": null
+    },
+    {
+      "id": null,
+      "question": "我的 PIN 输错三次了，现在用不了",
+      "expected": [
+        "修改 PIN 与 PIN 被锁"
+      ],
+      "candidate_sources": [],
+      "displayed_sources": [],
+      "candidate_count": 0,
+      "displayed_count": 0,
+      "source_hit": false,
+      "citation_precision": 1.0,
+      "citations_valid": null,
+      "generator": null,
+      "used_rewrite": false,
+      "used_hyde": false,
+      "latency_ms": 144.2,
+      "error": "KeyError: 'mixed'"
+    },
+    {
+      "id": null,
+      "question": "Why does my card keep getting declined overseas?",
+      "expected": [
+        "卡被拒或不能用"
+      ],
+      "candidate_sources": [
+        "Card declined or not working",
+        "卡被拒或不能用"
+      ],
+      "displayed_sources": [
+        "Card declined or not working",
+        "卡被拒或不能用"
+      ],
+      "candidate_count": 1,
+      "displayed_count": 1,
+      "source_hit": true,
+      "citation_precision": 1.0,
+      "citations_valid": true,
+      "generator": "deepseek",
+      "used_rewrite": false,
+      "used_hyde": false,
+      "latency_ms": 1889.91,
+      "error": null
+    },
+    {
+      "id": null,
+      "question": "ATM 把我的卡吃掉了",
+      "expected": [
+        "ATM 吞卡"
+      ],
+      "candidate_sources": [
+        "ATM 吞卡",
+        "Card retained by an ATM"
+      ],
+      "displayed_sources": [
+        "ATM 吞卡",
+        "Card retained by an ATM"
+      ],
+      "candidate_count": 1,
+      "displayed_count": 1,
+      "source_hit": true,
+      "citation_precision": 1.0,
+      "citations_valid": true,
+      "generator": "deepseek",
+      "used_rewrite": false,
+      "used_hyde": false,
+      "latency_ms": 1644.19,
+      "error": null
+    },
+    {
+      "id": null,
+      "question": "My card expires next month, do I need to apply for a new one?",
+      "expected": [
+        "卡片即将到期"
+      ],
+      "candidate_sources": [
+        "Card about to expire",
+        "卡片即将到期"
+      ],
+      "displayed_sources": [
+        "Card about to expire",
+        "卡片即将到期"
+      ],
+      "candidate_count": 1,
+      "displayed_count": 1,
+      "source_hit": true,
+      "citation_precision": 1.0,
+      "citations_valid": true,
+      "generator": "deepseek",
+      "used_rewrite": false,
+      "used_hyde": false,
+      "latency_ms": 1457.82,
+      "error": null
+    },
+    {
+      "id": null,
+      "question": "可以给我太太办一张 supplementary card 吗？",
+      "expected": [
+        "补发实体卡与附属卡"
+      ],
+      "candidate_sources": [],
+      "displayed_sources": [],
+      "candidate_count": 0,
+      "displayed_count": 0,
+      "source_hit": false,
+      "citation_precision": 1.0,
+      "citations_valid": null,
+      "generator": null,
+      "used_rewrite": false,
+      "used_hyde": false,
+      "latency_ms": 2485.22,
+      "error": "KeyError: 'mixed'"
+    },
+    {
+      "id": null,
+      "question": "Is your debit card Visa or Mastercard?",
+      "expected": [
+        "卡组织与受理范围"
+      ],
+      "candidate_sources": [
+        "Card networks and where cards are accepted",
+        "卡组织与受理范围"
+      ],
+      "displayed_sources": [
+        "Card networks and where cards are accepted",
+        "卡组织与受理范围"
+      ],
+      "candidate_count": 1,
+      "displayed_count": 1,
+      "source_hit": true,
+      "citation_precision": 1.0,
+      "citations_valid": true,
+      "generator": "deepseek",
+      "used_rewrite": false,
+      "used_hyde": false,
+      "latency_ms": 1239.14,
+      "error": null
+    },
+    {
+      "id": null,
+      "question": "Can I open an account if I'm 15?",
+      "expected": [
+        "开户条件"
+      ],
+      "candidate_sources": [
+        "Who can open an account",
+        "开户条件"
+      ],
+      "displayed_sources": [
+        "Who can open an account",
+        "开户条件"
+      ],
+      "candidate_count": 1,
+      "displayed_count": 1,
+      "source_hit": true,
+      "citation_precision": 1.0,
+      "citations_valid": true,
+      "generator": "deepseek",
+      "used_rewrite": false,
+      "used_hyde": true,
+      "latency_ms": 4928.14,
+      "error": null
+    },
+    {
+      "id": null,
+      "question": "开户需要什么证件？没有 Singpass 可以吗？",
+      "expected": [
+        "身份验证"
+      ],
+      "candidate_sources": [
+        "Verifying your identity",
+        "身份验证"
+      ],
+      "displayed_sources": [
+        "Verifying your identity",
+        "身份验证"
+      ],
+      "candidate_count": 1,
+      "displayed_count": 1,
+      "source_hit": true,
+      "citation_precision": 1.0,
+      "citations_valid": true,
+      "generator": "deepseek",
+      "used_rewrite": false,
+      "used_hyde": false,
+      "latency_ms": 2541.96,
+      "error": null
+    },
+    {
+      "id": null,
+      "question": "The app keeps rejecting my selfie during verification",
+      "expected": [
+        "身份验证失败"
+      ],
+      "candidate_sources": [
+        "When identity verification fails",
+        "身份验证失败"
+      ],
+      "displayed_sources": [
+        "When identity verification fails",
+        "身份验证失败"
+      ],
+      "candidate_count": 1,
+      "displayed_count": 1,
+      "source_hit": true,
+      "citation_precision": 1.0,
+      "citations_valid": true,
+      "generator": "deepseek",
+      "used_rewrite": false,
+      "used_hyde": true,
+      "latency_ms": 5702.8,
+      "error": null
+    },
+    {
+      "id": null,
+      "question": "我搬家了，地址要怎么改？",
+      "expected": [
+        "修改个人资料"
+      ],
+      "candidate_sources": [
+        "Updating your personal details",
+        "修改个人资料"
+      ],
+      "displayed_sources": [
+        "Updating your personal details",
+        "修改个人资料"
+      ],
+      "candidate_count": 1,
+      "displayed_count": 1,
+      "source_hit": true,
+      "citation_precision": 1.0,
+      "citations_valid": true,
+      "generator": "deepseek",
+      "used_rewrite": false,
+      "used_hyde": true,
+      "latency_ms": 5517.13,
+      "error": null
+    },
+    {
+      "id": null,
+      "question": "I can't remember my internet banking password",
+      "expected": [
+        "忘记登录密码"
+      ],
+      "candidate_sources": [
+        "Forgotten login password",
+        "忘记登录密码"
+      ],
+      "displayed_sources": [
+        "Forgotten login password",
+        "忘记登录密码"
+      ],
+      "candidate_count": 1,
+      "displayed_count": 1,
+      "source_hit": true,
+      "citation_precision": 1.0,
+      "citations_valid": true,
+      "generator": "deepseek",
+      "used_rewrite": false,
+      "used_hyde": false,
+      "latency_ms": 2146.06,
+      "error": null
+    },
+    {
+      "id": null,
+      "question": "我想 close 我的 savings account",
+      "expected": [
+        "销户"
+      ],
+      "candidate_sources": [],
+      "displayed_sources": [],
+      "candidate_count": 0,
+      "displayed_count": 0,
+      "source_hit": false,
+      "citation_precision": 1.0,
+      "citations_valid": null,
+      "generator": null,
+      "used_rewrite": false,
+      "used_hyde": false,
+      "latency_ms": 270.84,
+      "error": "KeyError: 'mixed'"
+    },
+    {
+      "id": null,
+      "question": "Can I hold Japanese yen in my account?",
+      "expected": [
+        "多币种账户支持的货币"
+      ],
+      "candidate_sources": [
+        "Currencies in the multi-currency account",
+        "多币种账户支持的货币"
+      ],
+      "displayed_sources": [
+        "Currencies in the multi-currency account",
+        "多币种账户支持的货币"
+      ],
+      "candidate_count": 1,
+      "displayed_count": 1,
+      "source_hit": true,
+      "citation_precision": 1.0,
+      "citations_valid": true,
+      "generator": "deepseek",
+      "used_rewrite": false,
+      "used_hyde": false,
+      "latency_ms": 1460.65,
+      "error": null
+    },
+    {
+      "id": null,
+      "question": "Do you support holding JPY (Japanese yen)?",
+      "expected": [
+        "多币种账户支持的货币"
+      ],
+      "candidate_sources": [
+        "Currencies in the multi-currency account",
+        "多币种账户支持的货币"
+      ],
+      "displayed_sources": [
+        "Currencies in the multi-currency account",
+        "多币种账户支持的货币"
+      ],
+      "candidate_count": 1,
+      "displayed_count": 1,
+      "source_hit": true,
+      "citation_precision": 1.0,
+      "citations_valid": true,
+      "generator": "deepseek",
+      "used_rewrite": false,
+      "used_hyde": false,
+      "latency_ms": 904.0,
+      "error": null
+    },
+    {
+      "id": null,
+      "question": "你们可以存比特币吗？",
+      "expected": [
+        "多币种账户支持的货币",
+        "收款人限制"
+      ],
+      "candidate_sources": [
+        "Currencies in the multi-currency account",
+        "多币种账户支持的货币"
+      ],
+      "displayed_sources": [
+        "Currencies in the multi-currency account",
+        "多币种账户支持的货币"
+      ],
+      "candidate_count": 1,
+      "displayed_count": 1,
+      "source_hit": true,
+      "citation_precision": 1.0,
+      "citations_valid": true,
+      "generator": "deepseek",
+      "used_rewrite": false,
+      "used_hyde": true,
+      "latency_ms": 3432.59,
+      "error": null
+    },
+    {
+      "id": null,
+      "question": "我在你们银行存了 15 万新币，如果银行倒闭能拿回多少？",
+      "expected": [
+        "存款保险"
+      ],
+      "candidate_sources": [
+        "Deposit insurance",
+        "Unfamiliar charges on your statement",
+        "存款保险",
+        "账单上看不懂的费用"
+      ],
+      "displayed_sources": [
+        "Deposit insurance",
+        "存款保险"
+      ],
+      "candidate_count": 2,
+      "displayed_count": 1,
+      "source_hit": true,
+      "citation_precision": 1.0,
+      "citations_valid": true,
+      "generator": "deepseek",
+      "used_rewrite": false,
+      "used_hyde": true,
+      "latency_ms": 5979.78,
+      "error": null
+    },
+    {
+      "id": null,
+      "question": "Is the USD in my multi-currency account covered by deposit insurance?",
+      "expected": [
+        "存款保险"
+      ],
+      "candidate_sources": [
+        "Deposit insurance",
+        "存款保险"
+      ],
+      "displayed_sources": [
+        "Deposit insurance",
+        "存款保险"
+      ],
+      "candidate_count": 1,
+      "displayed_count": 1,
+      "source_hit": true,
+      "citation_precision": 1.0,
+      "citations_valid": true,
+      "generator": "deepseek",
+      "used_rewrite": false,
+      "used_hyde": false,
+      "latency_ms": 1096.84,
+      "error": null
+    },
+    {
+      "id": null,
+      "question": "我手机好像被黑了，可以马上把所有账户都 freeze 吗？",
+      "expected": [
+        "紧急冻结账户"
+      ],
+      "candidate_sources": [],
+      "displayed_sources": [],
+      "candidate_count": 0,
+      "displayed_count": 0,
+      "source_hit": false,
+      "citation_precision": 1.0,
+      "citations_valid": null,
+      "generator": null,
+      "used_rewrite": false,
+      "used_hyde": false,
+      "latency_ms": 111.45,
+      "error": "KeyError: 'mixed'"
+    },
+    {
+      "id": null,
+      "question": "How can I lock part of my savings so it can't be transferred out online?",
+      "expected": [
+        "资金锁"
+      ],
+      "candidate_sources": [
+        "Money Lock",
+        "资金锁"
+      ],
+      "displayed_sources": [
+        "Money Lock",
+        "资金锁"
+      ],
+      "candidate_count": 1,
+      "displayed_count": 1,
+      "source_hit": true,
+      "citation_precision": 1.0,
+      "citations_valid": true,
+      "generator": "deepseek",
+      "used_rewrite": false,
+      "used_hyde": false,
+      "latency_ms": 1957.61,
+      "error": null
+    },
+    {
+      "id": null,
+      "question": "PayNow 转账的时候为什么看不到对方的 nickname 了？",
+      "expected": [
+        "PayNow 收款人名字的显示"
+      ],
+      "candidate_sources": [],
+      "displayed_sources": [],
+      "candidate_count": 0,
+      "displayed_count": 0,
+      "source_hit": false,
+      "citation_precision": 1.0,
+      "citations_valid": null,
+      "generator": null,
+      "used_rewrite": false,
+      "used_hyde": false,
+      "latency_ms": 187.84,
+      "error": "KeyError: 'mixed'"
+    },
+    {
+      "id": null,
+      "question": "定期存款利率是多少？",
+      "expected": [],
+      "candidate_sources": [],
+      "displayed_sources": [],
+      "candidate_count": 0,
+      "displayed_count": 0,
+      "source_hit": null,
+      "citation_precision": null,
+      "citations_valid": null,
+      "generator": "none",
+      "used_rewrite": false,
+      "used_hyde": true,
+      "latency_ms": 2048.55,
+      "error": null
+    },
+    {
+      "id": null,
+      "question": "How do I apply for a home loan?",
+      "expected": [],
+      "candidate_sources": [],
+      "displayed_sources": [],
+      "candidate_count": 0,
+      "displayed_count": 0,
+      "source_hit": null,
+      "citation_precision": null,
+      "citations_valid": null,
+      "generator": "none",
+      "used_rewrite": false,
+      "used_hyde": false,
+      "latency_ms": 0.1,
+      "error": null
+    },
+    {
+      "id": null,
+      "question": "你们的分行几点开门？",
+      "expected": [],
+      "candidate_sources": [],
+      "displayed_sources": [],
+      "candidate_count": 0,
+      "displayed_count": 0,
+      "source_hit": null,
+      "citation_precision": null,
+      "citations_valid": null,
+      "generator": "none",
+      "used_rewrite": false,
+      "used_hyde": true,
+      "latency_ms": 2908.14,
+      "error": null
+    },
+    {
+      "id": null,
+      "question": "Does my credit card come with travel insurance?",
+      "expected": [],
+      "candidate_sources": [],
+      "displayed_sources": [],
+      "candidate_count": 0,
+      "displayed_count": 0,
+      "source_hit": null,
+      "citation_precision": null,
+      "citations_valid": null,
+      "generator": "none",
+      "used_rewrite": false,
+      "used_hyde": true,
+      "latency_ms": 3861.98,
+      "error": null
+    },
+    {
+      "id": null,
+      "question": "那 FAST 呢？",
+      "expected": [
+        "本地转账费用"
+      ],
+      "candidate_sources": [
+        "Local transfer fees",
+        "Transfer limits",
+        "本地转账费用",
+        "转账限额"
+      ],
+      "displayed_sources": [
+        "Local transfer fees",
+        "本地转账费用"
+      ],
+      "candidate_count": 2,
+      "displayed_count": 1,
+      "source_hit": true,
+      "citation_precision": 1.0,
+      "citations_valid": true,
+      "generator": "deepseek",
+      "used_rewrite": true,
+      "used_hyde": false,
+      "latency_ms": 2445.07,
+      "error": null
+    },
+    {
+      "id": null,
+      "question": "what if I forgot the PIN?",
+      "expected": [
+        "修改 PIN 与 PIN 被锁"
+      ],
+      "candidate_sources": [
+        "ATM 吞卡",
+        "Card retained by an ATM",
+        "Changing or unblocking your PIN",
+        "修改 PIN 与 PIN 被锁"
+      ],
+      "displayed_sources": [
+        "Changing or unblocking your PIN",
+        "修改 PIN 与 PIN 被锁"
+      ],
+      "candidate_count": 2,
+      "displayed_count": 1,
+      "source_hit": true,
+      "citation_precision": 1.0,
+      "citations_valid": true,
+      "generator": "deepseek",
+      "used_rewrite": false,
+      "used_hyde": false,
+      "latency_ms": 2016.29,
+      "error": null
+    },
+    {
+      "id": null,
+      "question": "Does Lion City Bank offer mortgages or home loans?",
+      "expected": [],
+      "candidate_sources": [],
+      "displayed_sources": [],
+      "candidate_count": 0,
+      "displayed_count": 0,
+      "source_hit": null,
+      "citation_precision": null,
+      "citations_valid": null,
+      "generator": "none",
+      "used_rewrite": false,
+      "used_hyde": false,
+      "latency_ms": 0.09,
+      "error": null
+    }
+  ]
+}

@@ -46,6 +46,8 @@ class GraphState(TypedDict, total=False):
     fraud_signal: Literal["none", "reported", "hypothetical"]
     router_backend: RouterBackend  # 这一轮是模型判断的还是规则判断的 [每轮]
 
+    resolved_question: str  # current-turn query resolved from context, when applicable
+
     # 实体
     entities: dict[str, Any]  # 抽到的实体，和上一轮的合并；products、attr 只算这一轮 [跨轮]
     missing_slots: list[str]  # 还缺哪些必填信息 [每轮]
@@ -112,6 +114,7 @@ PER_TURN_DEFAULTS: dict[str, Any] = {
     "intent_score": 0.0,
     "fraud_signal": "none",
     "router_backend": "keyword",
+    "resolved_question": "",
     "missing_slots": [],
     "decision": None,
     "route": None,

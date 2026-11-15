@@ -1,0 +1,276 @@
+{
+  "base_url": "http://127.0.0.1:8002",
+  "scenario_count": 5,
+  "turn_count": 13,
+  "passed": 13,
+  "failed": 0,
+  "mean_latency_ms": 3835.7,
+  "results": [
+    {
+      "scenario": "连续追问补发卡与超时处理",
+      "question": "新卡一般几天寄到？",
+      "answer": "新卡或补发的卡一般会在 5–7 个工作日内以挂号信寄到您登记的新加坡地址，您可以在 App 中查看寄送进度。如果超过 10 个工作日仍未收到，请联系我们补寄。",
+      "sources": [
+        {
+          "doc": "lcb__faq__card_services",
+          "title": "银行卡服务 / Card services",
+          "section": "新卡寄送时间 / Card delivery time",
+          "rerank_score": 0.9968,
+          "label": "《银行卡服务》新卡寄送时间"
+        }
+      ],
+      "status": 200,
+      "elapsed_ms": 3679.1,
+      "answer_ok": true,
+      "source_ok": true,
+      "pending": null,
+      "passed": true
+    },
+    {
+      "scenario": "连续追问补发卡与超时处理",
+      "question": "那补发卡也一样吗？",
+      "answer": "是的，补发的卡同样会在 5–7 个工作日内以挂号信寄到您登记的新加坡地址，您可以在 App 中查看寄送进度。若超过 10 个工作日仍未收到，请联系我们补寄。",
+      "sources": [
+        {
+          "doc": "lcb__faq__card_services",
+          "title": "银行卡服务 / Card services",
+          "section": "新卡寄送时间 / Card delivery time",
+          "rerank_score": 0.991,
+          "label": "《银行卡服务》新卡寄送时间"
+        }
+      ],
+      "status": 200,
+      "elapsed_ms": 5126.3,
+      "answer_ok": true,
+      "source_ok": true,
+      "pending": null,
+      "passed": true
+    },
+    {
+      "scenario": "连续追问补发卡与超时处理",
+      "question": "超过10个工作日还没收到呢？",
+      "answer": "建议您尽快联系我行客服申请补寄，同时可在 App 中查看寄送进度确认卡片状态。资料未说明其他处理方式。",
+      "sources": [
+        {
+          "doc": "lcb__faq__card_services",
+          "title": "银行卡服务 / Card services",
+          "section": "新卡寄送时间 / Card delivery time",
+          "rerank_score": 0.9981,
+          "label": "《银行卡服务》新卡寄送时间"
+        }
+      ],
+      "status": 200,
+      "elapsed_ms": 4091.4,
+      "answer_ok": true,
+      "source_ok": true,
+      "pending": null,
+      "passed": true
+    },
+    {
+      "scenario": "切换主题后回到寄送问题",
+      "question": "我申请的新卡还没到，大概多久？",
+      "answer": "新卡一般会在 5–7 个工作日内以挂号信寄到您登记的新加坡地址，您可以在 App 中查看寄送进度。如果超过 10 个工作日仍未收到，请联系我们安排补寄。",
+      "sources": [
+        {
+          "doc": "lcb__faq__card_services",
+          "title": "银行卡服务 / Card services",
+          "section": "新卡寄送时间 / Card delivery time",
+          "rerank_score": 0.9137,
+          "label": "《银行卡服务》新卡寄送时间"
+        }
+      ],
+      "status": 200,
+      "elapsed_ms": 3418.1,
+      "answer_ok": true,
+      "source_ok": true,
+      "pending": null,
+      "passed": true
+    },
+    {
+      "scenario": "切换主题后回到寄送问题",
+      "question": "顺便问下，PayNow转账收费吗？",
+      "answer": "PayNow 的手续费：免费\n\n来源：产品资料（术语图谱）",
+      "sources": [
+        {
+          "doc": "neo4j",
+          "title": "术语图谱 / Product graph",
+          "section": "PayNow",
+          "rerank_score": null
+        }
+      ],
+      "status": 200,
+      "elapsed_ms": 2704.0,
+      "answer_ok": true,
+      "source_ok": true,
+      "pending": null,
+      "passed": true
+    },
+    {
+      "scenario": "切换主题后回到寄送问题",
+      "question": "那新卡超过10个工作日还没收到怎么办？",
+      "answer": "超过 10 个工作日仍未收到新卡，请联系银行安排补寄。新卡或补发的卡会以挂号信寄到您登记的新加坡地址，您也可以在 App 中查看寄送进度。目前不支持寄送到新加坡以外的地址。",
+      "sources": [
+        {
+          "doc": "lcb__faq__card_services",
+          "title": "银行卡服务 / Card services",
+          "section": "新卡寄送时间 / Card delivery time",
+          "rerank_score": 0.9891,
+          "label": "《银行卡服务》新卡寄送时间"
+        }
+      ],
+      "status": 200,
+      "elapsed_ms": 5345.9,
+      "answer_ok": true,
+      "source_ok": true,
+      "pending": null,
+      "passed": true
+    },
+    {
+      "scenario": "插入无关问题后追问寄送期限",
+      "question": "补办的银行卡几天能寄到？",
+      "answer": "补办的新卡一般会在 5–7 个工作日内以挂号信寄到您登记的新加坡地址，您可在 App 查看寄送进度。若超过 10 个工作日仍未收到，请联系银行补寄；目前不支持寄到新加坡以外地址。",
+      "sources": [
+        {
+          "doc": "lcb__faq__card_services",
+          "title": "银行卡服务 / Card services",
+          "section": "新卡寄送时间 / Card delivery time",
+          "rerank_score": 0.9977,
+          "label": "《银行卡服务》新卡寄送时间"
+        }
+      ],
+      "status": 200,
+      "elapsed_ms": 4322.2,
+      "answer_ok": true,
+      "source_ok": true,
+      "pending": null,
+      "passed": true
+    },
+    {
+      "scenario": "插入无关问题后追问寄送期限",
+      "question": "谢谢。顺便问，借记卡可以申请附属卡吗？",
+      "answer": "借记卡不提供附属卡，且每个账户只能关联一张借记卡；如需为家人办附属卡，信用卡可为18岁以上家人申请，首两张免年费。",
+      "sources": [
+        {
+          "doc": "lcb__faq__card_services",
+          "title": "银行卡服务 / Card services",
+          "section": "补发实体卡与附属卡 / Replacement and supplementary cards",
+          "rerank_score": 0.9472,
+          "label": "《银行卡服务》补发实体卡与附属卡"
+        }
+      ],
+      "status": 200,
+      "elapsed_ms": 3584.0,
+      "answer_ok": true,
+      "source_ok": true,
+      "pending": null,
+      "passed": true
+    },
+    {
+      "scenario": "插入无关问题后追问寄送期限",
+      "question": "刚才那张补办卡如果超过10个工作日呢？",
+      "answer": "超过 10 个工作日仍未收到，请联系银行补寄。您也可以在 App 查看寄送进度；目前不支持将卡寄到新加坡以外的地址。",
+      "sources": [
+        {
+          "doc": "lcb__faq__card_services",
+          "title": "银行卡服务 / Card services",
+          "section": "新卡寄送时间 / Card delivery time",
+          "rerank_score": 0.6914,
+          "label": "《银行卡服务》新卡寄送时间"
+        }
+      ],
+      "status": 200,
+      "elapsed_ms": 4175.5,
+      "answer_ok": true,
+      "source_ok": true,
+      "pending": null,
+      "passed": true
+    },
+    {
+      "scenario": "地址限制后追问处理时限",
+      "question": "新卡可以寄到新加坡以外吗？",
+      "answer": "不可以，目前不支持把新卡寄到新加坡以外的地址。新卡或补发的卡会在 5–7 个工作日内以挂号信寄到您登记的新加坡地址，您可在 App 查看寄送进度。",
+      "sources": [
+        {
+          "doc": "lcb__faq__card_services",
+          "title": "银行卡服务 / Card services",
+          "section": "新卡寄送时间 / Card delivery time",
+          "rerank_score": 0.9997,
+          "label": "《银行卡服务》新卡寄送时间"
+        }
+      ],
+      "status": 200,
+      "elapsed_ms": 3541.9,
+      "answer_ok": true,
+      "source_ok": true,
+      "pending": null,
+      "passed": true
+    },
+    {
+      "scenario": "地址限制后追问处理时限",
+      "question": "那超过10个工作日没收到呢？",
+      "answer": "超过 10 个工作日仍未收到新卡或补发卡，请联系银行安排补寄。您也可以在 App 中查看寄送进度，以便确认卡片当前的寄送状态。",
+      "sources": [
+        {
+          "doc": "lcb__faq__card_services",
+          "title": "银行卡服务 / Card services",
+          "section": "新卡寄送时间 / Card delivery time",
+          "rerank_score": 0.9981,
+          "label": "《银行卡服务》新卡寄送时间"
+        }
+      ],
+      "status": 200,
+      "elapsed_ms": 3251.9,
+      "answer_ok": true,
+      "source_ok": true,
+      "pending": null,
+      "passed": true
+    },
+    {
+      "scenario": "英文多轮追问",
+      "question": "How long does a replacement card take to arrive?",
+      "answer": "A replacement card is sent by registered mail within 5–7 working days. If an ATM retained your card, the replacement is free and also arrives in 5–7 working days.",
+      "sources": [
+        {
+          "doc": "lcb__faq__card_services",
+          "title": "银行卡服务 / Card services",
+          "section": "新卡寄送时间 / Card delivery time",
+          "rerank_score": 0.9337,
+          "label": "Card services – Card delivery time"
+        },
+        {
+          "doc": "lcb__faq__card_services",
+          "title": "银行卡服务 / Card services",
+          "section": "ATM 吞卡 / Card retained by an ATM",
+          "rerank_score": 0.7672,
+          "label": "Card services – Card retained by an ATM"
+        }
+      ],
+      "status": 200,
+      "elapsed_ms": 3523.9,
+      "answer_ok": true,
+      "source_ok": true,
+      "pending": null,
+      "passed": true
+    },
+    {
+      "scenario": "英文多轮追问",
+      "question": "What if it still has not arrived after 10 working days?",
+      "answer": "If your card has not arrived after 10 working days, contact the bank so it can be resent. Delivery is normally by registered mail within 5–7 working days, and you can track it in the app.",
+      "sources": [
+        {
+          "doc": "lcb__faq__card_services",
+          "title": "银行卡服务 / Card services",
+          "section": "新卡寄送时间 / Card delivery time",
+          "rerank_score": 0.9954,
+          "label": "Card services – Card delivery time"
+        }
+      ],
+      "status": 200,
+      "elapsed_ms": 3099.6,
+      "answer_ok": true,
+      "source_ok": true,
+      "pending": null,
+      "passed": true
+    }
+  ]
+}

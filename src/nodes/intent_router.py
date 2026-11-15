@@ -19,6 +19,9 @@ from src.utils.fraud_context import (fraud_action_status_question, fraud_context
 from src.utils.history_utils import (annual_fee_followup, fraud_confirmed_followup, fraud_general_followup, history_of,
                                     negated_fraud_limit_question, replacement_fee_stolen_followup,
                                     statement_fee_followup, statement_fee_general_followup, stolen_card_clarification)
+from src.utils.query_expansion_utils import (expand_card_delivery_query,
+                                             is_unanchored_overdue_delivery_followup,
+                                             resolve_card_delivery_followup)
 from src.utils.reference_bank_utils import (is_reference_policy_question, reference_question_intent,
                                             resolve_reference_bank)
 
@@ -198,6 +201,20 @@ class IntentRouterNode(BaseNode):
             # 用户已说明只是了解一般流程：结束盗刷确认状态，转知识库给出有来源的说明。
             return {"intent": "card_service", "sub_intent": "lost_or_stolen_card", "intent_score": 0.99,
                     "router_backend": "keyword", "fraud_confirmation_pending": False}
+
+        # Card delivery is a safe FAQ. Resolve its common standalone phrasing before
+        # the classifier so low-confidence questions do not stop before RAG retrieval.
+        delivery_followup = resolve_card_delivery_followup(current, history)
+        if delivery_followup:
+            return {"intent": "card_service", "sub_intent": "card_delivery_estimate", "intent_score": 0.99,
+                    "router_backend": "keyword", "fraud_signal": "none",
+                    "resolved_question": delivery_followup}
+        if is_unanchored_overdue_delivery_followup(current, history):
+            return {"intent": "unknown", "sub_intent": "", "intent_score": UNKNOWN_SCORE,
+                    "router_backend": "keyword", "fraud_signal": "none"}
+        if expand_card_delivery_query(current):
+            return {"intent": "card_service", "sub_intent": "card_delivery_estimate", "intent_score": 0.99,
+                    "router_backend": "keyword", "fraud_signal": "none"}
         if negated_fraud_limit_question(current) or not topic:
             return {"intent": "unknown", "sub_intent": "", "intent_score": UNKNOWN_SCORE, "router_backend": "keyword"}
         if FILLER_RE.match(current):

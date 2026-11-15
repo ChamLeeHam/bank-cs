@@ -67,7 +67,7 @@ class CustomerTicketTests(unittest.TestCase):
     def test_query_is_scoped_and_hides_draft_replies(self, query):
         list_customer_tickets('C002', 999)
         sql, params = query.call_args.args
-        self.assertIn('where customer_id = %s', sql.lower())
+        self.assertIn('where t.customer_id = %s', sql.lower())
         self.assertIn("status in ('replied', 'closed')", sql.lower())
         self.assertEqual(params, ('C002', 50))
 

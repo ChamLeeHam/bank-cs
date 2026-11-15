@@ -19,7 +19,7 @@ def process(question, chunks):
 
 
 def _cliff_cutoff(chunks):
-    """相邻两个分数差距突然变大的地方截断，后面的不要"""
+    """先按分数断崖截断，再剔除明显低于最佳结果的候选块。"""
     config = get_config()
     min_topk = min(config.rerank_min_topk, len(chunks))
     max_topk = min(config.rerank_max_topk, len(chunks))
@@ -35,7 +35,17 @@ def _cliff_cutoff(chunks):
         if gap >= config.rerank_gap_abs or ratio >= config.rerank_ratio:
             top_k = i + 1
             break
-    return chunks[:top_k]
+    selected = chunks[:top_k]
+    if not selected or selected[0].get("rerank_score") is None:
+        return selected
+
+    relative_threshold = config.rerank_relative_threshold
+    if not 0 < relative_threshold <= 1:
+        relative_threshold = 0.6
+    best_score = selected[0]["rerank_score"]
+    cutoff = best_score * relative_threshold
+    return [chunk for chunk in selected if chunk.get("rerank_score") is None
+            or chunk["rerank_score"] >= cutoff]
 
 
 def _reranker(question, chunks):

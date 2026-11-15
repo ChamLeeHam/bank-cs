@@ -46,9 +46,9 @@ def get_llm_client(model_name=None, temperature=0.0, response_format=False, time
         return None
 
 
-def chat(messages, temperature=0.2):
+def chat(messages, temperature=0.2, response_format=False):
     """发送对话，返回回复的文本"""
-    client = get_llm_client(temperature=temperature)
+    client = get_llm_client(temperature=temperature, response_format=response_format)
     if client is None:
         raise RuntimeError("LLM客户端不可用")
     return str(client.invoke(messages).content).strip()

@@ -31,7 +31,7 @@ export async function streamMessage(session, text, onText) {
         answer += event.text;
         onText(answer);
       }
-      if (event.type === 'done') return { answer, pending: event.pending };
+      if (event.type === 'done') return { answer, pending: event.pending, sources: event.sources || [] };
     }
   }
   throw new Error('连接中断，未收到完整回复。请先查看工单或卡片状态，再决定是否重试。');

@@ -118,18 +118,19 @@ export function Chat() {
     setError('');
     setAnnouncement('');
     const id = String(++messageId.current);
-    const update = (answer) => setMessages(previous => previous.map(m => m.id === id ? { ...m, text: answer } : m));
+    const update = (answer, sources) => setMessages(previous => previous.map(m => m.id === id
+      ? { ...m, text: answer, ...(sources ? { sources } : {}) } : m));
     try {
       const sid = session || await start();
       setMessages(previous => [...previous,
         { id: id + '-user', role: 'user', text: pending === 'otp' && !/^(取消|cancel)$/i.test(text) ? '已提交验证输入' : text },
-        { id, role: 'assistant', text: '' },
+        { id, role: 'assistant', text: '', sources: [] },
       ]);
       setDraft('');
       const reply = options.statementTxnId
         ? await api(`/api/sessions/${sid}/statement/${encodeURIComponent(options.statementTxnId)}/${options.statementAction === 'dispute' ? 'dispute' : 'explanation'}`, options.statementAction === 'dispute' ? 'POST' : 'GET')
         : await streamMessage(sid, text, update);
-      if (options.statementTxnId) update(reply.answer);
+      update(reply.answer, reply.sources || []);
       setPending(reply.pending);
       setAnnouncement(reply.answer);
     } catch (e) {
@@ -218,11 +219,13 @@ export function Chat() {
 function Message({ message }) {
   const { role, text } = message;
   const match = role === 'assistant' && /\n\n(?:来源：|Source:\s*)([\s\S]*)$/i.exec(text);
+  const sources = message.sources?.length ? message.sources : (match ? [{ label: match[1] }] : []);
   return <article className={`message ${role}`}>
     {role === 'assistant' && <span className="avatar"><Landmark size={16}/></span>}
     <div><h2 className="message-author">{role === 'user' ? '你' : '狮城银行客服'}</h2>
       <div className="bubble">{match ? text.slice(0, match.index) : text || <span role="status">正在处理…</span>}
-        {match && <div className="sources"><BookOpen size={15}/><span>{match[1]}</span></div>}
+        {sources.length > 0 && <div className="sources"><BookOpen size={15}/><div>{sources.map((source, index) =>
+          <span key={`${source.doc || source.label}-${index}`}>{source.label || source.section || source.title}</span>)}</div></div>}
       </div>
     </div>
   </article>;

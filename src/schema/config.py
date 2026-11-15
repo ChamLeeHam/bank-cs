@@ -68,6 +68,9 @@ class Config:
     # RAG 的参数，加 BANK_ 前缀是因为 .env 里已经有别的项目的 RERANKER_* 配置
     rag_rewrite: bool = field(default_factory=lambda: os.getenv("BANK_RAG_REWRITE", "true").lower() == "true")
     rag_hyde: bool = field(default_factory=lambda: os.getenv("BANK_RAG_HYDE", "true").lower() == "true")
+    rag_adaptive_retrieval: bool = field(default_factory=lambda: os.getenv("BANK_RAG_ADAPTIVE_RETRIEVAL", "true").lower() == "true")
+    rag_direct_min_score: float = field(default_factory=lambda: float(os.getenv("BANK_RAG_DIRECT_MIN_SCORE", "0.35")))
+    startup_warmup: bool = field(default_factory=lambda: os.getenv("BANK_STARTUP_WARMUP", "true").lower() == "true")
     rag_candidates: int = field(default_factory=lambda: int(os.getenv("BANK_RAG_CANDIDATES", "10")))  # 每一路取多少条
     hyde_weight: float = field(default_factory=lambda: float(os.getenv("BANK_HYDE_WEIGHT", "0.7")))  # HyDE 那一路的权重
     reranker_model: Path = field(default_factory=lambda: ROOT_DIR / os.getenv("BANK_RERANKER_MODEL", "pretrained/bge-reranker-base"))
@@ -75,6 +78,7 @@ class Config:
     rerank_max_topk: int = field(default_factory=lambda: int(os.getenv("BANK_RERANK_MAX_TOPK", "3")))
     rerank_gap_abs: float = field(default_factory=lambda: float(os.getenv("BANK_RERANK_GAP_ABS", "0.3")))
     rerank_ratio: float = field(default_factory=lambda: float(os.getenv("BANK_RERANK_RATIO", "0.5")))
+    rerank_relative_threshold: float = field(default_factory=lambda: float(os.getenv("BANK_RERANK_RELATIVE_THRESHOLD", "0.6")))
     rerank_min_score: float = field(default_factory=lambda: float(os.getenv("BANK_RERANK_MIN_SCORE", "0.01")))  # 最高分低于这个就当作没找到
 
     #schema的配置

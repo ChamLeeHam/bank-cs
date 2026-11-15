@@ -1,0 +1,86 @@
+{
+  "base_url": "http://127.0.0.1:8002",
+  "checks": 5,
+  "passed": 5,
+  "failed": 0,
+  "results": [
+    {
+      "scenario": "PayNow 后的省略追问",
+      "question": "超过10个工作日还没收到呢？",
+      "answer": "不好意思，能再具体说明一下吗？例如：银行卡、转账汇款、手续费或账户余额。",
+      "sources": [],
+      "status": 200,
+      "elapsed_ms": 2101.7,
+      "expected_source": null,
+      "answer_ok": true,
+      "source_ok": true,
+      "clarification_ok": true,
+      "pending": null,
+      "passed": true
+    },
+    {
+      "scenario": "无上下文的省略追问",
+      "question": "超过10个工作日还没收到呢？",
+      "answer": "不好意思，能再具体说明一下吗？例如：银行卡、转账汇款、手续费或账户余额。",
+      "sources": [],
+      "status": 200,
+      "elapsed_ms": 2088.5,
+      "expected_source": null,
+      "answer_ok": true,
+      "source_ok": true,
+      "clarification_ok": true,
+      "pending": null,
+      "passed": true
+    },
+    {
+      "scenario": "寄送主题之后切换 PIN",
+      "question": "我的银行卡 PIN 被锁了，怎么解锁？",
+      "answer": "连续输错 PIN 3 次后，PIN 会被锁定，卡片暂时不能刷卡或取款。解锁方法：在 App 中选择\"银行卡 > 解锁 PIN\"并完成 OTP 验证，解锁后需重新设置 PIN。",
+      "sources": [
+        {
+          "doc": "lcb__faq__card_services",
+          "title": "银行卡服务 / Card services",
+          "section": "修改 PIN 与 PIN 被锁 / Changing or unblocking your PIN",
+          "rerank_score": 0.9886,
+          "label": "《银行卡服务》修改 PIN 与 PIN 被锁"
+        }
+      ],
+      "status": 200,
+      "elapsed_ms": 2746.0,
+      "expected_source": "Changing or unblocking your PIN",
+      "answer_ok": true,
+      "source_ok": true,
+      "clarification_ok": null,
+      "pending": null,
+      "passed": true
+    },
+    {
+      "scenario": "PIN 主题后的省略追问",
+      "question": "超过10个工作日还没收到呢？",
+      "answer": "不好意思，能再具体说明一下吗？例如：银行卡、转账汇款、手续费或账户余额。",
+      "sources": [],
+      "status": 200,
+      "elapsed_ms": 2115.9,
+      "expected_source": null,
+      "answer_ok": true,
+      "source_ok": true,
+      "clarification_ok": true,
+      "pending": null,
+      "passed": true
+    },
+    {
+      "scenario": "无上下文英文省略追问",
+      "question": "What if it still has not arrived after 10 working days?",
+      "answer": "Sorry, could you tell me a bit more? For example: card, transfer, fees or account balance.",
+      "sources": [],
+      "status": 200,
+      "elapsed_ms": 2098.2,
+      "expected_source": null,
+      "answer_ok": true,
+      "source_ok": true,
+      "clarification_ok": true,
+      "pending": null,
+      "passed": true
+    }
+  ]
+}
