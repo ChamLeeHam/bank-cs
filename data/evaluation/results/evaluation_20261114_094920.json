@@ -1,0 +1,302 @@
+{
+  "run_id": "20261114_094920",
+  "timestamp": "2026-11-14T09:49:20+08:00",
+  "git_commit": "48e3d16",
+  "git_dirty": true,
+  "dataset_sha256": {
+    "intent": "7198219f2a920374ac6cc2f08f7b7aabad4c4c8aaff5e9d0cdc4f81327b014bb",
+    "faq": "7b043905978ecb0150f524a4b1e86e1bcaa11f1821f0bc795e795a392a01c649",
+    "api_faq": "9b2d9066d832a7ae2e8d664a1c120cc0f25d2f1afe10a564ee92c7fb4e59eb1b"
+  },
+  "dataset_counts": {
+    "intent": 640,
+    "faq": 41,
+    "api_faq": 18,
+    "intent_language": {
+      "en": 216,
+      "zh": 204,
+      "mixed": 220
+    },
+    "faq_language": {
+      "zh": 13,
+      "en": 19,
+      "mixed": 9
+    },
+    "api_faq_language": {
+      "zh": 6,
+      "en": 6,
+      "mixed": 6
+    }
+  },
+  "api": {
+    "api_base": "http://127.0.0.1:8002",
+    "selected_count": 18,
+    "successful_count": 18,
+    "per_language_requested": 6,
+    "stopped_early_reason": null,
+    "source_citation_accuracy": 0.5555555555555556,
+    "citation_presence_rate": 1.0,
+    "latency_ms": {
+      "mean": 5375.56,
+      "p50": 6334.23,
+      "p95": 10057.71
+    },
+    "by_language": {
+      "zh": {
+        "count": 6,
+        "successful_count": 6,
+        "source_citation_accuracy": 0.5,
+        "mean_latency_ms": 5299.44
+      },
+      "en": {
+        "count": 6,
+        "successful_count": 6,
+        "source_citation_accuracy": 0.5,
+        "mean_latency_ms": 5332.12
+      },
+      "mixed": {
+        "count": 6,
+        "successful_count": 6,
+        "source_citation_accuracy": 0.6666666666666666,
+        "mean_latency_ms": 5495.13
+      }
+    },
+    "details": [
+      {
+        "question": "PayNow 转账通常会收取手续费吗？",
+        "lang": "zh",
+        "expected": [
+          "本地转账费用"
+        ],
+        "http_status": 200,
+        "latency_ms": 4924.69,
+        "source_cited_correctly": false,
+        "citation_present": true,
+        "pending": null,
+        "answer_preview": "PayNow 的手续费：免费\n\n来源：产品资料（术语图谱）"
+      },
+      {
+        "question": "海外电汇有哪些常见手续费？",
+        "lang": "zh",
+        "expected": [
+          "海外电汇（TT）手续费"
+        ],
+        "http_status": 200,
+        "latency_ms": 2722.29,
+        "source_cited_correctly": false,
+        "citation_present": true,
+        "pending": null,
+        "answer_preview": "海外电汇的手续费：每笔 SGD 10，中转行可能另扣 SGD 10–30；选 OUR 另加 SGD 20 可全额到账\n\n来源：产品资料（术语图谱）"
+      },
+      {
+        "question": "FAST 转账一般多久到账？",
+        "lang": "zh",
+        "expected": [
+          "转账一般多久到账"
+        ],
+        "http_status": 200,
+        "latency_ms": 2628.82,
+        "source_cited_correctly": false,
+        "citation_present": true,
+        "pending": null,
+        "answer_preview": "FAST 转账的到账时间：通常几分钟内，全天可用\n\n来源：产品资料（术语图谱）"
+      },
+      {
+        "question": "狮城银行支持哪些卡组织？",
+        "lang": "zh",
+        "expected": [
+          "卡组织与受理范围"
+        ],
+        "http_status": 200,
+        "latency_ms": 7054.85,
+        "source_cited_correctly": true,
+        "citation_present": true,
+        "pending": null,
+        "answer_preview": "狮城银行支持 Visa、Mastercard 和银联：借记卡为 Visa，信用卡为 Mastercard，另提供银联借记卡。所有卡片都支持 Apple Pay 和 Google Pay。\n\n来源：《银行卡服务》卡组织与受理范围；《账户服务》存款保险"
+      },
+      {
+        "question": "外币兑换和海外刷卡会收取哪些费用？",
+        "lang": "zh",
+        "expected": [
+          "外币兑换与外币刷卡费用"
+        ],
+        "http_status": 200,
+        "latency_ms": 7450.06,
+        "source_cited_correctly": true,
+        "citation_present": true,
+        "pending": null,
+        "answer_preview": "在多币种账户内兑换货币不另收手续费，成本已包含在买卖汇率差价中。外币刷卡消费（包括海外网站以外币付款）用 Visa 或 Mastercard 收取交易金额 3.25% 的外币交易费，银联卡为 1%。海外商户以新元付款时可能另收动态货币转换（DCC）费用，建议选择以当地货币付款。\n\n来源：《费用与汇率》外币兑换与外币刷卡费用；《费用与汇率》海外电汇（TT）手续费；《费用与汇率》ATM 取款费用"
+      },
+      {
+        "question": "银行卡到期前会自动续发吗？",
+        "lang": "zh",
+        "expected": [
+          "卡片即将到期"
+        ],
+        "http_status": 200,
+        "latency_ms": 7015.93,
+        "source_cited_correctly": true,
+        "citation_present": true,
+        "pending": null,
+        "answer_preview": "会，卡片到期前一个月，我们会自动把新卡寄到您登记的地址，卡号不变，有效期和安全码会更新。收到新卡后请激活，并在自动扣款商户（如订阅服务）中更新有效期和CVV。\n\n来源：《银行卡服务》卡片即将到期"
+      },
+      {
+        "question": "What's the usual fee for an overseas TT?",
+        "lang": "en",
+        "expected": [
+          "海外电汇（TT）手续费"
+        ],
+        "http_status": 200,
+        "latency_ms": 2739.28,
+        "source_cited_correctly": false,
+        "citation_present": true,
+        "pending": null,
+        "answer_preview": "Fee for Overseas TT: SGD 10 per transfer; intermediary banks may deduct SGD 10–30; add SGD 20 (OUR) for the full amount\n\nSource: product data (knowledge graph)"
+      },
+      {
+        "question": "How does a Visa foreign currency transaction fee work?",
+        "lang": "en",
+        "expected": [
+          "外币兑换与外币刷卡费用"
+        ],
+        "http_status": 200,
+        "latency_ms": 2636.0,
+        "source_cited_correctly": false,
+        "citation_present": true,
+        "pending": null,
+        "answer_preview": "Foreign transaction fee for Visa Debit Card: 3.25%\n\nSource: product data (knowledge graph)"
+      },
+      {
+        "question": "What is the difference between PayNow and FAST?",
+        "lang": "en",
+        "expected": [
+          "转账方式比较"
+        ],
+        "http_status": 200,
+        "latency_ms": 10057.71,
+        "source_cited_correctly": true,
+        "citation_present": true,
+        "pending": null,
+        "answer_preview": "PayNow sends money using a mobile number, NRIC or UEN and arrives instantly, 24/7. FAST sends to any Singapore bank account by account number, usually arrives within minutes, and supports up to SGD 200,000 per transfer.\n\nSource: Transfer and receiving guide – Ways to transfer money"
+      },
+      {
+        "question": "What are the fees for withdrawing cash overseas?",
+        "lang": "en",
+        "expected": [
+          "ATM 取款费用"
+        ],
+        "http_status": 200,
+        "latency_ms": 7225.58,
+        "source_cited_correctly": true,
+        "citation_present": true,
+        "pending": null,
+        "answer_preview": "Overseas ATM withdrawals cost SGD 5 each, plus a 3.25% foreign transaction fee. The overseas ATM operator may also add its own fee, which will be shown on the screen.\n\nSource: Fees and exchange rates – ATM withdrawal fees; Fees and exchange rates – Unfamiliar charges on your statement; Fees and exchange rates – Oversea"
+      },
+      {
+        "question": "Which card networks does Lion City Bank support?",
+        "lang": "en",
+        "expected": [
+          "卡组织与受理范围"
+        ],
+        "http_status": 200,
+        "latency_ms": 6512.88,
+        "source_cited_correctly": true,
+        "citation_present": true,
+        "pending": null,
+        "answer_preview": "Lion City Bank supports Visa, Mastercard and UnionPay. Its debit card is Visa, its credit card is Mastercard, and it offers a UnionPay debit card for spending in mainland China.\n\nSource: Card services – Card networks and where cards are accepted"
+      },
+      {
+        "question": "How long does an overseas TT usually take?",
+        "lang": "en",
+        "expected": [
+          "转账一般多久到账"
+        ],
+        "http_status": 200,
+        "latency_ms": 2821.29,
+        "source_cited_correctly": false,
+        "citation_present": true,
+        "pending": null,
+        "answer_preview": "Arrival time for Overseas TT: Submitted before 3 pm on a business day: processed same day, usually 1–3 working days, up to 5 for some countries\n\nSource: product data (knowledge graph)"
+      },
+      {
+        "question": "你们的 exchange rate 周末会不会调整？",
+        "lang": "mixed",
+        "expected": [
+          "汇率如何确定"
+        ],
+        "http_status": 200,
+        "latency_ms": 6454.07,
+        "source_cited_correctly": true,
+        "citation_present": true,
+        "pending": null,
+        "answer_preview": "周末和公众假期使用锁定牌价，不会像工作日那样约每 5 分钟更新一次，并会加收 0.5% 的波动缓冲。实时牌价可在 App 的“汇率”页面查看。\n\n来源：《费用与汇率》汇率如何确定"
+      },
+      {
+        "question": "海外 ATM 取款的 standard fee 是多少？",
+        "lang": "mixed",
+        "expected": [
+          "ATM 取款费用"
+        ],
+        "http_status": 200,
+        "latency_ms": 7399.68,
+        "source_cited_correctly": true,
+        "citation_present": true,
+        "pending": null,
+        "answer_preview": "海外 ATM 取款每次收取 SGD 5，外币金额另加 3.25% 外币交易费。海外 ATM 运营商也可能另外收费，具体会在屏幕上显示。\n\n来源：《费用与汇率》ATM 取款费用；《费用与汇率》海外电汇（TT）手续费；《费用与汇率》账单上看不懂的费用"
+      },
+      {
+        "question": "FAST transfer 通常多久到账？",
+        "lang": "mixed",
+        "expected": [
+          "转账一般多久到账",
+          "转账方式比较"
+        ],
+        "http_status": 200,
+        "latency_ms": 2674.65,
+        "source_cited_correctly": false,
+        "citation_present": true,
+        "pending": null,
+        "answer_preview": "FAST 转账的到账时间：通常几分钟内，全天可用\n\n来源：产品资料（术语图谱）"
+      },
+      {
+        "question": "credit card supplementary card 申请有什么条件？",
+        "lang": "mixed",
+        "expected": [
+          "补发实体卡与附属卡"
+        ],
+        "http_status": 200,
+        "latency_ms": 7495.66,
+        "source_cited_correctly": true,
+        "citation_present": true,
+        "pending": null,
+        "answer_preview": "信用卡附属卡可为18岁以上的家人申请，首两张免年费。借记卡不提供附属卡。其他具体条件资料未说明，建议转人工确认。\n\n来源：《银行卡服务》补发实体卡与附属卡"
+      },
+      {
+        "question": "PayNow transfer 有手续费吗？",
+        "lang": "mixed",
+        "expected": [
+          "本地转账费用"
+        ],
+        "http_status": 200,
+        "latency_ms": 2732.33,
+        "source_cited_correctly": false,
+        "citation_present": true,
+        "pending": null,
+        "answer_preview": "PayNow 的手续费：免费\n\n来源：产品资料（术语图谱）"
+      },
+      {
+        "question": "海外刷卡的 foreign currency fee 怎么算？",
+        "lang": "mixed",
+        "expected": [
+          "外币兑换与外币刷卡费用"
+        ],
+        "http_status": 200,
+        "latency_ms": 6214.4,
+        "source_cited_correctly": true,
+        "citation_present": true,
+        "pending": null,
+        "answer_preview": "海外刷卡的外币交易费按交易金额计算：Visa 或 Mastercard 卡为 3.25%，银联卡为 1%。若海外商户以新元计价并收取动态货币转换（DCC）费用，建议选择以当地货币付款。\n\n来源：《费用与汇率》外币兑换与外币刷卡费用；《费用与汇率》海外电汇（TT）手续费；《费用与汇率》ATM 取款费用"
+      }
+    ]
+  }
+}

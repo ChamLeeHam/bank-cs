@@ -8,16 +8,19 @@ from src.utils.milvus_utils import create_hybrid_search_request, execute_hybrid_
 logger = logging.getLogger(__name__)
 
 
-def process(query, intent=None, collection_name=None):
+def process(query, intent=None, collection_name=None, doc_prefix=None):
     """collection_name 不传就查狮城银行的 FAQ（kb_collection）"""
     config = get_config()
     collection_name = collection_name or config.kb_collection
+    if doc_prefix is None and collection_name == config.kb_collection:
+        # Shared demo collection: default FAQ queries stay within Lion City Bank entries.
+        doc_prefix = "lcb__faq__"
 
     # 1. 问题转成混合向量 {"dense": [...], "sparse": [...]}
     embeddings = generate_hybrid_embedding([query])
 
     # 2. 按一级意图过滤（不传就不过滤）
-    filter_expr = _build_filter_expr(intent)
+    filter_expr = _build_filter_expr(intent, doc_prefix)
 
     # 3. 构建检索请求，每一路多取一些，合并后再截取
     requests = create_hybrid_search_request(
@@ -41,10 +44,14 @@ def process(query, intent=None, collection_name=None):
     return {"embedding_chunks": _extract_entities(hits)}
 
 
-def _build_filter_expr(intent):
-    if not intent:
-        return None
-    return f'intent == "{intent}"'
+def _build_filter_expr(intent, doc_prefix=None):
+    filters = []
+    if intent:
+        filters.append(f'intent == "{intent}"')
+    if doc_prefix:
+        # Prefixes come from the fixed internal bank registry, not from user input.
+        filters.append(f'doc like "{doc_prefix}%"')
+    return " and ".join(filters) or None
 
 
 def _extract_entities(hits):

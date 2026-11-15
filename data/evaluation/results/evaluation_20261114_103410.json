@@ -1,0 +1,728 @@
+{
+  "run_id": "20261114_103410",
+  "timestamp": "2026-11-14T10:34:10+08:00",
+  "git_commit": "48e3d16",
+  "git_dirty": true,
+  "dataset_sha256": {
+    "intent": "7198219f2a920374ac6cc2f08f7b7aabad4c4c8aaff5e9d0cdc4f81327b014bb",
+    "faq": "4b96f95840e6d1b1716293c160f90821bf71a9ec68400064e2296227947e5d6c",
+    "api_faq": "9b2d9066d832a7ae2e8d664a1c120cc0f25d2f1afe10a564ee92c7fb4e59eb1b"
+  },
+  "dataset_counts": {
+    "intent": 640,
+    "faq": 44,
+    "api_faq": 18,
+    "intent_language": {
+      "en": 216,
+      "zh": 204,
+      "mixed": 220
+    },
+    "faq_language": {
+      "zh": 13,
+      "en": 22,
+      "mixed": 9
+    },
+    "api_faq_language": {
+      "zh": 6,
+      "en": 6,
+      "mixed": 6
+    }
+  },
+  "retrieval": {
+    "count": 44,
+    "successful_count": 44,
+    "error_count": 0,
+    "answerable_count": 40,
+    "expected_source_recall": 1.0,
+    "top1_source_accuracy": 0.9,
+    "out_of_scope_count": 4,
+    "out_of_scope_rejection_accuracy": 0.75,
+    "mean_latency_ms": 3840.46,
+    "by_language": {
+      "en": {
+        "count": 22,
+        "answerable_count": 20,
+        "expected_source_recall": 1.0,
+        "top1_source_accuracy": 0.9
+      },
+      "mixed": {
+        "count": 9,
+        "answerable_count": 9,
+        "expected_source_recall": 1.0,
+        "top1_source_accuracy": 1.0
+      },
+      "zh": {
+        "count": 13,
+        "answerable_count": 11,
+        "expected_source_recall": 1.0,
+        "top1_source_accuracy": 0.8181818181818182
+      }
+    },
+    "details": [
+      {
+        "question": "PayNow 转账要收钱吗？",
+        "lang": "zh",
+        "expected": [
+          "本地转账费用"
+        ],
+        "kept": [
+          "收到不明的 PayNow 转账",
+          "如何收款",
+          "本地转账费用"
+        ],
+        "source_recall": true,
+        "top1_correct": false,
+        "correctly_rejected": null,
+        "latency_ms": 10344.3,
+        "error": null
+      },
+      {
+        "question": "What's the charge for sending a TT to Malaysia?",
+        "lang": "en",
+        "expected": [
+          "海外电汇（TT）手续费"
+        ],
+        "kept": [
+          "海外电汇（TT）手续费"
+        ],
+        "source_recall": true,
+        "top1_correct": true,
+        "correctly_rejected": null,
+        "latency_ms": 3459.6,
+        "error": null
+      },
+      {
+        "question": "Is the overseas TT fee different if I send money to Malaysia?",
+        "lang": "en",
+        "expected": [
+          "海外电汇（TT）手续费"
+        ],
+        "kept": [
+          "海外电汇（TT）手续费"
+        ],
+        "source_recall": true,
+        "top1_correct": true,
+        "correctly_rejected": null,
+        "latency_ms": 2512.51,
+        "error": null
+      },
+      {
+        "question": "你们的 exchange rate 是怎么定的？周末会不会不一样？",
+        "lang": "mixed",
+        "expected": [
+          "汇率如何确定"
+        ],
+        "kept": [
+          "汇率如何确定"
+        ],
+        "source_recall": true,
+        "top1_correct": true,
+        "correctly_rejected": null,
+        "latency_ms": 3624.61,
+        "error": null
+      },
+      {
+        "question": "I paid in USD on Amazon with my Visa, why was there an extra 3.25%?",
+        "lang": "en",
+        "expected": [
+          "外币兑换与外币刷卡费用"
+        ],
+        "kept": [
+          "外币兑换与外币刷卡费用",
+          "ATM 取款费用",
+          "账单上看不懂的费用"
+        ],
+        "source_recall": true,
+        "top1_correct": true,
+        "correctly_rejected": null,
+        "latency_ms": 4417.37,
+        "error": null
+      },
+      {
+        "question": "在日本 ATM 拿钱要多少 fee？",
+        "lang": "mixed",
+        "expected": [
+          "ATM 取款费用"
+        ],
+        "kept": [
+          "ATM 取款费用"
+        ],
+        "source_recall": true,
+        "top1_correct": true,
+        "correctly_rejected": null,
+        "latency_ms": 4335.48,
+        "error": null
+      },
+      {
+        "question": "statement 上面有一笔看不懂的小额 charge 是什么？",
+        "lang": "mixed",
+        "expected": [
+          "账单上看不懂的费用"
+        ],
+        "kept": [
+          "账单上看不懂的费用"
+        ],
+        "source_recall": true,
+        "top1_correct": true,
+        "correctly_rejected": null,
+        "latency_ms": 2537.1,
+        "error": null
+      },
+      {
+        "question": "信用卡年费可以免吗？",
+        "lang": "zh",
+        "expected": [
+          "银行卡年费与其他卡费"
+        ],
+        "kept": [
+          "银行卡年费与其他卡费"
+        ],
+        "source_recall": true,
+        "top1_correct": true,
+        "correctly_rejected": null,
+        "latency_ms": 1838.04,
+        "error": null
+      },
+      {
+        "question": "What's the difference between PayNow and FAST?",
+        "lang": "en",
+        "expected": [
+          "转账方式比较"
+        ],
+        "kept": [
+          "转账方式比较"
+        ],
+        "source_recall": true,
+        "top1_correct": true,
+        "correctly_rejected": null,
+        "latency_ms": 4386.91,
+        "error": null
+      },
+      {
+        "question": "FAST transfer 一般几分钟会到？",
+        "lang": "mixed",
+        "expected": [
+          "转账一般多久到账",
+          "转账方式比较"
+        ],
+        "kept": [
+          "转账一般多久到账",
+          "转账方式比较"
+        ],
+        "source_recall": true,
+        "top1_correct": true,
+        "correctly_rejected": null,
+        "latency_ms": 2369.84,
+        "error": null
+      },
+      {
+        "question": "How do I send money to my mum's bank account in China?",
+        "lang": "en",
+        "expected": [
+          "如何汇款到海外"
+        ],
+        "kept": [
+          "如何汇款到海外"
+        ],
+        "source_recall": true,
+        "top1_correct": true,
+        "correctly_rejected": null,
+        "latency_ms": 3898.17,
+        "error": null
+      },
+      {
+        "question": "我朋友在美国要汇钱给我，要给他什么资料？",
+        "lang": "zh",
+        "expected": [
+          "如何收款"
+        ],
+        "kept": [
+          "如何收款"
+        ],
+        "source_recall": true,
+        "top1_correct": true,
+        "correctly_rejected": null,
+        "latency_ms": 4264.19,
+        "error": null
+      },
+      {
+        "question": "My friend in the US wants to wire money to my Lion City account. What bank details should I give them?",
+        "lang": "en",
+        "expected": [
+          "如何收款"
+        ],
+        "kept": [
+          "如何收款"
+        ],
+        "source_recall": true,
+        "top1_correct": true,
+        "correctly_rejected": null,
+        "latency_ms": 4561.52,
+        "error": null
+      },
+      {
+        "question": "Why can't I add Binance as a payee?",
+        "lang": "en",
+        "expected": [
+          "收款人限制"
+        ],
+        "kept": [
+          "收款人限制"
+        ],
+        "source_recall": true,
+        "top1_correct": true,
+        "correctly_rejected": null,
+        "latency_ms": 2789.35,
+        "error": null
+      },
+      {
+        "question": "我想一次转 SGD 10,000 给朋友，可以吗？",
+        "lang": "zh",
+        "expected": [
+          "转账限额"
+        ],
+        "kept": [
+          "收款人限制",
+          "转账限额"
+        ],
+        "source_recall": true,
+        "top1_correct": false,
+        "correctly_rejected": null,
+        "latency_ms": 2746.75,
+        "error": null
+      },
+      {
+        "question": "My transfer got returned, what usually causes that?",
+        "lang": "en",
+        "expected": [
+          "转账失败的常见原因"
+        ],
+        "kept": [
+          "转账失败的常见原因"
+        ],
+        "source_recall": true,
+        "top1_correct": true,
+        "correctly_rejected": null,
+        "latency_ms": 7874.46,
+        "error": null
+      },
+      {
+        "question": "新卡收到了要怎么开通？",
+        "lang": "zh",
+        "expected": [
+          "激活新卡"
+        ],
+        "kept": [
+          "激活新卡",
+          "卡片即将到期"
+        ],
+        "source_recall": true,
+        "top1_correct": true,
+        "correctly_rejected": null,
+        "latency_ms": 3302.83,
+        "error": null
+      },
+      {
+        "question": "My new card still hasn't arrived after two weeks",
+        "lang": "en",
+        "expected": [
+          "新卡寄送时间"
+        ],
+        "kept": [
+          "激活新卡",
+          "新卡寄送时间",
+          "ATM 吞卡"
+        ],
+        "source_recall": true,
+        "top1_correct": false,
+        "correctly_rejected": null,
+        "latency_ms": 3232.15,
+        "error": null
+      },
+      {
+        "question": "我的 PIN 输错三次了，现在用不了",
+        "lang": "mixed",
+        "expected": [
+          "修改 PIN 与 PIN 被锁"
+        ],
+        "kept": [
+          "修改 PIN 与 PIN 被锁",
+          "忘记登录密码",
+          "ATM 吞卡"
+        ],
+        "source_recall": true,
+        "top1_correct": true,
+        "correctly_rejected": null,
+        "latency_ms": 2531.5,
+        "error": null
+      },
+      {
+        "question": "Why does my card keep getting declined overseas?",
+        "lang": "en",
+        "expected": [
+          "卡被拒或不能用"
+        ],
+        "kept": [
+          "卡被拒或不能用"
+        ],
+        "source_recall": true,
+        "top1_correct": true,
+        "correctly_rejected": null,
+        "latency_ms": 3146.95,
+        "error": null
+      },
+      {
+        "question": "ATM 把我的卡吃掉了",
+        "lang": "zh",
+        "expected": [
+          "ATM 吞卡"
+        ],
+        "kept": [
+          "ATM 吞卡"
+        ],
+        "source_recall": true,
+        "top1_correct": true,
+        "correctly_rejected": null,
+        "latency_ms": 2392.43,
+        "error": null
+      },
+      {
+        "question": "My card expires next month, do I need to apply for a new one?",
+        "lang": "en",
+        "expected": [
+          "卡片即将到期"
+        ],
+        "kept": [
+          "卡片即将到期"
+        ],
+        "source_recall": true,
+        "top1_correct": true,
+        "correctly_rejected": null,
+        "latency_ms": 5922.34,
+        "error": null
+      },
+      {
+        "question": "可以给我太太办一张 supplementary card 吗？",
+        "lang": "mixed",
+        "expected": [
+          "补发实体卡与附属卡"
+        ],
+        "kept": [
+          "补发实体卡与附属卡"
+        ],
+        "source_recall": true,
+        "top1_correct": true,
+        "correctly_rejected": null,
+        "latency_ms": 2742.85,
+        "error": null
+      },
+      {
+        "question": "Is your debit card Visa or Mastercard?",
+        "lang": "en",
+        "expected": [
+          "卡组织与受理范围"
+        ],
+        "kept": [
+          "卡组织与受理范围"
+        ],
+        "source_recall": true,
+        "top1_correct": true,
+        "correctly_rejected": null,
+        "latency_ms": 4076.92,
+        "error": null
+      },
+      {
+        "question": "Can I open an account if I'm 15?",
+        "lang": "en",
+        "expected": [
+          "开户条件"
+        ],
+        "kept": [
+          "开户条件"
+        ],
+        "source_recall": true,
+        "top1_correct": true,
+        "correctly_rejected": null,
+        "latency_ms": 3624.99,
+        "error": null
+      },
+      {
+        "question": "开户需要什么证件？没有 Singpass 可以吗？",
+        "lang": "zh",
+        "expected": [
+          "身份验证"
+        ],
+        "kept": [
+          "身份验证"
+        ],
+        "source_recall": true,
+        "top1_correct": true,
+        "correctly_rejected": null,
+        "latency_ms": 5133.87,
+        "error": null
+      },
+      {
+        "question": "The app keeps rejecting my selfie during verification",
+        "lang": "en",
+        "expected": [
+          "身份验证失败"
+        ],
+        "kept": [
+          "身份验证失败"
+        ],
+        "source_recall": true,
+        "top1_correct": true,
+        "correctly_rejected": null,
+        "latency_ms": 4449.24,
+        "error": null
+      },
+      {
+        "question": "我搬家了，地址要怎么改？",
+        "lang": "zh",
+        "expected": [
+          "修改个人资料"
+        ],
+        "kept": [
+          "修改个人资料"
+        ],
+        "source_recall": true,
+        "top1_correct": true,
+        "correctly_rejected": null,
+        "latency_ms": 3280.33,
+        "error": null
+      },
+      {
+        "question": "I can't remember my internet banking password",
+        "lang": "en",
+        "expected": [
+          "忘记登录密码"
+        ],
+        "kept": [
+          "忘记登录密码"
+        ],
+        "source_recall": true,
+        "top1_correct": true,
+        "correctly_rejected": null,
+        "latency_ms": 2723.22,
+        "error": null
+      },
+      {
+        "question": "我想 close 我的 savings account",
+        "lang": "mixed",
+        "expected": [
+          "销户"
+        ],
+        "kept": [
+          "销户"
+        ],
+        "source_recall": true,
+        "top1_correct": true,
+        "correctly_rejected": null,
+        "latency_ms": 3406.12,
+        "error": null
+      },
+      {
+        "question": "Can I hold Japanese yen in my account?",
+        "lang": "en",
+        "expected": [
+          "多币种账户支持的货币"
+        ],
+        "kept": [
+          "多币种账户支持的货币"
+        ],
+        "source_recall": true,
+        "top1_correct": true,
+        "correctly_rejected": null,
+        "latency_ms": 5114.8,
+        "error": null
+      },
+      {
+        "question": "Do you support holding JPY (Japanese yen)?",
+        "lang": "en",
+        "expected": [
+          "多币种账户支持的货币"
+        ],
+        "kept": [
+          "多币种账户支持的货币"
+        ],
+        "source_recall": true,
+        "top1_correct": true,
+        "correctly_rejected": null,
+        "latency_ms": 2396.14,
+        "error": null
+      },
+      {
+        "question": "你们可以存比特币吗？",
+        "lang": "zh",
+        "expected": [
+          "多币种账户支持的货币",
+          "收款人限制"
+        ],
+        "kept": [
+          "多币种账户支持的货币"
+        ],
+        "source_recall": true,
+        "top1_correct": true,
+        "correctly_rejected": null,
+        "latency_ms": 6481.41,
+        "error": null
+      },
+      {
+        "question": "我在你们银行存了 15 万新币，如果银行倒闭能拿回多少？",
+        "lang": "zh",
+        "expected": [
+          "存款保险"
+        ],
+        "kept": [
+          "存款保险",
+          "账单上看不懂的费用"
+        ],
+        "source_recall": true,
+        "top1_correct": true,
+        "correctly_rejected": null,
+        "latency_ms": 4366.58,
+        "error": null
+      },
+      {
+        "question": "Is the USD in my multi-currency account covered by deposit insurance?",
+        "lang": "en",
+        "expected": [
+          "存款保险"
+        ],
+        "kept": [
+          "存款保险"
+        ],
+        "source_recall": true,
+        "top1_correct": true,
+        "correctly_rejected": null,
+        "latency_ms": 4176.56,
+        "error": null
+      },
+      {
+        "question": "我手机好像被黑了，可以马上把所有账户都 freeze 吗？",
+        "lang": "mixed",
+        "expected": [
+          "紧急冻结账户"
+        ],
+        "kept": [
+          "紧急冻结账户"
+        ],
+        "source_recall": true,
+        "top1_correct": true,
+        "correctly_rejected": null,
+        "latency_ms": 3320.93,
+        "error": null
+      },
+      {
+        "question": "How can I lock part of my savings so it can't be transferred out online?",
+        "lang": "en",
+        "expected": [
+          "资金锁"
+        ],
+        "kept": [
+          "资金锁"
+        ],
+        "source_recall": true,
+        "top1_correct": true,
+        "correctly_rejected": null,
+        "latency_ms": 4919.08,
+        "error": null
+      },
+      {
+        "question": "PayNow 转账的时候为什么看不到对方的 nickname 了？",
+        "lang": "mixed",
+        "expected": [
+          "PayNow 收款人名字的显示"
+        ],
+        "kept": [
+          "PayNow 收款人名字的显示",
+          "收到不明的 PayNow 转账"
+        ],
+        "source_recall": true,
+        "top1_correct": true,
+        "correctly_rejected": null,
+        "latency_ms": 3229.94,
+        "error": null
+      },
+      {
+        "question": "定期存款利率是多少？",
+        "lang": "zh",
+        "expected": null,
+        "kept": [],
+        "source_recall": null,
+        "top1_correct": null,
+        "correctly_rejected": true,
+        "latency_ms": 2199.2,
+        "error": null
+      },
+      {
+        "question": "How do I apply for a home loan?",
+        "lang": "en",
+        "expected": null,
+        "kept": [
+          "开户条件"
+        ],
+        "source_recall": null,
+        "top1_correct": null,
+        "correctly_rejected": false,
+        "latency_ms": 2736.02,
+        "error": null
+      },
+      {
+        "question": "你们的分行几点开门？",
+        "lang": "zh",
+        "expected": null,
+        "kept": [],
+        "source_recall": null,
+        "top1_correct": null,
+        "correctly_rejected": true,
+        "latency_ms": 2501.46,
+        "error": null
+      },
+      {
+        "question": "Does my credit card come with travel insurance?",
+        "lang": "en",
+        "expected": null,
+        "kept": [],
+        "source_recall": null,
+        "top1_correct": null,
+        "correctly_rejected": true,
+        "latency_ms": 3184.57,
+        "error": null
+      },
+      {
+        "question": "那 FAST 呢？",
+        "lang": "zh",
+        "expected": [
+          "本地转账费用"
+        ],
+        "kept": [
+          "本地转账费用",
+          "转账限额"
+        ],
+        "source_recall": true,
+        "top1_correct": true,
+        "correctly_rejected": null,
+        "latency_ms": 3327.91,
+        "error": null
+      },
+      {
+        "question": "what if I forgot the PIN?",
+        "lang": "en",
+        "expected": [
+          "修改 PIN 与 PIN 被锁"
+        ],
+        "kept": [
+          "激活新卡",
+          "ATM 吞卡",
+          "修改 PIN 与 PIN 被锁"
+        ],
+        "source_recall": true,
+        "top1_correct": false,
+        "correctly_rejected": null,
+        "latency_ms": 5099.86,
+        "error": null
+      }
+    ]
+  }
+}

@@ -18,7 +18,7 @@ from pymysql.constants import CLIENT
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent.parent
-TABLES = ["customers", "accounts", "cards", "payees", "transfers", "card_transactions", "tickets", "turn_log", "product_category", "product", "product_attr", "product_alias"]
+TABLES = ["customers", "accounts", "cards", "payees", "transfers", "card_transactions", "tickets", "ticket_events", "turn_log", "product_category", "product", "product_attr", "product_alias"]
 
 
 def connect(database: str | None = None) -> pymysql.connections.Connection:

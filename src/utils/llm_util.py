@@ -11,13 +11,13 @@ logger = logging.getLogger(__name__)
 cache_llm_client = {}
 
 
-def get_llm_client(model_name=None, temperature=0.0, response_format=False):
+def get_llm_client(model_name=None, temperature=0.0, response_format=False, timeout=30, max_retries=1):
     """获取 LLM 客户端，相同的参数只创建一次"""
     config = get_config()
 
     # 1. 模型名，默认用 .env 里的 DEEPSEEK_MODEL_NAME
     model_name = model_name or config.deepseek_model
-    cache_key = (model_name, temperature, response_format)
+    cache_key = (model_name, temperature, response_format, timeout, max_retries)
 
     # 2. 已经创建过就直接返回
     if cache_key in cache_llm_client:
@@ -35,8 +35,8 @@ def get_llm_client(model_name=None, temperature=0.0, response_format=False):
             api_key=config.deepseek_api_key,
             base_url=config.deepseek_base_url,
             temperature=temperature,
-            timeout=30,
-            max_retries=1,
+            timeout=timeout,
+            max_retries=max_retries,
             model_kwargs=model_kwargs,
         )
         cache_llm_client[cache_key] = client

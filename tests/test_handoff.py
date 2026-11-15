@@ -4,6 +4,7 @@ from unittest.mock import patch
 from langchain_core.messages import AIMessage, HumanMessage
 
 from src.nodes.intent_router import IntentRouterNode
+from src.nodes.rag_answer import RagAnswerNode
 from src.nodes.stub_nodes import AskBackNode, GateNode, HandoffNode, InputGuardNode
 from src.schema.exceptions import MySQLError
 from src.schema.state import create_default_state
@@ -94,6 +95,35 @@ class HandoffTests(unittest.TestCase):
                 decision = GateNode().process(state)
                 self.assertEqual(decision["route"], "rag")
 
+    def test_fraud_vs_merchant_dispute_comparison_uses_kb_but_urgent_action_still_handoffs(self):
+        question = "我没授权这笔交易，和我自己买了东西但想退款有什么区别？"
+        state = create_default_state(masked_question=question, question=question, lang="zh")
+        state.update(IntentRouterNode().process(state))
+        state.update(GateNode().process(state))
+        self.assertEqual(state["route"], "rag")
+        with patch.object(RagAnswerNode, "answer", return_value={"answer": "两类处理不同"}) as answer:
+            RagAnswerNode().process(state)
+        self.assertEqual(answer.call_args.args[0], "盗刷（非本人授权交易）与本人消费后的商户退款争议有什么区别？")
+
+        urgent = question + "请立即冻结卡片并转人工"
+        state = create_default_state(masked_question=urgent, question=urgent, lang="zh")
+        state.update(IntentRouterNode().process(state))
+        self.assertEqual(state["intent"], "fraud_report")
+        state.update(GateNode().process(state))
+        self.assertEqual(state["route"], "handoff")
+        with patch("src.nodes.stub_nodes.create_ticket", return_value=47):
+            self.assertEqual(HandoffNode().process(state)["priority"], "urgent")
+
+    def test_unfamiliar_statement_merchant_name_uses_kb_without_fraud_clarification(self):
+        question = "为什么账单上的商户名称我不认识？"
+        state = create_default_state(masked_question=question, question=question, lang="zh")
+        state.update(IntentRouterNode().process(state))
+        state.update(GateNode().process(state))
+        self.assertEqual(state["route"], "rag")
+        with patch.object(RagAnswerNode, "answer", return_value={"answer": "商户名称可能不同"}) as answer:
+            RagAnswerNode().process(state)
+        self.assertEqual(answer.call_args.args[0], "账单上的陌生商户名称、小额验证扣款或预授权通常是什么原因？")
+
     def test_complaint_howto_does_not_create_ticket(self):
         for question in ("怎么投诉？", "How do I make a complaint?"):
             with self.subTest(question=question):
@@ -176,13 +206,16 @@ class HandoffTests(unittest.TestCase):
 
     def test_general_information_followup_remains_in_fraud_context(self):
         prompt = "如果发现非本人交易，请通过银行官方 App 冻结卡片，或通过银行官方紧急渠道联系银行。请问这是已经发生，还是您在了解一般处理方法？"
-        question = "我只是想了解一下"
+        question = "我在了解这个一般的处理方法"
         state = create_default_state(masked_question=question, question=question, lang="zh", messages=[
             HumanMessage("如果我的卡被盗刷了怎么办？"), AIMessage(prompt), HumanMessage(question)])
         state.update(IntentRouterNode().process(state))
         state.update(GateNode().process(state))
-        self.assertEqual(state["route"], "ask_back")
-        self.assertIn("非本人交易", AskBackNode().process(state)["answer"])
+        self.assertEqual(state["route"], "rag")
+        self.assertFalse(state["fraud_confirmation_pending"])
+        with patch.object(RagAnswerNode, "answer", return_value={"answer": "盗刷处理说明"}) as answer:
+            RagAnswerNode().process(state)
+        self.assertEqual(answer.call_args.args[0], "银行卡被盗刷后的一般处理步骤是什么？")
 
     def test_negated_fraud_with_limit_question_does_not_create_urgent_ticket(self):
         for question in ("我的卡没有被盗刷，我想问怎么提高额度", "我的 card 没有被盗刷，只是想问 limit 怎么改"):

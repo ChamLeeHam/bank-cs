@@ -611,6 +611,7 @@ def process(docs=None, min_chars=MIN_CHARS, max_chars=MAX_CHARS):
     chunks = []
     for doc in docs:
         stem = Path(doc["file_title"]).stem
+        source_context = _bank_reference_context(stem)
         text = remove_unverified_tables(stem, doc["content"])
         text = split_large_tables(text, max_chars)
         items = split_markdown(text, min_chars, max_chars, merge_scope="chapter",
@@ -623,12 +624,46 @@ def process(docs=None, min_chars=MIN_CHARS, max_chars=MAX_CHARS):
                 "title": doc["file_title"][:200],
                 "section": section[:200],
                 # 存的文本带上标题路径，和 build_kb.py 一样，标题里的词也能搜到
-                "text": f"{section}\n{content}"[:8192],
+                "text": f"{source_context}{section}\n{content}"[:8192],
                 "chunk_id": item["id"],
                 "chars": len(content),
             })
         logger.info(f"{doc['file_title']} 切成 {len(items)} 块")
     return chunks
+
+
+def _bank_reference_context(stem: str) -> str:
+    """Label external bank PDFs so each retrieved chunk carries its institution and jurisdiction."""
+    normalized = stem.lower()
+    labels = (
+        ("dbs", "Source institution: DBS Bank; jurisdiction: Singapore. Reference material only; not Lion City Bank policy."),
+        ("citi", "Source institution: Citibank Singapore; jurisdiction: Singapore. Reference material only; not Lion City Bank policy."),
+        ("maybank", "Source institution: Maybank Singapore; jurisdiction: Singapore. Reference material only; not Lion City Bank policy."),
+        ("uob", "Source institution: United Overseas Bank; jurisdiction: Singapore. Reference material only; not Lion City Bank policy."),
+        ("sc_", "Source institution: Standard Chartered Singapore; jurisdiction: Singapore. Reference material only; not Lion City Bank policy."),
+        ("standard_chartered", "Source institution: Standard Chartered Singapore; jurisdiction: Singapore. Reference material only; not Lion City Bank policy."),
+        ("bofa", "Source institution: Bank of America; jurisdiction: United States. Reference material only; not Lion City Bank policy."),
+        ("boa_", "Source institution: Bank of America; jurisdiction: United States. Reference material only; not Lion City Bank policy."),
+        ("ubs", "Source institution: UBS; jurisdiction: Switzerland. Reference material only; not Lion City Bank policy."),
+        ("deutsche_sg", "Source institution: Deutsche Bank Wealth Management; service scope: Singapore and Hong Kong. Reference material only; not Lion City Bank policy."),
+        ("deutsche", "Source institution: Deutsche Bank; jurisdiction varies by document. Reference material only; not Lion City Bank policy."),
+    )
+    source_label = next((label for prefix, label in labels if normalized.startswith(prefix)),
+                        "Source institution/jurisdiction: see official source catalogue. Reference material only; not Lion City Bank policy.")
+    sources = (
+        ("uob_sg_scam", "https://www.uob.com.sg/assets/web-resources/personal/pdf/cards/services/transaction-dispute/scam-questionnaire.pdf"),
+        ("uob_sg_lost", "https://www.uob.com.sg/assets/web-resources/personal/pdf/cards/services/transaction-dispute/fraud-lost-stolen-questionnaire.pdf"),
+        ("uob", "https://www.uob.com.sg/personal/cards/services/transaction-dispute.page"),
+        ("maybank", "https://www.maybank2u.com.sg/iwov-resources/sg/pdf/cards/Dispute-Declaration-Form.pdf"),
+        ("bofa", "https://www.bankofamerica.com/deposits/resources/personal-schedule-fees.go"),
+        ("ubs", "https://www.ubs.com/ch/en/help/creditcard/notify-abuse.html"),
+        ("deutsche", "https://wealth.db.com/content/dam/deutschewealth/docs/serviceagreement.pdf"),
+        ("dbs", "https://www.dbs.com.sg/personal/support/general-incorrect-transaction.html"),
+        ("citi", "https://www.citibank.com.sg/dispute-faq/"),
+        ("sc_", "https://www.sc.com/sg/terms-and-conditions/")
+    )
+    source_url = next((url for prefix, url in sources if normalized.startswith(prefix)), "See official source catalogue.")
+    return f"{source_label}\nOfficial source: {source_url}\nDocument: {stem}\n"
 
 
 if __name__ == "__main__":

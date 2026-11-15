@@ -15,7 +15,7 @@ from src.utils.ticket_utils import create_ticket
 from src.utils.transfer_context import transfer_ordinal, transfer_other
 from src.utils.history_utils import (fraud_general_followup, history_of, negated_fraud_limit_question,
                                     replacement_fee_stolen_followup, stolen_card_hypothetical)
-from src.utils.fraud_context import fraud_context
+from src.utils.fraud_context import fraud_action_status_question, fraud_context
 
 _CJK = re.compile(r"[一-鿿]")
 _LATIN = re.compile(r"[A-Za-z]{2,}")
@@ -38,7 +38,7 @@ _COMPLAINT_HOWTO = re.compile(
     re.IGNORECASE,
 )
 _LIMIT_REQUEST = re.compile(
-    r"(?:额度|限额).{0,12}(?:怎么|如何|调整|修改|提高|降低|设置)|"
+    r"(?:额度|限额|\blimit\b).{0,12}(?:怎么|如何|调整|修改|提高|降低|设置)|"
     r"(?:怎么|如何|调整|修改|提高|降低|设置).{0,12}(?:额度|限额)|"
     r"\b(?:how (?:can|do) i |how to |change |adjust |increase |decrease |raise |lower ).{0,25}\blimit\b|"
     r"\blimit\b.{0,20}\b(?:change|adjust|increase|decrease|raise|lower)\b",
@@ -203,8 +203,14 @@ class GateNode(BaseNode):
 
         if fraud_signal == "hypothetical" or intent == "fraud_report":
             return self._result("clarify", "ask_back", missing, clarify_count)
+        if fraud_action_status_question(text, state.get("fraud_ticket_id")):
+            return self._result("answer", "ask_back", missing, clarify_count)
 
-        if fraud_general_followup(text, history_of(state)) or negated_fraud_limit_question(text):
+        if fraud_general_followup(text, history_of(state), state.get("fraud_confirmation_pending")):
+            return {**self._result("answer", "rag", missing, clarify_count),
+                    "intent": "card_service", "sub_intent": "lost_or_stolen_card",
+                    "fraud_confirmation_pending": False}
+        if negated_fraud_limit_question(text):
             return self._result("clarify", "ask_back", missing, clarify_count)
 
         if stolen_card_hypothetical(text) and not replacement_fee_stolen_followup(text, history_of(state)):
@@ -263,11 +269,16 @@ class AskBackNode(BaseNode):
     def process(self, state: GraphState) -> StateUpdate:
         lang = state.get("lang", "en")
         if state.get("fraud_signal") == "hypothetical" or state.get("intent") == "fraud_report":
-            return {"answer": pick(lang,
+            return {"fraud_confirmation_pending": True, "answer": pick(lang,
                 "If you notice an unauthorized transaction, freeze your card in the bank's official app or contact the bank through an official emergency channel. Has this happened to you, or are you asking generally?",
                 "如果发现非本人交易，请通过银行官方 App 冻结卡片，或通过银行官方紧急渠道联系银行。请问这是已经发生，还是您在了解一般处理方法？")}
-        if fraud_general_followup(state.get("masked_question", ""), history_of(state)):
-            return {"answer": pick(lang,
+        if fraud_action_status_question(state.get("masked_question", ""), state.get("fraud_ticket_id")):
+            ticket_id = state["fraud_ticket_id"]
+            return {"clarify_count": 0, "answer": pick(lang,
+                f"Fraud ticket #{ticket_id} did not freeze your card or change its limit. Check the current status in the bank's official app.",
+                f"盗刷工单（编号 {ticket_id}）不会冻结卡片或调整额度。请在银行官方 App 查看当前状态并办理。")}
+        if fraud_general_followup(state.get("masked_question", ""), history_of(state), state.get("fraud_confirmation_pending")):
+            return {"fraud_confirmation_pending": False, "clarify_count": 0, "answer": pick(lang,
                 "Understood. If an unauthorized transaction occurs, freeze your card through the bank's official app and contact the bank through an official channel.",
                 "明白了。如果日后发现非本人交易，请通过银行官方 App 冻结卡片，并通过银行官方渠道联系银行。")}
         if negated_fraud_limit_question(state.get("masked_question", "")):
@@ -312,6 +323,7 @@ class HandoffNode(BaseNode):
                     "answer": pick(lang, "I couldn't create a support ticket. Please contact the bank directly.",
                                    "暂时无法创建人工工单，请直接联系银行客服。") + guidance}
         return {"priority": priority, "ticket_id": ticket_id,
+                **({"fraud_ticket_id": ticket_id} if urgent else {}),
                 "answer": pick(lang, f"A support ticket has been created (#{ticket_id}). "
                                      "Human-agent notification is not yet available; please contact the bank directly.",
                                f"已创建人工工单（编号 {ticket_id}）。目前尚未接通人工通知，请直接联系银行客服。") + guidance}
@@ -358,7 +370,9 @@ class OutputGuardNode(BaseNode):
             if latest_user is not None and latest_user.id:
                 updates.append(HumanMessage("[私人业务问题已隐藏]", id=latest_user.id))
         updates.append(AIMessage(history_answer))
-        return {"answer": answer, "messages": updates}
+        return {"answer": answer, "messages": updates,
+                "fraud_confirmation_pending": state.get("route") == "ask_back"
+                and (state.get("fraud_signal") == "hypothetical" or state.get("intent") == "fraud_report")}
 
 
 if __name__ == "__main__":

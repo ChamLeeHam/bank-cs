@@ -4,15 +4,18 @@
 # 每一步都在 src/utils 里，这个节点只负责按顺序调用
 # 在项目根目录运行测试：uv run python -m src.nodes.rag_answer
 import time
+import re
 
 from src.schema.base import BaseNode, StateUpdate
 from src.schema.exceptions import BankAssistantError, Neo4jError
 from src.schema.state import GraphState
 from src.utils import (hyde_utils, reranker_utils, response_utils, rewrite_query_utils, rrf_utils,
                        search_embedding_utils)
-from src.utils.history_utils import (annual_fee_followup, history_of, replacement_fee_stolen_followup,
+from src.utils.fraud_context import fraud_dispute_comparison_question, unfamiliar_merchant_name_question
+from src.utils.history_utils import (annual_fee_followup, fraud_general_followup, history_of, replacement_fee_stolen_followup,
                                     statement_fee_followup, stolen_card_clarification)
 from src.utils.neo4j_utils import get_product_attr, get_product_names
+from src.utils.reference_bank_utils import is_reference_policy_question, resolve_reference_bank
 from src.utils.scope_utils import unsupported_scope_reason
 
 NOT_FOUND = {
@@ -23,6 +26,11 @@ KB_DOWN = {
     "zh": "抱歉，知识库暂时无法使用，请稍后再试，或回复“转人工”联系人工客服。",
     "en": "Sorry, the knowledge base is unavailable right now. Please try again later or ask for a human agent.",
 }
+_TT_FEE_WITH_STATUS = re.compile(
+    r"(?:海外电汇|电汇|\bTT\b|telegraphic transfer).{0,80}(?:手续费|fee).{0,80}(?:处理中|审核中|待处理|processing|under review|pending)|"
+    r"(?:处理中|审核中|待处理|processing|under review|pending).{0,80}(?:海外电汇|电汇|\bTT\b|telegraphic transfer).{0,80}(?:手续费|fee)",
+    re.IGNORECASE,
+)
 
 
 class RagAnswerNode(BaseNode):
@@ -37,6 +45,15 @@ class RagAnswerNode(BaseNode):
         lang = "en" if state.get("lang") == "en" else "zh"  # 中英混杂的用中文回答
         question = state.get("masked_question", "")
         history = history_of(state)
+        reference_bank = resolve_reference_bank(question, history)
+        if not is_reference_policy_question(question, reference_bank):
+            reference_bank = None
+        if fraud_dispute_comparison_question(question):
+            question = "盗刷（非本人授权交易）与本人消费后的商户退款争议有什么区别？"
+        elif unfamiliar_merchant_name_question(question):
+            question = "账单上的陌生商户名称、小额验证扣款或预授权通常是什么原因？"
+        elif fraud_general_followup(question, history, state.get("fraud_confirmation_pending")):
+            question = "银行卡被盗刷后的一般处理步骤是什么？"
         matched, fee = statement_fee_followup(question, history)
         if matched and not fee:
             return {"answer": "抱歉，我无法确定您指的是哪一项费用，请告诉我费用名称。", "sources": [], "search_query": ""}
@@ -48,22 +65,22 @@ class RagAnswerNode(BaseNode):
         if stolen_card_clarification(question, history) == "info":
             question = "银行卡被盗后如何处理？"
         scope_rejected = unsupported_scope_reason(question)
-        if scope_rejected:
+        if scope_rejected and not reference_bank:
             self.last_run = {"generator": "none", "scope_rejected": scope_rejected}
             return {"answer": NOT_FOUND[lang], "sources": [], "search_query": question}
 
         entities = state.get("entities") or {}
 
         # 1. 产品和属性都清楚，直接用术语图谱回答
-        graph_result = self._answer_from_graph(entities, lang)
+        graph_result = None if reference_bank or _TT_FEE_WITH_STATUS.search(question) else self._answer_from_graph(entities, lang)
         if graph_result:
             self.last_run = {"generator": "graph"}
             self.log_step(self.name, "用术语图谱回答")
             return graph_result
 
         # 2. 其他情况走 RAG，找到了产品就把产品名加到检索里
-        result = self.answer(question, history, lang, entities.get("products"), state.get("sub_intent"))
-        if replacement_question:
+        result = self.answer(question, history, lang, entities.get("products"), state.get("sub_intent"), reference_bank)
+        if replacement_question and not reference_bank:
             result["answer"] += "\n\n如果您的卡已被盗，请尽快冻结卡片；如需协助冻结，请告诉我。"
         return result
 
@@ -97,10 +114,13 @@ class RagAnswerNode(BaseNode):
                    for r in results]
         return {"answer": answer, "sources": sources, "search_query": ""}
 
-    def answer(self, question, history, lang, products=None, sub_intent=None):
+    def answer(self, question, history, lang, products=None, sub_intent=None, reference_bank=None):
+        reference_bank = reference_bank or resolve_reference_bank(question, history)
+        if not is_reference_policy_question(question, reference_bank):
+            reference_bank = None
         # 1~4. 检索
         try:
-            rewritten_query, docs, info = self.retrieve(question, history, products)
+            rewritten_query, docs, info = self.retrieve(question, history, products, reference_bank)
         except BankAssistantError as e:
             self.logger.error(f"知识库不可用：{e}")
             return {"answer": KB_DOWN[lang], "sources": [], "search_query": question, "error": str(e)}
@@ -134,27 +154,33 @@ class RagAnswerNode(BaseNode):
 
         # 5. 生成回答，失败的话直接用资料原文
         start = time.perf_counter()
-        response = response_utils.process(rewritten_query, history, docs, lang)
-        answer = response["answer"] or self._source_text(docs[0], lang)
+        response = response_utils.process(rewritten_query, history, docs, lang, reference_bank=reference_bank)
+        answer = response["answer"] or (NOT_FOUND[lang] if reference_bank else self._source_text(docs[0], lang))
         if not response["answer"]:
-            docs = docs[:1]  # 使用原文回退时，只引用实际展示的章节
+            docs = docs[:1] if not reference_bank else []  # 不直接向客户回显原始参考银行文档
         self.last_run = {**info, "generator": response["generator"], "t_generate": time.perf_counter() - start}
         self.log_step(self.name, f"5. 回答生成完成：{response['generator']}")
 
         # 6. 加上来源
         sources = [{"doc": d["doc"], "title": d["title"], "section": d["section"], "rerank_score": d["rerank_score"]}
                    for d in docs]
-        answer = f"{answer}\n\n{self._source_line(docs, lang)}"
+        answer = f"{answer}\n\n{self._source_line(docs, lang, reference_bank)}"
+        if reference_bank:
+            for source in sources:
+                source.update(adapted_from=reference_bank["key"], demo_policy=True)
         return {"answer": answer, "sources": sources, "search_query": rewritten_query}
 
-    def retrieve(self, question, history, products=None):
+    def retrieve(self, question, history, products=None, reference_bank=None):
         """返回 (重写后的问题, 保留下来的块, 中间结果)；products 是实体抽取找到的产品 ID"""
         cfg = self.config
+        reference_bank = reference_bank or resolve_reference_bank(question, history)
+        if not is_reference_policy_question(question, reference_bank):
+            reference_bank = None
         info = {}
 
         # 知识库未覆盖的业务类型直接拒答，避免被相邻账户资料误召回。
         scope_rejected = unsupported_scope_reason(question)
-        if scope_rejected:
+        if scope_rejected and not reference_bank:
             info.update({"rewritten": question, "search_query": question,
                          "scope_rejected": scope_rejected, "best_score": None})
             return question, [], info
@@ -182,8 +208,13 @@ class RagAnswerNode(BaseNode):
 
         # 2. 两路检索
         start = time.perf_counter()
-        embedding_chunks = search_embedding_utils.process(search_query)["embedding_chunks"]
-        if cfg.rag_hyde and not response_utils.is_pin_unblock_question(question):
+        if reference_bank:
+            embedding_chunks = search_embedding_utils.process(
+                search_query, collection_name=cfg.kb_collection, doc_prefix=reference_bank["doc_prefix"]
+            )["embedding_chunks"]
+        else:
+            embedding_chunks = search_embedding_utils.process(search_query)["embedding_chunks"]
+        if not reference_bank and cfg.rag_hyde and not response_utils.is_pin_unblock_question(question):
             hyde_result = hyde_utils.process(rewritten_query)
         else:
             hyde_result = {"hyde_doc": None, "embedding_chunks": []}
@@ -217,7 +248,7 @@ class RagAnswerNode(BaseNode):
         return response_utils.split_languages(body)[lang] or body
 
     @staticmethod
-    def _source_line(docs, lang):
+    def _source_line(docs, lang, reference_bank=None):
         names = []
         for d in docs:
             zh_title, _, en_title = d["title"].partition(" / ")
@@ -226,9 +257,28 @@ class RagAnswerNode(BaseNode):
                 names.append(f"{en_title or zh_title} – {en_sec or zh_sec}")
             else:
                 names.append(f"《{zh_title}》{zh_sec}")
+        if reference_bank:
+            categories = {
+                "bofa": ("账户费用与收费标准", "Account fees and charges"),
+                "maybank": ("银行卡交易争议处理", "Card transaction disputes"),
+                "standard_chartered": ("银行卡服务与交易条款", "Card services and transaction terms"),
+                "citi": ("银行卡交易争议处理", "Card transaction disputes"),
+                "deutsche": ("财富管理服务说明", "Wealth management service information"),
+                "ubs": ("银行卡安全与交易争议", "Card security and transaction disputes"),
+                "dbs": ("电子支付与账户服务", "E-payments and account services"),
+                "uob": ("银行卡失卡与争议处理", "Lost-card and transaction dispute handling"),
+            }
+            category_zh, category_en = categories.get(reference_bank["key"], ("客户服务", "Customer service"))
+            return (f"Source: Lion City Bank knowledge base – {category_en}." if lang == "en" else
+                    f"来源：狮城银行知识库 · {category_zh}")
         if lang == "en":
             return "Source: " + "; ".join(names)
         return "来源：" + "；".join(names)
+
+    @staticmethod
+    def _reference_source_url(doc):
+        match = re.search(r"^Official source:\s*(\S+)", doc.get("text", ""), re.MULTILINE)
+        return match.group(1) if match else None
 
 
 if __name__ == "__main__":

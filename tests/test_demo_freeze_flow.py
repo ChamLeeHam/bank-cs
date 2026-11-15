@@ -30,6 +30,24 @@ class DemoFreezeFlowTests(unittest.TestCase):
     @patch("src.schema.main_graph.write_turn_log")
     @patch("src.nodes.intent_router.IntentRouterNode._model_ready", return_value=False)
     @patch("src.nodes.verify_otp.query_one", return_value={"demo_otp": "123456"})
+    @patch("src.nodes.stub_nodes.create_ticket", return_value=42)
+    def test_fraud_interrupts_otp_and_preserves_failed_attempts(self, ticket, otp, model, audit):
+        session = self._session()
+        self.assertEqual(self._send(session, "我要冻结银行卡")["pending"], "otp")
+        for _ in range(2):
+            self.assertEqual(self._send(session, "000000")["pending"], "otp")
+        report = self._send(session, "刚收到一笔现金取款通知，不是我取的，请转人工")
+        self.assertIsNone(report["pending"])
+        self.assertIn("42", report["answer"])
+        self.assertEqual(ticket.call_args.args[1], "urgent")
+        ticket.assert_called_once()
+        self.assertEqual(self._send(session, "我要冻结银行卡")["pending"], "otp")
+        self.assertIsNone(self._send(session, "000000")["pending"])
+        self.assertIsNone(self._send(session, "我要冻结银行卡")["pending"])
+
+    @patch("src.schema.main_graph.write_turn_log")
+    @patch("src.nodes.intent_router.IntentRouterNode._model_ready", return_value=False)
+    @patch("src.nodes.verify_otp.query_one", return_value={"demo_otp": "123456"})
     def test_confirm_cancel_and_customer_isolation(self, otp, model, audit):
         with patch("src.nodes.account_agent.get_cards", side_effect=lambda customer: self.cards[customer]), \
              patch("src.nodes.account_agent.freeze_card", side_effect=self._freeze) as freeze:

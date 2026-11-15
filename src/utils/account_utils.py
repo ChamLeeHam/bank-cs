@@ -35,6 +35,66 @@ def get_latest_card_transaction(customer_id):
     return rows[0] if rows else None
 
 
+def get_recent_statement(customer_id, limit=30):
+    """读取客户最近的卡片交易和转账，供本地演示账单使用。"""
+    limit = min(max(int(limit), 1), 50)
+    sql = """
+        (select t.txn_id as transaction_id, 'card' as kind, t.merchant as description,
+                t.amount, t.currency, t.status, t.txn_time as occurred_at,
+                c.last4 as card_last4, null as transfer_fee, t.country,
+                null as status_note_zh
+         from card_transactions t join cards c on c.card_id = t.card_id
+         where c.customer_id = %s)
+        union all
+        (select t.transfer_id as transaction_id, 'transfer' as kind, t.transfer_type as description,
+                t.amount, t.currency, t.status, t.created_at as occurred_at,
+                null as card_last4, t.fee as transfer_fee, p.country,
+                t.status_note_zh as status_note_zh
+         from transfers t join payees p on p.payee_id = t.payee_id and p.customer_id = t.customer_id
+         where t.customer_id = %s)
+        order by occurred_at desc, transaction_id desc
+        limit %s
+    """
+    return query(sql, (customer_id, customer_id, limit))
+
+
+def get_statement_transaction(customer_id, transaction_id):
+    """按客户归属读取账单中单笔交易，避免用模型猜测或跨客户查询。"""
+    rows = get_recent_statement(customer_id, limit=50)
+    return next((row for row in rows if row["transaction_id"] == transaction_id), None)
+
+
+def get_statement_transaction_detail(customer_id, transaction_id):
+    """Load receipt-safe details for one transaction owned by this customer."""
+    if transaction_id.startswith("CT"):
+        rows = query("""
+            select t.txn_id as transaction_id, 'card' as kind, t.merchant as description,
+                   t.amount, t.currency, t.status, t.txn_time as occurred_at, t.country,
+                   c.last4 as card_last4, c.card_type, c.network,
+                   c.account_id as debit_account_id, a.account_type as debit_account_type
+            from card_transactions t
+            join cards c on c.card_id = t.card_id
+            left join accounts a on a.account_id = c.account_id and a.customer_id = c.customer_id
+            where c.customer_id = %s and t.txn_id = %s limit 1
+        """, (customer_id, transaction_id))
+    else:
+        rows = query("""
+            select t.transfer_id as transaction_id, 'transfer' as kind, t.transfer_type as description,
+                   t.amount, t.currency, t.status, t.created_at as occurred_at, t.completed_at,
+                   t.fee as transfer_fee, t.status_note_zh,
+                   p.full_name as payee_name, p.nickname as payee_nickname,
+                   p.bank_name as payee_bank_name, p.country as payee_country,
+                   p.account_masked as payee_account_masked,
+                   a.account_id as debit_account_id, a.account_type as debit_account_type,
+                   a.currency as debit_account_currency
+            from transfers t
+            join payees p on p.payee_id = t.payee_id and p.customer_id = t.customer_id
+            left join accounts a on a.account_id = t.from_account_id and a.customer_id = t.customer_id
+            where t.customer_id = %s and t.transfer_id = %s limit 1
+        """, (customer_id, transaction_id))
+    return rows[0] if rows else None
+
+
 # 2. 最近的转账，可以只看汇给某几个收款人的
 def get_recent_transfers(customer_id, payee_ids=None, days=30, limit=5):
     sql = """

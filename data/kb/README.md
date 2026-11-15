@@ -8,9 +8,11 @@
 | 文件 | 一级意图 | 章节数 | 内容 |
 |---|---|---|---|
 | fees_rates.md | fees_rates | 11 | 转账手续费、汇率、外币刷卡费、ATM 费用、账单费用、信用卡还款、DCC、借记卡与信用卡区别 |
-| transfer_guide.md | transfer_howto | 17 | 转账方式与时效、海外汇款与收款、PayNow 标识/二维码/误转、FAST、GIRO/eGIRO、MEPS+ |
+| transfer_guide.md | transfer_howto | 19 | 转账方式与时效、海外汇款与收款、PayNow 标识/二维码/误转、FAST、GIRO/eGIRO、MEPS+、电子回单状态与用途 |
 | card_services.md | card_service | 12 | 激活、寄卡、PIN、卡被拒、银行卡丢失或被盗、ATM 吞卡、卡到期、补卡、网购失败、订阅扣款、预授权 |
 | account_services.md | account_service | 13 | 开户、身份验证、改资料、忘记密码、销户、多币种、存款保险、紧急冻结、资金锁、安全核验 |
+| card_security.md | fraud_report | 6 | 卡片疑似泄露、陌生/小额交易、ATM 未吐钞、盗刷报告及工单跟进 |
+| payment_disputes.md | dispute_refund | 6 | 盗刷与商户争议的区别、重复扣款、退款未显示、金额不符、待处理交易、交易核查材料 |
 
 ### 参考的公开资料
 
@@ -24,7 +26,11 @@
 | 资金锁 | 新加坡的银行有类似的功能（Money Lock），锁住的钱不能在网上转出 | 最少锁 SGD 1,000、只能到分行解锁 | 新闻报道、ABS 的数据 |
 | PayNow 收款人名字的显示 | ABS 从 2026 年 6 月 6 日起取消个人客户的 PayNow 昵称 | 无 | 银行发给客户的通知 |
 
-本轮在前次 4 节基础上，再新增 15 节中英双语内容，总计 52 节。新增主题包括 PayNow 标识与 QR、FAST/GIRO/eGIRO/MEPS+ 的使用场景、信用卡还款与 DCC、网购拒付、换卡后的订阅扣款、预授权，以及身份核验和可疑联络的安全处理。它们不新增狮城银行演示产品的费率、限额或承诺时限；通用信息和虚构演示规则在文中明确区分。盗刷、争议退款和投诉仍由现有流程转人工，新增知识不会改变分流策略。
+当前 FAQ 共 67 个中英双语章节。新加入的章节覆盖卡片疑似泄露、非本人交易、小额验证扣款、ATM 未吐钞、本人交易争议、工单进度、待处理交易，以及电子回单上的状态和凭证边界等高频问题，并与通用卡片服务和费用规则分开存放。新文档里的 App 菜单和处理流程是狮城银行演示设定；参考真实银行资料时只借鉴信息组织和常见问题类型，不复制其费率、时限或承诺。盗刷、争议退款和投诉仍按现有规则转人工，新增知识不会自行冻结卡片或承诺退款。
+
+为丰富课程演示，UOB、Maybank、BofA、UBS 等银行公开资料也会整理进同一个演示知识库，并统一以虚构的“狮城银行”客服口吻回答。它们用于展示检索覆盖面，不代表真实狮城银行已经提供相应产品或流程。原始来源和适用地区仍记录在 `data/research/bank_reference_sources.md`，供维护者核对。
+
+更多银行的官方参考资料和地区适用范围见 `data/research/bank_reference_sources.md`。入库时会保留内部来源标记；客户界面统一显示狮城银行演示知识分类，不显示文件名和原始长链接。
 
 新增章节参考的公开资料（以自己的话概述）：
 
@@ -36,7 +42,7 @@
 | PayNow 标识、QR/SGQR、FAST、GIRO 与 MEPS+ 适用场景 | [ABS PayNow](https://www.abs.org.sg/e-payments/pay-now)、[ABS e-payment comparison table](https://www.abs.org.sg/docs/library/production-copy-e-payment-solutions-comparison-table_v1-1.pdf)、[ABS FAST](https://www.abs.org.sg/e-payments/fast)、[ABS GIRO](https://www.abs.org.sg/e-payments/giro) |
 | eGIRO 授权建立、信用卡利息与 DCC | [ABS eGIRO](https://www.abs.org.sg/e-payments/eGIRO)、[MoneySense: Credit card interest and charges](https://www.moneysense.gov.sg/understanding-credit-card-interest-and-charges/)、[MoneySense: Understanding credit cards](https://www.moneysense.gov.sg/understanding-credit-cards/) |
 
-通用安全提示：对不明入账不要自行转给来电者指定的账户；从银行官方 App 或银行卡上的联系方式联系银行。涉及未授权交易时，应尽快报告银行。相关意图目前由人工处理，知识库新增说明暂不改变分流策略。
+通用安全提示：对不明入账不要自行转给来电者指定的账户；从银行官方 App 或银行卡上的联系方式联系银行。涉及未授权交易时，应尽快报告银行。相关意图目前由人工处理，知识库新增说明暂不改变分流策略。新增 `card_security.md` 和 `payment_disputes.md` 中的安全步骤用于提供背景说明；是否转人工仍由现有流程决定。
 
 每个文件开头写 title 和 intent。每个 "## " 章节是一块，中文一段、英文一段放在一起。
 `<!-- sub_intents: ... -->` 写这一节对应哪些二级意图，build_kb.py 会检查这些标签是不是存在。
@@ -44,8 +50,9 @@
 ## 建库
 
 ```bash
-uv run python src/scripts/build_kb.py          # 重建 Milvus 集合 lioncity_faq，再测一下检索
+uv run python src/scripts/build_kb.py          # 重建合并后的 lioncity_bank_knowledge（本行 FAQ + 整理的官方参考资料）
 uv run python src/scripts/build_kb.py --check  # 只检查文档格式
+uv run python src/scripts/build_kb.py --faq-only  # 只重建本行 FAQ 部分
 ```
 
 向量用本地的 bge-m3，中文和英文在同一个向量空间里，客户的问题不会发到外面。
@@ -54,13 +61,12 @@ Milvus 里两个向量各建一个索引（dense_vector 用 HNSW，sparse_vector
 向量用 pymilvus 的 BGEM3EmbeddingFunction 生成（里面是 FlagEmbedding），返回的稀疏向量是 CSR 格式，再转成 {token_id: 权重}。
 模型目录里要同时有 sparse_linear.pt 和 colbert_linear.pt。少了一个 FlagEmbedding 不会报错，
 但稀疏向量那一层会用随机参数，检索结果就不对了，所以 get_bge_m3_embedding_model() 会先检查这两个文件。
-集合名是 lioncity_faq（BANK_KB_COLLECTION），和 Milvus 里其他项目的集合分开。
+集合名是 lioncity_bank_knowledge（BANK_KB_COLLECTION），和 Milvus 里其他项目的集合分开。普通问题默认检索本行 FAQ 子集；明确提到参考银行时，在同一集合内按内部来源标签筛选对应材料。
 
 ## 银行官网的 PDF（MinerU）
 
-为了试一下真实的银行文档，从银行官网下载了几个 PDF 放在 data/kb/pdf（DBS 的收费表、Citi 的信用卡说明和争议 FAQ）。
-这些是真实银行的资料，不是狮城银行的，所以单独放在 bank_pdf_docs 集合（BANK_PDF_COLLECTION），
-不放进 lioncity_faq，客服回答不会用到。PDF 的版权是银行的，PDF 和 MinerU 的输出都不提交（.gitignore）。
+为了试一下真实的银行文档，从银行官网下载的 PDF 放在 data/kb/pdf，并整理了官网页面摘要。
+默认建库会把本行 FAQ 与这些参考资料放进一个统一集合；`--pdf` 仅用于重建旧的独立 PDF 集合以便回退。PDF 的版权是银行的，PDF 和 MinerU 的输出都不提交（.gitignore）。
 
 步骤：
 
@@ -70,7 +76,7 @@ Milvus 里两个向量各建一个索引（dense_vector 用 HNSW，sparse_vector
    ```
 2. `src/utils/mineru_utils.py`：找到 MinerU 生成的 .md，补回小节标题，清洗
 3. `src/utils/md_split_utils.py`：切块，大表格拆开并带上表头（切块的核心代码来自课程的 07-md_split_by_handler.py）
-4. `uv run python src/scripts/build_kb.py --pdf`：bge-m3 生成稠密和稀疏向量，写进 bank_pdf_docs
+4. `uv run python src/scripts/build_kb.py`：bge-m3 生成稠密和稀疏向量，写进统一演示知识库
 
 MinerU 输出的 .md 要先清洗：去掉 `<sub>` `<sup>` 标签、HTML 实体（`&#x27;`）、`S\$30` 这种转义，去掉封面和目录。
 还有两个问题是看了 DBS 的输出才发现的：
@@ -106,16 +112,24 @@ MinerU 把小表格拆开以后，数字放到了别的表头下面：
 
 ### 检查
 
-提交前检查了 5 项，都通过了：
+早期 DBS 收费表单文档的检查记录（之后又扩充了 PDF 集合）：
 
-1. lioncity_faq 没受影响：还是 33 条，只有 4 个 FAQ 文档，第一步混合检索的指标和上面一样（75.7% / 89.2% / 0.827）
+1. FAQ 和参考资料现存于同一集合，检索时用内部文档前缀区分本行 FAQ 与指定参考来源
 2. MinerU 的输出能读出来、切好块，块里没有未核对表格的内容，6 处都换成了说明
 3. bge-m3 同时生成了 1024 维的稠密向量和稀疏向量，集合里两个向量都存了
-4. PDF 的 16 块都在 bank_pdf_docs，lioncity_faq 里没有 DBS 的内容
+4. 早期检查基于旧的独立集合；现在默认建库会将本行 FAQ 与参考资料合并
 5. bank_pdf_docs 的混合检索加精排：5 个问题（开户费、硬币存款、本票、柜台费、DBS IDEAL 令牌）都找到了对的小节和数字；
    问支票本的时候，10 个候选里都没有 Cheque Services 表格的数字
 
 "coin deposit charge" 混合检索排在第 4，精排以后排到了第 1。数据少的时候 RRF 的分数很接近，精排很有用。
+
+### 2026-11-15 外部参考集扩充
+
+- `bank_pdf_docs` 现含 10 份来自 6 家机构的官方 PDF，以及 4 份官网内容摘要；资料覆盖 DBS、Citi、渣打、德意志银行财富管理、UOB、Maybank、Bank of America 和 UBS。
+- 每个 PDF 和网页摘要检索块都带来源机构、地区、原始链接和“仅供参考，不代表狮城银行政策”的标识。Maybank 资料明确标为 2018 年表格；Maybank、UBS 和美国资料均注明适用范围。
+- 重建时抽查了 DBS 电子支付争议、Citi 交易争议、渣打可疑交易、德意志银行投诉、UOB 费用/争议、Maybank 争议分类、BofA 费用和 UBS 争议等查询。
+- 集合计数核对：`bank_pdf_docs` 为 878 条；客户 FAQ `lioncity_faq` 保持 67 条。两个集合独立构建。
+- Milvus 的 VARCHAR 按 UTF-8 字节限制，PDF 入库现在会按字节安全截断章节和正文，避免中文章节名超过字段上限。
 
 还存在的问题：
 

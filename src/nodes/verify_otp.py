@@ -43,7 +43,7 @@ class VerifyOtpNode(BaseNode):
             return {"otp_verified": False,
                     "answer": pick(lang, "Sorry, I can't find your customer record.", "抱歉，没有找到您的客户信息。")}
 
-        for attempt in range(MAX_TRIES):
+        for attempt in range(state.get("otp_failures", 0), MAX_TRIES):
             if attempt == 0:
                 message = {"en": "This is a demo. Please enter the 6-digit demo verification code.",
                            "zh": "这是演示流程，请输入 6 位演示验证码。"}
@@ -53,12 +53,15 @@ class VerifyOtpNode(BaseNode):
                            "zh": f"验证码不正确，请重新输入（还可以试 {left} 次）。"}
             # 同一个节点里可以有多个 interrupt，恢复的时候按顺序拿到客户每次输入的值
             code = interrupt({"type": "otp", "message_en": message["en"], "message_zh": message["zh"]})
+            if str(code).strip().lower() in ("取消", "cancel"):
+                return {"otp_verified": False, "otp_failures": attempt,
+                        "answer": pick(lang, "Verification cancelled.", "已取消身份验证。")}
             if str(code).strip() == row["demo_otp"]:
                 self.log_step(self.name, f"验证通过，第 {attempt + 1} 次")
-                return {"otp_verified": True, "otp_customer_id": state.get("customer_id")}
+                return {"otp_verified": True, "otp_customer_id": state.get("customer_id"), "otp_failures": 0}
 
         self.log_step(self.name, "验证失败，次数用完")
-        return {"otp_verified": False, "otp_locked": True,
+        return {"otp_verified": False, "otp_locked": True, "otp_failures": MAX_TRIES,
                 "answer": pick(lang, "The OTP is incorrect too many times, so I can't access your account. "
                                      "Please contact us by phone.",
                                "验证码错误次数太多，无法查询账户信息，请致电客服。")}

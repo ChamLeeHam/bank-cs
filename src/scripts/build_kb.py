@@ -57,13 +57,51 @@ def parse_doc(path: Path) -> list[dict]:
 
 
 def load_pdf_chunks() -> list[dict]:
-    """MinerU 解析好的 PDF：读 .md、清洗、切块（MinerU 要先在终端手动运行）"""
+    """Load the isolated external-bank corpus: MinerU PDFs plus curated official-page summaries."""
     from src.utils import md_split_utils, mineru_utils
 
-    chunks = md_split_utils.process(mineru_utils.process())
+    docs = mineru_utils.process()
+    reference_dir = PROJECT_ROOT / "data" / "research" / "bank_reference_docs"
+    for path in sorted(reference_dir.glob("*.md")):
+        content = path.read_text(encoding="utf-8").strip()
+        if content:
+            docs.append({"file_title": f"{path.stem}.md", "md_path": str(path), "content": content})
+
+    chunks = md_split_utils.process(docs)
     # 集合的字段和 FAQ 一样；PDF 没有意图标签，intent 留空
-    return [{"doc": c["doc"], "title": c["title"], "section": c["section"], "intent": "",
-             "sub_intents": [], "text": c["text"]} for c in chunks]
+    return [{"doc": _truncate_utf8(c["doc"], 64), "title": _truncate_utf8(c["title"], 200),
+             "section": _truncate_utf8(c["section"], 200), "intent": "",
+             "sub_intents": [], "text": _truncate_utf8(c["text"], 8192)} for c in chunks]
+
+
+def load_unified_chunks() -> list[dict]:
+    """Build the single demo collection from curated Lion City FAQ and adapted reference material."""
+    faq_paths = [p for p in sorted(config.kb_dir.glob("*.md")) if p.name.lower() != "readme.md"]
+    faq_chunks = [chunk for path in faq_paths for chunk in parse_doc(path)]
+    for chunk in faq_chunks:
+        chunk["doc"] = f"lcb__faq__{chunk['doc']}"
+
+    reference_chunks = load_pdf_chunks()
+    for chunk in reference_chunks:
+        original_doc = chunk["doc"]
+        chunk["doc"] = f"lcb__ref__{original_doc}"
+        # Keep provenance in the stored text, while customer-facing answers use the fictional demo bank voice.
+        chunk["title"] = "狮城银行演示知识库 / Lion City Bank Demo Knowledge Base"
+        chunk["text"] = re.sub(
+            r"^Source institution:[^\n]*\nOfficial source: ([^\n]*)\nDocument: [^\n]*\n",
+            r"Lion City Bank demonstration knowledge. Adapted for this local demo; preserve documented conditions.\n"
+            r"Official source: \1\nInternal reference: " + original_doc + "\n",
+            chunk["text"], count=1,
+        )
+        chunk["doc"] = _truncate_utf8(chunk["doc"], 64)
+        chunk["title"] = _truncate_utf8(chunk["title"], 200)
+        chunk["text"] = _truncate_utf8(chunk["text"], 8192)
+    return faq_chunks + reference_chunks
+
+
+def _truncate_utf8(value: str, max_bytes: int) -> str:
+    """Milvus VARCHAR lengths count UTF-8 bytes, not Python characters."""
+    return value.encode("utf-8")[:max_bytes].decode("utf-8", errors="ignore")
 
 
 def save_to_milvus(chunks: list[dict], collection_name: str) -> None:
@@ -87,10 +125,14 @@ def save_to_milvus(chunks: list[dict], collection_name: str) -> None:
 
 def search_test(questions: list[str], collection_name: str) -> None:
     from src.utils import search_embedding_utils
+    from src.utils.reference_bank_utils import detect_reference_bank
 
     print("\n检索自测（top 2）：")
     for q in questions:
-        hits = search_embedding_utils.process(q, collection_name=collection_name)["embedding_chunks"][:2]
+        bank = detect_reference_bank(q) if collection_name == config.kb_collection else None
+        prefix = bank["doc_prefix"] if bank else ("lcb__faq__" if collection_name == config.kb_collection else None)
+        hits = search_embedding_utils.process(q, collection_name=collection_name,
+                                              doc_prefix=prefix)["embedding_chunks"][:2]
         print(f"  {q}")
         for h in hits:
             print(f"      {h['score']:.4f}  《{h['title'].split(' / ')[0]}》{h['section']}")
@@ -99,21 +141,40 @@ def search_test(questions: list[str], collection_name: str) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(description="构建知识库")
     parser.add_argument("--check", action="store_true", help="只解析和校验文档")
-    parser.add_argument("--pdf", action="store_true", help="建 MinerU 解析的 PDF 集合，不是狮城银行的 FAQ")
+    parser.add_argument("--pdf", action="store_true", help="仅重建旧的 PDF 参考集合（回退用途）")
+    parser.add_argument("--faq-only", action="store_true", help="只重建本行 FAQ；默认构建合并后的演示知识库")
     args = parser.parse_args()
 
     if args.pdf:
         chunks = load_pdf_chunks()
         collection_name = config.pdf_collection
-        questions = ["How much is the account fee for a Business Multi-Currency Account?",
-                     "What is the fee for an outward telegraphic transfer?", "How much does a cheque book cost?",
-                     "Is there a fee to close my account?", "coin deposit charge", "Cashier's Order fee"]
-    else:
+        questions = ["DBS e-payment fraud unauthorized transaction what should customer do?",
+                     "Citi Singapore dispute a card transaction documents required",
+                     "Standard Chartered Singapore credit card unauthorized transaction terms",
+                     "Deutsche Bank Singapore wealth management service agreement complaint contact",
+                     "UOB lost stolen card questionnaire what information to report",
+                     "Maybank Singapore dispute card transaction evidence form",
+                     "Bank of America personal banking account fees schedule",
+                     "UBS Switzerland dispute transaction pending reserved posted amount",
+                     "How much is the account fee for a Business Multi-Currency Account?",
+                     "What is the fee for an outward telegraphic transfer?",
+                     "How much does a cheque book cost?", "coin deposit charge"]
+    elif args.faq_only:
         docs = [p for p in sorted(config.kb_dir.glob("*.md")) if p.name.lower() != "readme.md"]  # README 是说明文档，不入库
         chunks = [c for path in docs for c in parse_doc(path)]
+        for chunk in chunks:
+            chunk["doc"] = f"lcb__faq__{chunk['doc']}"
         collection_name = config.kb_collection
         questions = ["How much is the overseas TT fee?", "汇款到中国要几天？", "我的 PIN 被 lock 了怎么办",
                      "我要怎么更新地址？", "ATM 吞了我的卡", "can I open account if I'm 15"]
+    else:
+        chunks = load_unified_chunks()
+        collection_name = config.kb_collection
+        questions = ["How much is the overseas TT fee?", "汇款到中国要几天？", "我的 PIN 被 lock 了怎么办",
+                     "UOB lost stolen card questionnaire what information to report",
+                     "Maybank Singapore dispute card transaction evidence form",
+                     "Bank of America personal banking account fees schedule",
+                     "UBS Switzerland dispute transaction pending reserved posted amount"]
 
     if not chunks:
         hint = "先在终端用 MinerU 解析 data/kb/pdf 里的 PDF" if args.pdf else f"{config.kb_dir} 里没有文档"

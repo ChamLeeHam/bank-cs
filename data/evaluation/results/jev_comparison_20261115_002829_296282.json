@@ -1,0 +1,639 @@
+{
+  "dataset_sha256": "7198219f2a920374ac6cc2f08f7b7aabad4c4c8aaff5e9d0cdc4f81327b014bb",
+  "baseline": "D:\\大模型\\bank-cs\\data\\evaluation\\results\\evaluation_20261114_234123.json",
+  "metrics": {
+    "requested": 640,
+    "completed": 22,
+    "complete": false,
+    "jev_accuracy": 0.9545454545454546,
+    "baseline_accuracy_same_samples": 1.0,
+    "jev_macro_f1": 0.4883720930232558,
+    "baseline_macro_f1_same_samples": 1.0,
+    "jev_latency_ms": {
+      "mean": 1007.72,
+      "p95": 1758.72
+    },
+    "models": {
+      "jev-latest": 22
+    },
+    "baseline_mean_ms_same_samples": 386.81
+  },
+  "predictions": [
+    {
+      "id": "test-00001",
+      "lang": "en",
+      "text": "Please advise the current balance of my multi-currency account.",
+      "expected_intent": "balance_inquiry",
+      "predicted_intent": "balance_inquiry",
+      "baseline_intent": "balance_inquiry",
+      "latency_ms": 626.86,
+      "model": "jev-latest",
+      "confidence": 1,
+      "probabilities": {
+        "account_service": 0,
+        "balance_inquiry": 1,
+        "card_lost_freeze": 0,
+        "card_service": 0,
+        "complaint": 0,
+        "dispute_refund": 0,
+        "fees_rates": 0,
+        "fraud_report": 0,
+        "out_of_scope": 0,
+        "transfer_howto": 0,
+        "transfer_status": 0
+      },
+      "usage": {
+        "input_tokens": 632,
+        "output_tokens": 117
+      }
+    },
+    {
+      "id": "test-00002",
+      "lang": "zh",
+      "text": "我现在就要我的余额啦，为什么这么慢？",
+      "expected_intent": "balance_inquiry",
+      "predicted_intent": "transfer_status",
+      "baseline_intent": "balance_inquiry",
+      "latency_ms": 580.7,
+      "model": "jev-latest",
+      "confidence": 0.35,
+      "probabilities": {
+        "account_service": 0,
+        "balance_inquiry": 0.37,
+        "card_lost_freeze": 0,
+        "card_service": 0,
+        "complaint": 0.2,
+        "dispute_refund": 0.01,
+        "fees_rates": 0,
+        "fraud_report": 0,
+        "out_of_scope": 0,
+        "transfer_howto": 0.01,
+        "transfer_status": 0.41
+      },
+      "usage": {
+        "input_tokens": 637,
+        "output_tokens": 116
+      }
+    },
+    {
+      "id": "test-00003",
+      "lang": "mixed",
+      "text": "我想问一下我的 multi-currency account balance。",
+      "expected_intent": "balance_inquiry",
+      "predicted_intent": "balance_inquiry",
+      "baseline_intent": "balance_inquiry",
+      "latency_ms": 611.57,
+      "model": "jev-latest",
+      "confidence": 1,
+      "probabilities": {
+        "account_service": 0,
+        "balance_inquiry": 1,
+        "card_lost_freeze": 0,
+        "card_service": 0,
+        "complaint": 0,
+        "dispute_refund": 0,
+        "fees_rates": 0,
+        "fraud_report": 0,
+        "out_of_scope": 0,
+        "transfer_howto": 0,
+        "transfer_status": 0
+      },
+      "usage": {
+        "input_tokens": 633,
+        "output_tokens": 117
+      }
+    },
+    {
+      "id": "test-00004",
+      "lang": "en",
+      "text": "Could you kindly advise how much money is in my multi-currency account?",
+      "expected_intent": "balance_inquiry",
+      "predicted_intent": "balance_inquiry",
+      "baseline_intent": "balance_inquiry",
+      "latency_ms": 974.49,
+      "model": "jev-latest",
+      "confidence": 1,
+      "probabilities": {
+        "account_service": 0,
+        "balance_inquiry": 1,
+        "card_lost_freeze": 0,
+        "card_service": 0,
+        "complaint": 0,
+        "dispute_refund": 0,
+        "fees_rates": 0,
+        "fraud_report": 0,
+        "out_of_scope": 0,
+        "transfer_howto": 0,
+        "transfer_status": 0
+      },
+      "usage": {
+        "input_tokens": 635,
+        "output_tokens": 117
+      }
+    },
+    {
+      "id": "test-00005",
+      "lang": "zh",
+      "text": "往来账户的 SGD 余额",
+      "expected_intent": "balance_inquiry",
+      "predicted_intent": "balance_inquiry",
+      "baseline_intent": "balance_inquiry",
+      "latency_ms": 1758.72,
+      "model": "jev-latest",
+      "confidence": 1,
+      "probabilities": {
+        "account_service": 0,
+        "balance_inquiry": 1,
+        "card_lost_freeze": 0,
+        "card_service": 0,
+        "complaint": 0,
+        "dispute_refund": 0,
+        "fees_rates": 0,
+        "fraud_report": 0,
+        "out_of_scope": 0,
+        "transfer_howto": 0,
+        "transfer_status": 0
+      },
+      "usage": {
+        "input_tokens": 628,
+        "output_tokens": 117
+      }
+    },
+    {
+      "id": "test-00006",
+      "lang": "mixed",
+      "text": "不要再叫我 log in，直接告诉我我的 SGD savings balance。",
+      "expected_intent": "balance_inquiry",
+      "predicted_intent": "balance_inquiry",
+      "baseline_intent": "balance_inquiry",
+      "latency_ms": 796.7,
+      "model": "jev-latest",
+      "confidence": 1,
+      "probabilities": {
+        "account_service": 0,
+        "balance_inquiry": 1,
+        "card_lost_freeze": 0,
+        "card_service": 0,
+        "complaint": 0,
+        "dispute_refund": 0,
+        "fees_rates": 0,
+        "fraud_report": 0,
+        "out_of_scope": 0,
+        "transfer_howto": 0,
+        "transfer_status": 0
+      },
+      "usage": {
+        "input_tokens": 638,
+        "output_tokens": 117
+      }
+    },
+    {
+      "id": "test-00007",
+      "lang": "en",
+      "text": "hello can u just tell me my account balance alr i've been waiting",
+      "expected_intent": "balance_inquiry",
+      "predicted_intent": "balance_inquiry",
+      "baseline_intent": "balance_inquiry",
+      "latency_ms": 964.81,
+      "model": "jev-latest",
+      "confidence": 1,
+      "probabilities": {
+        "account_service": 0,
+        "balance_inquiry": 1,
+        "card_lost_freeze": 0,
+        "card_service": 0,
+        "complaint": 0,
+        "dispute_refund": 0,
+        "fees_rates": 0,
+        "fraud_report": 0,
+        "out_of_scope": 0,
+        "transfer_howto": 0,
+        "transfer_status": 0
+      },
+      "usage": {
+        "input_tokens": 634,
+        "output_tokens": 117
+      }
+    },
+    {
+      "id": "test-00008",
+      "lang": "zh",
+      "text": "请尽快告知我往来账户的余额。",
+      "expected_intent": "balance_inquiry",
+      "predicted_intent": "balance_inquiry",
+      "baseline_intent": "balance_inquiry",
+      "latency_ms": 647.65,
+      "model": "jev-latest",
+      "confidence": 1,
+      "probabilities": {
+        "account_service": 0,
+        "balance_inquiry": 1,
+        "card_lost_freeze": 0,
+        "card_service": 0,
+        "complaint": 0,
+        "dispute_refund": 0,
+        "fees_rates": 0,
+        "fraud_report": 0,
+        "out_of_scope": 0,
+        "transfer_howto": 0,
+        "transfer_status": 0
+      },
+      "usage": {
+        "input_tokens": 633,
+        "output_tokens": 117
+      }
+    },
+    {
+      "id": "test-00009",
+      "lang": "mixed",
+      "text": "我的 savings 里面有多少钱？",
+      "expected_intent": "balance_inquiry",
+      "predicted_intent": "balance_inquiry",
+      "baseline_intent": "balance_inquiry",
+      "latency_ms": 667.4,
+      "model": "jev-latest",
+      "confidence": 1,
+      "probabilities": {
+        "account_service": 0,
+        "balance_inquiry": 1,
+        "card_lost_freeze": 0,
+        "card_service": 0,
+        "complaint": 0,
+        "dispute_refund": 0,
+        "fees_rates": 0,
+        "fraud_report": 0,
+        "out_of_scope": 0,
+        "transfer_howto": 0,
+        "transfer_status": 0
+      },
+      "usage": {
+        "input_tokens": 629,
+        "output_tokens": 117
+      }
+    },
+    {
+      "id": "test-00010",
+      "lang": "en",
+      "text": "whats my account balance",
+      "expected_intent": "balance_inquiry",
+      "predicted_intent": "balance_inquiry",
+      "baseline_intent": "balance_inquiry",
+      "latency_ms": 620.3,
+      "model": "jev-latest",
+      "confidence": 1,
+      "probabilities": {
+        "account_service": 0,
+        "balance_inquiry": 1,
+        "card_lost_freeze": 0,
+        "card_service": 0,
+        "complaint": 0,
+        "dispute_refund": 0,
+        "fees_rates": 0,
+        "fraud_report": 0,
+        "out_of_scope": 0,
+        "transfer_howto": 0,
+        "transfer_status": 0
+      },
+      "usage": {
+        "input_tokens": 624,
+        "output_tokens": 117
+      }
+    },
+    {
+      "id": "test-00011",
+      "lang": "zh",
+      "text": "请告诉我我的 SGD 往来账户里有多少钱。",
+      "expected_intent": "balance_inquiry",
+      "predicted_intent": "balance_inquiry",
+      "baseline_intent": "balance_inquiry",
+      "latency_ms": 561.9,
+      "model": "jev-latest",
+      "confidence": 1,
+      "probabilities": {
+        "account_service": 0,
+        "balance_inquiry": 1,
+        "card_lost_freeze": 0,
+        "card_service": 0,
+        "complaint": 0,
+        "dispute_refund": 0,
+        "fees_rates": 0,
+        "fraud_report": 0,
+        "out_of_scope": 0,
+        "transfer_howto": 0,
+        "transfer_status": 0
+      },
+      "usage": {
+        "input_tokens": 638,
+        "output_tokens": 117
+      }
+    },
+    {
+      "id": "test-00012",
+      "lang": "mixed",
+      "text": "我的 balance 还剩多少 lah？",
+      "expected_intent": "balance_inquiry",
+      "predicted_intent": "balance_inquiry",
+      "baseline_intent": "balance_inquiry",
+      "latency_ms": 969.39,
+      "model": "jev-latest",
+      "confidence": 1,
+      "probabilities": {
+        "account_service": 0,
+        "balance_inquiry": 1,
+        "card_lost_freeze": 0,
+        "card_service": 0,
+        "complaint": 0,
+        "dispute_refund": 0,
+        "fees_rates": 0,
+        "fraud_report": 0,
+        "out_of_scope": 0,
+        "transfer_howto": 0,
+        "transfer_status": 0
+      },
+      "usage": {
+        "input_tokens": 628,
+        "output_tokens": 117
+      }
+    },
+    {
+      "id": "test-00013",
+      "lang": "en",
+      "text": "May I request my current account balance, please?",
+      "expected_intent": "balance_inquiry",
+      "predicted_intent": "balance_inquiry",
+      "baseline_intent": "balance_inquiry",
+      "latency_ms": 1716.87,
+      "model": "jev-latest",
+      "confidence": 1,
+      "probabilities": {
+        "account_service": 0,
+        "balance_inquiry": 1,
+        "card_lost_freeze": 0,
+        "card_service": 0,
+        "complaint": 0,
+        "dispute_refund": 0,
+        "fees_rates": 0,
+        "fraud_report": 0,
+        "out_of_scope": 0,
+        "transfer_howto": 0,
+        "transfer_status": 0
+      },
+      "usage": {
+        "input_tokens": 629,
+        "output_tokens": 117
+      }
+    },
+    {
+      "id": "test-00014",
+      "lang": "zh",
+      "text": "我已经问了三次了。我的往来账户余额是多少？",
+      "expected_intent": "balance_inquiry",
+      "predicted_intent": "balance_inquiry",
+      "baseline_intent": "balance_inquiry",
+      "latency_ms": 599.8,
+      "model": "jev-latest",
+      "confidence": 1,
+      "probabilities": {
+        "account_service": 0,
+        "balance_inquiry": 1,
+        "card_lost_freeze": 0,
+        "card_service": 0,
+        "complaint": 0,
+        "dispute_refund": 0,
+        "fees_rates": 0,
+        "fraud_report": 0,
+        "out_of_scope": 0,
+        "transfer_howto": 0,
+        "transfer_status": 0
+      },
+      "usage": {
+        "input_tokens": 640,
+        "output_tokens": 117
+      }
+    },
+    {
+      "id": "test-00015",
+      "lang": "mixed",
+      "text": "帮我 check 我的 current account balance。",
+      "expected_intent": "balance_inquiry",
+      "predicted_intent": "balance_inquiry",
+      "baseline_intent": "balance_inquiry",
+      "latency_ms": 612.16,
+      "model": "jev-latest",
+      "confidence": 1,
+      "probabilities": {
+        "account_service": 0,
+        "balance_inquiry": 1,
+        "card_lost_freeze": 0,
+        "card_service": 0,
+        "complaint": 0,
+        "dispute_refund": 0,
+        "fees_rates": 0,
+        "fraud_report": 0,
+        "out_of_scope": 0,
+        "transfer_howto": 0,
+        "transfer_status": 0
+      },
+      "usage": {
+        "input_tokens": 630,
+        "output_tokens": 117
+      }
+    },
+    {
+      "id": "test-00016",
+      "lang": "en",
+      "text": "how much inside my account",
+      "expected_intent": "balance_inquiry",
+      "predicted_intent": "balance_inquiry",
+      "baseline_intent": "balance_inquiry",
+      "latency_ms": 1196.86,
+      "model": "jev-latest",
+      "confidence": 1,
+      "probabilities": {
+        "account_service": 0,
+        "balance_inquiry": 1,
+        "card_lost_freeze": 0,
+        "card_service": 0,
+        "complaint": 0,
+        "dispute_refund": 0,
+        "fees_rates": 0,
+        "fraud_report": 0,
+        "out_of_scope": 0,
+        "transfer_howto": 0,
+        "transfer_status": 0
+      },
+      "usage": {
+        "input_tokens": 624,
+        "output_tokens": 117
+      }
+    },
+    {
+      "id": "test-00017",
+      "lang": "zh",
+      "text": "往来账户余额多少",
+      "expected_intent": "balance_inquiry",
+      "predicted_intent": "balance_inquiry",
+      "baseline_intent": "balance_inquiry",
+      "latency_ms": 625.69,
+      "model": "jev-latest",
+      "confidence": 1,
+      "probabilities": {
+        "account_service": 0,
+        "balance_inquiry": 1,
+        "card_lost_freeze": 0,
+        "card_service": 0,
+        "complaint": 0,
+        "dispute_refund": 0,
+        "fees_rates": 0,
+        "fraud_report": 0,
+        "out_of_scope": 0,
+        "transfer_howto": 0,
+        "transfer_status": 0
+      },
+      "usage": {
+        "input_tokens": 627,
+        "output_tokens": 117
+      }
+    },
+    {
+      "id": "test-00018",
+      "lang": "mixed",
+      "text": "balance please，savings account，快点 lah。",
+      "expected_intent": "balance_inquiry",
+      "predicted_intent": "balance_inquiry",
+      "baseline_intent": "balance_inquiry",
+      "latency_ms": 559.07,
+      "model": "jev-latest",
+      "confidence": 1,
+      "probabilities": {
+        "account_service": 0,
+        "balance_inquiry": 1,
+        "card_lost_freeze": 0,
+        "card_service": 0,
+        "complaint": 0,
+        "dispute_refund": 0,
+        "fees_rates": 0,
+        "fraud_report": 0,
+        "out_of_scope": 0,
+        "transfer_howto": 0,
+        "transfer_status": 0
+      },
+      "usage": {
+        "input_tokens": 630,
+        "output_tokens": 117
+      }
+    },
+    {
+      "id": "test-00019",
+      "lang": "en",
+      "text": "Kindly confirm the available balance in my SGD savings account.",
+      "expected_intent": "balance_inquiry",
+      "predicted_intent": "balance_inquiry",
+      "baseline_intent": "balance_inquiry",
+      "latency_ms": 1358.51,
+      "model": "jev-latest",
+      "confidence": 1,
+      "probabilities": {
+        "account_service": 0,
+        "balance_inquiry": 1,
+        "card_lost_freeze": 0,
+        "card_service": 0,
+        "complaint": 0,
+        "dispute_refund": 0,
+        "fees_rates": 0,
+        "fraud_report": 0,
+        "out_of_scope": 0,
+        "transfer_howto": 0,
+        "transfer_status": 0
+      },
+      "usage": {
+        "input_tokens": 631,
+        "output_tokens": 117
+      }
+    },
+    {
+      "id": "test-00020",
+      "lang": "mixed",
+      "text": "可以 kindly 告诉我我的 current account 里面有多少吗？",
+      "expected_intent": "balance_inquiry",
+      "predicted_intent": "balance_inquiry",
+      "baseline_intent": "balance_inquiry",
+      "latency_ms": 1143.25,
+      "model": "jev-latest",
+      "confidence": 1,
+      "probabilities": {
+        "account_service": 0,
+        "balance_inquiry": 1,
+        "card_lost_freeze": 0,
+        "card_service": 0,
+        "complaint": 0,
+        "dispute_refund": 0,
+        "fees_rates": 0,
+        "fraud_report": 0,
+        "out_of_scope": 0,
+        "transfer_howto": 0,
+        "transfer_status": 0
+      },
+      "usage": {
+        "input_tokens": 638,
+        "output_tokens": 117
+      }
+    },
+    {
+      "id": "test-00021",
+      "lang": "en",
+      "text": "how much money left",
+      "expected_intent": "balance_inquiry",
+      "predicted_intent": "balance_inquiry",
+      "baseline_intent": "balance_inquiry",
+      "latency_ms": 575.94,
+      "model": "jev-latest",
+      "confidence": 1,
+      "probabilities": {
+        "account_service": 0,
+        "balance_inquiry": 1,
+        "card_lost_freeze": 0,
+        "card_service": 0,
+        "complaint": 0,
+        "dispute_refund": 0,
+        "fees_rates": 0,
+        "fraud_report": 0,
+        "out_of_scope": 0,
+        "transfer_howto": 0,
+        "transfer_status": 0
+      },
+      "usage": {
+        "input_tokens": 623,
+        "output_tokens": 117
+      }
+    },
+    {
+      "id": "test-00022",
+      "lang": "zh",
+      "text": "查我的余额可以吗",
+      "expected_intent": "balance_inquiry",
+      "predicted_intent": "balance_inquiry",
+      "baseline_intent": "balance_inquiry",
+      "latency_ms": 4001.2,
+      "model": "jev-latest",
+      "confidence": 1,
+      "probabilities": {
+        "account_service": 0,
+        "balance_inquiry": 1,
+        "card_lost_freeze": 0,
+        "card_service": 0,
+        "complaint": 0,
+        "dispute_refund": 0,
+        "fees_rates": 0,
+        "fraud_report": 0,
+        "out_of_scope": 0,
+        "transfer_howto": 0,
+        "transfer_status": 0
+      },
+      "usage": {
+        "input_tokens": 627,
+        "output_tokens": 117
+      }
+    }
+  ]
+}

@@ -9,7 +9,7 @@ CREATE DATABASE IF NOT EXISTS lioncity_bank
 USE lioncity_bank;
 
 SET FOREIGN_KEY_CHECKS = 0;
-DROP TABLE IF EXISTS turn_log, tickets, card_transactions, transfers, payees, cards, accounts, customers,
+DROP TABLE IF EXISTS ticket_events, turn_log, tickets, card_transactions, transfers, payees, cards, accounts, customers,
                      product_alias, product_attr, product, product_category;
 SET FOREIGN_KEY_CHECKS = 1;
 
@@ -112,7 +112,7 @@ CREATE TABLE tickets (
   intent          VARCHAR(50)  NOT NULL               COMMENT '一级意图',
   sub_intent      VARCHAR(60)  NULL                   COMMENT '二级意图，如 app_problem，方便坐席分类处理',
   priority        ENUM('normal','urgent') NOT NULL DEFAULT 'normal',
-  status          ENUM('open','replied','closed') NOT NULL DEFAULT 'open',
+  status          ENUM('open','in_progress','replied','closed') NOT NULL DEFAULT 'open',
   notification_status ENUM('not_required','pending','processing','sent','failed') NOT NULL DEFAULT 'not_required'   COMMENT '通知状态',
   notification_attempts INT NOT NULL DEFAULT 0 COMMENT '通知尝试次数',
   notified_at DATETIME NULL COMMENT '通知成功时间',
@@ -120,11 +120,37 @@ CREATE TABLE tickets (
   notification_alerted_at DATETIME NULL COMMENT '最近一次通知超时提醒时间',
   summary         TEXT         NOT NULL               COMMENT '对话摘要（已脱敏）',
   agent_reply     TEXT         NULL,
+  related_transaction_id VARCHAR(20) NULL COMMENT '客户核查工单关联的账单交易编号',
+  related_transaction JSON NULL COMMENT '创建工单时的账单交易快照（金额、币种、状态等）',
   created_at      DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at      DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   CONSTRAINT fk_tk_cust FOREIGN KEY (customer_id) REFERENCES customers(customer_id),
-  INDEX idx_tk_status (status, priority)
+  INDEX idx_tk_status (status, priority),
+  INDEX idx_tk_related_transaction (related_transaction_id)
 ) COMMENT '转人工工单（n8n 读取并通知坐席）';
+
+CREATE TABLE ticket_events (
+  event_id        BIGINT AUTO_INCREMENT PRIMARY KEY,
+  ticket_id       INT NOT NULL,
+  event_type      ENUM('submitted','started','replied','closed') NOT NULL,
+  actor_type      ENUM('system','agent') NOT NULL,
+  created_at      DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_ticket_event_ticket FOREIGN KEY (ticket_id) REFERENCES tickets(ticket_id) ON DELETE CASCADE,
+  INDEX idx_ticket_event_time (ticket_id, created_at, event_id)
+) COMMENT '工单状态流转时间线';
+
+CREATE TRIGGER trg_ticket_event_insert
+AFTER INSERT ON tickets FOR EACH ROW
+INSERT INTO ticket_events (ticket_id, event_type, actor_type, created_at)
+VALUES (NEW.ticket_id, 'submitted', 'system', NEW.created_at);
+
+CREATE TRIGGER trg_ticket_event_status
+AFTER UPDATE ON tickets FOR EACH ROW
+INSERT INTO ticket_events (ticket_id, event_type, actor_type, created_at)
+SELECT NEW.ticket_id,
+       CASE NEW.status WHEN 'in_progress' THEN 'started' WHEN 'replied' THEN 'replied' ELSE 'closed' END,
+       'agent', CURRENT_TIMESTAMP
+WHERE OLD.status <> NEW.status;
 
 -- 对话审计日志（对应 GraphState 的 trace / tool_calls）-------------------
 CREATE TABLE turn_log (

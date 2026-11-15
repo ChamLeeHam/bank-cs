@@ -14,6 +14,8 @@ from src.schema.base import BaseNode, StateUpdate
 from src.schema.state import GraphState
 from src.utils.llm_util import get_llm_client
 from src.utils.response_utils import _has_invented_numbers, is_pin_unblock_question
+from src.utils.history_utils import history_of
+from src.utils.reference_bank_utils import is_reference_policy_question, resolve_reference_bank
 
 TOOLS = [search_faq, get_product_info]
 MAX_HISTORY = 6  # 最近几条消息给 Agent
@@ -27,7 +29,9 @@ SYSTEM_PROMPT = """你是狮城银行（Lion City Bank）的 AI 客服。
 4. 客户用英文就用英文回答，中文或者中英混杂就用中文回答
 5. 只回答客户问的内容，不要加入无关的情况；回答简短清楚，不用写"根据资料"这种话，不用自己写来源名称
 6. 使用 FAQ 资料回答时，在回答末尾原样写出实际使用的每个章节编号，例如 [FAQ:123456abcdef]；不要写没有用到的编号
-7. 不提供投资建议"""
+7. 如果客户给出了账单中的具体交易和已记录手续费，要先明确指出账单金额与收费规则是否吻合；本行手续费、中转行/商户可能另收的费用要区分，不能把“可能收取”说成已经实际扣收
+8. 交易状态（如处理中）要单独解释，不要暗示它必然导致某笔费用；如果客户同时问费用和状态，分别回答这两点
+9. 不提供投资建议"""
 
 FAQ_CITATION = re.compile(r"\[FAQ:([0-9a-f]{12})\]", re.IGNORECASE)
 
@@ -52,6 +56,12 @@ class BankAgentNode(BaseNode):
 
     def process(self, state: GraphState) -> StateUpdate:
         lang = "en" if state.get("lang") == "en" else "zh"
+        question = state.get("masked_question", "")
+        reference_bank = resolve_reference_bank(question, history_of(state))
+        if is_reference_policy_question(question, reference_bank):
+            # The agent is trained as Lion City Bank support; external-bank questions use
+            # the source-filtered RAG path so their policies cannot be mixed with local FAQ.
+            return self.fallback.process(state)
         if is_pin_unblock_question(state.get("masked_question", "")):
             return self.fallback.process(state)
         # state["messages"] 里已经有这一轮的问题了（input_guard 加的），而且是脱敏过的

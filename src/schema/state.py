@@ -63,12 +63,15 @@ class GraphState(TypedDict, total=False):
     otp_verified: bool  # 这个会话是否已经验证过 OTP，只能由 verify_otp 写 [跨轮]
     otp_customer_id: str  # OTP 验证对应的客户，不能跨客户复用
     otp_locked: bool  # 本会话连续输错达到上限后锁定账户查询 [跨轮]
+    otp_failures: int
+    fraud_confirmation_pending: bool
     transfer_candidates: list[str]  # 最近一次已选中的候选列表，保持当时的顺序
     transfer_customer_id: str  # 列表所属客户
     tool_calls: list[dict[str, Any]]  # 账户智能体调用了哪些工具，用来审计 [每轮]
 
     # handoff 写入
     ticket_id: int | None  # 工单号 [跨轮]
+    fraud_ticket_id: int | None  # 最近一张已创建的盗刷工单 [跨轮]
     priority: Priority  # 盗刷是 urgent [每轮]
 
     # 输出
@@ -87,9 +90,12 @@ CROSS_TURN_DEFAULTS: dict[str, Any] = {
     "otp_verified": False,
     "otp_customer_id": "",
     "otp_locked": False,
+    "otp_failures": 0,
+    "fraud_confirmation_pending": False,
     "transfer_candidates": [],
     "transfer_customer_id": "",
     "ticket_id": None,
+    "fraud_ticket_id": None,
     "clarify_count": 0,
 }
 

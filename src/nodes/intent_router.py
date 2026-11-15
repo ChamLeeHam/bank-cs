@@ -13,10 +13,14 @@ from src.nodes.stub_nodes import KEYWORD_RULES, router_text
 from src.schema.base import BaseNode, StateUpdate
 from src.schema.config import get_config
 from src.schema.state import GraphState
-from src.utils.fraud_context import fraud_context
+from src.utils.fraud_context import (fraud_action_status_question, fraud_context,
+                                     fraud_comparison_requests_action, fraud_dispute_comparison_question,
+                                     unfamiliar_merchant_name_question)
 from src.utils.history_utils import (annual_fee_followup, fraud_confirmed_followup, fraud_general_followup, history_of,
                                     negated_fraud_limit_question, replacement_fee_stolen_followup,
-                                    statement_fee_followup, stolen_card_clarification)
+                                    statement_fee_followup, statement_fee_general_followup, stolen_card_clarification)
+from src.utils.reference_bank_utils import (is_reference_policy_question, reference_question_intent,
+                                            resolve_reference_bank)
 
 logger = logging.getLogger(__name__)
 
@@ -154,17 +158,47 @@ class IntentRouterNode(BaseNode):
         current = state.get("masked_question", "").strip()
         history = history_of(state)
         signal, topic = fraud_context(current)
-        if signal == "reported" or fraud_confirmed_followup(current, history):
+        comparison_question = fraud_dispute_comparison_question(current)
+        urgent_comparison = comparison_question and (state.get("human_requested")
+                                                      or fraud_comparison_requests_action(current))
+        if urgent_comparison:
+            return {"intent": "fraud_report", "sub_intent": "", "intent_score": 0.99,
+                    "router_backend": "keyword", "fraud_signal": "reported",
+                    "fraud_confirmation_pending": False}
+        if comparison_question:
+            return {"intent": "card_service", "sub_intent": "lost_or_stolen_card", "intent_score": 0.99,
+                    "router_backend": "keyword", "fraud_signal": "none",
+                    "fraud_confirmation_pending": False}
+        if signal == "reported" or fraud_confirmed_followup(current, history, state.get("fraud_confirmation_pending")):
             return {"intent": "fraud_report", "sub_intent": "", "intent_score": 0.99,
                     "router_backend": "keyword", "fraud_signal": "reported"}
+        if unfamiliar_merchant_name_question(current):
+            return {"intent": "card_service", "sub_intent": "lost_or_stolen_card", "intent_score": 0.99,
+                    "router_backend": "keyword", "fraud_signal": "none",
+                    "fraud_confirmation_pending": False}
         if signal == "hypothetical":
             return {"intent": "unknown", "sub_intent": "", "intent_score": UNKNOWN_SCORE,
                     "router_backend": "keyword", "fraud_signal": "hypothetical"}
+        if fraud_action_status_question(current, state.get("fraud_ticket_id")):
+            return {"intent": "unknown", "sub_intent": "", "intent_score": UNKNOWN_SCORE, "router_backend": "keyword"}
+
+        # Explicit, general questions about another bank's published policy use the isolated reference corpus.
+        # A reported fraud incident was handled above and continues through the existing urgent route.
+        reference_bank = resolve_reference_bank(current, history)
+        if is_reference_policy_question(current, reference_bank):
+            self.log_step(self.name, "明确询问外部银行公开资料，路由到银行参考知识库")
+            return {"intent": reference_question_intent(current), "sub_intent": "", "intent_score": 0.99,
+                    "router_backend": "keyword", "fraud_signal": "none",
+                    "fraud_confirmation_pending": False}
 
         # 1. 规则：问候、没有内容的消息
         if GREETING_RE.match(current):
             return {"intent": "greeting", "sub_intent": "hello", "intent_score": 0.95, "router_backend": "keyword"}
-        if fraud_general_followup(current, history) or negated_fraud_limit_question(current) or not topic:
+        if fraud_general_followup(current, history, state.get("fraud_confirmation_pending")):
+            # 用户已说明只是了解一般流程：结束盗刷确认状态，转知识库给出有来源的说明。
+            return {"intent": "card_service", "sub_intent": "lost_or_stolen_card", "intent_score": 0.99,
+                    "router_backend": "keyword", "fraud_confirmation_pending": False}
+        if negated_fraud_limit_question(current) or not topic:
             return {"intent": "unknown", "sub_intent": "", "intent_score": UNKNOWN_SCORE, "router_backend": "keyword"}
         if FILLER_RE.match(current):
             return {"intent": "unknown", "sub_intent": "", "intent_score": UNKNOWN_SCORE, "router_backend": "keyword"}
@@ -191,6 +225,9 @@ class IntentRouterNode(BaseNode):
         if choice:
             return {"intent": "card_lost_freeze" if choice == "freeze" else "card_service",
                     "sub_intent": "", "intent_score": 0.99, "router_backend": "keyword"}
+        if statement_fee_general_followup(current, history_of(state)):
+            return {"intent": "fees_rates", "sub_intent": "extra_charge_on_statement", "intent_score": 0.99,
+                    "router_backend": "keyword"}
         matched, _ = statement_fee_followup(current, history_of(state))
         if matched:
             return {"intent": "fees_rates", "sub_intent": "", "intent_score": 0.99, "router_backend": "keyword"}

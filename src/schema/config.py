@@ -54,8 +54,8 @@ class Config:
     # 集合名用 BANK_KB_COLLECTION，.env 里的 MILVUS_COLLECTION 是别的项目的
     milvus_uri: str = field(default_factory=lambda: os.getenv("MILVUS_URL", "http://localhost:19530"))
     milvus_token: str = field(default_factory=lambda: os.getenv("MILVUS_TOKEN", ""))
-    kb_collection: str = field(default_factory=lambda: os.getenv("BANK_KB_COLLECTION", "lioncity_faq"))
-    # 银行官网下载的 PDF（MinerU 解析）放在另一个集合，是真实银行的资料，不和狮城银行的 FAQ 混在一起
+    kb_collection: str = field(default_factory=lambda: os.getenv("BANK_KB_COLLECTION", "lioncity_bank_knowledge"))
+    # Legacy collection kept for rollback; all customer queries use kb_collection.
     pdf_collection: str = field(default_factory=lambda: os.getenv("BANK_PDF_COLLECTION", "bank_pdf_docs"))
     kb_dir: Path = field(default_factory=lambda: ROOT_DIR / os.getenv("BANK_KB_DIR", "data/kb"))
     embed_model: Path = field(default_factory=lambda: ROOT_DIR / os.getenv("EMBED_MODEL", "pretrained/bge-m3"))

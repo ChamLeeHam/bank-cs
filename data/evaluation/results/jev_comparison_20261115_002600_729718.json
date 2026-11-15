@@ -1,0 +1,359 @@
+{
+  "dataset_sha256": "7198219f2a920374ac6cc2f08f7b7aabad4c4c8aaff5e9d0cdc4f81327b014bb",
+  "baseline": "D:\\大模型\\bank-cs\\data\\evaluation\\results\\evaluation_20261114_234123.json",
+  "metrics": {
+    "requested": 12,
+    "completed": 12,
+    "complete": true,
+    "jev_accuracy": 0.9166666666666666,
+    "baseline_accuracy_same_samples": 1.0,
+    "jev_macro_f1": 0.76,
+    "baseline_macro_f1_same_samples": 1.0,
+    "jev_latency_ms": {
+      "mean": 664.29,
+      "p95": 909.74
+    },
+    "models": {
+      "jev-latest": 12
+    },
+    "baseline_mean_ms_same_samples": 500.41
+  },
+  "predictions": [
+    {
+      "id": "test-00354",
+      "lang": "en",
+      "text": "Please terminate my account.",
+      "expected_intent": "account_service",
+      "predicted_intent": "account_service",
+      "baseline_intent": "account_service",
+      "latency_ms": 726.72,
+      "model": "jev-latest",
+      "confidence": 1,
+      "probabilities": {
+        "account_service": 1,
+        "balance_inquiry": 0,
+        "card_lost_freeze": 0,
+        "card_service": 0,
+        "complaint": 0,
+        "dispute_refund": 0,
+        "fees_rates": 0,
+        "fraud_report": 0,
+        "out_of_scope": 0,
+        "transfer_howto": 0,
+        "transfer_status": 0
+      },
+      "usage": {
+        "input_tokens": 624,
+        "output_tokens": 116
+      }
+    },
+    {
+      "id": "test-00356",
+      "lang": "mixed",
+      "text": "请 show 我怎样 reset 我的 passcode。",
+      "expected_intent": "account_service",
+      "predicted_intent": "account_service",
+      "baseline_intent": "account_service",
+      "latency_ms": 575.4,
+      "model": "jev-latest",
+      "confidence": 0.74,
+      "probabilities": {
+        "account_service": 0.76,
+        "balance_inquiry": 0,
+        "card_lost_freeze": 0,
+        "card_service": 0.21,
+        "complaint": 0,
+        "dispute_refund": 0,
+        "fees_rates": 0,
+        "fraud_report": 0,
+        "out_of_scope": 0.03,
+        "transfer_howto": 0,
+        "transfer_status": 0
+      },
+      "usage": {
+        "input_tokens": 634,
+        "output_tokens": 116
+      }
+    },
+    {
+      "id": "test-00355",
+      "lang": "zh",
+      "text": "请删除我的账户，你们的服务不达标。",
+      "expected_intent": "account_service",
+      "predicted_intent": "account_service",
+      "baseline_intent": "account_service",
+      "latency_ms": 621.24,
+      "model": "jev-latest",
+      "confidence": 0.97,
+      "probabilities": {
+        "account_service": 0.97,
+        "balance_inquiry": 0,
+        "card_lost_freeze": 0,
+        "card_service": 0,
+        "complaint": 0.03,
+        "dispute_refund": 0,
+        "fees_rates": 0,
+        "fraud_report": 0,
+        "out_of_scope": 0,
+        "transfer_howto": 0,
+        "transfer_status": 0
+      },
+      "usage": {
+        "input_tokens": 636,
+        "output_tokens": 116
+      }
+    },
+    {
+      "id": "test-00001",
+      "lang": "en",
+      "text": "Please advise the current balance of my multi-currency account.",
+      "expected_intent": "balance_inquiry",
+      "predicted_intent": "balance_inquiry",
+      "baseline_intent": "balance_inquiry",
+      "latency_ms": 634.33,
+      "model": "jev-latest",
+      "confidence": 1,
+      "probabilities": {
+        "account_service": 0,
+        "balance_inquiry": 1,
+        "card_lost_freeze": 0,
+        "card_service": 0,
+        "complaint": 0,
+        "dispute_refund": 0,
+        "fees_rates": 0,
+        "fraud_report": 0,
+        "out_of_scope": 0,
+        "transfer_howto": 0,
+        "transfer_status": 0
+      },
+      "usage": {
+        "input_tokens": 632,
+        "output_tokens": 117
+      }
+    },
+    {
+      "id": "test-00003",
+      "lang": "mixed",
+      "text": "我想问一下我的 multi-currency account balance。",
+      "expected_intent": "balance_inquiry",
+      "predicted_intent": "balance_inquiry",
+      "baseline_intent": "balance_inquiry",
+      "latency_ms": 623.58,
+      "model": "jev-latest",
+      "confidence": 1,
+      "probabilities": {
+        "account_service": 0,
+        "balance_inquiry": 1,
+        "card_lost_freeze": 0,
+        "card_service": 0,
+        "complaint": 0,
+        "dispute_refund": 0,
+        "fees_rates": 0,
+        "fraud_report": 0,
+        "out_of_scope": 0,
+        "transfer_howto": 0,
+        "transfer_status": 0
+      },
+      "usage": {
+        "input_tokens": 633,
+        "output_tokens": 117
+      }
+    },
+    {
+      "id": "test-00002",
+      "lang": "zh",
+      "text": "我现在就要我的余额啦，为什么这么慢？",
+      "expected_intent": "balance_inquiry",
+      "predicted_intent": "transfer_status",
+      "baseline_intent": "balance_inquiry",
+      "latency_ms": 620.88,
+      "model": "jev-latest",
+      "confidence": 0.4,
+      "probabilities": {
+        "account_service": 0,
+        "balance_inquiry": 0.33,
+        "card_lost_freeze": 0,
+        "card_service": 0,
+        "complaint": 0.2,
+        "dispute_refund": 0.01,
+        "fees_rates": 0,
+        "fraud_report": 0,
+        "out_of_scope": 0,
+        "transfer_howto": 0.01,
+        "transfer_status": 0.45
+      },
+      "usage": {
+        "input_tokens": 637,
+        "output_tokens": 116
+      }
+    },
+    {
+      "id": "test-00119",
+      "lang": "en",
+      "text": "Card stolen pls freeze now",
+      "expected_intent": "card_lost_freeze",
+      "predicted_intent": "card_lost_freeze",
+      "baseline_intent": "card_lost_freeze",
+      "latency_ms": 639.38,
+      "model": "jev-latest",
+      "confidence": 0.99,
+      "probabilities": {
+        "account_service": 0,
+        "balance_inquiry": 0,
+        "card_lost_freeze": 0.99,
+        "card_service": 0,
+        "complaint": 0,
+        "dispute_refund": 0,
+        "fees_rates": 0,
+        "fraud_report": 0.01,
+        "out_of_scope": 0,
+        "transfer_howto": 0,
+        "transfer_status": 0
+      },
+      "usage": {
+        "input_tokens": 624,
+        "output_tokens": 119
+      }
+    },
+    {
+      "id": "test-00121",
+      "lang": "mixed",
+      "text": "我的 debit card 不见了，please block 它。",
+      "expected_intent": "card_lost_freeze",
+      "predicted_intent": "card_lost_freeze",
+      "baseline_intent": "card_lost_freeze",
+      "latency_ms": 553.54,
+      "model": "jev-latest",
+      "confidence": 1,
+      "probabilities": {
+        "account_service": 0,
+        "balance_inquiry": 0,
+        "card_lost_freeze": 1,
+        "card_service": 0,
+        "complaint": 0,
+        "dispute_refund": 0,
+        "fees_rates": 0,
+        "fraud_report": 0,
+        "out_of_scope": 0,
+        "transfer_howto": 0,
+        "transfer_status": 0
+      },
+      "usage": {
+        "input_tokens": 634,
+        "output_tokens": 119
+      }
+    },
+    {
+      "id": "test-00120",
+      "lang": "zh",
+      "text": "请帮帮我！我的卡被偷了！",
+      "expected_intent": "card_lost_freeze",
+      "predicted_intent": "card_lost_freeze",
+      "baseline_intent": "card_lost_freeze",
+      "latency_ms": 806.69,
+      "model": "jev-latest",
+      "confidence": 0.99,
+      "probabilities": {
+        "account_service": 0,
+        "balance_inquiry": 0,
+        "card_lost_freeze": 0.99,
+        "card_service": 0,
+        "complaint": 0,
+        "dispute_refund": 0,
+        "fees_rates": 0,
+        "fraud_report": 0.01,
+        "out_of_scope": 0,
+        "transfer_howto": 0,
+        "transfer_status": 0
+      },
+      "usage": {
+        "input_tokens": 631,
+        "output_tokens": 119
+      }
+    },
+    {
+      "id": "test-00294",
+      "lang": "en",
+      "text": "Is it possible to give a second card for this account to my daughter?",
+      "expected_intent": "card_service",
+      "predicted_intent": "card_service",
+      "baseline_intent": "card_service",
+      "latency_ms": 909.74,
+      "model": "jev-latest",
+      "confidence": 0.97,
+      "probabilities": {
+        "account_service": 0.03,
+        "balance_inquiry": 0,
+        "card_lost_freeze": 0,
+        "card_service": 0.97,
+        "complaint": 0,
+        "dispute_refund": 0,
+        "fees_rates": 0,
+        "fraud_report": 0,
+        "out_of_scope": 0,
+        "transfer_howto": 0,
+        "transfer_status": 0
+      },
+      "usage": {
+        "input_tokens": 634,
+        "output_tokens": 116
+      }
+    },
+    {
+      "id": "test-00296",
+      "lang": "mixed",
+      "text": "我的 new card 要 activate 需要做什么？",
+      "expected_intent": "card_service",
+      "predicted_intent": "card_service",
+      "baseline_intent": "card_service",
+      "latency_ms": 637.99,
+      "model": "jev-latest",
+      "confidence": 1,
+      "probabilities": {
+        "account_service": 0,
+        "balance_inquiry": 0,
+        "card_lost_freeze": 0,
+        "card_service": 1,
+        "complaint": 0,
+        "dispute_refund": 0,
+        "fees_rates": 0,
+        "fraud_report": 0,
+        "out_of_scope": 0,
+        "transfer_howto": 0,
+        "transfer_status": 0
+      },
+      "usage": {
+        "input_tokens": 633,
+        "output_tokens": 116
+      }
+    },
+    {
+      "id": "test-00295",
+      "lang": "zh",
+      "text": "你们的卡会邮寄到哪些地方？",
+      "expected_intent": "card_service",
+      "predicted_intent": "card_service",
+      "baseline_intent": "card_service",
+      "latency_ms": 621.94,
+      "model": "jev-latest",
+      "confidence": 1,
+      "probabilities": {
+        "account_service": 0,
+        "balance_inquiry": 0,
+        "card_lost_freeze": 0,
+        "card_service": 1,
+        "complaint": 0,
+        "dispute_refund": 0,
+        "fees_rates": 0,
+        "fraud_report": 0,
+        "out_of_scope": 0,
+        "transfer_howto": 0,
+        "transfer_status": 0
+      },
+      "usage": {
+        "input_tokens": 632,
+        "output_tokens": 116
+      }
+    }
+  ]
+}

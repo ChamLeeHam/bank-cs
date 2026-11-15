@@ -11,27 +11,32 @@ def stolen_card_hypothetical(question):
     return bool(_STOLEN_CARD_HYPOTHETICAL.fullmatch(question))
 
 
-def fraud_confirmed_followup(question, history):
+def _fraud_confirmation_active(history, pending):
+    if pending:
+        return True
+    # 兼容旧会话快照及只传历史的调用者。
+    return bool(history and history[-1][0] == "客服" and (
+        "这是已经发生，还是您在了解一般处理方法" in history[-1][1]
+        or "Has this happened to you, or are you asking generally?" in history[-1][1]))
+
+
+def fraud_confirmed_followup(question, history, pending=False):
     """仅把紧接盗刷假设澄清的明确发生确认视为风险报告。"""
-    if not history or history[-1][0] != "客服":
-        return False
-    previous = history[-1][1]
-    if "这是已经发生，还是您在了解一般处理方法" not in previous and "Has this happened to you, or are you asking generally?" not in previous:
+    if not _fraud_confirmation_active(history, pending):
         return False
     return bool(re.fullmatch(r"(?:是的?[，, ]*)?(?:已经|确实|真的)(?:发生|发生了|被盗刷了)[。！!？?\s]*|"
                              r"(?:yes[, ]+)?(?:it (?:already )?happened|it has happened)[.!?\s]*",
                              question, re.IGNORECASE))
 
 
-def fraud_general_followup(question, history):
+def fraud_general_followup(question, history, pending=False):
     """仅识别紧接盗刷风险澄清的明确一般咨询答复。"""
-    if not history or history[-1][0] != "客服":
+    if not _fraud_confirmation_active(history, pending):
         return False
-    previous = history[-1][1]
-    if "这是已经发生，还是您在了解一般处理方法" not in previous and "Has this happened to you, or are you asking generally?" not in previous:
-        return False
-    return bool(re.fullmatch(r"(?:我)?(?:只是|只是想|只想|就是想)(?:想)?(?:了解|知道|问)(?:一下|一般处理方法|怎么处理)?[。！!？?\s]*|"
-                             r"(?:i(?:'m| am) )?(?:just|only) (?:asking|curious|want to know)[.!?\s]*",
+    return bool(re.fullmatch(r"(?:我)?(?:只是想|只是|只想|就是想)?(?:在)?(?:想)?(?:了解|知道|问)(?:一下)?"
+                             r"(?:这个|这类)?(?:一般|通用)?(?:的)?(?:处理方法|处理流程|怎么处理|怎么办)?[。！!？?\s]*|"
+                             r"(?:no[, ]+)?(?:nothing has happened[, ]+)?(?:i(?:'m| am) )?"
+                             r"(?:just|only) (?:asking|curious|want to know)[.!?\s]*",
                              question, re.IGNORECASE))
 
 
@@ -109,6 +114,19 @@ def statement_fee_followup(question, history):
     number = match.group(1)
     index = int(number) if number.isdigit() else "一二三四五六七八九".index(number) + 1
     return True, items[index - 1] if index <= len(items) else None
+
+
+def statement_fee_general_followup(question, history):
+    """Recognize a request for the common-fee list after an initial small statement charge question."""
+    if not re.search(r"(?:一般|通常|常见).{0,12}(?:小额)?(?:费用|收费|charges?|fees?).{0,8}(?:有哪些|什么|包括)|"
+                     r"what (?:are|kinds of) .{0,24}(?:small )?(?:fees|charges)", question, re.IGNORECASE):
+        return False
+    previous_customer = next((text for role, text in reversed(history) if role == "客户"), "")
+    previous_answer = next((text for role, text in reversed(history) if role == "客服"), "")
+    return (bool(re.search(r"账单|statement", previous_customer, re.IGNORECASE))
+            and bool(re.search(r"小额|charge|费用|fee", previous_customer, re.IGNORECASE))
+            and bool(re.search(r"常见项目包括|无法确认具体|common items include|can't identify the exact",
+                               previous_answer, re.IGNORECASE)))
 
 
 def history_of(state):
