@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ChevronRight, ClipboardList, Headset, LogOut, RefreshCw } from 'lucide-react';
+import { BarChart3, ChevronRight, ClipboardList, Headset, LogOut, RefreshCw, Ticket, UserRoundCog } from 'lucide-react';
 import { Shell } from './shell.jsx';
 import { api } from './api.js';
+import { Reports } from './reports.jsx';
 
 const statuses = { open: '待处理', in_progress: '处理中', replied: '已有回复', closed: '已关闭' };
 const names = { complaint: '投诉', fraud_report: '疑似盗刷', dispute_refund: '交易争议',
@@ -17,6 +18,12 @@ export function Agent() {
   const [auth, setAuth] = useState(null), [authError, setAuthError] = useState('');
   const [items, setItems] = useState([]), [selectedId, setSelectedId] = useState(null);
   const [status, setStatus] = useState(''), [level, setLevel] = useState('');
+  const [view, setView] = useState('tickets');
+  const [scope, setScope] = useState('');
+  const [users, setUsers] = useState([]);
+  const [assignUser, setAssignUser] = useState('');
+  const [userFormOpen, setUserFormOpen] = useState(false);
+  const [reportFilters, setReportFilters] = useState({ start_date: '', end_date: '', intent: '' });
   const [draft, setDraft] = useState(''), [notice, setNotice] = useState(''), [error, setError] = useState('');
   const [working, setWorking] = useState(false), [loading, setLoading] = useState(false);
   const sequence = useRef(0);
@@ -39,7 +46,11 @@ export function Agent() {
     const query = new URLSearchParams();
     if (status) query.set('status', status);
     if (level) query.set('priority', level);
+    if (reportFilters.start_date) query.set('start_date', reportFilters.start_date);
+    if (reportFilters.end_date) query.set('end_date', reportFilters.end_date);
+    if (reportFilters.intent) query.set('intent', reportFilters.intent);
     try {
+      if (scope) query.set('scope', scope);
       const data = await api('/api/agent/tickets?' + query);
       if (sequence.current !== token) return;
       setItems(data.tickets);
@@ -49,7 +60,8 @@ export function Agent() {
       if (e.status === 401) expire(); else setError(e.message);
     } finally { if (sequence.current === token) setLoading(false); }
   }
-  useEffect(() => { if (auth?.authenticated) load(); }, [auth?.authenticated, status, level]);
+  useEffect(() => { if (auth?.authenticated && view === 'tickets') load(); },
+    [auth?.authenticated, status, level, scope, view, reportFilters.start_date, reportFilters.end_date, reportFilters.intent]);
   useEffect(() => { setDraft(selected?.agent_reply || ''); }, [selected?.ticket_id, selected?.agent_reply]);
   function select(t) { setSelectedId(t.ticket_id); setNotice(''); }
   async function authSubmit(e) {
@@ -57,10 +69,11 @@ export function Agent() {
     const fields = new FormData(e.currentTarget);
     setWorking(true); setAuthError('');
     try {
-      await api('/api/agent/auth/' + (auth.configured ? 'login' : 'setup'), 'POST', {
+      const data = await api('/api/agent/auth/' + (auth.configured ? 'login' : 'setup'), 'POST', {
         username: fields.get('username').trim(), password: fields.get('password'),
       });
-      setAuth({ configured: true, authenticated: true });
+      setAuth({ configured: true, authenticated: true, identity: data.identity });
+      setScope(data.identity?.role === 'supervisor' ? 'all' : 'queue');
     } catch (err) { setAuthError(err.message); if (err.status === 409) await check(); }
     finally { setWorking(false); }
   }
@@ -89,6 +102,39 @@ export function Agent() {
       }
     } finally { setWorking(false); }
   }
+  function showTickets(filters = {}) {
+    setReportFilters({ start_date: filters.start_date || '', end_date: filters.end_date || '', intent: filters.intent || '' });
+    setStatus(filters.status || ''); setLevel(filters.priority || ''); setSelectedId(null); setView('tickets');
+  }
+  async function loadTeamsAndUsers() {
+    if (auth?.identity?.role === 'supervisor') {
+      const userResult = await api('/api/agent/users'); setUsers(userResult.users || []);
+    }
+  }
+  useEffect(() => {
+    if (!auth?.authenticated) return;
+    if (!scope) setScope(auth.identity?.role === 'supervisor' ? 'all' : 'queue');
+    loadTeamsAndUsers().catch(e => setError(e.message));
+  }, [auth?.authenticated]);
+  useEffect(() => {
+    if (selected) setAssignUser(selected.assigned_agent || '');
+  }, [selected?.ticket_id, selected?.assigned_agent]);
+  async function assignSelected() {
+    if (!selected || working) return;
+    setWorking(true); setError(''); setNotice('');
+    try {
+      await api(`/api/agent/tickets/${selected.ticket_id}/assignment`, 'PATCH', { username: assignUser || null });
+      await load(); setNotice(`工单 #${selected.ticket_id} 已改派给坐席 ${assignUser}。`);
+    } catch (e) { setError(e.message); } finally { setWorking(false); }
+  }
+  async function createAgentUser(e) {
+    e.preventDefault(); const form = e.currentTarget; const fields = new FormData(form);
+    setWorking(true); setError(''); setNotice('');
+    try {
+      await api('/api/agent/users', 'POST', { username: fields.get('username'), password: fields.get('password') });
+      await loadTeamsAndUsers(); form.reset(); setUserFormOpen(false); setNotice('坐席账号已创建。');
+    } catch (err) { setError(err.message); } finally { setWorking(false); }
+  }
 
   return <Shell title="坐席工作台" action={auth?.authenticated && <button className="button outline" onClick={logout} disabled={working}><LogOut size={16}/> 退出登录</button>}>
     {!auth?.authenticated ? <section className="auth-card">
@@ -104,10 +150,29 @@ export function Agent() {
       </form> : authError ? <button className="button outline" onClick={check}>重试</button> : <p role="status">正在检查登录状态…</p>}
       {authError && <p className="error" role="alert">{authError}</p>}
     </section> : <section className="desk">
-      <div className="desk-heading"><div><h1>工单工作台</h1><p>查看客户问题并记录处理回复。</p></div>
-        <button className="button outline" onClick={load} disabled={loading || working}><RefreshCw size={16}/> 刷新工单</button></div>
+      <div className="desk-heading"><div><h1>坐席工作台</h1><p>查看并处理自动分配给你的客户工单。</p></div>
+        <div className="desk-nav" role="tablist" aria-label="坐席工作台视图">
+          <button type="button" role="tab" aria-selected={view === 'tickets'} className={view === 'tickets' ? 'active' : ''}
+            onClick={() => setView('tickets')}><Ticket size={16}/>工单处理</button>
+          <button type="button" role="tab" aria-selected={view === 'reports'} className={view === 'reports' ? 'active' : ''}
+            onClick={() => setView('reports')}><BarChart3 size={16}/>运营报表</button>
+          {auth.identity?.role === 'supervisor' && <button type="button" role="tab" aria-selected={view === 'users'} className={view === 'users' ? 'active' : ''}
+            onClick={() => setView('users')}><UserRoundCog size={16}/>坐席管理</button>}
+        </div>
+        {view === 'tickets' && <button className="button outline" onClick={load} disabled={loading || working}><RefreshCw size={16}/> 刷新工单</button>}
+      </div>
       {error && <p className="error" role="alert">{error}</p>}
       {notice && <p className="success" role="status">{notice}</p>}
+      {view === 'reports' ? <Reports onDrillDown={showTickets} onUnauthorized={expire}/> : view === 'users' ? <section className="user-admin">
+        <div className="list-heading"><div><h2>坐席账号</h2><p className="muted">新工单会自动均衡分配；坐席只能查看分配给自己的工单。</p></div>
+          <button className="button primary" onClick={() => setUserFormOpen(v => !v)}>{userFormOpen ? '收起' : '添加坐席'}</button></div>
+        {userFormOpen && <form className="user-create-form" onSubmit={createAgentUser}>
+          <label>坐席账号<input name="username" required minLength={3} maxLength={32} pattern="[A-Za-z0-9_.-]+"/></label>
+          <label>初始密码<input name="password" type="password" required minLength={8} maxLength={128}/></label>
+          <button className="button primary" disabled={working}>创建账号</button>
+        </form>}
+        <div className="user-list">{users.map(u => <div key={u.username}><strong>{u.username}</strong><span>{u.role === 'supervisor' ? '主管' : '自动派单坐席'}</span></div>)}</div>
+      </section> : <>
       <div className="desk-grid">
         <section className="desk-list" aria-label="工单列表">
           <div className="list-heading"><h2>客户工单</h2><span>{loading ? '正在加载…' : `${items.length} 张`}</span></div>
@@ -119,9 +184,13 @@ export function Agent() {
               <option value="">全部优先级</option><option value="urgent">紧急</option><option value="normal">普通</option>
             </select>
           </div>
+          {auth.identity?.role === 'supervisor' ? <div className="scope-tabs" aria-label="工单范围">
+            {[['all','全部工单'],['queue','未分配工单']].map(([key,label]) =>
+              <button key={key} className={scope === key ? 'active' : ''} onClick={() => { setScope(key); setSelectedId(null); }} type="button">{label}</button>)}
+          </div> : <p className="assignment-scope-note">仅显示自动分配给账号 <strong>{auth.identity?.username}</strong> 的工单</p>}
           <div className="ticket-list">{items.map(t => <button key={t.ticket_id} className="ticket-row" type="button"
             aria-pressed={selectedId === t.ticket_id} onClick={() => select(t)} disabled={working || loading}>
-            <span><strong>{title(t)}</strong><small>#{t.ticket_id} · {t.customer_id} · {t.profile?.category || '客户服务'}</small></span>
+            <span><strong>{title(t)}</strong><small>#{t.ticket_id} · {t.customer_id} · {t.assigned_agent ? `坐席 ${t.assigned_agent}` : '等待主管分配'}</small></span>
             <span className={`tag ${t.priority}`}>{priority(t)}</span><ChevronRight size={15}/>
           </button>)}
           {!loading && items.length === 0 && <p className="empty-list">没有符合当前筛选条件的工单。</p>}</div>
@@ -136,6 +205,16 @@ export function Agent() {
             <dl className="detail-meta"><div><dt>客户</dt><dd>{selected.customer_id}</dd></div>
               <div><dt>身份核验</dt><dd>{profile.identity_verified ? '已通过' : '未验证'}</dd></div>
               <div><dt>创建时间</dt><dd>{date(selected.created_at)}</dd></div></dl>
+            <section className="assignment-card" aria-label="工单派单信息">
+              <div><span>分配范围</span><strong>坐席专属工单</strong></div>
+              <div><span>处理坐席</span><strong>{selected.assigned_agent || '等待主管分配'}</strong></div>
+              <div><span>分配方式</span><strong>{selected.dispatch_source === 'ai' ? '智能体均衡分配' : selected.dispatch_source === 'manual' ? '主管改派' : '负载均衡兜底'}</strong></div>
+              {auth.identity?.role === 'supervisor' && selected.status !== 'closed' && <div className="assignment-controls">
+                <select aria-label="指定坐席" value={assignUser} onChange={e => setAssignUser(e.target.value)}>
+                  {users.filter(u => u.role === 'agent').map(u => <option value={u.username} key={u.username}>{u.username}</option>)}</select>
+                <button className="button outline" disabled={working || loading} onClick={assignSelected}>确认改派</button>
+              </div>}
+            </section>
             {selected.related_transaction && <section className="related-transaction" aria-label="关联账单交易">
               <header><div><span>账单核查</span><h3>关联交易</h3></div><span className="tag">{selected.related_transaction.kind === 'card' ? '银行卡' : '转账'}</span></header>
               <dl><div><dt>交易编号</dt><dd>{selected.related_transaction.transaction_id}</dd></div>
@@ -169,6 +248,7 @@ export function Agent() {
           </> : <div className="empty-detail"><ClipboardList size={34} strokeWidth={1.4}/><h2>选择一张工单</h2><p>选择工单后可以查看详情和记录回复。</p></div>}
         </section>
       </div>
+      </>}
     </section>}
   </Shell>;
 }

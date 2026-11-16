@@ -28,14 +28,74 @@ def _password_hash(password, salt):
 
 def setup(username, password):
     """首次设置，独占创建避免并发覆盖。"""
-    salt = secrets.token_bytes(16)
-    record = {"username": username, "salt": salt.hex(), "password_hash": _password_hash(password, salt),
-              "iterations": ITERATIONS}
+    record = {"users": [_make_user(username, password, "supervisor", None)]}
     with _lock:
         AUTH_FILE.parent.mkdir(parents=True, exist_ok=True)
         fd = os.open(AUTH_FILE, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
         with os.fdopen(fd, "w", encoding="utf-8") as f:
             json.dump(record, f)
+
+
+def _make_user(username, password, role, team):
+    salt = secrets.token_bytes(16)
+    return {"username": username, "salt": salt.hex(), "password_hash": _password_hash(password, salt),
+            "iterations": ITERATIONS, "role": role, "team": team}
+
+
+def _read_users():
+    record = json.loads(AUTH_FILE.read_text(encoding="utf-8"))
+    if isinstance(record.get("users"), list):
+        return record["users"]
+    # Existing single-account files become supervisor accounts without changing passwords.
+    if all(key in record for key in ("username", "salt", "password_hash", "iterations")):
+        return [{**record, "role": "supervisor", "team": None}]
+    raise ValueError("invalid agent auth file")
+
+
+def identity(token):
+    if not token:
+        return None
+    with _lock:
+        session = _sessions.get(token)
+        if not session:
+            return None
+        if isinstance(session, tuple):
+            expiry, username = session
+        else:  # compatibility with pre-upgrade in-memory sessions
+            expiry, username = session, None
+        if expiry <= time.monotonic():
+            _sessions.pop(token, None)
+            return None
+        if username is None:
+            return None
+        user = next((item for item in _read_users() if item.get("username") == username), None)
+        if not user:
+            _sessions.pop(token, None)
+            return None
+        return {"username": user["username"], "role": user.get("role", "agent"), "team": user.get("team")}
+
+
+def add_user(username, password, team):
+    with _lock:
+        users = _read_users()
+        if any(user.get("username", "").casefold() == username.casefold() for user in users):
+            raise FileExistsError(username)
+        users.append(_make_user(username, password, "agent", team))
+        AUTH_FILE.write_text(json.dumps({"users": users}, ensure_ascii=False), encoding="utf-8")
+    return {"username": username, "role": "agent", "team": team}
+
+
+def list_users():
+    with _lock:
+        return [{"username": user["username"], "role": user.get("role", "agent"), "team": user.get("team")}
+                for user in _read_users()]
+
+
+def get_user(username):
+    with _lock:
+        return next(({"username": user["username"], "role": user.get("role", "agent"),
+                       "team": user.get("team")} for user in _read_users()
+                     if user.get("username") == username), None)
 
 
 def login(username, password, client_key):
@@ -47,10 +107,15 @@ def login(username, password, client_key):
         if until:
             attempts = 0
         try:
-            record = json.loads(AUTH_FILE.read_text(encoding="utf-8"))
-            salt = bytes.fromhex(record["salt"])
-            actual = hashlib.pbkdf2_hmac("sha256", password.encode("utf-8"), salt, record["iterations"]).hex()
-            valid = hmac.compare_digest(username, record["username"]) and hmac.compare_digest(actual, record["password_hash"])
+            users = _read_users()
+            if not users:
+                raise ValueError("no agent users configured")
+            user = next((item for item in users
+                         if hmac.compare_digest(username, item.get("username", ""))), users[0])
+            salt = bytes.fromhex(user["salt"])
+            actual = hashlib.pbkdf2_hmac("sha256", password.encode("utf-8"), salt, user["iterations"]).hex()
+            valid = (hmac.compare_digest(actual, user["password_hash"])
+                     and hmac.compare_digest(username, user.get("username", "")))
         except (OSError, ValueError, KeyError, TypeError):
             return None, "unavailable"
         if not valid:
@@ -59,7 +124,7 @@ def login(username, password, client_key):
             return None, "locked" if attempts >= MAX_FAILURES else "invalid"
         _failures.pop(client_key, None)
         token = secrets.token_urlsafe(32)
-        _sessions[token] = now + SESSION_SECONDS
+        _sessions[token] = (now + SESSION_SECONDS, user["username"])
         return token, None
 
 
@@ -67,8 +132,9 @@ def is_authenticated(token):
     if not token:
         return False
     with _lock:
-        expiry = _sessions.get(token, 0)
-        if expiry <= time.monotonic():
+        session = _sessions.get(token)
+        expiry = session[0] if isinstance(session, tuple) else session
+        if not expiry or expiry <= time.monotonic():
             _sessions.pop(token, None)
             return False
         return True

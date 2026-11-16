@@ -9,6 +9,7 @@ import re
 import threading
 from contextlib import asynccontextmanager
 from typing import Literal
+from datetime import date
 from pathlib import Path
 from uuid import uuid4
 from urllib.parse import urlsplit
@@ -29,8 +30,11 @@ from src.utils.ticket_utils import (
     get_customer_ticket,
     list_customer_tickets,
     list_tickets,
+    supervisor_assign_ticket,
+    ticket_analytics,
     update_ticket,
 )
+from src.utils.ticket_assignment_schema import ensure_ticket_assignment_schema
 from src.utils.mysql_utils import query_one
 from src.utils.account_utils import get_recent_statement, get_statement_transaction, get_statement_transaction_detail
 from src.utils.receipt_pdf import build_transaction_receipt
@@ -41,6 +45,8 @@ from src.utils import agent_auth
 @asynccontextmanager
 async def lifespan(_app):
     from src.schema.config import get_config
+
+    await asyncio.to_thread(ensure_ticket_assignment_schema)
 
     if get_config().startup_warmup:
         try:
@@ -101,6 +107,14 @@ class AgentCredentials(BaseModel):
     password: str = Field(min_length=1, max_length=128)
 
 
+class AgentUserCreate(AgentCredentials):
+    pass
+
+
+class TicketAssignment(BaseModel):
+    username: str = Field(min_length=3, max_length=32, pattern=r"^[A-Za-z0-9_.-]+$")
+
+
 def check_origin(request: Request):
     origin = request.headers.get("origin")
     if origin:
@@ -127,9 +141,16 @@ def require_local(request: Request):
 
 def require_agent(request: Request):
     require_local(request)
-    if not agent_auth.is_authenticated(request.cookies.get("agent_session")):
+    identity = agent_auth.identity(request.cookies.get("agent_session"))
+    if not identity:
         raise HTTPException(status_code=401, detail="请先登录坐席账号。")
-    return True
+    return identity
+
+
+def require_supervisor(identity=Depends(require_agent)):
+    if identity.get("role") != "supervisor":
+        raise HTTPException(status_code=403, detail="只有主管账号可以管理坐席和改派工单。")
+    return identity
 
 @app.post("/api/internal/tickets/{ticket_id}/claim-notification")
 def claim_notification(ticket_id: int, request: Request):
@@ -178,8 +199,8 @@ def agent_page():
 def agent_auth_status(request: Request, response: Response):
     require_local(request)
     response.headers["Cache-Control"] = "no-store"
-    return {"configured": agent_auth.is_configured(),
-            "authenticated": agent_auth.is_authenticated(request.cookies.get("agent_session"))}
+    identity = agent_auth.identity(request.cookies.get("agent_session"))
+    return {"configured": agent_auth.is_configured(), "authenticated": bool(identity), "identity": identity}
 
 
 @app.post("/api/agent/auth/setup")
@@ -199,7 +220,7 @@ def agent_setup(credentials: AgentCredentials, request: Request, response: Respo
     if error:
         raise HTTPException(status_code=503, detail="账号已创建，请重新登录。")
     _set_agent_cookie(response, token, request)
-    return {"ok": True}
+    return {"ok": True, "identity": agent_auth.identity(token)}
 
 
 @app.post("/api/agent/auth/login")
@@ -214,7 +235,37 @@ def agent_login(credentials: AgentCredentials, request: Request, response: Respo
     if error:
         raise HTTPException(status_code=401, detail="账号或密码不正确。")
     _set_agent_cookie(response, token, request)
-    return {"ok": True}
+    return {"ok": True, "identity": agent_auth.identity(token)}
+
+
+@app.get("/api/agent/teams")
+def agent_teams(authenticated: bool = Depends(require_agent)):
+    return {"teams": {"customer_service": "公共坐席池"}}
+
+
+@app.get("/api/agent/users")
+def agent_users(authenticated=Depends(require_supervisor)):
+    try:
+        return {"users": agent_auth.list_users()}
+    except (OSError, ValueError):
+        logger.exception("坐席列表读取失败")
+        raise HTTPException(status_code=503, detail="坐席列表暂时无法读取。")
+
+
+@app.post("/api/agent/users")
+def agent_user_create(payload: AgentUserCreate, request: Request,
+                      authenticated=Depends(require_supervisor)):
+    check_origin(request)
+    if len(payload.password) < 8:
+        raise HTTPException(status_code=400, detail="密码至少需要 8 个字符。")
+    try:
+        user = agent_auth.add_user(payload.username, payload.password, None)
+        return {"user": user}
+    except FileExistsError:
+        raise HTTPException(status_code=409, detail="这个坐席账号已存在。")
+    except OSError:
+        logger.exception("坐席账号创建失败")
+        raise HTTPException(status_code=503, detail="无法保存坐席账号。")
 
 
 @app.post("/api/agent/auth/logout")
@@ -228,19 +279,61 @@ def agent_logout(request: Request, response: Response):
 
 @app.get("/api/agent/tickets")
 def agent_tickets(response: Response, status: Literal["open", "in_progress", "replied", "closed"] | None = None,
-                  authenticated: bool = Depends(require_agent),
-                  priority: Literal["urgent", "normal"] | None = None):
+                  authenticated=Depends(require_agent),
+                  priority: Literal["urgent", "normal"] | None = None,
+                  start_date: date | None = None, end_date: date | None = None,
+                  intent: str | None = None,
+                  scope: Literal["queue", "mine", "team", "all"] | None = None,
+                  assigned_agent: str | None = None):
     response.headers["Cache-Control"] = "no-store"
+    if start_date and end_date and start_date > end_date:
+        raise HTTPException(status_code=400, detail="开始日期不能晚于结束日期。")
+    if intent and not re.fullmatch(r"[a-zA-Z0-9_]{1,60}", intent):
+        raise HTTPException(status_code=400, detail="工单分类无效。")
+    if assigned_agent and authenticated.get("role") != "supervisor":
+        raise HTTPException(status_code=403, detail="只有主管可以筛选其他坐席的工单。")
+    scope = scope or ("all" if authenticated.get("role") == "supervisor" else "queue")
+    assigned_team = assigned_agent_name = None
+    unassigned_only = False
+    if authenticated.get("role") != "supervisor":
+        # A seat can only read tickets allocated to its own account, regardless of client filters.
+        assigned_agent_name = authenticated["username"]
+    elif scope != "all":
+        if scope == "queue":
+            unassigned_only = True
+        elif scope == "mine":
+            assigned_agent_name = authenticated["username"]
+        elif scope == "team":
+            assigned_team = authenticated.get("team")
     try:
-        return {"tickets": list_tickets(status=status, priority=priority)}
+        return {"tickets": list_tickets(status=status, priority=priority, limit=500,
+                                         start_date=start_date, end_date=end_date, intent=intent,
+                                         assigned_team=assigned_team, assigned_agent=assigned_agent_name,
+                                         unassigned_only=unassigned_only)}
     except MySQLError:
         logger.exception("读取工单失败")
         raise HTTPException(status_code=503, detail="工单暂时无法读取，请稍后重试。")
 
 
+@app.get("/api/agent/reports")
+def agent_reports(start_date: date, end_date: date, response: Response,
+                  authenticated=Depends(require_agent)):
+    response.headers["Cache-Control"] = "no-store"
+    if start_date > end_date:
+        raise HTTPException(status_code=400, detail="开始日期不能晚于结束日期。")
+    if (end_date - start_date).days > 365:
+        raise HTTPException(status_code=400, detail="报表日期范围最多为 366 天。")
+    try:
+        return ticket_analytics(start_date, end_date,
+                                agent=None if authenticated.get("role") == "supervisor" else authenticated["username"])
+    except MySQLError:
+        logger.exception("读取工单报表失败")
+        raise HTTPException(status_code=503, detail="运营报表暂时无法读取，请稍后重试。")
+
+
 @app.patch("/api/agent/tickets/{ticket_id}")
 def agent_update_ticket(ticket_id: int, payload: TicketUpdate, request: Request,
-                        authenticated: bool = Depends(require_agent)):
+                        authenticated=Depends(require_agent)):
     check_origin(request)
     transitions = {
         "open": {"in_progress", "replied", "closed"},
@@ -254,12 +347,29 @@ def agent_update_ticket(ticket_id: int, payload: TicketUpdate, request: Request,
     if payload.status == "replied" and not reply:
         raise HTTPException(status_code=400, detail="请先填写处理回复。")
     try:
-        if not update_ticket(ticket_id, payload.expected_status, payload.status, reply or None):
+        if not update_ticket(ticket_id, payload.expected_status, payload.status, reply or None, authenticated):
             raise HTTPException(status_code=409, detail="工单不存在或状态已变化，请刷新后重试。")
         return {"ok": True}
     except MySQLError:
         logger.exception("更新工单失败")
         raise HTTPException(status_code=503, detail="工单暂时无法更新，请稍后重试。")
+
+
+@app.patch("/api/agent/tickets/{ticket_id}/assignment")
+def agent_assign_ticket(ticket_id: int, payload: TicketAssignment, request: Request,
+                        authenticated=Depends(require_supervisor)):
+    check_origin(request)
+    if payload.username:
+        user = agent_auth.get_user(payload.username)
+        if not user or user.get("role") != "agent":
+            raise HTTPException(status_code=400, detail="所选账号不是坐席账号。")
+    try:
+        if not supervisor_assign_ticket(ticket_id, payload.username):
+            raise HTTPException(status_code=409, detail="工单不存在或已关闭，无法改派。")
+        return {"ok": True}
+    except MySQLError:
+        logger.exception("改派工单失败")
+        raise HTTPException(status_code=503, detail="暂时无法改派工单。")
 
 
 @app.post("/api/sessions")

@@ -122,11 +122,17 @@ CREATE TABLE tickets (
   agent_reply     TEXT         NULL,
   related_transaction_id VARCHAR(20) NULL COMMENT '客户核查工单关联的账单交易编号',
   related_transaction JSON NULL COMMENT '创建工单时的账单交易快照（金额、币种、状态等）',
+  assigned_team   VARCHAR(40) NULL COMMENT '派单业务队列',
+  assigned_agent  VARCHAR(32) NULL COMMENT '认领或指定的坐席账号',
+  assigned_at     DATETIME NULL COMMENT '派单或认领时间',
+  dispatch_note   VARCHAR(180) NULL COMMENT '智能体或规则派单理由',
+  dispatch_source VARCHAR(12) NOT NULL DEFAULT 'rule' COMMENT 'ai、rule、manual',
   created_at      DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at      DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   CONSTRAINT fk_tk_cust FOREIGN KEY (customer_id) REFERENCES customers(customer_id),
   INDEX idx_tk_status (status, priority),
-  INDEX idx_tk_related_transaction (related_transaction_id)
+  INDEX idx_tk_related_transaction (related_transaction_id),
+  INDEX idx_tk_assignment (assigned_team, assigned_agent, status, priority)
 ) COMMENT '转人工工单（n8n 读取并通知坐席）';
 
 CREATE TABLE ticket_events (

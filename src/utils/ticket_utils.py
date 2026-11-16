@@ -8,6 +8,7 @@ from langchain_core.messages import HumanMessage
 from src.intents import INTENTS
 from src.utils.llm_util import get_llm_client
 from src.utils.mysql_utils import execute, query, query_one
+from src.utils.ticket_dispatch_agent import dispatch_ticket
 
 logger = logging.getLogger(__name__)
 
@@ -199,27 +200,53 @@ def create_ticket(state, priority, related_transaction=None):
         messages = [str(state["masked_question"])[:700]]
     verified = bool(state.get("otp_verified") and state.get("otp_customer_id") == state.get("customer_id"))
     summary, summary_source = summarize_ticket(messages, state.get("intent") or "unknown", state.get("sub_intent") or "")
+    try:
+        from src.utils.agent_auth import list_users
+
+        usernames = sorted(user["username"] for user in list_users() if user.get("role") == "agent")
+    except (OSError, ValueError, KeyError):
+        usernames = []
+    candidates = []
+    if usernames:
+        placeholders = ", ".join(["%s"] * len(usernames))
+        rows = query(f"""
+            select assigned_agent, count(*) as active_tickets
+            from tickets
+            where assigned_agent in ({placeholders}) and status <> 'closed'
+            group by assigned_agent
+        """, tuple(usernames))
+        workload = {row["assigned_agent"]: row["active_tickets"] for row in rows}
+        candidates = [{"username": username, "active_tickets": workload.get(username, 0)}
+                      for username in usernames]
+    dispatch = dispatch_ticket(candidates, summary)
     stored_summary = _format_ticket_summary(summary, messages, verified, summary_source)
     if related_transaction:
         sql = """
             insert into tickets (session_id, customer_id, intent, sub_intent, priority, summary,
-                                 related_transaction_id, related_transaction, notification_status)
-            values (%s, %s, %s, %s, %s, %s, %s, %s, 'pending')
+                                 related_transaction_id, related_transaction, notification_status,
+                                 assigned_team, assigned_agent, assigned_at, dispatch_note, dispatch_source)
+            values (%s, %s, %s, %s, %s, %s, %s, %s, 'pending', 'customer_service', %s,
+                    case when %s is null then null else current_timestamp end, %s, %s)
         """
         params = (state.get("session_id"), state.get("customer_id"), state.get("intent") or "unknown",
                   state.get("sub_intent") or None, priority, stored_summary,
-                  related_transaction["transaction_id"], json.dumps(related_transaction, ensure_ascii=False))
+                  related_transaction["transaction_id"], json.dumps(related_transaction, ensure_ascii=False),
+                  dispatch["username"], dispatch["username"], dispatch["reason"], dispatch["source"])
     else:
         sql = """
-            insert into tickets (session_id, customer_id, intent, sub_intent, priority, summary, notification_status)
-            values (%s, %s, %s, %s, %s, %s, 'pending')
+            insert into tickets (session_id, customer_id, intent, sub_intent, priority, summary, notification_status,
+                                 assigned_team, assigned_agent, assigned_at, dispatch_note, dispatch_source)
+            values (%s, %s, %s, %s, %s, %s, 'pending', 'customer_service', %s,
+                    case when %s is null then null else current_timestamp end, %s, %s)
         """
         params = (state.get("session_id"), state.get("customer_id"), state.get("intent") or "unknown",
-                  state.get("sub_intent") or None, priority, stored_summary)
+                  state.get("sub_intent") or None, priority, stored_summary,
+                  dispatch["username"], dispatch["username"], dispatch["reason"], dispatch["source"])
     result = execute(sql, params)
     if result["rowcount"] != 1 or not result["lastrowid"]:
         raise ValueError("工单没有创建成功")
-    logger.info("工单已创建 ticket_id=%s summary_source=%s", result["lastrowid"], summary_source)
+    logger.info("工单已创建 ticket_id=%s summary_source=%s assignee=%s dispatch=%s",
+                result["lastrowid"], summary_source, dispatch["username"], dispatch["source"])
     return result["lastrowid"]
 
 
@@ -245,12 +272,14 @@ def claim_ticket_notification(ticket_id):
     return result["rowcount"] == 1
 
 
-def list_tickets(status=None, priority=None, limit=100):
-    """坐席演示：紧急工单优先，最多返回最近 100 条。"""
+def list_tickets(status=None, priority=None, limit=100, start_date=None, end_date=None, intent=None,
+                 assigned_team=None, assigned_agent=None, unassigned_only=False):
+    """坐席演示工单查询，支持状态、优先级、创建日期和意图筛选。"""
     sql = """
         select ticket_id, customer_id, intent, sub_intent, priority, status, summary,
                related_transaction_id, related_transaction,
-               agent_reply, created_at, updated_at
+               agent_reply, created_at, updated_at, assigned_team, assigned_agent,
+               assigned_at, dispatch_note, dispatch_source
         from tickets where 1 = 1
     """
     params = []
@@ -260,8 +289,25 @@ def list_tickets(status=None, priority=None, limit=100):
     if priority:
         sql += " and priority = %s"
         params.append(priority)
+    if start_date:
+        sql += " and created_at >= %s"
+        params.append(start_date)
+    if end_date:
+        sql += " and created_at < DATE_ADD(%s, INTERVAL 1 DAY)"
+        params.append(end_date)
+    if intent:
+        sql += " and intent = %s"
+        params.append(intent)
+    if assigned_team:
+        sql += " and assigned_team = %s"
+        params.append(assigned_team)
+    if assigned_agent:
+        sql += " and assigned_agent = %s"
+        params.append(assigned_agent)
+    if unassigned_only:
+        sql += " and assigned_agent is null"
     sql += " order by case when priority = 'urgent' then 0 else 1 end, created_at desc, ticket_id desc limit %s"
-    params.append(min(max(limit, 1), 100))
+    params.append(min(max(limit, 1), 500))
     tickets = query(sql, params)
     for ticket in tickets:
         related = ticket.get("related_transaction")
@@ -272,6 +318,76 @@ def list_tickets(status=None, priority=None, limit=100):
                 ticket["related_transaction"] = None
         ticket["profile"] = ticket_profile(ticket)
     return tickets
+
+
+def supervisor_assign_ticket(ticket_id, username):
+    """Supervisor can assign an open ticket directly to any seat."""
+    result = execute("""
+        update tickets set assigned_team = 'customer_service', assigned_agent = %s, assigned_at = current_timestamp,
+                           dispatch_source = 'manual', dispatch_note = '主管手动改派。'
+        where ticket_id = %s and status <> 'closed'
+    """, (username, ticket_id))
+    return result["rowcount"] == 1
+
+
+def ticket_analytics(start_date, end_date, team=None, agent=None):
+    """坐席演示报表；员工仅统计分配给自己的工单。"""
+    filters = ""
+    filter_params = ()
+    if team:
+        filters += " and t.assigned_team = %s"
+        filter_params += (team,)
+    if agent:
+        filters += " and t.assigned_agent = %s"
+        filter_params += (agent,)
+    bounds = (start_date, end_date)
+    summary_params = bounds + filter_params
+    summary = query_one("""
+        select count(*) as total,
+               coalesce(sum(intent = 'complaint'), 0) as complaints,
+               coalesce(sum(status = 'open'), 0) as open_count,
+               coalesce(sum(status = 'in_progress'), 0) as in_progress_count,
+               coalesce(sum(status = 'replied'), 0) as replied_count,
+               coalesce(sum(status = 'closed'), 0) as closed_count,
+               coalesce(sum(priority = 'urgent'), 0) as urgent_count,
+               avg(case when status = 'closed' then timestampdiff(second, created_at,
+                   coalesce((select min(e.created_at) from ticket_events e
+                    where e.ticket_id = t.ticket_id and e.event_type = 'closed'), updated_at)) end) as avg_resolution_seconds
+        from tickets t
+        where t.created_at >= %s and t.created_at < date_add(%s, interval 1 day)
+        {filters}
+    """.format(filters=filters), summary_params) or {}
+    trend_params = bounds + filter_params + bounds + bounds + filter_params
+    trend = query("""
+        select day,
+               sum(new_count) as new_count,
+               sum(complaint_count) as complaint_count,
+               sum(closed_count) as closed_count
+        from (
+          select date(t.created_at) as day, count(*) as new_count,
+                 sum(intent = 'complaint') as complaint_count, 0 as closed_count
+          from tickets t where t.created_at >= %s and t.created_at < date_add(%s, interval 1 day)
+            {filters}
+          group by date(t.created_at)
+          union all
+          select date(e.created_at) as day, 0 as new_count, 0 as complaint_count,
+                 count(distinct e.ticket_id) as closed_count
+          from ticket_events e join tickets t on t.ticket_id = e.ticket_id
+          where e.event_type = 'closed' and e.created_at >= %s
+            and e.created_at < date_add(%s, interval 1 day)
+            and t.created_at >= %s and t.created_at < date_add(%s, interval 1 day)
+          {filters}
+          group by date(e.created_at)
+        ) daily
+        group by day order by day
+    """.format(filters=filters), trend_params)
+    categories = query("""
+        select t.intent, count(*) as count
+        from tickets t where t.created_at >= %s and t.created_at < date_add(%s, interval 1 day)
+        {filters}
+        group by intent order by count desc, intent
+    """.format(filters=filters), summary_params)
+    return {"summary": summary, "trend": trend, "categories": categories}
 
 
 def list_customer_tickets(customer_id, limit=50):
@@ -323,10 +439,14 @@ def get_customer_ticket(customer_id, ticket_id):
     return ticket
 
 
-def update_ticket(ticket_id, expected_status, status, reply=None):
+def update_ticket(ticket_id, expected_status, status, reply=None, actor=None):
     """仅在状态未变化时更新，防止旧页面覆盖其他操作。"""
     sql = """
         update tickets set status = %s, agent_reply = coalesce(%s, agent_reply)
         where ticket_id = %s and status = %s
     """
-    return execute(sql, (status, reply, ticket_id, expected_status))["rowcount"] == 1
+    params = [status, reply, ticket_id, expected_status]
+    if actor and actor.get("role") != "supervisor":
+        sql += " and assigned_team = %s and assigned_agent = %s"
+        params.extend([actor.get("team"), actor.get("username")])
+    return execute(sql, tuple(params))["rowcount"] == 1
