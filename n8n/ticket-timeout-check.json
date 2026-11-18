@@ -15,7 +15,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT ticket_id, notification_status,\n       notification_claimed_at, notification_attempts\nFROM tickets\nWHERE notification_status = 'processing'\n  AND notification_alerted_at IS NULL\n  AND (\n      notification_claimed_at IS NULL\n      OR notification_claimed_at < NOW() - INTERVAL 10 MINUTE\n  )\nORDER BY notification_claimed_at, ticket_id;",
+        "query": "SELECT ticket_id, notification_status, assigned_agent, intent, priority,\n       notification_claimed_at, notification_attempts\nFROM tickets\nWHERE notification_status = 'processing'\n  AND notification_alerted_at IS NULL\n  AND (\n      notification_claimed_at IS NULL\n      OR notification_claimed_at < NOW() - INTERVAL 10 MINUTE\n  )\nORDER BY notification_claimed_at, ticket_id;",
         "options": {}
       },
       "type": "n8n-nodes-base.mySql",
@@ -30,19 +30,19 @@
     {
       "parameters": {
         "fromEmail": "sender@example.com",
-        "toEmail": "recipient@example.com",
-        "subject": "=【人工核对】工单 #{{ $json.ticket_id }} 通知处理超时",
-        "html": "=<p>有一张工单的通知长时间处于处理中，请人工核对。</p>\n<p>工单编号：{{ $json.ticket_id }}</p>\n<p>认领时间：{{ $json.notification_claimed_at }}</p>\n<p>请检查 n8n 执行记录和收件箱，确认原通知是否已经发送。</p>\n<p>核对前请勿直接重发。</p>",
+        "toEmail": "={{ $('读取超时通知收件人').item.json.agent_email }}",
+        "subject": "=【坐席超时提醒】工单 #{{ $('读取超时通知收件人').item.json.ticket_id }}",
+        "html": "=<p>工单通知已超过 10 分钟仍处于处理中，请核对邮件发送记录并联系客户。</p><p>工单号：{{ $('读取超时通知收件人').item.json.ticket_id }}</p><p>负责坐席：{{ $('读取超时通知收件人').item.json.assigned_agent || '未分配' }}</p><p>认领时间：{{ $('Execute a SQL query').item.json.notification_claimed_at || '未知' }}</p><p>若已发送原通知，请勿重复处理；若发送失败，请按坐席工作台流程联系客户。</p>",
         "options": {}
       },
       "type": "n8n-nodes-base.emailSend",
       "typeVersion": 2.1,
       "position": [
-        96,
-        -48
+        700,
+        220
       ],
-      "id": "302f80ac-65f6-4cb7-b5f3-451349fba88a",
-      "name": "Send an Email",
+      "id": "b37302d9-af38-4485-b278-1abfbd25536b",
+      "name": "发送坐席超时提醒",
       "webhookId": "1220ebd3-a130-4af3-b5ee-26baacc22e50"
     },
     {
@@ -61,6 +61,41 @@
       ],
       "id": "2a31d983-85f1-4974-9206-f67712d5f434",
       "name": "Execute a SQL query1"
+    },
+    {
+      "id": "559ae9c9-fd6a-4759-8ce2-76075ff219e8",
+      "name": "读取超时通知收件人",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        480,
+        300
+      ],
+      "parameters": {
+        "method": "GET",
+        "url": "=http://127.0.0.1:8002/api/internal/tickets/{{ $json.ticket_id }}/notification-recipients",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      }
+    },
+    {
+      "parameters": {
+        "fromEmail": "sender@example.com",
+        "toEmail": "={{ $('读取超时通知收件人').item.json.supervisor_email }}",
+        "subject": "=【主管超时知会】工单 #{{ $('读取超时通知收件人').item.json.ticket_id }}",
+        "html": "=<p>一张工单的通知已超过 10 分钟仍处于处理中，请主管核对发送记录和处理状态。</p><p>工单号：{{ $('读取超时通知收件人').item.json.ticket_id }}</p><p>负责坐席：{{ $('读取超时通知收件人').item.json.assigned_agent || '未分配' }}</p><p>认领时间：{{ $('Execute a SQL query').item.json.notification_claimed_at || '未知' }}</p><p>若已发送原通知，请勿重复处理；若通知失败，请协调坐席跟进。</p>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        920,
+        380
+      ],
+      "id": "4078b511-3e01-4209-8380-980cb54e8af6",
+      "name": "发送主管超时知会",
+      "webhookId": "1220ebd3-a130-4af3-b5ee-26baacc22e50"
     }
   ],
   "connections": {
@@ -79,7 +114,7 @@
       "main": [
         [
           {
-            "node": "Send an Email",
+            "node": "读取超时通知收件人",
             "type": "main",
             "index": 0
           }
@@ -87,6 +122,39 @@
       ]
     },
     "Send an Email": {
+      "main": [
+        [
+          {
+            "node": "Execute a SQL query1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "读取超时通知收件人": {
+      "main": [
+        [
+          {
+            "node": "发送坐席超时提醒",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "发送坐席超时提醒": {
+      "main": [
+        [
+          {
+            "node": "发送主管超时知会",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "发送主管超时知会": {
       "main": [
         [
           {

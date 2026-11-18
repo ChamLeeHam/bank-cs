@@ -27,8 +27,18 @@ _ACCOUNT_ID = re.compile(r"\b(?:SA|CA|MC)-\d{4}-\d{4}\b", re.IGNORECASE)
 _ACCOUNT_NUMBER = re.compile(r"((?:account(?:\s*(?:number|no\.?))?|账号|账户号码)\s*(?:是|为|is)?\s*[:：#]?\s*)([\d -]{8,20})", re.IGNORECASE)
 _PRIVATE_QUESTION = re.compile(r"(?:我|本人|我的).{0,35}(?:余额|转账|汇款|转了|汇了|转给|汇给|给.{0,15}(?:钱|转|汇))|"
                                r"\b(?:my|mine)\b.{0,50}\b(?:balance|transfer|remittance|transaction|account number)\b", re.IGNORECASE)
-_INJECTION = re.compile(r"ignore (all |the )?previous instructions|忽略(之前|以上)的?(所有)?指令|system prompt|系统提示词",
-                        re.IGNORECASE)
+_INJECTION = re.compile(
+    r"ignore (all |the )?previous instructions|忽略(之前|以上)的?(所有)?指令|system prompt|系统提示词|"
+    # Catch role spoofing that asks for privileged customer data, even when it
+    # does not literally say "ignore previous instructions".
+    r"(?:你(?:现在)?是.{0,24}(?:管理员|开发者|root)|"
+    r"(?:现在|从现在起).{0,12}你.{0,24}(?:管理员|开发者|root))"
+    r".{0,80}(?:不受.{0,8}限制|忽略.{0,12}(?:限制|规则|安全|指令)|"
+    r"直接.{0,12}(?:调出|查询|读取|导出))|"
+    r"\b(?:developer|admin|administrator|root) mode\b.{0,100}"
+    r"\b(?:disregard|ignore|bypass|reveal|disclose|dump|confidential)\b",
+    re.IGNORECASE,
+)
 _COMPLAINT_REQUEST = re.compile(
     r"\s*(?:我要投诉|我想投诉|我要提出投诉|我想提出投诉|i (?:want|would like) to (?:make a complaint|complain))[。.!！?？\s]*",
     re.IGNORECASE,
@@ -87,10 +97,16 @@ def router_text(state):
     所以把上一条消息和这一条拼起来再去判断意图
     """
     current = state.get("masked_question", "")
-    if state.get("clarify_count", 0) > 0:
-        history = last_user_messages(state, 2)
-        if len(history) == 2:
-            return f"{history[0]} {current}"
+    messages = state.get("messages") or []
+    last_assistant = next((str(m.content) for m in reversed(messages)
+                           if isinstance(m, AIMessage)), "")
+    clarification_prompt = any(marker in last_assistant.lower() for marker in (
+        "能再具体说明", "could you clarify", "tell me a bit more", "please be more specific"
+    ))
+    history = last_user_messages(state, 2)
+    short_followup = len(current.strip()) <= 14 and len(history) == 2
+    if (state.get("clarify_count", 0) > 0 or clarification_prompt or short_followup) and len(history) == 2:
+        return f"{history[0]} {current}"
     return current
 
 
@@ -163,7 +179,7 @@ class GateNode(BaseNode):
     """
     决定走哪个分支：
     1. 客户要求转人工，转人工
-    2. 置信度太低，转人工
+    2. 置信度太低，先追问澄清；重复澄清仍无法识别时再转人工
     3. 模型说是别的银行，但是没提别的银行、术语图谱又找到了本行的产品，按知识库问题回答
     4. 置信度一般或者缺信息，追问；已经连续追问 2 次了就转人工
        不过知识库类的意图，图谱已经找到了产品和属性，问题就够清楚了，直接回答
@@ -222,7 +238,9 @@ class GateNode(BaseNode):
             return self._result("clarify", "ask_back", missing, clarify_count)
 
         if score < low:
-            return self._result("handoff", "handoff", missing, clarify_count)
+            if clarify_count >= self.MAX_CLARIFY:
+                return self._result("handoff", "handoff", missing, clarify_count)
+            return self._result("clarify", "ask_back", missing, clarify_count)
 
         # 训练数据里没有问本行信用卡年费的句子，模型会把它当成别的银行（见 intents.py 的 OTHER_BANK_RE）
         if (intent == "out_of_scope" and state.get("sub_intent") == "other_company" and entities.get("products")
@@ -325,8 +343,8 @@ class HandoffNode(BaseNode):
         return {"priority": priority, "ticket_id": ticket_id,
                 **({"fraud_ticket_id": ticket_id} if urgent else {}),
                 "answer": pick(lang, f"A support ticket has been created (#{ticket_id}). "
-                                     "Human-agent notification is not yet available; please contact the bank directly.",
-                               f"已创建人工工单（编号 {ticket_id}）。目前尚未接通人工通知，请直接联系银行客服。") + guidance}
+                                     "It has been queued for follow-up. The system will notify the assigned agent and supervisor; you can track progress under My Tickets.",
+                               f"已创建人工工单（编号 {ticket_id}），已进入待处理队列。系统将通知负责坐席和主管，您可在「我的工单」查看进度。") + guidance}
 
 
 class RefuseNode(BaseNode):
@@ -335,6 +353,20 @@ class RefuseNode(BaseNode):
     def process(self, state: GraphState) -> StateUpdate:
         lang = state.get("lang", "en")
         if state.get("intent") == "greeting":
+            sub_intent = state.get("sub_intent")
+            if sub_intent in ("thanks", "acknowledgement") and state.get("fraud_confirmation_pending"):
+                return {"answer": pick(lang,
+                    "You're welcome. To guide you safely, I still need to know: has an unauthorized transaction happened, or are you asking about the general process?",
+                    ("不客气。" if sub_intent == "thanks" else "明白。")
+                    + "为了给您合适的指引，我还需要确认：这是已经发生的非本人交易，还是您在了解一般处理方法？")}
+            if sub_intent == "thanks":
+                return {"answer": pick(lang,
+                    "You're welcome! If you have another banking question, feel free to ask.",
+                    "不客气！还有其他银行卡、转账或费用问题，随时可以问我。")}
+            if sub_intent == "goodbye":
+                return {"answer": pick(lang, "Goodbye! Take care.", "再见，祝您一切顺利！")}
+            if sub_intent == "acknowledgement":
+                return {"answer": pick(lang, "All right. I'm here if you need anything else.", "好的，有需要随时告诉我。")}
             # 欢迎语里说明是 AI 客服
             return {"answer": pick(lang, "Hello! I'm Lion City Bank's AI assistant. How can I help you today?",
                                    "您好！我是狮城银行 AI 客服，请问有什么可以帮您？")}
@@ -370,9 +402,13 @@ class OutputGuardNode(BaseNode):
             if latest_user is not None and latest_user.id:
                 updates.append(HumanMessage("[私人业务问题已隐藏]", id=latest_user.id))
         updates.append(AIMessage(history_answer))
+        preserve_fraud_confirmation = (state.get("fraud_confirmation_pending")
+                                       and state.get("intent") == "greeting"
+                                       and state.get("sub_intent") in ("thanks", "acknowledgement"))
         return {"answer": answer, "messages": updates,
-                "fraud_confirmation_pending": state.get("route") == "ask_back"
-                and (state.get("fraud_signal") == "hypothetical" or state.get("intent") == "fraud_report")}
+                "fraud_confirmation_pending": preserve_fraud_confirmation or (
+                    state.get("route") == "ask_back"
+                    and (state.get("fraud_signal") == "hypothetical" or state.get("intent") == "fraud_report"))}
 
 
 if __name__ == "__main__":

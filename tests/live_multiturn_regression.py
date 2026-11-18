@@ -37,6 +37,14 @@ DELIVERY_SOURCE = ("card delivery time", "新卡寄送时间")
 SUPPLEMENTARY_SOURCE = ("replacement and supplementary cards", "补发实体卡与附属卡")
 
 SCENARIOS = [
+    ("澄清后补充年龄与卡种", [
+        ("未满18岁能办卡吗？", ("具体说明", "再具体"), None),
+        ("银行卡", ("16岁", "16 岁", "21岁", "21 岁"), ("开户条件", "account services")),
+    ]),
+    ("PayNow 后追问 FAST 费用", [
+        ("PayNow转账收费吗？", ("免费", "不收费"), ("PayNow", "本地转账费用")),
+        ("那FAST呢？", ("免费", "不收费"), ("本地转账费用", "Local transfer fees")),
+    ]),
     ("连续追问补发卡与超时处理", [
         ("新卡一般几天寄到？", ("5–7", "5-7", "5 to 7"), DELIVERY_SOURCE),
         ("那补发卡也一样吗？", ("5–7", "5-7", "5 to 7"), DELIVERY_SOURCE),
@@ -81,7 +89,7 @@ def main():
                 for source in sources if isinstance(source, dict)
             )
             answer_ok = has_any(answer, expected_answer)
-            source_ok = has_any(source_text, expected_source)
+            source_ok = (not sources) if expected_source is None else has_any(source_text, expected_source)
             pending = body.get("pending")
             passed = status == 200 and answer_ok and source_ok and pending is None
             result = {
@@ -112,7 +120,7 @@ def main():
     }
     output_dir = Path("data/evaluation/results")
     output_dir.mkdir(parents=True, exist_ok=True)
-    (output_dir / "multiturn_followup_20261115.json").write_text(
+    (output_dir / "multiturn_followup_20261116.json").write_text(
         json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8"
     )
 
@@ -137,7 +145,7 @@ def main():
             "", f"### {index}. {item['scenario']}：{item['question']}", "",
             item["answer"], "", "**来源：** " + json.dumps(item["sources"], ensure_ascii=False),
         ]
-    (output_dir / "multiturn_followup_20261115.md").write_text(
+    (output_dir / "multiturn_followup_20261116.md").write_text(
         "\n".join(lines) + "\n", encoding="utf-8"
     )
     print("SUMMARY " + json.dumps({

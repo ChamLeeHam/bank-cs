@@ -51,7 +51,8 @@ def fraud_general_followup(question, history, pending=False):
     if not _fraud_confirmation_active(history, pending):
         return False
     return bool(re.fullmatch(r"(?:我)?(?:只是想|只是|只想|就是想)?(?:在)?(?:想)?(?:了解|知道|问)(?:一下)?"
-                             r"(?:这个|这类)?(?:一般|通用)?(?:的)?(?:处理方法|处理流程|怎么处理|怎么办)?[。！!？?\s]*|"
+                             r"(?:这个|这类)?(?:一般|通用)?(?:的)?(?:处理(?:的)?(?:方法|流程|步骤)|"
+                             r"(?:一般)?(?:要)?怎么处理|怎么办|一般怎么做)?[。！!？?\s]*|"
                              r"(?:no[, ]+)?(?:nothing has happened[, ]+)?(?:i(?:'m| am) )?"
                              r"(?:just|only) (?:asking|curious|want to know)[.!?\s]*",
                              question, re.IGNORECASE))

@@ -11,7 +11,7 @@ from src.utils.ticket_utils import list_tickets, update_ticket
 class WorkbenchTests(unittest.TestCase):
     def setUp(self):
         self.client = TestClient(app)
-        app.dependency_overrides[require_agent] = lambda: True
+        app.dependency_overrides[require_agent] = lambda: {"username": "test-agent", "role": "agent"}
 
     def tearDown(self):
         app.dependency_overrides.clear()
@@ -24,7 +24,10 @@ class WorkbenchTests(unittest.TestCase):
     def test_list_passes_filters(self, fetch):
         response = self.client.get('/api/agent/tickets?status=open&priority=urgent')
         self.assertEqual(response.json()['tickets'][0]['ticket_id'], 2)
-        fetch.assert_called_once_with(status='open', priority='urgent')
+        fetch.assert_called_once_with(status='open', priority='urgent', limit=500,
+                                      start_date=None, end_date=None, intent=None,
+                                      assigned_team=None, assigned_agent='test-agent',
+                                      unassigned_only=False)
 
     @patch('src.api.update_ticket', return_value=True)
     def test_reply_requires_text_and_valid_transition(self, update):
@@ -34,7 +37,8 @@ class WorkbenchTests(unittest.TestCase):
         update.assert_not_called()
         response = self.client.patch(path, json={'expected_status':'open','status':'replied','reply':' 已记录 '})
         self.assertEqual(response.status_code, 200)
-        update.assert_called_once_with(1, 'open', 'replied', '已记录')
+        update.assert_called_once_with(1, 'open', 'replied', '已记录',
+                                       {"username": "test-agent", "role": "agent"})
 
     @patch('src.api.update_ticket', return_value=False)
     def test_changed_status_returns_conflict(self, update):
@@ -50,7 +54,7 @@ class WorkbenchTests(unittest.TestCase):
         list_tickets(status='open', priority='urgent', limit=999)
         sql, args = query.call_args.args
         self.assertIn('status = %s', sql)
-        self.assertEqual(args, ['open', 'urgent', 100])
+        self.assertEqual(args, ['open', 'urgent', 500])
 
     @patch('src.utils.ticket_utils.execute', return_value={'rowcount': 1})
     def test_update_checks_previous_state(self, execute):

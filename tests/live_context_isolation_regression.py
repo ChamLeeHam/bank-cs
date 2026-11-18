@@ -97,19 +97,33 @@ def main():
     check("无上下文英文省略追问", "What if it still has not arrived after 10 working days?",
           s, b, t, should_clarify=True)
 
+    # Keep two customer sessions interleaved: B must not inherit A's card-delivery context,
+    # while A must retain its own context after B has asked an unrelated question.
+    sid_a = session()
+    ask(sid_a, "补办的银行卡几天能寄到？")
+    status, body, elapsed = post("/api/sessions", {"customer_id": "C002"})
+    assert status == 200 and body.get("session_id")
+    sid_b = body["session_id"]
+    s, b, t = ask(sid_b, "超过10个工作日还没收到呢？")
+    check("会话B不继承会话A的寄卡上下文", "超过10个工作日还没收到呢？", s, b, t,
+          should_clarify=True)
+    s, b, t = ask(sid_a, "超过10个工作日还没收到呢？")
+    check("会话A保留自己的寄卡上下文", "超过10个工作日还没收到呢？", s, b, t,
+          expected_source="新卡寄送时间", answer_terms=("10", "补寄"))
+
     passed = sum(item["passed"] for item in RESULTS)
     report = {"base_url": BASE, "checks": len(RESULTS), "passed": passed,
               "failed": len(RESULTS) - passed, "results": RESULTS}
     output_dir = Path("data/evaluation/results")
     output_dir.mkdir(parents=True, exist_ok=True)
-    (output_dir / "context_isolation_20261115.json").write_text(
+    (output_dir / "context_isolation_20261116.json").write_text(
         json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8"
     )
     lines = ["# 多轮上下文隔离实测", "", f"- 检查项：{len(RESULTS)}", f"- 通过：{passed}/{len(RESULTS)}", "",
              "| 场景 | 问题 | 结果 | 回复 |", "|---|---|---|---|"]
     for item in RESULTS:
         lines.append(f"| {item['scenario']} | {item['question']} | {'通过' if item['passed'] else '失败'} | {item['answer']} |")
-    (output_dir / "context_isolation_20261115.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    (output_dir / "context_isolation_20261116.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
     print("SUMMARY " + json.dumps({"checks": len(RESULTS), "passed": passed,
                                    "failed": len(RESULTS) - passed}, ensure_ascii=False), flush=True)
     raise SystemExit(0 if passed == len(RESULTS) else 1)

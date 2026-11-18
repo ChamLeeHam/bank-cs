@@ -1,5 +1,5 @@
 {
-  "name": "银行客服自动化 - 定时总控（停用草稿）",
+  "name": "银行客服自动化 - 定时总控",
   "nodes": [
     {
       "parameters": {},
@@ -146,7 +146,8 @@
       "position": [
         0,
         440
-      ]
+      ],
+      "disabled": true
     },
     {
       "parameters": {
@@ -178,7 +179,7 @@
     },
     {
       "parameters": {
-        "content": "## 自动化入口（停用草稿）\n- 每 5 分钟检查待通知工单\n- 每 10 分钟检查超时通知\n- 每天 09:00 发送前一天日报\n- 手动入口仅查看状态\n\n所有定时任务尚未启用；启用前需完成重复发送、子流程发布与恢复验证。",
+        "content": "## 自动化运行状态\n- 已启用：每 5 分钟检查待通知工单\n- 已启用：每 10 分钟检查超时通知\n- 已启用：每分钟检查首次响应 SLA\n- 已停用：每天 09:00 生成前一天日报\n- 手动入口仅查看工单状态\n- 定时执行记录请查看 Executions",
         "height": 260,
         "width": 470
       },
@@ -190,6 +191,54 @@
       ],
       "id": "18dea7ec-3b53-4cda-90c2-98b664faa8cf",
       "name": "使用说明"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 1
+            }
+          ]
+        }
+      },
+      "id": "be156956-f44f-4e55-86eb-2592489e0656",
+      "name": "每分钟检查首次响应 SLA",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        256
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "bcUnifiedSla001",
+          "mode": "list",
+          "cachedResultName": "首次响应 SLA - 坐席与主管分档提醒"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {},
+        "mode": "once"
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        304,
+        256
+      ],
+      "id": "e73f8fb5-4028-4c0f-8da6-306f81fbb628",
+      "name": "调用首次响应 SLA 子流程"
     }
   ],
   "connections": {
@@ -236,12 +285,26 @@
           }
         ]
       ]
+    },
+    "每分钟检查首次响应 SLA": {
+      "main": [
+        [
+          {
+            "node": "调用首次响应 SLA 子流程",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "调用首次响应 SLA 子流程": {
+      "main": []
     }
   },
   "settings": {
     "executionOrder": "v1",
     "timezone": "Asia/Shanghai"
   },
-  "active": false,
+  "active": true,
   "pinData": {}
 }

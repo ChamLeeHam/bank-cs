@@ -64,55 +64,23 @@
     {
       "parameters": {
         "fromEmail": "sender@example.com",
-        "toEmail": "recipient@example.com",
-        "subject": "=【工单通知】新工单 #{{ $('Edit Fields').item.json.ticket_id }}",
-        "html": "=<p>有一条新的客户工单：</p>\n<p>工单编号：{{ $('Edit Fields').item.json.ticket_id }}</p>\n<p>类型：{{ $('Edit Fields').item.json.intent }}</p>\n<p>优先级：{{ $('Edit Fields').item.json.priority }}</p>\n<p>请登录工单工作台查看详情。</p>",
+        "toEmail": "={{ $('HTTP Request').item.json.agent_email }}",
+        "subject": "=【坐席待办】工单 #{{ $('HTTP Request').item.json.ticket_id }}",
+        "html": "=<p>有一张新工单已分配给你，请登录坐席工作台处理。</p><p>工单编号：{{ $('HTTP Request').item.json.ticket_id }}</p><p>工单分类：{{ $('HTTP Request').item.json.intent }}</p><p>优先级：{{ $('HTTP Request').item.json.priority }}</p>",
         "options": {}
       },
       "type": "n8n-nodes-base.emailSend",
       "typeVersion": 2.1,
       "position": [
-        690,
-        0
+        2040,
+        -180
       ],
       "id": "7b5ec9a3-a4ef-49cd-aba5-1e019acc93eb",
-      "name": "Send an Email",
+      "name": "发送坐席通知",
       "webhookId": "2de5b421-cf0b-4751-af71-7acf7eebe2dd",
-      "onError": "continueErrorOutput"
-    },
-    {
-      "parameters": {
-        "operation": "executeQuery",
-        "query": "UPDATE tickets\nSET notification_status = 'sent',\n    notification_attempts = notification_attempts + 1,\n    notified_at = NOW()\nWHERE ticket_id = $1\n  AND notification_status = 'processing';",
-        "options": {
-          "queryReplacement": "={{ [ $('Edit Fields').item.json.ticket_id ] }}"
-        }
-      },
-      "type": "n8n-nodes-base.mySql",
-      "typeVersion": 2.5,
-      "position": [
-        910,
-        -120
-      ],
-      "id": "4e0643d5-da75-4bfa-b56a-13d4d37ca53b",
-      "name": "Execute a SQL query"
-    },
-    {
-      "parameters": {
-        "operation": "executeQuery",
-        "query": "UPDATE tickets\nSET notification_status = 'failed',\n    notification_attempts = notification_attempts + 1\nWHERE ticket_id = $1\n  AND notification_status = 'processing';",
-        "options": {
-          "queryReplacement": "={{ [ $('Edit Fields').item.json.ticket_id ] }}"
-        }
-      },
-      "type": "n8n-nodes-base.mySql",
-      "typeVersion": 2.5,
-      "position": [
-        1130,
-        120
-      ],
-      "id": "46ea4708-bfa0-4779-812c-7787e0b0818e",
-      "name": "Execute a SQL query1"
+      "onError": "continueErrorOutput",
+      "notesInFlow": true,
+      "notes": "通知被分配的坐席；演示时可与主管通知共用同一邮箱。"
     },
     {
       "parameters": {
@@ -176,8 +144,8 @@
       "type": "n8n-nodes-base.mySql",
       "typeVersion": 2.5,
       "position": [
-        2000,
-        0
+        2470,
+        -240
       ],
       "id": "8b203795-c9ec-4e44-b64d-0b1688d8adf4",
       "name": "读取成功后状态"
@@ -193,8 +161,8 @@
       "type": "n8n-nodes-base.mySql",
       "typeVersion": 2.5,
       "position": [
-        2000,
-        220
+        2470,
+        0
       ],
       "id": "b2a94ca4-1fdf-49fa-8f79-743fc392f4d2",
       "name": "读取失败后状态"
@@ -210,11 +178,150 @@
       "type": "n8n-nodes-base.mySql",
       "typeVersion": 2.5,
       "position": [
-        2000,
-        440
+        1790,
+        220
       ],
       "id": "21630233-1177-4615-80a7-f08718240b7d",
       "name": "读取未认领状态"
+    },
+    {
+      "parameters": {
+        "fromEmail": "sender@example.com",
+        "toEmail": "={{ $('HTTP Request').item.json.supervisor_email }}",
+        "subject": "=【主管知会】新工单 #{{ $('HTTP Request').item.json.ticket_id }}",
+        "html": "=<p>有一张新工单已分配给坐席。</p><p>工单编号：{{ $('HTTP Request').item.json.ticket_id }}</p><p>负责坐席：{{ $('HTTP Request').item.json.assigned_agent || '未分配' }}</p><p>工单分类：{{ $('HTTP Request').item.json.intent }}</p><p>优先级：{{ $('HTTP Request').item.json.priority }}</p>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        2040,
+        220
+      ],
+      "id": "8b6c8846-5190-4cc7-9e86-727c2a453062",
+      "name": "发送主管通知",
+      "onError": "continueErrorOutput",
+      "notesInFlow": true,
+      "notes": "主管知会邮件；演示时可与坐席通知共用同一邮箱，主题仍可区分。"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "51abe1ec-a111-43d6-8d0c-5818959c5ad1-condition",
+              "leftValue": "={{ $('HTTP Request').item.json.notify_agent }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1780,
+        -160
+      ],
+      "id": "51abe1ec-a111-43d6-8d0c-5818959c5ad1",
+      "name": "需要发送坐席通知"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "8eb49dde-c755-4dba-911f-fb0c770795d2-condition",
+              "leftValue": "={{ $('HTTP Request').item.json.notify_supervisor }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        2000,
+        20
+      ],
+      "id": "8eb49dde-c755-4dba-911f-fb0c770795d2",
+      "name": "需要发送主管通知"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=http://127.0.0.1:8002/api/internal/tickets/{{ $('Edit Fields').item.json.ticket_id }}/complete-notification/agent",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        2290,
+        -180
+      ],
+      "id": "6bea09f0-7544-42a8-b738-83f5ca49e507",
+      "name": "标记坐席通知已送达"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=http://127.0.0.1:8002/api/internal/tickets/{{ $('Edit Fields').item.json.ticket_id }}/complete-notification/supervisor",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        2290,
+        220
+      ],
+      "id": "9ad6978e-6d35-4678-b0b2-e9461caf7e1d",
+      "name": "标记主管通知已送达"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=http://127.0.0.1:8002/api/internal/tickets/{{ $('Edit Fields').item.json.ticket_id }}/fail-notification",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        2290,
+        440
+      ],
+      "id": "9c2dad24-5503-43cb-ae2f-05f78f2ceea7",
+      "name": "标记通知发送失败"
     }
   ],
   "connections": {
@@ -251,24 +358,6 @@
         ]
       ]
     },
-    "Send an Email": {
-      "main": [
-        [
-          {
-            "node": "Execute a SQL query",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Execute a SQL query1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "HTTP Request": {
       "main": [
         [
@@ -284,7 +373,7 @@
       "main": [
         [
           {
-            "node": "Send an Email",
+            "node": "需要发送坐席通知",
             "type": "main",
             "index": 0
           }
@@ -298,7 +387,90 @@
         ]
       ]
     },
-    "Execute a SQL query": {
+    "需要发送坐席通知": {
+      "main": [
+        [
+          {
+            "node": "发送坐席通知",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "需要发送主管通知",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "发送坐席通知": {
+      "main": [
+        [
+          {
+            "node": "标记坐席通知已送达",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "标记通知发送失败",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "标记坐席通知已送达": {
+      "main": [
+        [
+          {
+            "node": "需要发送主管通知",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "需要发送主管通知": {
+      "main": [
+        [
+          {
+            "node": "发送主管通知",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "读取成功后状态",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "发送主管通知": {
+      "main": [
+        [
+          {
+            "node": "标记主管通知已送达",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "标记通知发送失败",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "标记主管通知已送达": {
       "main": [
         [
           {
@@ -309,7 +481,7 @@
         ]
       ]
     },
-    "Execute a SQL query1": {
+    "标记通知发送失败": {
       "main": [
         [
           {

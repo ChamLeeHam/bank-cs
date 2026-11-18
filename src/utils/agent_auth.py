@@ -36,19 +36,19 @@ def setup(username, password):
             json.dump(record, f)
 
 
-def _make_user(username, password, role, team):
+def _make_user(username, password, role, team, email=None):
     salt = secrets.token_bytes(16)
     return {"username": username, "salt": salt.hex(), "password_hash": _password_hash(password, salt),
-            "iterations": ITERATIONS, "role": role, "team": team}
+            "iterations": ITERATIONS, "role": role, "team": team, "email": email}
 
 
 def _read_users():
     record = json.loads(AUTH_FILE.read_text(encoding="utf-8"))
     if isinstance(record.get("users"), list):
-        return record["users"]
+        return [{"email": None, **user} for user in record["users"]]
     # Existing single-account files become supervisor accounts without changing passwords.
     if all(key in record for key in ("username", "salt", "password_hash", "iterations")):
-        return [{**record, "role": "supervisor", "team": None}]
+        return [{"email": None, **record, "role": "supervisor", "team": None}]
     raise ValueError("invalid agent auth file")
 
 
@@ -75,27 +75,52 @@ def identity(token):
         return {"username": user["username"], "role": user.get("role", "agent"), "team": user.get("team")}
 
 
-def add_user(username, password, team):
+def add_user(username, password, team, email=None):
     with _lock:
         users = _read_users()
         if any(user.get("username", "").casefold() == username.casefold() for user in users):
             raise FileExistsError(username)
-        users.append(_make_user(username, password, "agent", team))
+        users.append(_make_user(username, password, "agent", team, email))
         AUTH_FILE.write_text(json.dumps({"users": users}, ensure_ascii=False), encoding="utf-8")
-    return {"username": username, "role": "agent", "team": team}
+    return {"username": username, "role": "agent", "team": team, "email": email}
 
 
 def list_users():
     with _lock:
-        return [{"username": user["username"], "role": user.get("role", "agent"), "team": user.get("team")}
+        return [{"username": user["username"], "role": user.get("role", "agent"), "team": user.get("team"),
+                 "email": user.get("email")}
                 for user in _read_users()]
 
 
 def get_user(username):
     with _lock:
         return next(({"username": user["username"], "role": user.get("role", "agent"),
-                       "team": user.get("team")} for user in _read_users()
+                       "team": user.get("team"), "email": user.get("email")} for user in _read_users()
                      if user.get("username") == username), None)
+
+
+def set_email(username, email):
+    with _lock:
+        users = _read_users()
+        user = next((item for item in users if item.get("username", "").casefold() == username.casefold()), None)
+        if not user:
+            return None
+        user["email"] = email
+        AUTH_FILE.write_text(json.dumps({"users": users}, ensure_ascii=False), encoding="utf-8")
+        return {"username": user["username"], "role": user.get("role", "agent"), "email": email}
+
+
+def notification_emails(agent_username):
+    with _lock:
+        users = _read_users()
+        supervisor = next((user for user in users if user.get("role") == "supervisor"), None)
+        agent = next((user for user in users
+                      if agent_username and user.get("username", "").casefold() == agent_username.casefold()), None)
+        if not supervisor or not supervisor.get("email"):
+            return None
+        # During demos, an agent without a personal mailbox uses the supervisor mailbox.
+        return {"agent_email": (agent or {}).get("email") or supervisor["email"],
+                "supervisor_email": supervisor["email"]}
 
 
 def login(username, password, client_key):

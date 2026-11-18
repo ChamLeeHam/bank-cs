@@ -9,7 +9,7 @@ CREATE DATABASE IF NOT EXISTS lioncity_bank
 USE lioncity_bank;
 
 SET FOREIGN_KEY_CHECKS = 0;
-DROP TABLE IF EXISTS ticket_events, turn_log, tickets, card_transactions, transfers, payees, cards, accounts, customers,
+DROP TABLE IF EXISTS daily_report_delivery, session_feedback, ticket_assignment_events, ticket_events, turn_log, tickets, card_transactions, transfers, payees, cards, accounts, customers,
                      product_alias, product_attr, product, product_category;
 SET FOREIGN_KEY_CHECKS = 1;
 
@@ -118,6 +118,15 @@ CREATE TABLE tickets (
   notified_at DATETIME NULL COMMENT '通知成功时间',
   notification_claimed_at DATETIME NULL COMMENT '通知认领时间',
   notification_alerted_at DATETIME NULL COMMENT '最近一次通知超时提醒时间',
+  notification_retry_safe TINYINT(1) NOT NULL DEFAULT 0 COMMENT '是否允许主管受控重试；历史记录默认需人工核对',
+  notification_agent_sent_at DATETIME NULL COMMENT '坐席通知送达时间',
+  notification_supervisor_sent_at DATETIME NULL COMMENT '主管知会送达时间',
+  sla_tracking_enabled TINYINT(1) NOT NULL DEFAULT 1 COMMENT '是否参与首次响应 SLA 邮件监控',
+  sla_notified_level VARCHAR(24) NULL COMMENT '最近已发送的首次响应 SLA 提醒档位',
+  sla_agent_notified_level VARCHAR(24) NULL COMMENT '坐席最近已发送的首次响应 SLA 提醒档位',
+  sla_supervisor_notified_level VARCHAR(24) NULL COMMENT '主管最近已发送的首次响应 SLA 提醒档位',
+  sla_claimed_level VARCHAR(24) NULL COMMENT '当前认领中的首次响应 SLA 提醒档位',
+  sla_claimed_at DATETIME NULL COMMENT '首次响应 SLA 提醒认领时间',
   summary         TEXT         NOT NULL               COMMENT '对话摘要（已脱敏）',
   agent_reply     TEXT         NULL,
   related_transaction_id VARCHAR(20) NULL COMMENT '客户核查工单关联的账单交易编号',
@@ -132,8 +141,29 @@ CREATE TABLE tickets (
   CONSTRAINT fk_tk_cust FOREIGN KEY (customer_id) REFERENCES customers(customer_id),
   INDEX idx_tk_status (status, priority),
   INDEX idx_tk_related_transaction (related_transaction_id),
-  INDEX idx_tk_assignment (assigned_team, assigned_agent, status, priority)
+  INDEX idx_tk_assignment (assigned_team, assigned_agent, status, priority),
+  INDEX idx_ticket_sla_monitor (status, priority, created_at)
 ) COMMENT '转人工工单（n8n 读取并通知坐席）';
+
+CREATE TABLE ticket_sla_settings (
+  setting_id TINYINT PRIMARY KEY,
+  tracking_started_at DATETIME NOT NULL COMMENT '首次响应 SLA 邮件监控启用时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE ticket_assignment_events (
+  event_id       BIGINT AUTO_INCREMENT PRIMARY KEY,
+  ticket_id      INT NOT NULL,
+  from_agent     VARCHAR(32) NULL,
+  to_agent       VARCHAR(32) NOT NULL,
+  actor_type     ENUM('system','supervisor') NOT NULL,
+  actor_username VARCHAR(32) NULL,
+  source         VARCHAR(12) NOT NULL COMMENT 'ai、rule、manual、migration',
+  note           VARCHAR(180) NULL,
+  created_at     DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_ticket_assignment_event_ticket FOREIGN KEY (ticket_id)
+    REFERENCES tickets(ticket_id) ON DELETE CASCADE,
+  INDEX idx_ticket_assignment_event_time (ticket_id, created_at, event_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT '工单自动分配及人工改派记录';
 
 CREATE TABLE ticket_events (
   event_id        BIGINT AUTO_INCREMENT PRIMARY KEY,
@@ -179,6 +209,33 @@ CREATE TABLE turn_log (
   INDEX idx_log_session (session_id, created_at),
   INDEX idx_log_time (created_at)
 ) COMMENT '每轮对话的审计日志（每日报表数据来源）';
+
+-- 日报发送幂等记录 ------------------------------------------------------
+CREATE TABLE daily_report_delivery (
+  report_date    DATE PRIMARY KEY COMMENT '统计日期；同一天只允许一条有效发送流程',
+  claim_token    VARCHAR(80) NOT NULL COMMENT 'n8n 执行编号，用于隔离并发认领与回写',
+  status         ENUM('processing','sent','failed') NOT NULL DEFAULT 'processing',
+  attempt_count  INT NOT NULL DEFAULT 1,
+  claimed_at     DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  sent_at        DATETIME NULL,
+  updated_at     DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  INDEX idx_daily_report_delivery_status (status, updated_at)
+) COMMENT '客服日报每日发送记录，避免同一统计日重复发邮件';
+
+-- 客户会话结束评价 ------------------------------------------------------
+CREATE TABLE session_feedback (
+  feedback_id     BIGINT AUTO_INCREMENT PRIMARY KEY,
+  session_id      VARCHAR(64) NOT NULL UNIQUE,
+  customer_id     VARCHAR(10) NOT NULL,
+  rating          TINYINT UNSIGNED NULL COMMENT '1-5 分，跳过时为空',
+  response_status ENUM('rated','skipped') NOT NULL,
+  created_at      DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT chk_session_feedback_rating CHECK (rating IS NULL OR rating BETWEEN 1 AND 5),
+  CONSTRAINT fk_session_feedback_customer FOREIGN KEY (customer_id)
+    REFERENCES customers(customer_id) ON DELETE CASCADE,
+  INDEX idx_session_feedback_time (created_at, response_status)
+) COMMENT '客户完成本次会话后的服务评分';
+
 -- 产品分类 -------------------------------------------------------------
 CREATE TABLE product_category (
   category_id   VARCHAR(20)  PRIMARY KEY            COMMENT '如 transfer',

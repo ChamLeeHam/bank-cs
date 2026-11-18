@@ -119,7 +119,7 @@ GENERATED_SUB_INTENTS: dict[str, list[str]] = {
     "card_lost_freeze": ["lost_or_stolen_card"],  # 和 Banking77 的标签同名
     "complaint": ["waiting_time", "staff_attitude", "app_problem", "unfair_fee"],
     "out_of_scope": ["investment_advice", "chitchat", "other_company", "non_banking"],
-    "greeting": ["hello"],
+    "greeting": ["hello", "thanks", "goodbye", "acknowledgement"],
 }
 
 LABEL_SEP = "/"  # 模型输出的格式是 一级意图/二级意图，比如 card_service/pin_blocked
@@ -133,6 +133,8 @@ INTENT_SYSTEM = "你是狮城银行客服系统的意图分类器。判断客户
 # 只放不容易误判的说法，单独一个"人工"不行，"人工智能"也会匹配上
 HUMAN_REQUEST_RE = re.compile(
     r"转人工|人工客服|找人工|要人工|真人客服|"
+    r"(?:(?:帮我|请帮我|麻烦(?:你)?|请)?\s*(?:提|开|建|创建|提交)(?:一下|一(?:个|张)?|个|张)?\s*(?:工单|服务单|单))|"
+    r"(?:create|open|raise|submit)\s+(?:a\s+)?(?:support\s+)?(?:ticket|case)|"
     r"human agent|live agent|(want|need|get) (a )?real person|"
     r"(speak|talk) to (a |an )?(human|person|agent|someone|staff|officer)",
     re.IGNORECASE,

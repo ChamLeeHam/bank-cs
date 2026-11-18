@@ -17,7 +17,7 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SELECT ticket_id, intent, priority, status,\n       notification_status, created_at\nFROM tickets\nWHERE notification_status = 'pending'\nORDER BY created_at ASC, ticket_id ASC\nLIMIT 20;",
+        "query": "SELECT ticket_id, intent, priority, status,\n       notification_status, created_at\nFROM tickets\nWHERE notification_status = 'pending'\n  AND notification_attempts < 3\nORDER BY created_at ASC, ticket_id ASC\nLIMIT 20;",
         "options": {}
       },
       "id": "49671bc6-54f9-44f6-8901-c0d8e75b491d",

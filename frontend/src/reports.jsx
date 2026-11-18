@@ -75,6 +75,7 @@ export function Reports({ onDrillDown, onUnauthorized }) {
     return () => { requestSequence.current++; };
   }, [range.start, range.end]);
   const summary = report?.summary || {};
+  const feedback = report?.feedback || null;
   const maxTrend = Math.max(1, ...buckets.flatMap(day => [Number(day.new_count), Number(day.complaint_count), Number(day.closed_count)]));
   const maxCategory = Math.max(1, ...(report?.categories || []).map(row => Number(row.count)));
   const drill = filters => onDrillDown({ ...filters, start_date: range.start, end_date: range.end });
@@ -93,15 +94,15 @@ export function Reports({ onDrillDown, onUnauthorized }) {
             onClick={() => setRange(initialRange(n))}>{n}天</button>)}
         </div>
         <button className="button outline report-refresh" type="button" onClick={load} disabled={loading} aria-label="刷新报表">
-          <RefreshCw size={16}/><span>{loading ? '更新中' : '刷新'}</span>
+          <RefreshCw className={loading ? 'spin-icon' : ''} size={16}/><span>{loading ? '更新中' : '刷新'}</span>
         </button>
       </div>
     </header>
     <p className="report-scope">统计范围：{range.start} 至 {range.end} · 演示工单数据</p>
     {error && <p className="error" role="alert"><AlertCircle size={16}/>{error}</p>}
-    {loading && !report ? <div className="report-loading" role="status">正在汇总工单数据…</div> : report && <>
-      <div className="metric-strip" aria-busy={loading}>
-        <button type="button" className="metric" onClick={() => drill({})}>
+    {loading && !report ? <div className="report-loading" role="status"><span className="spinner"/>正在汇总工单数据…</div> : report && <>
+      <div className={`metric-strip${feedback ? ' has-feedback' : ''}`} aria-busy={loading}>
+        <button type="button" className="metric metric-lead" onClick={() => drill({})}>
           <span className="metric-label"><BarChart3 size={16}/>新建工单</span><strong>{count(summary.total)}</strong><small>按创建日期统计</small>
         </button>
         <button type="button" className="metric" onClick={() => drill({ intent: 'complaint' })}>
@@ -119,12 +120,18 @@ export function Reports({ onDrillDown, onUnauthorized }) {
           <span className="metric-label"><Clock3 size={16}/>平均处理时长</span><strong>{duration(summary.avg_resolution_seconds)}</strong>
           <small>仅统计已关闭工单</small>
         </button>
+        {feedback && <article className="metric metric-feedback">
+          <span className="metric-label"><TicketCheck size={16}/>会话服务评分</span>
+          <strong>{Number(feedback.rating_count) ? `${Number(feedback.average_rating).toFixed(1)} / 5` : '—'}</strong>
+          <small>{count(feedback.rating_count)} 份有效评分 · {count(feedback.skipped_count)} 次跳过；全渠道汇总</small>
+        </article>}
       </div>
 
       <div className="report-main-grid">
         <section className="report-panel trend-panel">
           <header><div><h2>工单趋势</h2><p>{buckets.length > 60 ? '每周汇总新建、投诉与关闭数量' : '每日新建、投诉与关闭数量'}</p></div><span className="report-unit">张 / {buckets.length > 60 ? '周' : '日'}</span></header>
           <div className="trend-legend"><span><i className="legend-new"/>新建</span><span><i className="legend-complaint"/>投诉</span><span><i className="legend-closed"/>关闭</span></div>
+          <div className="trend-plot"><span className="y-tick y-top">{maxTrend}</span><span className="y-tick y-mid">{Math.round(maxTrend / 2)}</span>
           <div className="trend-chart" role="img" aria-label={`按${buckets.length > 60 ? '周' : '日'}显示新建工单、投诉和关闭工单数量的柱状图`}>
             {buckets.map((day, index) => <div className="trend-day" key={day.day} title={`${day.day}：新建 ${day.new_count}，投诉 ${day.complaint_count}，关闭 ${day.closed_count}`}>
               <div className="trend-bars">
@@ -136,7 +143,7 @@ export function Reports({ onDrillDown, onUnauthorized }) {
                 <small>{day.day.slice(5)}</small>}
             </div>)}
             {!days.some(day => Number(day.new_count) || Number(day.closed_count)) && <p className="chart-empty">该时段暂无工单记录</p>}
-          </div>
+          </div></div>
           <footer>新建与投诉按工单创建日统计；关闭按首次关闭日统计。点击分类或指标可查看对应工单。</footer>
         </section>
         <section className="report-panel category-panel">

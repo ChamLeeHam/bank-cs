@@ -71,6 +71,8 @@ class Config:
     rag_adaptive_retrieval: bool = field(default_factory=lambda: os.getenv("BANK_RAG_ADAPTIVE_RETRIEVAL", "true").lower() == "true")
     rag_direct_min_score: float = field(default_factory=lambda: float(os.getenv("BANK_RAG_DIRECT_MIN_SCORE", "0.35")))
     startup_warmup: bool = field(default_factory=lambda: os.getenv("BANK_STARTUP_WARMUP", "true").lower() == "true")
+    n8n_automation_webhook_url: str = field(default_factory=lambda: os.getenv("N8N_AUTOMATION_WEBHOOK_URL", "").strip())
+    n8n_internal_token: str = field(default_factory=lambda: os.getenv("N8N_INTERNAL_TOKEN", ""))
     rag_candidates: int = field(default_factory=lambda: int(os.getenv("BANK_RAG_CANDIDATES", "10")))  # 每一路取多少条
     hyde_weight: float = field(default_factory=lambda: float(os.getenv("BANK_HYDE_WEIGHT", "0.7")))  # HyDE 那一路的权重
     reranker_model: Path = field(default_factory=lambda: ROOT_DIR / os.getenv("BANK_RERANKER_MODEL", "pretrained/bge-reranker-base"))

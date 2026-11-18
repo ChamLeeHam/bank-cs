@@ -7,7 +7,8 @@ from langchain_core.messages import HumanMessage
 
 from src.intents import INTENTS
 from src.utils.llm_util import get_llm_client
-from src.utils.mysql_utils import execute, query, query_one
+from src.utils.mysql_utils import execute, get_mysql_connection, query, query_one
+from src.schema.exceptions import MySQLError
 from src.utils.ticket_dispatch_agent import dispatch_ticket
 
 logger = logging.getLogger(__name__)
@@ -224,8 +225,9 @@ def create_ticket(state, priority, related_transaction=None):
         sql = """
             insert into tickets (session_id, customer_id, intent, sub_intent, priority, summary,
                                  related_transaction_id, related_transaction, notification_status,
+                                 notification_retry_safe,
                                  assigned_team, assigned_agent, assigned_at, dispatch_note, dispatch_source)
-            values (%s, %s, %s, %s, %s, %s, %s, %s, 'pending', 'customer_service', %s,
+            values (%s, %s, %s, %s, %s, %s, %s, %s, 'pending', 1, 'customer_service', %s,
                     case when %s is null then null else current_timestamp end, %s, %s)
         """
         params = (state.get("session_id"), state.get("customer_id"), state.get("intent") or "unknown",
@@ -235,19 +237,45 @@ def create_ticket(state, priority, related_transaction=None):
     else:
         sql = """
             insert into tickets (session_id, customer_id, intent, sub_intent, priority, summary, notification_status,
+                                 notification_retry_safe,
                                  assigned_team, assigned_agent, assigned_at, dispatch_note, dispatch_source)
-            values (%s, %s, %s, %s, %s, %s, 'pending', 'customer_service', %s,
+            values (%s, %s, %s, %s, %s, %s, 'pending', 1, 'customer_service', %s,
                     case when %s is null then null else current_timestamp end, %s, %s)
         """
         params = (state.get("session_id"), state.get("customer_id"), state.get("intent") or "unknown",
                   state.get("sub_intent") or None, priority, stored_summary,
                   dispatch["username"], dispatch["username"], dispatch["reason"], dispatch["source"])
-    result = execute(sql, params)
+    result = _insert_ticket_and_assignment_event(sql, params, dispatch)
     if result["rowcount"] != 1 or not result["lastrowid"]:
         raise ValueError("工单没有创建成功")
     logger.info("工单已创建 ticket_id=%s summary_source=%s assignee=%s dispatch=%s",
                 result["lastrowid"], summary_source, dispatch["username"], dispatch["source"])
     return result["lastrowid"]
+
+
+def _insert_ticket_and_assignment_event(sql, params, dispatch):
+    """Create a ticket and its first assignment history entry in one transaction."""
+    connection = get_mysql_connection()
+    try:
+        connection.begin()
+        with connection.cursor() as cursor:
+            rowcount = cursor.execute(sql, params)
+            ticket_id = cursor.lastrowid
+            if rowcount == 1 and ticket_id and dispatch.get("username"):
+                cursor.execute("""
+                    insert into ticket_assignment_events
+                        (ticket_id, from_agent, to_agent, actor_type, actor_username,
+                         source, note, created_at)
+                    values (%s, null, %s, 'system', null, %s, %s, current_timestamp)
+                """, (ticket_id, dispatch["username"], dispatch["source"], dispatch["reason"]))
+        connection.commit()
+        return {"rowcount": rowcount, "lastrowid": ticket_id}
+    except Exception as exc:
+        connection.rollback()
+        logger.exception("工单和首次派单记录写入失败")
+        raise MySQLError("工单没有创建成功", "ticket_utils", exc)
+    finally:
+        connection.close()
 
 
 def find_active_related_ticket(session_id, transaction_id):
@@ -264,11 +292,66 @@ def claim_ticket_notification(ticket_id):
         update tickets
         set notification_status = 'processing',
             notification_claimed_at = NOW(),
-            notification_alerted_at = NULL
+            notification_alerted_at = NULL,
+            notification_attempts = notification_attempts + 1
         where ticket_id = %s
           and notification_status = 'pending'
+          and notification_attempts < 3
     """
     result = execute(sql, (ticket_id,))
+    return result["rowcount"] == 1
+
+
+def mark_notification_recipient_sent(ticket_id, recipient):
+    """Record each successful email immediately so retries skip delivered recipients."""
+    if recipient == "agent":
+        sql = """
+            update tickets
+            set notification_agent_sent_at = coalesce(notification_agent_sent_at, NOW()),
+                notification_status = case when notification_supervisor_sent_at is not null
+                                           then 'sent' else 'processing' end,
+                notified_at = case when notification_supervisor_sent_at is not null
+                                   then coalesce(notified_at, NOW()) else notified_at end
+            where ticket_id = %s and notification_status = 'processing'
+        """
+    elif recipient == "supervisor":
+        sql = """
+            update tickets
+            set notification_supervisor_sent_at = coalesce(notification_supervisor_sent_at, NOW()),
+                notification_status = case when notification_agent_sent_at is not null
+                                           then 'sent' else 'processing' end,
+                notified_at = case when notification_agent_sent_at is not null
+                                   then coalesce(notified_at, NOW()) else notified_at end
+            where ticket_id = %s and notification_status = 'processing'
+        """
+    else:
+        raise ValueError("unknown notification recipient")
+    result = execute(sql, (ticket_id,))
+    return result["rowcount"] == 1
+
+
+def fail_ticket_notification(ticket_id):
+    """Mark a confirmed delivery failure; successful recipient timestamps remain intact."""
+    result = execute("""
+        update tickets set notification_status = 'failed'
+        where ticket_id = %s and notification_status = 'processing'
+    """, (ticket_id,))
+    return result["rowcount"] == 1
+
+
+def requeue_failed_notification(ticket_id):
+    """Supervisor-triggered retry, limited to safe new-flow tickets after a cooldown."""
+    result = execute("""
+        update tickets
+        set notification_status = 'pending', notification_claimed_at = NULL,
+            notification_alerted_at = NULL
+        where ticket_id = %s
+          and notification_status = 'failed'
+          and notification_retry_safe = 1
+          and notification_attempts < 3
+          and notification_claimed_at <= NOW() - INTERVAL 10 MINUTE
+          and (notification_agent_sent_at is null or notification_supervisor_sent_at is null)
+    """, (ticket_id,))
     return result["rowcount"] == 1
 
 
@@ -279,7 +362,8 @@ def list_tickets(status=None, priority=None, limit=100, start_date=None, end_dat
         select ticket_id, customer_id, intent, sub_intent, priority, status, summary,
                related_transaction_id, related_transaction,
                agent_reply, created_at, updated_at, assigned_team, assigned_agent,
-               assigned_at, dispatch_note, dispatch_source
+               assigned_at, dispatch_note, dispatch_source,
+               timestampdiff(SECOND, created_at, NOW()) as sla_elapsed_seconds
         from tickets where 1 = 1
     """
     params = []
@@ -320,14 +404,57 @@ def list_tickets(status=None, priority=None, limit=100, start_date=None, end_dat
     return tickets
 
 
-def supervisor_assign_ticket(ticket_id, username):
+def supervisor_assign_ticket(ticket_id, username, actor_username):
     """Supervisor can assign an open ticket directly to any seat."""
-    result = execute("""
-        update tickets set assigned_team = 'customer_service', assigned_agent = %s, assigned_at = current_timestamp,
-                           dispatch_source = 'manual', dispatch_note = '主管手动改派。'
-        where ticket_id = %s and status <> 'closed'
-    """, (username, ticket_id))
-    return result["rowcount"] == 1
+    connection = get_mysql_connection()
+    try:
+        connection.begin()
+        with connection.cursor() as cursor:
+            cursor.execute("select assigned_agent, status from tickets where ticket_id = %s for update", (ticket_id,))
+            current = cursor.fetchone()
+            if not current or current["status"] == "closed":
+                connection.rollback()
+                return False
+            old_username = current["assigned_agent"]
+            if old_username == username:
+                connection.commit()
+                return True
+            cursor.execute("""
+                update tickets set assigned_team = 'customer_service', assigned_agent = %s,
+                                   assigned_at = current_timestamp, dispatch_source = 'manual',
+                                   dispatch_note = '主管手动改派。'
+                where ticket_id = %s and status <> 'closed'
+            """, (username, ticket_id))
+            if cursor.rowcount != 1:
+                connection.rollback()
+                return False
+            cursor.execute("""
+                insert into ticket_assignment_events
+                    (ticket_id, from_agent, to_agent, actor_type, actor_username,
+                     source, note, created_at)
+                values (%s, %s, %s, 'supervisor', %s, 'manual', '主管手动改派。', current_timestamp)
+            """, (ticket_id, old_username, username, actor_username))
+        connection.commit()
+        return True
+    except Exception as exc:
+        connection.rollback()
+        logger.exception("工单改派和历史记录写入失败")
+        raise MySQLError("暂时无法改派工单。", "ticket_utils", exc)
+    finally:
+        connection.close()
+
+
+def list_ticket_assignment_history(ticket_id, identity):
+    ticket = query_one("select assigned_agent from tickets where ticket_id = %s", (ticket_id,))
+    if not ticket or (identity.get("role") != "supervisor" and
+                      ticket.get("assigned_agent") != identity.get("username")):
+        return None
+    return query("""
+        select event_id, from_agent, to_agent, actor_type, actor_username, source, note, created_at
+        from ticket_assignment_events
+        where ticket_id = %s
+        order by created_at, event_id
+    """, (ticket_id,))
 
 
 def ticket_analytics(start_date, end_date, team=None, agent=None):

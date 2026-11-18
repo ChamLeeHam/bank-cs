@@ -1,0 +1,346 @@
+{
+  "id": "bcUnifiedSla001",
+  "name": "首次响应 SLA - 坐席与主管分档提醒",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        300
+      ],
+      "id": "88227807-84d2-4400-9e3e-2548b8fd3a3e",
+      "name": "由定时总控触发"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT due.ticket_id, due.priority, due.intent, due.assigned_agent, due.created_at, due.elapsed_seconds, due.sla_level\nFROM (\n SELECT t.ticket_id,t.priority,t.intent,t.assigned_agent,t.created_at,\n  TIMESTAMPDIFF(SECOND,t.created_at,NOW()) elapsed_seconds,\n  CASE WHEN t.priority='urgent' AND TIMESTAMPDIFF(SECOND,t.created_at,NOW())>=300 THEN 'severe_timeout'\n       WHEN t.priority='urgent' AND TIMESTAMPDIFF(SECOND,t.created_at,NOW())>=240 THEN 'pre_timeout'\n       WHEN t.priority='normal' AND TIMESTAMPDIFF(SECOND,t.created_at,NOW())>=3600 THEN 'severe_timeout'\n       WHEN t.priority='normal' AND TIMESTAMPDIFF(SECOND,t.created_at,NOW())>=1800 THEN 'timeout'\n       WHEN t.priority='normal' AND TIMESTAMPDIFF(SECOND,t.created_at,NOW())>=1440 THEN 'pre_timeout' ELSE NULL END sla_level,\n  CASE WHEN t.priority='urgent' AND TIMESTAMPDIFF(SECOND,t.created_at,NOW())>=300 THEN 3\n       WHEN t.priority='urgent' AND TIMESTAMPDIFF(SECOND,t.created_at,NOW())>=240 THEN 1\n       WHEN t.priority='normal' AND TIMESTAMPDIFF(SECOND,t.created_at,NOW())>=3600 THEN 3\n       WHEN t.priority='normal' AND TIMESTAMPDIFF(SECOND,t.created_at,NOW())>=1800 THEN 2\n       WHEN t.priority='normal' AND TIMESTAMPDIFF(SECOND,t.created_at,NOW())>=1440 THEN 1 ELSE 0 END current_rank,\n  COALESCE(FIELD(t.sla_agent_notified_level,'pre_timeout','timeout','severe_timeout'),0) agent_notified_rank,\n  COALESCE(FIELD(t.sla_supervisor_notified_level,'pre_timeout','timeout','severe_timeout'),0) supervisor_notified_rank\n FROM tickets t WHERE t.status='open' AND t.sla_tracking_enabled=1\n  AND (t.sla_claimed_at IS NULL OR t.sla_claimed_at<NOW()-INTERVAL 10 MINUTE)\n) due WHERE due.sla_level IS NOT NULL AND due.current_rank>LEAST(due.agent_notified_rank,due.supervisor_notified_rank)\nORDER BY CASE WHEN due.priority='urgent' THEN 0 ELSE 1 END,due.created_at,due.ticket_id;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.5,
+      "position": [
+        240,
+        300
+      ],
+      "id": "c9acb127-b215-42da-9c1c-b78e68f5e9a2",
+      "name": "查询待响应 SLA 工单"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=http://127.0.0.1:8002/api/internal/tickets/{{ $json.ticket_id }}/claim-sla-alert/{{ $json.sla_level }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        480,
+        300
+      ],
+      "id": "08e6fce0-143a-4cd9-80be-0f8b49937ee4",
+      "name": "认领 SLA 提醒"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "ff73f6f8-4c86-4016-9ede-f9eecb4049b5",
+              "leftValue": "={{ $json.claimed }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        700,
+        300
+      ],
+      "id": "697129de-a8d5-4dd3-b763-2a4766f7566f",
+      "name": "是否认领成功"
+    },
+    {
+      "parameters": {
+        "fromEmail": "sender@example.com",
+        "toEmail": "={{ $('认领 SLA 提醒').item.json.agent_email }}",
+        "subject": "=【{{ $('认领 SLA 提醒').item.json.sla_label }}·坐席】工单 #{{ $('认领 SLA 提醒').item.json.ticket_id }}",
+        "html": "=<p>该工单尚未开始处理，已进入首次响应提醒档位：{{ $('认领 SLA 提醒').item.json.sla_label }}。</p><p>工单号：{{ $('认领 SLA 提醒').item.json.ticket_id }}</p><p>优先级：{{ $('认领 SLA 提醒').item.json.priority === 'urgent' ? '紧急' : '普通' }}</p><p>负责坐席：{{ $('认领 SLA 提醒').item.json.assigned_agent || '未分配' }}</p><p>等待时间：{{ Math.floor($('认领 SLA 提醒').item.json.elapsed_seconds / 60) }} 分钟</p>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        920,
+        220
+      ],
+      "id": "b8d10b77-37e7-4e47-99c9-b880f56e8682",
+      "name": "发送坐席 SLA 提醒",
+      "webhookId": "1220ebd3-a130-4af3-b5ee-26baacc22e50"
+    },
+    {
+      "parameters": {
+        "fromEmail": "sender@example.com",
+        "toEmail": "={{ $('认领 SLA 提醒').item.json.supervisor_email }}",
+        "subject": "=【{{ $('认领 SLA 提醒').item.json.sla_label }}·主管知会】工单 #{{ $('认领 SLA 提醒').item.json.ticket_id }}",
+        "html": "=<p>一张工单尚未开始处理，已进入首次响应提醒档位：{{ $('认领 SLA 提醒').item.json.sla_label }}。</p><p>工单号：{{ $('认领 SLA 提醒').item.json.ticket_id }}</p><p>优先级：{{ $('认领 SLA 提醒').item.json.priority === 'urgent' ? '紧急' : '普通' }}</p><p>负责坐席：{{ $('认领 SLA 提醒').item.json.assigned_agent || '未分配' }}</p><p>等待时间：{{ Math.floor($('认领 SLA 提醒').item.json.elapsed_seconds / 60) }} 分钟</p>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        1140,
+        380
+      ],
+      "id": "43fd1d3e-fc63-43b8-b418-4636eb7dafc1",
+      "name": "发送主管 SLA 知会",
+      "webhookId": "1220ebd3-a130-4af3-b5ee-26baacc22e50"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=http://127.0.0.1:8002/api/internal/tickets/{{ $('认领 SLA 提醒').item.json.ticket_id }}/complete-sla-alert/{{ $('认领 SLA 提醒').item.json.sla_level }}/supervisor",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        1360,
+        380
+      ],
+      "id": "7fb26d4d-491c-4c9f-b0db-2b8a28c8d537",
+      "name": "记录主管提醒已发送"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "661efab8-5942-4ef7-afb4-a3ec2e98d3af",
+              "leftValue": "={{ $('认领 SLA 提醒').item.json.notify_agent }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        920,
+        100
+      ],
+      "id": "d103c786-5362-4341-b58d-40ce8d569652",
+      "name": "是否需要发送坐席邮件"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "b69867dd-7941-4035-a49a-48d89cb03ba8",
+              "leftValue": "={{ $('认领 SLA 提醒').item.json.notify_supervisor }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1360,
+        250
+      ],
+      "id": "c81012f1-a3e2-40cc-b6d9-11377fe89315",
+      "name": "是否需要发送主管邮件"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=http://127.0.0.1:8002/api/internal/tickets/{{ $('认领 SLA 提醒').item.json.ticket_id }}/complete-sla-alert/{{ $('认领 SLA 提醒').item.json.sla_level }}/agent",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        1140,
+        180
+      ],
+      "id": "9b9b6882-5cf3-4981-8920-eea5da2c3657",
+      "name": "记录坐席提醒已发送"
+    }
+  ],
+  "connections": {
+    "由定时总控触发": {
+      "main": [
+        [
+          {
+            "node": "查询待响应 SLA 工单",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "查询待响应 SLA 工单": {
+      "main": [
+        [
+          {
+            "node": "认领 SLA 提醒",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "认领 SLA 提醒": {
+      "main": [
+        [
+          {
+            "node": "是否认领成功",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "是否认领成功": {
+      "main": [
+        [
+          {
+            "node": "是否需要发送坐席邮件",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "发送坐席 SLA 提醒": {
+      "main": [
+        [
+          {
+            "node": "记录坐席提醒已发送",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "发送主管 SLA 知会": {
+      "main": [
+        [
+          {
+            "node": "记录主管提醒已发送",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "记录坐席提醒已发送": {
+      "main": [
+        [
+          {
+            "node": "是否需要发送主管邮件",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "是否需要发送坐席邮件": {
+      "main": [
+        [
+          {
+            "node": "发送坐席 SLA 提醒",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "是否需要发送主管邮件",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "是否需要发送主管邮件": {
+      "main": [
+        [
+          {
+            "node": "发送主管 SLA 知会",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "记录主管提醒已发送": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "pinData": {},
+  "staticData": null,
+  "versionId": "51db8a75-9694-45ef-8aa7-b590eda996d2"
+}

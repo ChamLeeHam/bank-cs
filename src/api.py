@@ -7,6 +7,8 @@ import ipaddress
 import hmac
 import re
 import threading
+import urllib.error
+import urllib.request
 from contextlib import asynccontextmanager
 from typing import Literal
 from datetime import date
@@ -25,17 +27,27 @@ from src.schema.main_graph import is_customer_verified, resume, run_query
 from src.schema.exceptions import MySQLError
 from src.utils.ticket_utils import (
     claim_ticket_notification,
+    fail_ticket_notification,
+    mark_notification_recipient_sent,
+    requeue_failed_notification,
     create_ticket,
     find_active_related_ticket,
     get_customer_ticket,
     list_customer_tickets,
     list_tickets,
+    list_ticket_assignment_history,
     supervisor_assign_ticket,
     ticket_analytics,
     update_ticket,
 )
 from src.utils.ticket_assignment_schema import ensure_ticket_assignment_schema
-from src.utils.mysql_utils import query_one
+from src.utils.ticket_notification_schema import ensure_ticket_notification_schema
+from src.utils.ticket_sla import SLA_ALERT_RANK, SLA_LABELS, sla_level
+from src.utils.ticket_sla_schema import ensure_ticket_sla_schema
+from src.utils.service_feedback import parse_service_feedback, record_service_feedback, service_feedback_analytics
+from src.utils.service_feedback_schema import ensure_service_feedback_schema
+from src.utils.mysql_utils import execute, query, query_one
+from src.schema.config import get_config
 from src.utils.account_utils import get_recent_statement, get_statement_transaction, get_statement_transaction_detail
 from src.utils.receipt_pdf import build_transaction_receipt
 from src.intents import is_human_request
@@ -47,6 +59,9 @@ async def lifespan(_app):
     from src.schema.config import get_config
 
     await asyncio.to_thread(ensure_ticket_assignment_schema)
+    await asyncio.to_thread(ensure_ticket_notification_schema)
+    await asyncio.to_thread(ensure_ticket_sla_schema)
+    await asyncio.to_thread(ensure_service_feedback_schema)
 
     if get_config().startup_warmup:
         try:
@@ -76,6 +91,7 @@ async def revalidate_demo_assets(request: Request, call_next):
 # 演示会话只在当前进程中保存；客户 ID 由服务端绑定，不接受对话中切换
 sessions = {}
 sessions_lock = threading.Lock()
+automation_run_lock = threading.Lock()
 DEMO_CUSTOMERS = {"C001", "C002", "C003"}
 TICKET_STATUS_QUESTION = re.compile(
     r"(?:工单.{0,10}(?:状态|进度|处理到哪|怎么样)|(?:查|查看|查询|看看|了解).{0,12}工单)|"
@@ -108,11 +124,22 @@ class AgentCredentials(BaseModel):
 
 
 class AgentUserCreate(AgentCredentials):
-    pass
+    email: str | None = Field(default=None, max_length=254,
+                              pattern=r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
+
+
+class AgentUserEmail(BaseModel):
+    email: str = Field(min_length=3, max_length=254,
+                       pattern=r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 
 
 class TicketAssignment(BaseModel):
     username: str = Field(min_length=3, max_length=32, pattern=r"^[A-Za-z0-9_.-]+$")
+
+
+class AutomationRun(BaseModel):
+    action: Literal["notify"]
+    confirm: bool = False
 
 
 def check_origin(request: Request):
@@ -155,27 +182,222 @@ def require_supervisor(identity=Depends(require_agent)):
 @app.post("/api/internal/tickets/{ticket_id}/claim-notification")
 def claim_notification(ticket_id: int, request: Request):
     """供本机 n8n 认领待通知工单。"""
-    require_local(request)
-
-    token = os.getenv("N8N_INTERNAL_TOKEN", "")
-    supplied = request.headers.get("X-Internal-Token", "")
-
-    if not token:
-        raise HTTPException(status_code=503, detail="内部接口令牌未配置。")
-
-    if not hmac.compare_digest(supplied, token):
-        raise HTTPException(status_code=401, detail="内部接口认证失败。")
+    _require_n8n_internal_token(request)
 
     if ticket_id <= 0:
         raise HTTPException(status_code=400, detail="工单编号无效。")
 
     try:
+        ticket = query_one("""
+            select ticket_id, assigned_agent, intent, priority,
+                   notification_agent_sent_at, notification_supervisor_sent_at
+            from tickets where ticket_id = %s
+        """, (ticket_id,))
+        if not ticket:
+            raise HTTPException(status_code=404, detail="工单不存在。")
+        emails = agent_auth.notification_emails(ticket.get("assigned_agent"))
+        if not emails:
+            raise HTTPException(status_code=503, detail="请先为主管账号配置通知邮箱。")
         claimed = claim_ticket_notification(ticket_id)
     except MySQLError:
         logger.exception("认领通知工单失败")
         raise HTTPException(status_code=503, detail="暂时无法认领工单。")
 
-    return {"ticket_id": ticket_id, "claimed": claimed}
+    return {"ticket_id": ticket_id, "claimed": claimed,
+            "notify_agent": ticket.get("notification_agent_sent_at") is None,
+            "notify_supervisor": ticket.get("notification_supervisor_sent_at") is None,
+            "assigned_agent": ticket.get("assigned_agent"),
+            "intent": ticket.get("intent"), "priority": ticket.get("priority"), **emails}
+
+
+@app.post("/api/internal/tickets/{ticket_id}/complete-notification/{recipient}")
+def complete_notification_recipient(ticket_id: int, recipient: Literal["agent", "supervisor"], request: Request):
+    """Record one confirmed successful email; the ticket is sent after both recipients are recorded."""
+    _require_n8n_internal_token(request)
+    if ticket_id <= 0:
+        raise HTTPException(status_code=400, detail="工单编号无效。")
+    try:
+        completed = mark_notification_recipient_sent(ticket_id, recipient)
+        if not completed:
+            raise HTTPException(status_code=409, detail="工单状态已变化，无法记录通知结果。")
+        row = query_one("SELECT notification_status FROM tickets WHERE ticket_id = %s", (ticket_id,))
+    except MySQLError:
+        logger.exception("记录工单通知收件人送达失败")
+        raise HTTPException(status_code=503, detail="暂时无法记录通知结果。")
+    return {"ticket_id": ticket_id, "recipient": recipient,
+            "notification_status": row["notification_status"] if row else None}
+
+
+@app.post("/api/internal/tickets/{ticket_id}/fail-notification")
+def fail_notification(ticket_id: int, request: Request):
+    """Record a definite email-node failure while preserving any successful recipient."""
+    _require_n8n_internal_token(request)
+    if ticket_id <= 0:
+        raise HTTPException(status_code=400, detail="工单编号无效。")
+    try:
+        failed = fail_ticket_notification(ticket_id)
+    except MySQLError:
+        logger.exception("记录工单通知失败状态失败")
+        raise HTTPException(status_code=503, detail="暂时无法记录通知失败。")
+    if not failed:
+        raise HTTPException(status_code=409, detail="工单状态已变化，无法标记通知失败。")
+    return {"ticket_id": ticket_id, "notification_status": "failed"}
+
+
+@app.get("/api/internal/tickets/{ticket_id}/notification-recipients")
+def notification_recipients(ticket_id: int, request: Request):
+    """供 n8n 超时提醒读取工单对应的坐席与主管邮箱；只读，不改变工单状态。"""
+    _require_n8n_internal_token(request)
+
+    if ticket_id <= 0:
+        raise HTTPException(status_code=400, detail="工单编号无效。")
+
+    try:
+        ticket = query_one("""
+            select ticket_id, assigned_agent, intent, priority
+            from tickets where ticket_id = %s
+        """, (ticket_id,))
+    except MySQLError:
+        logger.exception("读取超时提醒收件人失败")
+        raise HTTPException(status_code=503, detail="暂时无法读取工单通知收件人。")
+    if not ticket:
+        raise HTTPException(status_code=404, detail="工单不存在。")
+
+    emails = agent_auth.notification_emails(ticket.get("assigned_agent"))
+    if not emails:
+        raise HTTPException(status_code=503, detail="请先为主管账号配置通知邮箱。")
+    return {"ticket_id": ticket_id, "assigned_agent": ticket.get("assigned_agent"),
+            "intent": ticket.get("intent"), "priority": ticket.get("priority"), **emails}
+
+
+@app.post("/api/internal/tickets/{ticket_id}/claim-sla-alert/{level}")
+def claim_sla_alert(ticket_id: int, level: Literal["pre_timeout", "timeout", "severe_timeout"], request: Request):
+    """Atomically claim one SLA escalation so overlapping n8n polls do not duplicate alerts."""
+    _require_n8n_internal_token(request)
+    if ticket_id <= 0:
+        raise HTTPException(status_code=400, detail="工单编号无效。")
+
+    try:
+        ticket = query_one("""
+            select ticket_id, assigned_agent, intent, priority, status, created_at, sla_tracking_enabled,
+                   sla_agent_notified_level, sla_supervisor_notified_level,
+                   timestampdiff(SECOND, created_at, NOW()) as elapsed_seconds
+            from tickets where ticket_id = %s
+        """, (ticket_id,))
+        if not ticket:
+            raise HTTPException(status_code=404, detail="工单不存在。")
+        current_level = sla_level(ticket.get("priority"), ticket.get("status"), ticket.get("elapsed_seconds"))
+        if not ticket.get("sla_tracking_enabled") or current_level != level:
+            return {"claimed": False, "ticket_id": ticket_id, "current_sla_level": current_level}
+
+        target_rank = SLA_ALERT_RANK[level]
+        notify_agent = SLA_ALERT_RANK.get(ticket.get("sla_agent_notified_level"), 0) < target_rank
+        notify_supervisor = SLA_ALERT_RANK.get(ticket.get("sla_supervisor_notified_level"), 0) < target_rank
+        if not notify_agent and not notify_supervisor:
+            return {"claimed": False, "ticket_id": ticket_id, "current_sla_level": current_level}
+
+        emails = agent_auth.notification_emails(ticket.get("assigned_agent"))
+        if not emails:
+            raise HTTPException(status_code=503, detail="请先为主管账号配置通知邮箱。")
+        result = execute("""
+            update tickets
+            set sla_claimed_level = %s, sla_claimed_at = NOW()
+            where ticket_id = %s and status = 'open' and sla_tracking_enabled = 1
+              and priority = %s and created_at = %s
+              and (
+                coalesce(field(sla_agent_notified_level, 'pre_timeout', 'timeout', 'severe_timeout'), 0) < %s
+                or coalesce(field(sla_supervisor_notified_level, 'pre_timeout', 'timeout', 'severe_timeout'), 0) < %s
+              )
+              and (sla_claimed_at is null or sla_claimed_at < NOW() - INTERVAL 10 MINUTE)
+        """, (level, ticket_id, ticket.get("priority"), ticket.get("created_at"), target_rank, target_rank))
+    except MySQLError:
+        logger.exception("认领工单 SLA 提醒失败")
+        raise HTTPException(status_code=503, detail="暂时无法认领工单超时提醒。")
+
+    claimed = result["rowcount"] == 1
+    return {"claimed": claimed, "ticket_id": ticket_id, "sla_level": level,
+            "sla_label": SLA_LABELS[level], "elapsed_seconds": int(ticket.get("elapsed_seconds") or 0),
+            "notify_agent": notify_agent, "notify_supervisor": notify_supervisor,
+            "assigned_agent": ticket.get("assigned_agent"), "intent": ticket.get("intent"),
+            "priority": ticket.get("priority"), **(emails if claimed else {})}
+
+
+@app.post("/api/internal/tickets/{ticket_id}/complete-sla-alert/{level}/{recipient}")
+def complete_sla_recipient_alert(
+    ticket_id: int,
+    level: Literal["pre_timeout", "timeout", "severe_timeout"],
+    recipient: Literal["agent", "supervisor"],
+    request: Request,
+):
+    """Persist one successful recipient so retries skip already-sent mail."""
+    _require_n8n_internal_token(request)
+    if ticket_id <= 0:
+        raise HTTPException(status_code=400, detail="工单编号无效。")
+    column = "sla_agent_notified_level" if recipient == "agent" else "sla_supervisor_notified_level"
+    target_rank = SLA_ALERT_RANK[level]
+    try:
+        ticket = query_one(
+            "SELECT sla_claimed_level, sla_agent_notified_level, sla_supervisor_notified_level "
+            "FROM tickets WHERE ticket_id = %s", (ticket_id,)
+        )
+        if not ticket or ticket.get("sla_claimed_level") != level:
+            raise HTTPException(status_code=409, detail="提醒认领已失效，请刷新工作流状态。")
+
+        if SLA_ALERT_RANK.get(ticket.get(column), 0) < target_rank:
+            execute(
+                f"UPDATE tickets SET {column} = %s WHERE ticket_id = %s AND sla_claimed_level = %s",
+                (level, ticket_id, level),
+            )
+        latest = query_one(
+            "SELECT sla_agent_notified_level, sla_supervisor_notified_level "
+            "FROM tickets WHERE ticket_id = %s", (ticket_id,)
+        )
+        all_sent = (
+            SLA_ALERT_RANK.get(latest.get("sla_agent_notified_level"), 0) >= target_rank
+            and SLA_ALERT_RANK.get(latest.get("sla_supervisor_notified_level"), 0) >= target_rank
+        )
+        if all_sent:
+            execute("""
+                UPDATE tickets
+                SET sla_notified_level = %s, sla_claimed_level = NULL, sla_claimed_at = NULL
+                WHERE ticket_id = %s AND sla_claimed_level = %s
+            """, (level, ticket_id, level))
+    except MySQLError:
+        logger.exception("记录工单单方 SLA 提醒失败")
+        raise HTTPException(status_code=503, detail="暂时无法记录工单超时提醒。")
+    return {"completed": True, "ticket_id": ticket_id, "sla_level": level,
+            "recipient": recipient, "all_recipients_completed": all_sent}
+
+
+@app.post("/api/internal/tickets/{ticket_id}/complete-sla-alert/{level}")
+def complete_sla_alert(ticket_id: int, level: Literal["pre_timeout", "timeout", "severe_timeout"], request: Request):
+    """Backward-compatible completion endpoint for older workflow exports."""
+    _require_n8n_internal_token(request)
+    if ticket_id <= 0:
+        raise HTTPException(status_code=400, detail="工单编号无效。")
+    try:
+        result = execute("""
+            update tickets
+            set sla_notified_level = %s, sla_agent_notified_level = %s,
+                sla_supervisor_notified_level = %s, sla_claimed_level = null, sla_claimed_at = null
+            where ticket_id = %s and sla_claimed_level = %s
+        """, (level, level, level, ticket_id, level))
+    except MySQLError:
+        logger.exception("完成工单 SLA 提醒记录失败")
+        raise HTTPException(status_code=503, detail="暂时无法记录工单超时提醒。")
+    if result["rowcount"] != 1:
+        raise HTTPException(status_code=409, detail="提醒认领已失效，请刷新工作流状态。")
+    return {"completed": True, "ticket_id": ticket_id, "sla_level": level}
+
+
+def _require_n8n_internal_token(request: Request):
+    require_local(request)
+    token = os.getenv("N8N_INTERNAL_TOKEN", "")
+    supplied = request.headers.get("X-Internal-Token", "")
+    if not token:
+        raise HTTPException(status_code=503, detail="内部接口令牌未配置。")
+    if not hmac.compare_digest(supplied, token):
+        raise HTTPException(status_code=401, detail="内部接口认证失败。")
 
 
 def _set_agent_cookie(response: Response, token: str, request: Request):
@@ -259,13 +481,133 @@ def agent_user_create(payload: AgentUserCreate, request: Request,
     if len(payload.password) < 8:
         raise HTTPException(status_code=400, detail="密码至少需要 8 个字符。")
     try:
-        user = agent_auth.add_user(payload.username, payload.password, None)
+        user = agent_auth.add_user(payload.username, payload.password, None,
+                                   payload.email.strip().lower() if payload.email else None)
         return {"user": user}
     except FileExistsError:
         raise HTTPException(status_code=409, detail="这个坐席账号已存在。")
     except OSError:
         logger.exception("坐席账号创建失败")
         raise HTTPException(status_code=503, detail="无法保存坐席账号。")
+
+
+@app.patch("/api/agent/users/{username}/email")
+def agent_user_email_update(username: str, payload: AgentUserEmail, request: Request,
+                            authenticated=Depends(require_supervisor)):
+    check_origin(request)
+    if not re.fullmatch(r"[A-Za-z0-9_.-]{3,32}", username):
+        raise HTTPException(status_code=400, detail="坐席账号无效。")
+    try:
+        user = agent_auth.set_email(username, payload.email.strip().lower())
+        if not user:
+            raise HTTPException(status_code=404, detail="坐席账号不存在。")
+        return {"user": user}
+    except OSError:
+        logger.exception("坐席邮箱保存失败")
+        raise HTTPException(status_code=503, detail="无法保存通知邮箱。")
+
+
+def _n8n_webhook_is_configured():
+    config = get_config()
+    value = config.n8n_automation_webhook_url
+    if not value or not config.n8n_internal_token:
+        return False
+    try:
+        parsed = urlsplit(value)
+        port = parsed.port
+    except ValueError:
+        return False
+    return (parsed.scheme == "http" and parsed.hostname in {"localhost", "127.0.0.1", "::1"}
+            and port is not None and not parsed.username and not parsed.password
+            and not parsed.query and not parsed.fragment)
+
+
+@app.get("/api/agent/automation/preview")
+def automation_preview(authenticated=Depends(require_supervisor)):
+    """Read-only snapshot for supervisors; never triggers an n8n workflow."""
+    try:
+        counts = query("""
+            select notification_status as status, count(*) as total
+            from tickets
+            where notification_status in ('pending', 'processing', 'sent', 'failed')
+            group by notification_status
+        """)
+        pending = query("""
+            select ticket_id, priority, intent, created_at, notification_status
+            from tickets
+            where notification_status = 'pending'
+            order by created_at asc, ticket_id asc
+            limit 25
+        """)
+        retryable_failed = query("""
+            select ticket_id, priority, intent, notification_attempts,
+                   notification_claimed_at, notification_agent_sent_at,
+                   notification_supervisor_sent_at
+            from tickets
+            where notification_status = 'failed'
+              and notification_retry_safe = 1
+              and notification_attempts < 3
+              and notification_claimed_at <= NOW() - INTERVAL 10 MINUTE
+              and (notification_agent_sent_at is null or notification_supervisor_sent_at is null)
+            order by notification_claimed_at, ticket_id
+            limit 25
+        """)
+    except MySQLError:
+        logger.exception("自动化预览读取失败")
+        raise HTTPException(status_code=503, detail="暂时无法读取待通知工单。")
+    totals = {str(row["status"]): int(row["total"]) for row in counts}
+    return {"counts": totals, "pending_tickets": pending,
+            "retryable_failed_tickets": retryable_failed,
+            "n8n_configured": _n8n_webhook_is_configured()}
+
+
+@app.post("/api/agent/tickets/{ticket_id}/retry-notification")
+def retry_ticket_notification(ticket_id: int, request: Request,
+                              authenticated=Depends(require_supervisor)):
+    """Put a known failed, retry-safe notification back in the queue after supervisor confirmation."""
+    check_origin(request)
+    if ticket_id <= 0:
+        raise HTTPException(status_code=400, detail="工单编号无效。")
+    try:
+        requeued = requeue_failed_notification(ticket_id)
+    except MySQLError:
+        logger.exception("重新排队工单通知失败")
+        raise HTTPException(status_code=503, detail="暂时无法重新排队通知。")
+    if not requeued:
+        raise HTTPException(status_code=409,
+                            detail="此工单暂不可重试：可能已送达、仍在冷却期、超过尝试上限，或属于旧版未跟踪记录。")
+    return {"ticket_id": ticket_id, "notification_status": "pending",
+            "message": "已重新加入待通知队列；已成功送达的收件人不会重复收到邮件。"}
+
+
+@app.post("/api/agent/automation/run")
+def automation_run(payload: AutomationRun, request: Request,
+                   authenticated=Depends(require_supervisor)):
+    check_origin(request)
+    if not payload.confirm:
+        raise HTTPException(status_code=400, detail="请先确认将由 n8n 发送待通知工单邮件。")
+    if not _n8n_webhook_is_configured():
+        raise HTTPException(status_code=503, detail="n8n 通知尚未配置；请在本机设置 Webhook 地址和内部令牌。")
+    if not automation_run_lock.acquire(blocking=False):
+        raise HTTPException(status_code=409, detail="通知流程正在触发，请稍候再查看执行结果。")
+    try:
+        config = get_config()
+        req = urllib.request.Request(
+            config.n8n_automation_webhook_url,
+            data=json.dumps({"task": payload.action}, ensure_ascii=False).encode("utf-8"),
+            headers={"Content-Type": "application/json", "X-Internal-Token": config.n8n_internal_token},
+            method="POST",
+        )
+        try:
+            with urllib.request.urlopen(req, timeout=8) as response:
+                if not 200 <= response.status < 300:
+                    raise HTTPException(status_code=502, detail="n8n 未接受通知任务。")
+        except (urllib.error.URLError, TimeoutError, OSError) as exc:
+            logger.warning("触发 n8n 通知工作流失败 (%s)", type(exc).__name__)
+            raise HTTPException(status_code=502, detail="无法连接 n8n；请检查服务状态后再试。")
+        return {"accepted": True, "message": "通知流程已触发。邮件发送结果请在 n8n 执行记录中查看。"}
+    finally:
+        automation_run_lock.release()
 
 
 @app.post("/api/agent/auth/logout")
@@ -324,8 +666,11 @@ def agent_reports(start_date: date, end_date: date, response: Response,
     if (end_date - start_date).days > 365:
         raise HTTPException(status_code=400, detail="报表日期范围最多为 366 天。")
     try:
-        return ticket_analytics(start_date, end_date,
-                                agent=None if authenticated.get("role") == "supervisor" else authenticated["username"])
+        report = ticket_analytics(start_date, end_date,
+                                  agent=None if authenticated.get("role") == "supervisor" else authenticated["username"])
+        if authenticated.get("role") == "supervisor":
+            report["feedback"] = service_feedback_analytics(start_date, end_date)
+        return report
     except MySQLError:
         logger.exception("读取工单报表失败")
         raise HTTPException(status_code=503, detail="运营报表暂时无法读取，请稍后重试。")
@@ -364,12 +709,26 @@ def agent_assign_ticket(ticket_id: int, payload: TicketAssignment, request: Requ
         if not user or user.get("role") != "agent":
             raise HTTPException(status_code=400, detail="所选账号不是坐席账号。")
     try:
-        if not supervisor_assign_ticket(ticket_id, payload.username):
+        if not supervisor_assign_ticket(ticket_id, payload.username, authenticated["username"]):
             raise HTTPException(status_code=409, detail="工单不存在或已关闭，无法改派。")
         return {"ok": True}
     except MySQLError:
         logger.exception("改派工单失败")
         raise HTTPException(status_code=503, detail="暂时无法改派工单。")
+
+
+@app.get("/api/agent/tickets/{ticket_id}/assignment-history")
+def agent_ticket_assignment_history(ticket_id: int, response: Response,
+                                    authenticated=Depends(require_agent)):
+    response.headers["Cache-Control"] = "no-store"
+    try:
+        events = list_ticket_assignment_history(ticket_id, authenticated)
+        if events is None:
+            raise HTTPException(status_code=404, detail="没有找到这张工单。")
+        return {"events": events}
+    except MySQLError:
+        logger.exception("读取工单派单记录失败")
+        raise HTTPException(status_code=503, detail="派单记录暂时无法读取，请稍后重试。")
 
 
 @app.post("/api/sessions")
@@ -685,6 +1044,22 @@ def send_message(session_id: str, request: Message):
     if not session["lock"].acquire(blocking=False):
         raise HTTPException(status_code=409, detail="上一条消息还在处理，请稍候。")
     try:
+        if session.get("pending") == "service_rating":
+            parsed = parse_service_feedback(message)
+            if parsed:
+                feedback_status, rating = parsed
+                try:
+                    record_service_feedback(session_id, session["customer_id"], feedback_status, rating)
+                except MySQLError:
+                    logger.exception("保存会话服务评价失败")
+                    raise HTTPException(status_code=503, detail="暂时无法保存评价，请稍后重试。")
+                session["pending"] = None
+                answer = ("感谢您的评价，祝您一切顺利！" if feedback_status == "rated"
+                          else "好的，已结束本次会话。感谢使用狮城银行客服。")
+                return {"answer": answer, "pending": None, "sources": []}
+            # A new banking question takes priority; the rating invitation is optional.
+            session["pending"] = None
+
         # 查已有工单是只读账户查询，不应被误判为转人工并再次创建工单。
         if TICKET_STATUS_QUESTION.search(message):
             if not session["ticket_verified"] and not is_customer_verified(session_id, session["customer_id"]):
@@ -721,9 +1096,22 @@ def send_message(session_id: str, request: Message):
             else:
                 result = run_query(session_id, session["customer_id"], message, verbose=False)
         pending = result.get("pending") or {}
-        session["pending"] = pending.get("type")
-        return {"answer": result.get("answer", ""), "pending": session["pending"],
+        pending_type = pending.get("type")
+        answer = result.get("answer", "")
+        should_invite_rating = (result.get("intent") == "greeting"
+                                and result.get("sub_intent") in ("thanks", "goodbye")
+                                and not result.get("fraud_confirmation_pending"))
+        if should_invite_rating:
+            lang = result.get("lang", "zh")
+            rating_prompt = ("Before you go, please rate this service from 1 to 5 (5 = very satisfied). You can also skip."
+                             if lang == "en" else "结束前请为本次服务打分：1–5 分（5 分表示非常满意），也可以选择跳过。")
+            answer = f"{answer}\n\n{rating_prompt}"
+            pending_type = "service_rating"
+        session["pending"] = pending_type
+        return {"answer": answer, "pending": session["pending"],
                 "sources": result.get("sources") or []}
+    except HTTPException:
+        raise
     except Exception:
         logger.exception("演示会话处理失败")
         raise HTTPException(status_code=500, detail="处理失败，请检查本地服务后重试。")

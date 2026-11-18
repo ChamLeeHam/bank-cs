@@ -11,7 +11,7 @@ const promptOptions = [
 ];
 const pendingLabels = {
   otp: '输入 6 位演示验证码', card_last4: '输入银行卡后四位', confirm_freeze: '确认是否冻结银行卡',
-  select_transfer: '输入完整交易编号', transfer_scope: '请选择查询范围',
+  select_transfer: '输入完整交易编号', transfer_scope: '请选择查询范围', service_rating: '请评价本次服务（1–5 分）',
 };
 const statusNames = { open: '待处理', in_progress: '处理中', replied: '已有回复', closed: '已关闭' };
 
@@ -23,7 +23,7 @@ export function Chat() {
   const [ticketVerified, setTicketVerified] = useState(false), [initialTicketId, setInitialTicketId] = useState(null);
   const [notifications, setNotifications] = useState([]), [unreadEventIds, setUnreadEventIds] = useState([]), [notificationOpen, setNotificationOpen] = useState(false);
   const [announcement, setAnnouncement] = useState('');
-  const lock = useRef(false), scroll = useRef(null), messageId = useRef(0);
+  const lock = useRef(false), scroll = useRef(null), messageId = useRef(0), stickToBottom = useRef(true);
   const notificationRef = useRef(null), eventSnapshot = useRef(new Map()), notificationLock = useRef(false);
 
   function acceptTicketBaseline(tickets) {
@@ -87,8 +87,12 @@ export function Chat() {
   useEffect(() => { reset(); }, [customer]);
   const tail = messages.at(-1);
   useEffect(() => {
-    if (scroll.current) scroll.current.scrollTop = scroll.current.scrollHeight;
+    if (scroll.current && stickToBottom.current) scroll.current.scrollTop = scroll.current.scrollHeight;
   }, [messages]);
+  function trackScroll(e) {
+    const el = e.currentTarget;
+    stickToBottom.current = el.scrollHeight - el.scrollTop - el.clientHeight < 80;
+  }
   useEffect(() => {
     if (!ticketVerified || !session || ticketsOpen) return;
     const refresh = async () => {
@@ -127,6 +131,7 @@ export function Chat() {
         { id, role: 'assistant', text: '', sources: [] },
       ]);
       setDraft('');
+      stickToBottom.current = true;
       const reply = options.statementTxnId
         ? await api(`/api/sessions/${sid}/statement/${encodeURIComponent(options.statementTxnId)}/${options.statementAction === 'dispute' ? 'dispute' : 'explanation'}`, options.statementAction === 'dispute' ? 'POST' : 'GET')
         : await streamMessage(sid, text, update);
@@ -138,12 +143,14 @@ export function Chat() {
       setError(e.message);
     } finally { lock.current = false; setBusy(false); }
   }
+  const customerName = { C001: '陈伟明', C002: 'Priya Nair', C003: '林美玲' }[customer];
   let choices = [];
   if (pending === 'select_transfer') choices = (tail?.text || '').split('\n')
     .filter(line => line.includes(' · ')).map(line => [line, line.split(' · ')[0].trim()]);
   if (pending === 'transfer_scope') choices = ['同一收款人', '所有收款人'].map(text => [text, text]);
   if (pending === 'confirm_freeze') choices = [['确认冻结', '确认']];
-  if (pending) choices.push(['取消', '取消']);
+  if (pending === 'service_rating') choices = [1, 2, 3, 4, 5].map(rating => [`${rating} 分`, String(rating)]).concat([['跳过', '跳过']]);
+  else if (pending) choices.push(['取消', '取消']);
 
   return <Shell title="客户服务" sidebar={<div className="customer-controls">
     <label htmlFor="customer">演示客户</label>
@@ -178,17 +185,18 @@ export function Chat() {
   </div>}>
     <section className="chat">
       <div className="sr-only" role="status">{announcement}</div>
-      <div className="chat-body" ref={scroll}>
+      <div className="chat-body" ref={scroll} onScroll={trackScroll}>
         {messages.length === 0 ? <div className="welcome">
           <div className="welcome-mark"><Landmark size={33} strokeWidth={1.55}/></div>
-          <h1>有什么可以帮你？</h1>
+          <h1>{customerName ? `${customerName}，有什么可以帮你？` : '有什么可以帮你？'}</h1>
           <p>查询账户、汇款进度，或了解银行服务。</p>
           <div className="quick-actions">{promptOptions.map(([title, text, Icon]) =>
             <button type="button" key={title} disabled={busy} onClick={() => send(text)}>
               <Icon size={19}/><span>{title}</span><ArrowRight size={16}/>
             </button>)}</div>
         </div> : <div className="transcript" aria-label="对话记录">
-          {messages.map(m => <Message key={m.id} message={m}/>)}
+          {messages.map((m, index) => <Message key={m.id} message={m}
+            context={m.role === 'assistant' && !m.text ? [...messages.slice(0, index)].reverse().find(item => item.role === 'user')?.text : ''}/>)}
         </div>}
       </div>
       <div className="compose-area">
@@ -199,7 +207,7 @@ export function Chat() {
         </div>}
         <form className="composer" onSubmit={e => { e.preventDefault(); send(draft); }}>
           <input aria-label="输入消息" autoComplete={pending === 'otp' ? 'one-time-code' : 'off'}
-            type={pending === 'otp' ? 'password' : 'text'} inputMode={pending === 'otp' || pending === 'card_last4' ? 'numeric' : 'text'}
+            type={pending === 'otp' ? 'password' : 'text'} inputMode={pending === 'otp' || pending === 'card_last4' || pending === 'service_rating' ? 'numeric' : 'text'}
             placeholder={pendingLabels[pending] || '输入你的问题…'} maxLength={2000}
             value={draft} onChange={e => setDraft(e.target.value)}/>
           <button className="send" type="submit" aria-label="发送消息" disabled={busy || !draft.trim()}><ArrowUp size={21}/></button>
@@ -216,19 +224,41 @@ export function Chat() {
   </Shell>;
 }
 
-function Message({ message }) {
+function Message({ message, context = '' }) {
   const { role, text } = message;
   const match = role === 'assistant' && /\n\n(?:来源：|Source:\s*)([\s\S]*)$/i.exec(text);
   const sources = message.sources?.length ? message.sources : (match ? [{ label: match[1] }] : []);
   return <article className={`message ${role}`}>
     {role === 'assistant' && <span className="avatar"><Landmark size={16}/></span>}
     <div><h2 className="message-author">{role === 'user' ? '你' : '狮城银行客服'}</h2>
-      <div className="bubble">{match ? text.slice(0, match.index) : text || <span role="status">正在处理…</span>}
+      <div className="bubble">{match ? text.slice(0, match.index) : text || <TypingIndicator context={context}/>}
         {sources.length > 0 && <div className="sources"><BookOpen size={15}/><div>{sources.map((source, index) =>
           <span key={`${source.doc || source.label}-${index}`}>{source.label || source.section || source.title}</span>)}</div></div>}
       </div>
     </div>
   </article>;
+}
+
+function TypingIndicator({ context }) {
+  return <div className="typing-context" role="status" aria-live="polite">
+    <div className="typing-context-heading"><span className="typing" aria-hidden="true"><i/><i/><i/></span>
+      <strong>正在结合当前对话准备回复</strong></div>
+    {context && <p className="typing-context-quote">{context}</p>}
+  </div>;
+}
+
+function TicketListSkeleton({ count = 3 }) {
+  return <div className="ticket-skeleton-list" aria-hidden="true">{Array.from({ length: count }, (_, index) =>
+    <div className="ticket-skeleton-row" key={index}><i className="skeleton-block skeleton-title"/><i className="skeleton-block skeleton-meta"/><i className="skeleton-block skeleton-summary"/></div>)}</div>;
+}
+
+function TicketDetailSkeleton({ label = '正在加载工单详情…' }) {
+  return <div className="detail-skeleton" role="status" aria-label={label}>
+    <div className="skeleton-block skeleton-title"/><div className="skeleton-block skeleton-meta"/>
+    <div className="skeleton-card"><div className="skeleton-block skeleton-meta"/><div className="skeleton-block skeleton-summary"/><div className="skeleton-block skeleton-summary short"/></div>
+    <div className="skeleton-card"><div className="skeleton-block skeleton-title"/><div className="skeleton-block skeleton-summary"/><div className="skeleton-block skeleton-summary"/></div>
+    <span className="loading-caption"><span className="spinner"/>{label}</span>
+  </div>;
 }
 
 function CustomerTickets({ session, onClose, initialTicketId, notificationReady, onVerified, onTicketsUpdated }) {
@@ -295,7 +325,7 @@ function CustomerTickets({ session, onClose, initialTicketId, notificationReady,
     return () => window.clearInterval(timer);
   }, [verified, selected?.ticket_id, path]);
   useEffect(() => { dialog.current.showModal(); load(); }, []);
-  return <dialog ref={dialog} className="ticket-dialog" aria-labelledby="ticket-title" onClose={onClose}>
+  return <dialog ref={dialog} className="ticket-dialog" aria-labelledby="ticket-title" onClose={onClose} onClick={e => { if (e.target === dialog.current) dialog.current.close(); }}>
     <div className="dialog-heading"><div>{selected && <button className="ticket-back" type="button" onClick={() => { setSelected(null); setError(''); }}>‹ 返回工单列表</button>}
       <h2 id="ticket-title">{selected ? `工单 #${selected.ticket_id}` : '我的工单'}</h2>
       <p>{selected ? '查看工单进度、处理信息和坐席回复。' : '查看处理进度和坐席回复。'}</p></div>
@@ -303,19 +333,19 @@ function CustomerTickets({ session, onClose, initialTicketId, notificationReady,
     {verify && <form className="verify" onSubmit={e => { e.preventDefault(); load(code); }}>
       <label htmlFor="ticket-code">演示验证码</label><input id="ticket-code" type="password" inputMode="numeric" required
         pattern="[0-9]{6}" maxLength={6} autoComplete="one-time-code" value={code} onChange={e => setCode(e.target.value)}/>
-      <button className="button primary" disabled={loading}>验证并查看</button>
+      <button className="button primary" disabled={loading}>{loading && <span className="spinner"/>}{loading ? '正在验证…' : '验证并查看'}</button>
     </form>}
     {error && <p className="error" role="alert">{error}</p>}
     {notice && <p className="ticket-update-notice" role="status">{notice}</p>}
-    {loading && <p role="status">正在加载…</p>}
-    {detailLoading && <p role="status">正在加载工单详情…</p>}
-    {!verify && !loading && !error && !selected && (list.length ? list.map(t => <button className="customer-ticket" key={t.ticket_id} type="button" onClick={() => openTicket(t.ticket_id)}>
-      <header><strong>工单 #{t.ticket_id}</strong><span className={`ticket-status status-${t.status}`}>{statusNames[t.status] || t.status}　›</span></header>
+    {!selected && loading && <><span className="loading-caption" role="status"><span className="spinner"/>正在加载工单…</span><TicketListSkeleton/></>}
+    {detailLoading && <TicketDetailSkeleton/>}
+    {!verify && !loading && !detailLoading && !error && !selected && (list.length ? list.map(t => <button className="customer-ticket" key={t.ticket_id} type="button" onClick={() => openTicket(t.ticket_id)}>
+      <header><strong>工单 #{t.ticket_id}</strong><span className={`ticket-status status-${t.status}`}>{statusNames[t.status] || t.status}<ChevronRight size={14}/></span></header>
       {t.created_at && <small className="muted">{String(t.created_at).replace('T', ' ').slice(0, 16)}</small>}
       <p>{t.agent_reply || (t.status === 'open' ? '工单已提交，等待坐席处理。' : t.status === 'in_progress' ? '坐席正在处理，请稍候。' : '查看工单详情。')}</p>
     </button>) : <p className="muted">当前客户没有工单。</p>)}
-    {!verify && selected && <CustomerTicketDetail ticket={selected}/>}
-    {!selected && <div className="dialog-footer"><button className="button outline" disabled={loading} onClick={() => load()}>刷新工单</button></div>}
+    {!verify && selected && !detailLoading && <CustomerTicketDetail ticket={selected}/>}
+    {!selected && <div className="dialog-footer"><button className="button outline" disabled={loading} onClick={() => load()}>{loading && <span className="spinner"/>}{loading ? '正在刷新…' : '刷新工单'}</button></div>}
   </dialog>;
 }
 
@@ -392,7 +422,7 @@ function StatementDialog({ session, onClose, onAsk }) {
       ? `请帮我解释账单中的这笔交易：${base}。`
       : `我想对账单中的这笔交易提出争议并申请人工核查：${base}。请帮我核实这笔交易及相关费用。`;
   }
-  return <dialog ref={dialog} className="ticket-dialog statement-dialog" aria-labelledby="statement-title" onClose={onClose}>
+  return <dialog ref={dialog} className="ticket-dialog statement-dialog" aria-labelledby="statement-title" onClose={onClose} onClick={e => { if (e.target === dialog.current) dialog.current.close(); }}>
     <div className="dialog-heading"><div>{selected && <button className="ticket-back" type="button" onClick={() => { setSelected(null); setError(''); }}>‹ 返回交易列表</button>}
       <h2 id="statement-title">{selected ? '交易详情' : '账单与近期交易'}</h2>
       <p>{selected ? '核对交易信息，或下载本笔交易的电子回单。' : '仅展示演示数据。选择一笔交易查看详情、咨询或申请核查。'}</p></div>
@@ -401,21 +431,21 @@ function StatementDialog({ session, onClose, onAsk }) {
       <label htmlFor="statement-code">演示验证码（默认 123456）</label>
       <input id="statement-code" type="password" inputMode="numeric" required pattern="[0-9]{6}" maxLength={6}
         autoComplete="one-time-code" value={code} onChange={e => setCode(e.target.value)}/>
-      <button className="button primary" disabled={loading}>{loading ? '正在验证…' : '验证并查看账单'}</button>
+      <button className="button primary" disabled={loading}>{loading && <span className="spinner"/>}{loading ? '正在验证…' : '验证并查看账单'}</button>
     </form>}
     {error && <p className="error" role="alert">{error}</p>}
-    {loading && verified && <p role="status">正在加载账单…</p>}
-    {detailLoading && <p role="status">正在加载交易详情…</p>}
-    {verified && !selected && !loading && !error && (items.length ? <div className="statement-list">{items.map(txn => <article className="statement-row" key={txn.transaction_id}>
+    {loading && verified && <><span className="loading-caption" role="status"><span className="spinner"/>正在加载账单…</span><TicketListSkeleton count={4}/></>}
+    {detailLoading && <TicketDetailSkeleton label="正在加载交易详情…"/>}
+    {verified && !selected && !loading && !detailLoading && !error && (items.length ? <div className="statement-list">{items.map(txn => <article className="statement-row" key={txn.transaction_id}>
       <button type="button" className="statement-main statement-open" onClick={() => openTransaction(txn.transaction_id)} aria-label={`查看 ${txn.description} 交易详情`}>
-        <div><strong>{txn.description}</strong><span className="tag">{txn.kind === 'card' ? '银行卡' : '转账'}</span></div>
-        <small className="muted">{txn.transaction_id} · {txn.occurred_at ? String(txn.occurred_at).replace('T', ' ').slice(0, 16) : ''} · {txnStatus[txn.status] || txn.status}</small>
+        <div className="statement-title"><strong>{txn.description}</strong><span className="tag">{txn.kind === 'card' ? '银行卡' : '转账'}</span></div>
         <strong className="statement-amount">{money(txn.amount, txn.currency)}</strong>
-        {txn.transfer_fee != null && Number(txn.transfer_fee) > 0 && <small className="muted">手续费记录：{money(txn.transfer_fee, 'SGD')}</small>}
-        <span className="statement-view">查看详情 <ChevronRight size={15}/></span>
+        <small className="muted statement-meta">{txn.transaction_id} · {txn.occurred_at ? String(txn.occurred_at).replace('T', ' ').slice(0, 16) : ''} · {txnStatus[txn.status] || txn.status}
+          {txn.transfer_fee != null && Number(txn.transfer_fee) > 0 && ` · 手续费 ${money(txn.transfer_fee, 'SGD')}`}</small>
+        <span className="statement-view">详情 <ChevronRight size={15}/></span>
       </button>
     </article>)}</div> : <p className="muted">近期没有可显示的交易。</p>)}
-    {selected && <TransactionDetail transaction={selected} session={session} onAsk={(intent) => {
+    {selected && !detailLoading && <TransactionDetail transaction={selected} session={session} onAsk={(intent) => {
       onAsk(contextual(selected, intent), selected.transaction_id, intent === 'ask' ? 'explanation' : 'dispute');
     }}/>}
   </dialog>;

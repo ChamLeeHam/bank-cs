@@ -29,6 +29,13 @@ logger = logging.getLogger(__name__)
 
 GREETING_RE = re.compile(r"^(hi|hello|hey|你好|您好|哈喽|早安|早上好|good (morning|afternoon|evening))[!！.。,，\s]*$",
                          re.IGNORECASE)
+THANKS_RE = re.compile(
+    r"^(?:(?:好|好的|嗯|明白了|知道了)[，,、\s]*)?(?:谢谢(?:你)?(?:的)?(?:解答|回答|帮助)?|多谢|感谢(?:你)?(?:的)?(?:解答|回答|帮助)?)[。！!？?\s]*$|"
+    r"^(?:(?:okay|ok|great|got it)[,，\s]*)?(?:thanks?|thank you(?: for (?:the )?(?:answer|help))?)[.!?\s]*$",
+    re.IGNORECASE,
+)
+GOODBYE_RE = re.compile(r"^(再见|拜拜|回头见|祝你再见|bye(?: bye)?|goodbye|see you)[。！!,.\s]*$", re.IGNORECASE)
+ACKNOWLEDGEMENT_RE = re.compile(r"^(明白了|知道了|收到|好的|好|ok|okay|got it)[。！!,.，\s]*$", re.IGNORECASE)
 # 训练数据里没有"嗯嗯"、"那个"这种消息，交给模型的话它会随便选一个意图，所以直接当成 unknown
 FILLER_RE = re.compile(r"^(嗯+|啊+|哦+|呃+|那个|就是那个|这个|是的|对|好的?|ok(ay)?|hmm+|um+|yes|no|\?+|？+)[!！.。,，?？~\s]*$",
                        re.IGNORECASE)
@@ -197,6 +204,13 @@ class IntentRouterNode(BaseNode):
         # 1. 规则：问候、没有内容的消息
         if GREETING_RE.match(current):
             return {"intent": "greeting", "sub_intent": "hello", "intent_score": 0.95, "router_backend": "keyword"}
+        if THANKS_RE.fullmatch(current):
+            return {"intent": "greeting", "sub_intent": "thanks", "intent_score": 0.99, "router_backend": "keyword"}
+        if GOODBYE_RE.fullmatch(current):
+            return {"intent": "greeting", "sub_intent": "goodbye", "intent_score": 0.99, "router_backend": "keyword"}
+        if ACKNOWLEDGEMENT_RE.fullmatch(current) and history and history[-1][0] == "客服":
+            return {"intent": "greeting", "sub_intent": "acknowledgement", "intent_score": 0.99,
+                    "router_backend": "keyword"}
         if fraud_general_followup(current, history, state.get("fraud_confirmation_pending")):
             # 用户已说明只是了解一般流程：结束盗刷确认状态，转知识库给出有来源的说明。
             return {"intent": "card_service", "sub_intent": "lost_or_stolen_card", "intent_score": 0.99,
@@ -267,14 +281,24 @@ class IntentRouterNode(BaseNode):
         # 2. 模型用不了，用关键词
         if not self._model_ready():
             intent, score = keyword_intent(joined)
-            return {"intent": intent, "sub_intent": "", "intent_score": score, "router_backend": "keyword"}
+            return {"intent": intent, "sub_intent": "", "intent_score": score, "router_backend": "keyword",
+                    "resolved_question": joined if joined != current else ""}
 
-        # 3. 先只看这一条消息。如果上一轮是追问、这一条又不太确定，就和上一条消息拼起来再判断一次
-        result = self._classify(current)
-        if joined != current and result["intent_score"] < self.config.intent_threshold:
+        # 3. 如果上一轮是追问，客户的短补充（如“银行卡”）必须和原问题一起分类。
+        # 单独分类补充内容可能得到高置信度但错误的宽泛标签，丢失原问题的具体属性。
+        if joined != current:
             with_context = self._classify(joined)
-            if with_context["intent_score"] > result["intent_score"]:
-                result = with_context
+            result = with_context
+            # 完整上下文仍不确定时，再比较只看当前消息的结果，保留置信度更高者。
+            if with_context["intent_score"] < self.config.intent_threshold:
+                current_only = self._classify(current)
+                if current_only["intent_score"] > with_context["intent_score"]:
+                    result = current_only
+        else:
+            result = self._classify(current)
+        if joined != current:
+            # 同一份上下文既用于分类，也用于后续 RAG 检索，避免正确识别意图后仍拿短补充词检索。
+            result["resolved_question"] = joined
         self.log_step(self.name, f"意图：{result['intent']}/{result['sub_intent']}，置信度 {result['intent_score']}")
         return result
 

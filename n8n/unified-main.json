@@ -14,12 +14,32 @@
     },
     {
       "parameters": {
+        "httpMethod": "POST",
+        "path": "bank-cs/admin-automation",
+        "authentication": "headerAuth",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        170
+      ],
+      "id": "b8bcb0bb-0882-4f01-ae8f-fb4f1f754c07",
+      "name": "管理员页面触发",
+      "webhookId": "9daf32c7-23f8-4b14-ae45-2a2c0b6c04b7",
+      "notesInFlow": true,
+      "notes": "导入后选择 Header Auth 凭证：Header 名称 X-Internal-Token，值与后端 N8N_INTERNAL_TOKEN 一致。"
+    },
+    {
+      "parameters": {
         "assignments": {
           "assignments": [
             {
               "id": "1e4c9c6f-ecfb-4872-82a1-7153e78db1c5",
               "name": "task",
-              "value": "preview",
+              "value": "={{ $json.body?.task || $json.task || 'preview' }}",
               "type": "string"
             }
           ]
@@ -238,7 +258,7 @@
     },
     {
       "parameters": {
-        "content": "## 银行客服自动化总控（停用）\n在“选择任务”设置 task：\n- preview：只读查看状态（默认）\n- notify：认领并发送工单邮件\n- timeout：发送超时人工核对提醒\n- daily：发送前一天日报\n\n后三项会实际发送邮件；保持停用，定时功能尚未配置。",
+        "content": "## 银行客服自动化总控（停用）\n可从手动入口运行，也可接收管理员页面 POST Webhook。\n导入后为 Webhook 选择 Header Auth 凭证（X-Internal-Token），并配置相同的后端令牌。\n任务：preview 只读；notify、timeout、daily 会实际发送邮件。\n保持工作流停用，配置并检查收件地址后再启用 Webhook。",
         "height": 280,
         "width": 480
       },
@@ -323,6 +343,17 @@
         [
           {
             "node": "只读查看工单状态",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "管理员页面触发": {
+      "main": [
+        [
+          {
+            "node": "选择任务",
             "type": "main",
             "index": 0
           }

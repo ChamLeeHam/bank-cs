@@ -18,12 +18,39 @@ def ensure_ticket_assignment_schema():
     if "idx_tk_assignment" not in indexes:
         execute("ALTER TABLE tickets ADD INDEX idx_tk_assignment (assigned_team, assigned_agent, status, priority)")
     execute("""
+        CREATE TABLE IF NOT EXISTS ticket_assignment_events (
+            event_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+            ticket_id INT NOT NULL,
+            from_agent VARCHAR(32) NULL,
+            to_agent VARCHAR(32) NOT NULL,
+            actor_type ENUM('system', 'supervisor') NOT NULL,
+            actor_username VARCHAR(32) NULL,
+            source VARCHAR(12) NOT NULL,
+            note VARCHAR(180) NULL,
+            created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            CONSTRAINT fk_ticket_assignment_event_ticket FOREIGN KEY (ticket_id)
+                REFERENCES tickets(ticket_id) ON DELETE CASCADE,
+            INDEX idx_ticket_assignment_event_time (ticket_id, created_at, event_id)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+    """)
+    execute("""
         update tickets set assigned_team = 'customer_service',
             dispatch_note = coalesce(dispatch_note, '按已有工单意图与风险规则补充分派。'),
             assigned_at = coalesce(assigned_at, created_at)
         where assigned_team is null or assigned_team <> 'customer_service'
     """)
     _auto_assign_unowned_tickets()
+    execute("""
+        INSERT INTO ticket_assignment_events
+            (ticket_id, from_agent, to_agent, actor_type, actor_username, source, note, created_at)
+        SELECT t.ticket_id, NULL, t.assigned_agent, 'system', NULL, t.dispatch_source,
+               COALESCE(t.dispatch_note, '历史工单的当前坐席归属。'), COALESCE(t.assigned_at, t.created_at)
+        FROM tickets t
+        WHERE t.assigned_agent IS NOT NULL
+          AND NOT EXISTS (
+              SELECT 1 FROM ticket_assignment_events e WHERE e.ticket_id = t.ticket_id
+          )
+    """)
 
 
 def _auto_assign_unowned_tickets():
