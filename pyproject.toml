@@ -19,6 +19,7 @@ dependencies = [
     "pymilvus[model]>=3.0.3",
     "pymysql>=1.2.4",
     "python-dotenv>=1.2.4",
+    "pyyaml>=6.0.3",
     "ragas>=0.4.3",
     "reportlab>=4.4",
     "sentence-transformers>=6.2.0",

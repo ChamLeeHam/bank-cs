@@ -9,10 +9,16 @@ import time
 import torch
 
 from src.intents import ALL_LABELS, INTENT_SYSTEM, INTENTS, LABEL_SEP, split_label
-from src.nodes.stub_nodes import KEYWORD_RULES, router_text
+from src.nodes.loan_calculator import (
+    LOAN_CALCULATION_INTENT, bare_amount_followup, implicit_amount_followup, is_loan_calculation_request,
+    loan_followup_arguments,
+)
+from src.nodes.stub_nodes import KEYWORD_RULES, is_internal_role_question, router_text
 from src.schema.base import BaseNode, StateUpdate
 from src.schema.config import get_config
 from src.schema.state import GraphState
+from src.utils.banking_terminology import banking_term_faq_intent
+from src.utils.financial_products import financial_product_query
 from src.utils.fraud_context import (fraud_action_status_question, fraud_context,
                                      fraud_comparison_requests_action, fraud_dispute_comparison_question,
                                      unfamiliar_merchant_name_question)
@@ -27,7 +33,7 @@ from src.utils.reference_bank_utils import (is_reference_policy_question, refere
 
 logger = logging.getLogger(__name__)
 
-GREETING_RE = re.compile(r"^(hi|hello|hey|你好|您好|哈喽|早安|早上好|good (morning|afternoon|evening))[!！.。,，\s]*$",
+GREETING_RE = re.compile(r"^(hi|hello|hey|你好|您好|哈喽|早安|早上好[呀啊吗]?|嗨(?:[，,\s]+(?:hi|hello|hey))?|good (morning|afternoon|evening))[!！.。,，\s]*$",
                          re.IGNORECASE)
 THANKS_RE = re.compile(
     r"^(?:(?:好|好的|嗯|明白了|知道了)[，,、\s]*)?(?:谢谢(?:你)?(?:的)?(?:解答|回答|帮助)?|多谢|感谢(?:你)?(?:的)?(?:解答|回答|帮助)?)[。！!？?\s]*$|"
@@ -59,7 +65,10 @@ _STATEMENT_RISK_RE = re.compile(
 )
 _LATEST_CARD_TRANSACTION_RE = re.compile(
     r"\b(?:my|mine)\s+(?:last|latest|most recent)\s+card\s+(?:transaction|payment)\b|"
-    r"(?:我的|本人)(?:最近一?|上一|最后一)(?:笔|次)?(?:银行卡|信用卡|借记卡|卡片)(?:交易|消费)",
+    r"\b(?:last|latest|most recent)\s+(?:purchase|payment|transaction)\s+(?:on|with|using)\s+my\s+(?:(?:debit|credit|bank)\s+)?card\b|"
+    r"(?:我的|本人)(?:最近一?|上一|最后一)(?:笔|次)?(?:银行卡|信用卡|借记卡|卡片)(?:交易|消费)|"
+    r"(?:我(?:的)?\s*)?(?:银行卡|信用卡|借记卡|\b(?:debit|credit|bank) card\b)\s*"
+    r"(?:最近一?|上一|最后一)(?:笔|次)?\s*(?:消费|交易|扣款|transaction\b|purchase\b|payment\b)",
     re.IGNORECASE,
 )
 _DISPUTE_PATTERNS = (
@@ -75,6 +84,40 @@ _DISPUTE_PATTERNS = (
         r"\b(?:wrong amount|incorrect amount|amount is wrong)\b.{0,25}\b(?:charge|payment|transaction|card|cash)\b|"
         r"拒付|交易争议|交易不认可|金额不符|金额不对|多扣了?钱", re.IGNORECASE)),
 )
+
+
+_CARD_REPAYMENT_RE = re.compile(r"信用卡.{0,12}还款|\bcredit[- ]card (?:repayment|payment)\b", re.I)
+_REPAYMENT_UNPOSTED_RE = re.compile(
+    r"(?:还没|尚未|未|没有|没)(?:显示|入账|到账)|"
+    r"\b(?:not|hasn't|has not) (?:been )?(?:posted|appeared|credited)\b", re.I
+)
+_REPAYMENT_GUIDANCE_RE = re.compile(
+    r"(?:怎么|如何|该|需要).{0,10}(?:核对|处理|排查)|"
+    r"\bwhat (?:should|can|do) i (?:check|do)\b", re.I
+)
+_ACCOUNT_PROOF_RE = re.compile(r"账户(?:归属|余额)?证明|\baccount (?:confirmation|certificate|proof)\b", re.I)
+_ACCOUNT_STATEMENT_RE = re.compile(r"对账单|月结单|\b(?:monthly |account |bank )?statement\b", re.I)
+_DOCUMENT_COMPARISON_RE = re.compile(
+    r"区别|不同|互相替代|互相代替|(?:能|可)(?:否|不能|不可以|以)?(?:用.{0,20})?(?:替代|代替)|"
+    r"\b(?:difference|differ|interchangeable|substitute|instead of)\b", re.I
+)
+_PERSONAL_ACTION_RE = re.compile(
+    r"(?:帮我|请|能否|可以).{0,5}(?:查(?:询)?(?:一下)?|开具|出具|下载|打印)|"
+    r"\b(?:can you|could you|please)\s+(?:check|look up|issue|generate|download|print)\b", re.I
+)
+
+
+def _billing_knowledge_intent(text):
+    """Match general billing and document guidance before the model fallback."""
+    if _STATEMENT_RISK_RE.search(text) or _PERSONAL_ACTION_RE.search(text):
+        return None
+    if (_CARD_REPAYMENT_RE.search(text) and _REPAYMENT_UNPOSTED_RE.search(text)
+            and _REPAYMENT_GUIDANCE_RE.search(text)):
+        return "fees_rates"
+    if (_ACCOUNT_STATEMENT_RE.search(text) and _ACCOUNT_PROOF_RE.search(text)
+            and _DOCUMENT_COMPARISON_RE.search(text)):
+        return "account_service"
+    return banking_term_faq_intent(text)
 
 
 def _general_statement_charge_question(text):
@@ -233,6 +276,11 @@ class IntentRouterNode(BaseNode):
             return {"intent": "unknown", "sub_intent": "", "intent_score": UNKNOWN_SCORE, "router_backend": "keyword"}
         if FILLER_RE.match(current):
             return {"intent": "unknown", "sub_intent": "", "intent_score": UNKNOWN_SCORE, "router_backend": "keyword"}
+        bare_amount = bare_amount_followup(current)
+        if ((bare_amount and not state.get("loan_calculation_context") and not state.get("loan_calculation_pending"))
+                or (not history and implicit_amount_followup(current))):
+            return {"intent": "unknown", "sub_intent": "ambiguous_amount",
+                    "intent_score": UNKNOWN_SCORE, "router_backend": "keyword"}
 
         # 只把否认之后的业务问题交给分类器，避免否定词被重新识别为盗刷。
         joined = router_text(state) if topic == current else topic
@@ -277,6 +325,27 @@ class IntentRouterNode(BaseNode):
                 "intent_score": 0.99,
                 "router_backend": "keyword",
             }
+
+        billing_knowledge_intent = _billing_knowledge_intent(current)
+        if billing_knowledge_intent and not state.get("private_input") and not state.get("human_requested"):
+            return {"intent": billing_knowledge_intent, "sub_intent": "", "intent_score": 0.99,
+                    "router_backend": "keyword"}
+
+        if not state.get("private_input") and not state.get("human_requested"):
+            loan_context = state.get("loan_calculation_context") or {}
+            followup = loan_followup_arguments(current, loan_context)
+            if followup or is_loan_calculation_request(current, state.get("loan_calculation_pending", False)):
+                return {"intent": "account_service", "sub_intent": LOAN_CALCULATION_INTENT,
+                        "intent_score": 0.99, "router_backend": "keyword"}
+
+        if (not state.get("private_input") and not state.get("human_requested")
+                and financial_product_query(current) is not None):
+            return {"intent": "account_service", "sub_intent": "", "intent_score": 0.99,
+                    "router_backend": "keyword"}
+
+        if is_internal_role_question(current) and not state.get("human_requested"):
+            return {"intent": "out_of_scope", "sub_intent": "non_banking", "intent_score": 0.99,
+                    "router_backend": "keyword"}
 
         # 2. 模型用不了，用关键词
         if not self._model_ready():

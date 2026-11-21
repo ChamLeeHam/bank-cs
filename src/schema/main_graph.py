@@ -16,15 +16,17 @@ from langsmith import tracing_context
 from src.nodes.bank_agent import BankAgentNode
 from src.nodes.account_agent import AccountAgentNode
 from src.nodes.intent_router import IntentRouterNode
+from src.nodes.loan_calculator import LOAN_CALCULATION_INTENT
 from src.nodes.rag_answer import RagAnswerNode
 from src.nodes.verify_otp import VerifyOtpNode
 from src.nodes.stub_nodes import (InputGuardNode, EntityExtractionNode, GateNode, AskBackNode,
                                   HandoffNode, RefuseNode, OutputGuardNode)
 from src.schema.config import get_config
-from src.schema.state import GraphState, create_turn_input
+from src.schema.state import GraphState, Lang, create_turn_input
 from src.schema.base import setup_logging
 from src.schema.exceptions import MySQLError
 from src.utils.audit_utils import write_turn_log
+from src.utils.financial_products import financial_product_query
 from src.utils.transfer_context import begin_transfer_resume, end_transfer_resume
 
 logger = logging.getLogger(__name__)
@@ -40,9 +42,15 @@ def route_after_gate(state: GraphState) -> str:
     """根据 gate 写的 route 找下一个节点"""
     if state.get("route") == "rag" and state.get("private_input"):
         return "ask_back"
+    if state.get("route") == "rag" and state.get("sub_intent") == LOAN_CALCULATION_INTENT:
+        return "bank_agent"
+    use_agent = get_config().use_agent
+    if use_agent and state.get("route") == "rag" and state.get("intent") == "account_service":
+        if financial_product_query(state.get("masked_question", "")) is not None:
+            return "rag_answer"
     route_to_node = {
         # 知识库类的问题：BANK_USE_AGENT=true 交给 Bank Agent，否则用原来的 RAG
-        "rag": "bank_agent" if get_config().use_agent else "rag_answer",
+        "rag": "bank_agent" if use_agent else "rag_answer",
         "account": "verify_otp",  # 账户的问题要先验证 OTP
         "handoff": "handoff",
         "refuse": "refuse",
@@ -109,6 +117,13 @@ def is_customer_verified(session_id: str, customer_id: str) -> bool:
     state = _app.get_state({"configurable": {"thread_id": session_id}}).values
     return bool(state.get("customer_id") == customer_id and state.get("otp_verified")
                 and state.get("otp_customer_id") == customer_id)
+
+
+def get_conversation_language(session_id: str, customer_id: str) -> Lang | None:
+    state = _app.get_state({"configurable": {"thread_id": session_id}}).values
+    if state.get("customer_id") == customer_id:
+        return state.get("conversation_lang")
+    return None
 
 
 def _run(session_id: str, graph_input, verbose: bool = True) -> dict:

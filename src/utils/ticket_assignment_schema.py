@@ -2,6 +2,24 @@
 from src.utils.mysql_utils import execute, query
 
 
+def ensure_ticket_dispute_constraint():
+    indexes = {row["Key_name"] for row in query("SHOW INDEX FROM tickets") if not row["Non_unique"]}
+    if "uk_ticket_active_txn" in indexes:
+        return
+    columns = {row["Field"] for row in query("SHOW COLUMNS FROM tickets")}
+    if "active_transaction_id" in columns:
+        execute("ALTER TABLE tickets ADD UNIQUE KEY uk_ticket_active_txn (customer_id, active_transaction_id)")
+    else:
+        execute("""
+            ALTER TABLE tickets
+                ADD COLUMN active_transaction_id VARCHAR(20)
+                    GENERATED ALWAYS AS (
+                        CASE WHEN status <> 'closed' THEN related_transaction_id ELSE NULL END
+                    ) STORED,
+                ADD UNIQUE KEY uk_ticket_active_txn (customer_id, active_transaction_id)
+        """)
+
+
 def ensure_ticket_assignment_schema():
     columns = {row["Field"] for row in query("SHOW COLUMNS FROM tickets")}
     additions = {

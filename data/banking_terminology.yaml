@@ -1,0 +1,459 @@
+# 狮城银行 FAQ 业务术语表
+# section 是 data/kb 对应文件里 H2 标题的中文部分，可作为预期出处。
+# aliases 收录用户可能使用的表达，用于检索与精排对齐。业务权限、工单创建、冻结确认由现有流程决定。
+# 多轮先确认指代对象。候选场景仍有歧义时，可以保留多个候选或追问。
+# rerank_hint 标记经过验证、可用于精排的条目。cues 中每一组至少命中一个表达。
+schema_version: 1
+documents:
+  account_services:
+    file: "data/kb/account_services.md"
+    terms:
+      - id: account_eligibility
+        section: "开户条件"
+        aliases_zh: ["多少岁能开账户","谁可以申请开户"]
+        aliases_en: ["minimum age to open an account","am I eligible to open a bank account"]
+      - id: multi_currency_documents
+        section: "多币种开户材料"
+        aliases_zh: ["开多币种账户要带什么","多币种账户申请要哪些文件"]
+        aliases_en: ["documents needed for a multi-currency account","paperwork for opening a foreign currency account"]
+      - id: identity_verification
+        section: "身份验证"
+        aliases_zh: ["如何证明是本人","身份核验要怎么做"]
+        aliases_en: ["how do I verify my identity","steps for completing identity checks"]
+      - id: identity_verification_failed
+        section: "身份验证失败"
+        aliases_zh: ["身份核验一直没通过","证件验证失败后怎么办"]
+        aliases_en: ["my identity check keeps failing","what to do after verification is rejected"]
+      - id: update_personal_details
+        section: "修改个人资料"
+        aliases_zh: ["在银行留的地址怎么改","怎么更新登记邮箱"]
+        aliases_en: ["update the address on my bank profile","change the email registered with the bank"]
+      - id: forgotten_login_password
+        section: "忘记登录密码"
+        aliases_zh: ["网银密码忘了怎么重设","银行应用登不上想找回密码"]
+        aliases_en: ["forgot my internet banking password","how to reset the app login password"]
+      - id: close_account
+        section: "销户"
+        aliases_zh: ["这个账户不用了怎么注销","把银行户口关掉要准备什么"]
+        aliases_en: ["how do I close my bank account","what do I need to cancel an unused account"]
+      - id: supported_currencies
+        section: "多币种账户支持的货币"
+        aliases_zh: ["这个户口可以放哪些外币","多币种钱包支持什么币"]
+        aliases_en: ["which currencies can the account hold","supported currencies for the multi-currency wallet"]
+      - id: deposit_insurance
+        section: "存款保险"
+        aliases_zh: ["存进银行的钱有保障吗","哪类存款可能纳入保障"]
+        aliases_en: ["which bank deposits are covered","what does deposit insurance protect"]
+      - id: emergency_account_lock
+        section: "紧急冻结账户"
+        aliases_zh: ["担心网银被接管想了解全面锁定","紧急锁定所有账户是做什么的"]
+        aliases_en: ["what does an emergency account lock do","temporarily lock access across my bank accounts"]
+      - id: money_lock
+        section: "资金锁"
+        aliases_zh: ["想把部分存款单独锁起来","怎样理解锁住一部分余额"]
+        aliases_en: ["lock away part of my savings","how does the Money Lock feature work"]
+      - id: additional_identity_details
+        section: "银行为何要求补充身份资料"
+        aliases_zh: ["银行又让我补充身份材料","为什么要重新提交客户资料"]
+        aliases_en: ["why is the bank asking for updated ID","why do I need to submit additional identity documents"]
+      - id: suspicious_bank_message
+        section: "收到可疑银行短信或电话怎么办"
+        aliases_zh: ["收到自称银行的可疑电话","银行短信里的链接看着不对"]
+        aliases_en: ["a caller claims to be from the bank","suspicious text with a banking link"]
+      - id: deposit_insurance_aggregation
+        section: "存款保险是按账户还是按银行计算"
+        aliases_zh: ["同一家银行有几个户口保障怎么算","存款保障是不是每个账户单独算"]
+        aliases_en: ["is deposit insurance calculated per account","do several accounts at one bank share coverage"]
+      - id: old_mobile_unavailable
+        section: "旧手机号无法接收验证码怎么办"
+        aliases_zh: ["原号码停机了收不到短信码","旧卡注销了怎么正规换绑定手机号"]
+        aliases_en: ["old mobile number cannot receive verification texts","update a registered phone number after losing the old SIM"]
+      - id: myinfo_mismatch
+        section: "开户时 MyInfo 预填资料不一致"
+        aliases_zh: ["开户自动填的姓名和证件对不上","MyInfo带出来的身份资料有误"]
+        aliases_en: ["prefilled MyInfo name differs from my ID","MyInfo pulled the wrong identity details"]
+        aliases_mixed: ["MyInfo 自动填的 name 和身份证拼法不一样"]
+  account_statements:
+    file: "data/kb/account_statements.md"
+    terms:
+      - id: recent_statement_activity
+        section: "如何查看近期账单与交易"
+        aliases_zh: ["账单页面哪里能看近期明细","在哪查看最近一笔交易的日期金额"]
+        aliases_en: ["where to view recent statement activity","find the date and amount in transaction details"]
+      - id: statement_receipt_account_proof
+        section: "月度对账单、交易回单与账户证明有什么区别"
+        aliases_zh: ["单笔付款凭据能证明账户是我的吗","电子回单可以替代月度对账单吗"]
+        aliases_en: ["can a payment printout prove account ownership","bank statement versus transaction receipt versus account confirmation"]
+        aliases_mixed: ["单笔 payment receipt 能不能当成 account ownership proof"]
+        rerank_hint:
+          zh: "单笔付款回单与账户归属证明的区别"
+          en: "One payment receipt versus an official account confirmation for proof of account ownership"
+          cues:
+            - ["单笔付款", "付款凭据", "payment receipt", "printout for one payment", "single payment printout"]
+            - ["账户归属", "证明账户", "account ownership", "own the account", "ownership proof"]
+      - id: account_proof_requirements
+        section: "申请账户证明前需要确认什么"
+        aliases_zh: ["开余额证明前要和接收方核对什么","对方要账户归属证明应该先问哪些条件"]
+        aliases_en: ["what to confirm before requesting a bank letter","does the receiving organisation need a date range or a certified account letter"]
+  card_security:
+    file: "data/kb/card_security.md"
+    terms:
+      - id: suspected_card_compromise
+        section: "怀疑银行卡被盗用时先做什么"
+        aliases_zh: ["怀疑卡资料泄露应该先做什么","卡可能被人拿去用先怎么自保"]
+        aliases_en: ["first steps if my card details were compromised","what to do if someone might be using my card"]
+      - id: unrecognised_card_transaction
+        section: "发现非本人银行卡交易怎么办"
+        aliases_zh: ["账单有一笔确定不是我刷的","发现没有授权的银行卡消费"]
+        aliases_en: ["there is a card purchase I did not authorise","how do I report a card transaction that wasn't mine"]
+      - id: verification_charge_unknown_merchant
+        section: "小额验证扣款或陌生商户名称"
+        aliases_zh: ["有一笔一块钱的测试扣款","商户名字不熟但还不确定是不是我买的"]
+        aliases_en: ["a tiny verification charge showed up","the merchant name looks unfamiliar and I am not sure what it is"]
+      - id: atm_cash_not_dispensed
+        section: "ATM 已扣款但没有收到现金"
+        aliases_zh: ["取现扣了余额却没出钞","机器说取款成功但没给现金"]
+        aliases_en: ["cash machine debited my account without dispensing cash","ATM withdrawal succeeded but no banknotes came out"]
+        aliases_mixed: ["ATM 显示 debit complete，可是没吐现金"]
+      - id: authorised_transaction_dispute
+        section: "本人操作但对交易金额或扣款有异议"
+        aliases_zh: ["是我刷的但金额不对","交易是本人做的但扣款有问题"]
+        aliases_en: ["I made the payment but dispute the amount","I authorised the transaction but the charge seems wrong"]
+      - id: fraud_dispute_ticket_status
+        section: "如何查询盗刷或交易争议工单"
+        aliases_zh: ["之前报了盗刷想看处理进度","交易争议单到哪一步了"]
+        aliases_en: ["check the status of my fraud report","look up an existing card dispute case"]
+  card_services:
+    file: "data/kb/card_services.md"
+    terms:
+      - id: activate_new_card
+        section: "激活新卡"
+        aliases_zh: ["新卡第一次用怎么开通","拿到实体卡后去哪激活"]
+        aliases_en: ["how do I activate a new card","enable my newly delivered debit card"]
+      - id: card_delivery
+        section: "新卡寄送时间"
+        aliases_zh: ["补发的卡还没有寄到","怎么查新卡寄送进度"]
+        aliases_en: ["my replacement card has not arrived","track the delivery of my new card"]
+      - id: card_pin
+        section: "修改 PIN 与 PIN 被锁"
+        aliases_zh: ["卡密码输错几次锁了","银行卡取款密码怎么改"]
+        aliases_en: ["my card PIN is blocked","how to change an ATM PIN"]
+      - id: card_declined
+        section: "卡被拒或不能用"
+        aliases_zh: ["刷卡总是被拒绝","这张卡突然用不了了"]
+        aliases_en: ["why does my card keep getting declined","my card is no longer working"]
+      - id: lost_stolen_card
+        section: "银行卡丢失或被盗"
+        aliases_zh: ["银行卡找不到了怎么处理","钱包被偷卡也在里面"]
+        aliases_en: ["what to do if a debit card is lost","my wallet was stolen with my card inside"]
+      - id: atm_retained_card
+        section: "ATM 吞卡"
+        aliases_zh: ["柜员机没吐卡","工资卡在柜员机里没吐出来","卡被机器吃掉了"]
+        aliases_en: ["the cash machine kept my card","ATM didn't give my card back"]
+        aliases_mixed: ["ATM 把我的 card 吃了，没退出来"]
+        rerank_hint:
+          zh: "ATM 吞卡，银行卡被柜员机吞掉后应该先联系谁"
+          en: "ATM retained my bank card. Who should I contact when the cash machine keeps my card?"
+          cues:
+            - ["ATM", "柜员机", "提款机", "cash machine"]
+            - ["银行卡", "工资卡", "卡片", "借记卡", "信用卡", "my card", "bank card"]
+            - ["吞", "吃掉", "吃了", "没吐出来", "没退出来", "kept", "retained", "give my card back"]
+          exclude: ["没出钞", "没吐现金", "没有吐现金", "no cash", "no banknotes"]
+      - id: card_expiry
+        section: "卡片即将到期"
+        aliases_zh: ["卡快过期了要自己申请新卡吗","有效期快到了银行怎么换卡"]
+        aliases_en: ["my card is expiring soon","will I receive a new card before expiry"]
+      - id: replacement_supplementary_card
+        section: "补发实体卡与附属卡"
+        aliases_zh: ["实体卡坏了怎么补","可以给家人申请附属卡吗"]
+        aliases_en: ["replace a damaged physical card","apply for a supplementary card"]
+      - id: card_network_acceptance
+        section: "卡组织与受理范围"
+        aliases_zh: ["Visa和万事达分别哪里能刷","银联卡在哪些机器能取钱"]
+        aliases_en: ["where is this card network accepted","which ATMs support my UnionPay card"]
+      - id: online_card_decline
+        section: "网购付款被拒先检查什么"
+        aliases_zh: ["网上下单刷卡失败要检查什么","电商收银台说卡片交易未通过"]
+        aliases_en: ["card declined at online checkout","what to check when an e-commerce payment fails"]
+      - id: recurring_payment_after_replacement
+        section: "订阅扣款在换卡后失败"
+        aliases_zh: ["换卡后会员没自动续费","补卡后周期性扣款失败"]
+        aliases_en: ["my subscription won't renew after replacing my card","recurring payments stopped after a card reissue"]
+      - id: card_preauthorisation_vs_final
+        section: "卡片预授权与最终入账金额不同"
+        aliases_zh: ["酒店押金和退房扣款金额不一样","租车先占卡额度后来正式扣款"]
+        aliases_en: ["hotel hold differs from the final card charge","rental car pre-authorisation versus the posted amount"]
+        aliases_mixed: ["酒店的 deposit hold 和 check-out 那笔 final charge 差在哪"]
+        rerank_hint:
+          zh: "酒店或租车的卡片预授权与最终入账金额为什么不同"
+          en: "Why are the card pre-authorisation hold and final posted card charge different?"
+          cues:
+            - ["酒店", "租车", "hotel", "car rental", "rental car"]
+            - ["押金", "预授权", "deposit", "hold", "pre-authorisation", "preauthorization", "authorisation"]
+            - ["最终", "结账", "退房", "final", "check-out", "checked out", "posted"]
+      - id: contactless_only_failure
+        section: "网购能付但感应付款失败"
+        aliases_zh: ["网购能刷实体店碰一碰不行","插卡能付但拍卡失败"]
+        aliases_en: ["online payments work but tap to pay fails","card insertion works but contactless does not"]
+        aliases_mixed: ["online 能付，实体店 tap 一直 fail"]
+      - id: renewal_vs_replacement
+        section: "到期换卡与丢失补卡如何区分"
+        aliases_zh: ["到期更新和报失补卡是一回事吗","有效期快到和卡遗失分别怎么换"]
+        aliases_en: ["renewing an expired card versus replacing a lost card","expiry renewal compared with lost-card replacement"]
+  credit_card_billing:
+    file: "data/kb/credit_card_billing.md"
+    terms:
+      - id: statement_vs_current_balance
+        section: "信用卡账单日、到期日和应还金额"
+        aliases_zh: ["已经出账单了后来又刷了一笔为什么欠得更多","本期应还和当前欠款为什么不同"]
+        aliases_en: ["why is my current balance bigger than the statement balance","what is the difference between the statement date and the due date"]
+        aliases_mixed: ["statement 出了以后又刷了一笔，为啥 current balance 更高"]
+        rerank_hint:
+          zh: "信用卡出账以后新增消费，本期账单应还金额与当前余额为什么不同"
+          en: "Why is the current credit card balance higher than the statement balance after a new purchase?"
+          cues:
+            - ["出了账单", "出账单", "出账后", "账单日后", "statement was issued", "after the statement date"]
+            - ["又刷", "新增消费", "又消费", "new purchase", "another purchase"]
+            - ["欠", "余额", "应还", "balance", "amount due"]
+          faq:
+            intent: fees_rates
+            cues: ["为什么", "为何", "why", "what is the difference"]
+      - id: repayment_checks
+        section: "信用卡还款应该核对什么"
+        aliases_zh: ["我要付卡账先核对哪些信息","给信用卡还钱前看哪个账户和金额"]
+        aliases_en: ["what to check before paying a credit card bill","confirm which card account and payment channel to use"]
+      - id: repayment_not_posted
+        section: "信用卡还款后仍显示未还"
+        aliases_zh: ["已经还卡账了但还显示欠款","付款行说成功可信用卡没记账"]
+        aliases_en: ["credit card payment is not showing yet","the sending bank shows success but the card repayment hasn't posted"]
+  fees_rates:
+    file: "data/kb/fees_rates.md"
+    terms:
+      - id: local_transfer_fees
+        section: "本地转账费用"
+        aliases_zh: ["用本地转账要扣服务费吗","在新加坡转给朋友收不收钱"]
+        aliases_en: ["fee for a domestic bank transfer","do local SGD transfers have a service charge"]
+      - id: overseas_tt_fee
+        section: "海外电汇（TT）手续费"
+        aliases_zh: ["电汇寄到国外手续费怎么算","海外汇款有哪些费用选项"]
+        aliases_en: ["fees for sending an overseas wire","what charges apply to a telegraphic transfer"]
+      - id: exchange_rate_basis
+        section: "汇率如何确定"
+        aliases_zh: ["换汇价格按什么定","转账看到的汇率从哪里来"]
+        aliases_en: ["how does the bank set the exchange rate","what determines my conversion rate"]
+      - id: foreign_card_conversion_fees
+        section: "外币兑换与外币刷卡费用"
+        aliases_zh: ["用卡买美元东西会加收什么","外币刷卡有汇兑附加费吗"]
+        aliases_en: ["foreign currency card purchase surcharge","extra costs for paying in a foreign currency"]
+      - id: atm_withdrawal_fees
+        section: "ATM 取款费用"
+        aliases_zh: ["去柜员机取钱有没有手续费","国外提款机会扣哪些费"]
+        aliases_en: ["cash withdrawal fees at an ATM","what fees apply when using a cash machine abroad"]
+      - id: overseas_cash_vs_card_fees
+        section: "海外 ATM 取现与外币刷卡费用对比"
+        aliases_zh: ["在国外拿现金和直接刷卡费用差多少","旅行用提款机还是刷外币卡更划算"]
+        aliases_en: ["compare overseas cash withdrawal and card purchase fees","costs of using an ATM abroad versus paying by card"]
+      - id: unfamiliar_statement_fee
+        section: "账单上看不懂的费用"
+        aliases_zh: ["明细有一项收费看不懂","账单里的服务费可能是哪一类"]
+        aliases_en: ["unexplained service charge on the statement","what kind of bank fee am I seeing"]
+      - id: card_annual_fee
+        section: "银行卡年费与其他卡费"
+        aliases_zh: ["信用卡每年扣的那笔费是什么","想了解银行卡年费和其他卡费"]
+        aliases_en: ["what is my card's annual fee","recurring yearly card fees and other charges"]
+      - id: foreign_purchase_shown_in_sgd
+        section: "外币消费为什么显示为新元"
+        aliases_zh: ["在国外花的外币为什么明细显示新币","用美元付款账单为何标成新元"]
+        aliases_en: ["foreign purchase displayed in Singapore dollars","why was a USD purchase shown in SGD on my statement"]
+      - id: minimum_vs_full_payment
+        section: "信用卡应还全额还是最低还款额"
+        aliases_zh: ["只交最低的剩下怎么办","还最低金额和还清账单有什么不同"]
+        aliases_en: ["pay the minimum or full statement balance","what happens to the rest if I only pay the minimum"]
+      - id: dcc_sgd_vs_local_currency
+        section: "海外刷卡时选择新元还是当地货币"
+        aliases_zh: ["国外收银让我选当地钱还是新币","境外刷卡机用新元结算好不好"]
+        aliases_en: ["overseas terminal asks me to choose SGD or local currency","should I accept the merchant's currency conversion"]
+      - id: credit_vs_debit_card
+        section: "信用卡与借记卡的区别"
+        aliases_zh: ["借记卡和信用卡扣哪的钱","提款卡和信用卡有什么区别"]
+        aliases_en: ["difference between a debit and credit card","which balance does each type of card draw from"]
+      - id: wire_separate_fee_entry
+        section: "电汇本金以外为什么另扣一笔钱"
+        aliases_zh: ["电汇金额之外又有单独扣费","汇款本金已经扣了为什么明细再扣一笔"]
+        aliases_en: ["separate debit besides the wire transfer amount","why is there another fee entry after my remittance"]
+  payment_disputes:
+    file: "data/kb/payment_disputes.md"
+    terms:
+      - id: duplicate_card_entry
+        section: "同一笔银行卡消费显示两次"
+        aliases_zh: ["同一家店同一笔消费出现两行","买一次却显示两笔卡账"]
+        aliases_en: ["the same purchase appears twice on my card","one card purchase shows two entries"]
+      - id: merchant_refund_not_posted
+        section: "商户说已退款但账单还没显示"
+        aliases_zh: ["店家说退钱了信用卡账单还没有","退款凭证有了卡里还没退"]
+        aliases_en: ["the shop issued a refund but I cannot see the credit","merchant refund has not appeared on my card statement"]
+      - id: charge_vs_receipt_mismatch
+        section: "商户扣款金额与收据不同"
+        aliases_zh: ["账单扣的钱比小票多","卡交易金额和商户收据对不上"]
+        aliases_en: ["card charge is different from my receipt","the posted card amount exceeds the shop invoice"]
+      - id: transaction_review_evidence
+        section: "申请交易核查需要准备什么"
+        aliases_zh: ["找银行核查扣款要留哪些凭证","申请查一笔交易需要给什么信息"]
+        aliases_en: ["what evidence should I keep for a transaction review","details needed before disputing a payment"]
+      - id: fraud_vs_merchant_dispute
+        section: "先判断是盗刷还是商户争议"
+        aliases_zh: ["怎么判断是非本人交易还是商户问题","什么时候算盗刷什么时候算消费争议"]
+        aliases_en: ["how to tell fraud from a merchant dispute","unauthorised transaction versus a billing disagreement"]
+      - id: pending_vs_posted_card_payment
+        section: "待处理交易和已入账交易有什么不同"
+        aliases_zh: ["卡付款显示待处理和入账差什么","待处理那一行算已扣款吗"]
+        aliases_en: ["is a pending card transaction already posted","pending versus completed entries on a card"]
+  service_tickets:
+    file: "data/kb/service_tickets.md"
+    terms:
+      - id: submit_ticket
+        section: "如何提交人工客服工单"
+        aliases_zh: ["怎么申请人工核查","在哪提交客服工单"]
+        aliases_en: ["how do I submit a support ticket","where to request review by a human agent"]
+      - id: ticket_status
+        section: "如何查看工单进度和坐席回复"
+        aliases_zh: ["在哪看客服处理状态","哪里找坐席给我的回复"]
+        aliases_en: ["where do I see agent replies","how to check the progress of my support ticket"]
+      - id: ticket_followup
+        section: "工单已提交但还没解决怎么办"
+        aliases_zh: ["之前的单关了但还没解决","已有工单想补充情况怎么办"]
+        aliases_en: ["the support case is closed but still unresolved","how to add information to an existing case"]
+        aliases_mixed: ["之前开的 support case 显示 closed，但问题还没解决"]
+  transfer_guide:
+    file: "data/kb/transfer_guide.md"
+    terms:
+      - id: transfer_method_compare
+        section: "转账方式比较"
+        aliases_zh: ["在本地和境外汇款用什么渠道","手机转钱有哪些方式可以选"]
+        aliases_en: ["what methods can I use to transfer money","options for sending money locally or abroad"]
+      - id: general_transfer_timing
+        section: "转账一般多久到账"
+        aliases_zh: ["汇出去通常要等几个工作日","国内转账和跨境汇款一般多久"]
+        aliases_en: ["how long do transfers usually take","usual delivery time for domestic and international transfers"]
+      - id: send_overseas_transfer
+        section: "如何汇款到海外"
+        aliases_zh: ["怎么把钱汇到境外账户","去哪里发起海外电汇"]
+        aliases_en: ["how do I send money to a bank account overseas","steps to make an international wire transfer"]
+      - id: receive_transfer
+        section: "如何收款"
+        aliases_zh: ["别人给我汇钱应该提供哪些信息","我怎么接收别人的银行转账"]
+        aliases_en: ["what details do I share to receive a bank transfer","how can someone send money to my account"]
+      - id: payee_restrictions
+        section: "收款人限制"
+        aliases_zh: ["为什么某类账户不能当收款方","可转账的收款银行有哪些限制"]
+        aliases_en: ["restrictions on who can receive a transfer","recipient bank or account eligibility"]
+      - id: transfer_limits
+        section: "转账限额"
+        aliases_zh: ["手机转账一天最多发多少","想知道每日汇款上限"]
+        aliases_en: ["maximum amount I can transfer per day","daily transfer cap for bank payments"]
+      - id: transfer_failure_reasons
+        section: "转账失败的常见原因"
+        aliases_zh: ["银行转账可能因为什么不成功","付款显示失败通常先看什么"]
+        aliases_en: ["why might a bank transfer fail","common reasons a payment is rejected"]
+      - id: paynow_display_name
+        section: "PayNow 收款人名字的显示"
+        aliases_zh: ["PayNow页面为什么显示这个名","输入手机号后出现的收款名怎么来的"]
+        aliases_en: ["why does PayNow show that recipient name","where does the payee display name come from"]
+      - id: paynow_wrong_recipient
+        section: "PayNow 转错收款人怎么办"
+        aliases_zh: ["PayNow发给错号码了","已经把款转错人怎么处理"]
+        aliases_en: ["sent PayNow money to the wrong person","I paid the wrong phone number via PayNow"]
+      - id: unexpected_paynow_payment
+        section: "收到不明的 PayNow 转账"
+        aliases_zh: ["有人转来不认识的钱要求转给第三人","陌生人PayNow入账让我退去另一账户"]
+        aliases_en: ["received an unexpected PayNow payment","a stranger wants me to forward a PayNow transfer elsewhere"]
+      - id: fast_vs_giro
+        section: "FAST 与 GIRO 有什么区别"
+        aliases_zh: ["FAST即时转和GIRO代扣差在哪","FAST和GIRO分别是干嘛的"]
+        aliases_en: ["FAST versus GIRO direct debit","how is FAST different from GIRO"]
+      - id: paynow_identifiers
+        section: "PayNow 可以用哪些资料收款"
+        aliases_zh: ["用手机号还是UEN收PayNow","PayNow收款可登记哪些标识"]
+        aliases_en: ["which identifiers can receive PayNow","can I use a mobile number or UEN for PayNow"]
+      - id: sgqr_payment
+        section: "使用 PayNow QR 或 SGQR 付款"
+        aliases_zh: ["扫商家码后名字不符先看什么","SGQR扫码付款应该核对什么"]
+        aliases_en: ["what to verify before confirming an SGQR payment","merchant name is wrong after scanning a PayNow QR"]
+      - id: fast_use_cases
+        section: "FAST 转账适合什么场景"
+        aliases_zh: ["什么样的本地付款适合FAST","周末用FAST转新元是否合适"]
+        aliases_en: ["when should I choose FAST for a local payment","is FAST suitable for quick SGD transfers"]
+      - id: giro_authorisation
+        section: "GIRO 扣款需要什么授权"
+        aliases_zh: ["设定账单自动扣款需要同意什么","账单机构怎样得到从我账户扣款的许可"]
+        aliases_en: ["what permission does a GIRO direct debit need","how to authorise a biller to collect payments"]
+      - id: egiro_mandate_pending
+        section: "eGIRO 授权没有马上生效怎么办"
+        aliases_zh: ["网上申请自动交账单还在等授权","eGIRO还没生效这期账单怎么付"]
+        aliases_en: ["online automatic bill collection authorisation is still pending","my eGIRO direct debit mandate has not activated"]
+        aliases_mixed: ["eGIRO mandate 还是 pending，这期 bill 怎么付"]
+        rerank_hint:
+          zh: "eGIRO 账单自动扣款授权还没生效，本期账单怎么付"
+          en: "My eGIRO direct debit mandate is pending. How can I pay the current bill while it is not active?"
+          cues:
+            - ["eGIRO", "自动交账单", "账单自动扣款", "automatic bill collection", "direct debit mandate"]
+            - ["待授权", "等授权", "没生效", "未生效", "pending", "not active", "not activated"]
+          faq:
+            intent: transfer_howto
+            cues: ["这期账单怎么付", "这一期账单怎么交", "本期账单怎么办", "what can i do about the current bill", "how can i pay", "how should i pay"]
+      - id: fast_giro_meps_choice
+        section: "FAST、GIRO 和 MEPS+ 怎么选"
+        aliases_zh: ["大额新元付款用FAST还是MEPS","FAST GIRO和MEPS加号分别适合哪种付款"]
+        aliases_en: ["how to choose between FAST, GIRO and MEPS+","which payment rail should I use for a high-value SGD transfer"]
+      - id: receipt_status_meaning
+        section: "电子交易回单上的状态是什么意思"
+        aliases_zh: ["电子回执上写审核中是什么意思","回单已完成状态怎么理解"]
+        aliases_en: ["what does under review mean on a transfer receipt","how to interpret the status on a payment receipt"]
+      - id: receipt_evidence_limits
+        section: "电子交易回单能证明什么"
+        aliases_zh: ["有转账回单能证明对方实际收到吗","一张付款凭据可以当作已到账证明吗"]
+        aliases_en: ["can a transfer receipt prove the recipient received funds","what does a bank transfer reference actually prove"]
+        aliases_mixed: ["transfer receipt 有 reference number 就算到账了吗"]
+      - id: new_payee_limited
+        section: "新增收款人后为什么还不能汇款"
+        aliases_zh: ["刚加完收款人转不了钱","余额和额度都有但新收款方不能转"]
+        aliases_en: ["why can't I pay a newly added beneficiary","a new payee is restricted even though I have sufficient limit"]
+      - id: swift_details_check
+        section: "境外汇款前如何核对 SWIFT 资料"
+        aliases_zh: ["国际汇款前拿到的SWIFT码怎么核对","电汇收款银行的BIC从哪确认"]
+        aliases_en: ["how do I verify the receiving bank's SWIFT code","which BIC and beneficiary details should I check before a wire"]
+      - id: submitted_transfer_progress
+        section: "汇款已提交时如何查看处理进度"
+        aliases_zh: ["已经发出的汇款去哪里看状态","我那笔转账的处理进度在哪查"]
+        aliases_en: ["where to check a transfer I already sent","how can I review the status of my submitted remittance"]
+disambiguation:
+  - topic: "ATM 吞卡与未出钞"
+    terms: ["atm_retained_card","atm_cash_not_dispensed","atm_withdrawal_fees"]
+    guidance: "确认终端留下的是卡、现金未发放但已扣款，还是仅询问费用。单独出现 ATM 或「没吐」时，结合句中的对象判断。"
+  - topic: "账单代扣授权与卡片预授权"
+    terms: ["egiro_mandate_pending","giro_authorisation","card_preauthorisation_vs_final","pending_vs_posted_card_payment"]
+    guidance: "账单机构、自动扣账、授权申请未生效指向 GIRO 类场景。酒店押金、商户暂占额度、最终刷卡金额指向卡片预授权。pending authorisation 独立出现时需要上下文。"
+  - topic: "信用卡账单、最低还款与付款入账"
+    terms: ["statement_vs_current_balance","minimum_vs_full_payment","repayment_checks","repayment_not_posted","duplicate_card_entry"]
+    guidance: "出账后新增的消费对应账单与当前余额差异。只付一部分对应最低还款。钱已经付出但卡方未记账对应还款入账。实际同笔消费显示两次才考虑重复记录。"
+  - topic: "单笔回单、对账单与账户证明"
+    terms: ["statement_receipt_account_proof","receipt_status_meaning","receipt_evidence_limits","account_proof_requirements"]
+    guidance: "问账户持有人或文件能否替代，优先核对文件用途。问收款方是否已收到，看回单的证明边界。问状态字样的解释或正式证明的申领要求，分别对齐对应术语。"
+  - topic: "盗刷、商户争议与小额验证"
+    terms: ["unrecognised_card_transaction","suspected_card_compromise","verification_charge_unknown_merchant","authorised_transaction_dispute","fraud_vs_merchant_dispute","merchant_refund_not_posted"]
+    guidance: "客户明确未授权的交易保留原有安全分流。已知本人消费但金额、退款有争议时看商户争议。单凭商户名称陌生或金额小无法判断是否盗刷。"
+  - topic: "转账时效、具体进度与转错人"
+    terms: ["general_transfer_timing","submitted_transfer_progress","transfer_failure_reasons","paynow_wrong_recipient","unexpected_paynow_payment"]
+    guidance: "通常多久到账是通用时效。昨天那笔等指明具体记录时应保留本人查询和验证要求。已转错人、陌生款项要求退给第三方各有独立处理说明。"
+  - topic: "卡片寄送、到期与挂失补卡"
+    terms: ["card_delivery","card_expiry","renewal_vs_replacement","lost_stolen_card","replacement_supplementary_card","recurring_payment_after_replacement"]
+    guidance: "未到手是配送问题。有效期将至是到期更新。卡找不到是挂失场景。卡换好了但订阅不扣费，应按更换后的自动扣款问题检索。"
+  - topic: "登录、卡 PIN、身份验证与换手机号"
+    terms: ["forgotten_login_password","card_pin","identity_verification_failed","old_mobile_unavailable","update_personal_details","myinfo_mismatch"]
+    guidance: "确认用户指 App 登录密码、实体卡 PIN、身份校验结果，还是绑定手机号收不到验证码。出现验证码、卡密码等词时保留该区分。"
+  - topic: "海外刷卡费用与币种选择"
+    terms: ["foreign_card_conversion_fees","dcc_sgd_vs_local_currency","foreign_purchase_shown_in_sgd","overseas_cash_vs_card_fees"]
+    guidance: "旅途中当场选币种、事后对账单显示 SGD、询问外币附加费和比较取现成本，是不同的问题。"
+  - topic: "提交新工单与跟进原工单"
+    terms: ["submit_ticket","ticket_status","ticket_followup","fraud_dispute_ticket_status"]
+    guidance: "询问入口或状态时保留只读语义。旧单未解决或需要补资料时优先定位原工单，是否创建新工单由现有流程决定。"

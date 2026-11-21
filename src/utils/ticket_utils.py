@@ -4,6 +4,7 @@ import json
 import re
 
 from langchain_core.messages import HumanMessage
+from pymysql.err import IntegrityError
 
 from src.intents import INTENTS
 from src.utils.llm_util import get_llm_client
@@ -278,13 +279,18 @@ def _insert_ticket_and_assignment_event(sql, params, dispatch):
         connection.close()
 
 
-def find_active_related_ticket(session_id, transaction_id):
-    """同一会话重复点击核查时复用尚未关闭的关联工单。"""
+def find_active_related_ticket(customer_id, transaction_id):
+    """Find the customer's active dispute for the same transaction across sessions."""
     return query_one("""
         select ticket_id from tickets
-        where session_id = %s and related_transaction_id = %s and status in ('open', 'replied')
-        order by ticket_id desc limit 1
-    """, (session_id, transaction_id))
+        where customer_id = %s and active_transaction_id = %s
+    """, (customer_id, transaction_id))
+
+
+def is_active_dispute_conflict(error):
+    cause = error.cause
+    return bool(isinstance(cause, IntegrityError) and cause.args[0] == 1062
+                and "uk_ticket_active_txn" in str(cause))
 
 def claim_ticket_notification(ticket_id):
     """尝试认领一张待通知工单；只有一个执行者能认领成功。"""

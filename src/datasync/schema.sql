@@ -130,6 +130,9 @@ CREATE TABLE tickets (
   summary         TEXT         NOT NULL               COMMENT '对话摘要（已脱敏）',
   agent_reply     TEXT         NULL,
   related_transaction_id VARCHAR(20) NULL COMMENT '客户核查工单关联的账单交易编号',
+  active_transaction_id VARCHAR(20) GENERATED ALWAYS AS (
+      CASE WHEN status <> 'closed' THEN related_transaction_id ELSE NULL END
+  ) STORED,
   related_transaction JSON NULL COMMENT '创建工单时的账单交易快照（金额、币种、状态等）',
   assigned_team   VARCHAR(40) NULL COMMENT '派单业务队列',
   assigned_agent  VARCHAR(32) NULL COMMENT '认领或指定的坐席账号',
@@ -141,6 +144,7 @@ CREATE TABLE tickets (
   CONSTRAINT fk_tk_cust FOREIGN KEY (customer_id) REFERENCES customers(customer_id),
   INDEX idx_tk_status (status, priority),
   INDEX idx_tk_related_transaction (related_transaction_id),
+  UNIQUE KEY uk_ticket_active_txn (customer_id, active_transaction_id),
   INDEX idx_tk_assignment (assigned_team, assigned_agent, status, priority),
   INDEX idx_ticket_sla_monitor (status, priority, created_at)
 ) COMMENT '转人工工单（n8n 读取并通知坐席）';

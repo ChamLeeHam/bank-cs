@@ -1,5 +1,5 @@
 # 知识库问答节点
-# 实体抽取找到了产品和属性（比如"电汇手续费"），先直接用术语图谱回答
+# 实体抽取找到产品和属性时，从术语图谱取值并交给生成模型组织回复
 # 其他问题走 RAG：问题重写 -> 混合检索 + HyDE 检索 -> RRF 合并 -> reranker 精排 -> 生成回答
 # 每一步都在 src/utils 里，这个节点只负责按顺序调用
 # 在项目根目录运行测试：uv run python -m src.nodes.rag_answer
@@ -7,10 +7,13 @@ import time
 import re
 
 from src.schema.base import BaseNode, StateUpdate
+from src.intents import mentions_other_bank
 from src.schema.exceptions import BankAssistantError, Neo4jError
 from src.schema.state import GraphState
 from src.utils import (hyde_utils, reranker_utils, response_utils, rewrite_query_utils, rrf_utils,
                        search_embedding_utils)
+from src.utils.banking_terminology import with_banking_term_hint
+from src.utils.financial_products import financial_product_query, read_financial_products
 from src.utils.fraud_context import fraud_dispute_comparison_question, unfamiliar_merchant_name_question
 from src.utils.history_utils import (annual_fee_followup, fraud_general_followup, history_of, replacement_fee_stolen_followup,
                                     needs_context_rewrite, statement_fee_followup, stolen_card_clarification)
@@ -28,10 +31,36 @@ KB_DOWN = {
     "en": "Sorry, the knowledge base is unavailable right now. Please try again later or ask for a human agent.",
 }
 _TT_FEE_WITH_STATUS = re.compile(
-    r"(?:海外电汇|电汇|\bTT\b|telegraphic transfer).{0,80}(?:手续费|fee).{0,80}(?:处理中|审核中|待处理|processing|under review|pending)|"
-    r"(?:处理中|审核中|待处理|processing|under review|pending).{0,80}(?:海外电汇|电汇|\bTT\b|telegraphic transfer).{0,80}(?:手续费|fee)",
+    r"(?:海外电汇|电汇|境外汇款|跨境汇款|海外汇款|\bTT\b|telegraphic transfer).{0,80}(?:手续费|fee).{0,80}(?:处理中|审核中|待处理|processing|under review|pending)|"
+    r"(?:处理中|审核中|待处理|processing|under review|pending).{0,80}(?:海外电汇|电汇|境外汇款|跨境汇款|海外汇款|\bTT\b|telegraphic transfer).{0,80}(?:手续费|fee)",
     re.IGNORECASE,
 )
+_OVERSEAS_REMITTANCE = re.compile(
+    r"境外汇款|跨境汇款|海外汇款|海外电汇|"
+    r"\b(?:overseas|international|cross-border) (?:transfer|remittance)s?\b|\btelegraphic transfers?\b", re.I,
+)
+_TRANSFER_FEE = re.compile(r"手续费|收费|\b(?:fees?|costs?|charges?)\b", re.I)
+_TRANSFER_ARRIVAL = re.compile(
+    r"到账时间|到账时效|几天.{0,8}(?:到|收到)|多久.{0,8}(?:到|收到)|"
+    r"\b(?:arrival time|how long|when (?:will|does)\b.{0,30}(?:arrive|reach|receive))\b", re.I,
+)
+_CALENDAR_FOLLOWUP = re.compile(
+    r"(?:那|所以|and|what about)?\s*(?:周末|节假日|weekends?|holidays?)\s*"
+    r"(?:(?:也)?(?:算|计入)(?:工作日)?(?:吗|呢)?|count|included)?[？?。.!！\s]*", re.I,
+)
+_CALENDAR_WORD = re.compile(r"周末|周[六日天]|节假日|公众假期|\b(?:weekends?|saturdays?|sundays?|holidays?)\b", re.I)
+
+
+def asks_overseas_calendar(question):
+    return bool(_OVERSEAS_REMITTANCE.search(question) and _CALENDAR_WORD.search(question))
+
+
+def asks_overseas_fee_and_arrival(question):
+    return bool(
+        _OVERSEAS_REMITTANCE.search(question) and _TRANSFER_FEE.search(question)
+        and _TRANSFER_ARRIVAL.search(question) and not _TT_FEE_WITH_STATUS.search(question)
+        and not mentions_other_bank(question)
+    )
 
 
 class RagAnswerNode(BaseNode):
@@ -49,6 +78,11 @@ class RagAnswerNode(BaseNode):
         reference_bank = resolve_reference_bank(question, history)
         if not is_reference_policy_question(question, reference_bank):
             reference_bank = None
+        current = state.get("masked_question", "").strip()
+        last_customer = next((text for role, text in reversed(history) if role == "客户"), "")
+        if not reference_bank and _CALENDAR_FOLLOWUP.fullmatch(current) and _OVERSEAS_REMITTANCE.search(last_customer):
+            question = ("Do weekends or public holidays count toward overseas TT working days?" if lang == "en"
+                        else "海外电汇到账时效里的工作日，是否计入周末或节假日？")
         if fraud_dispute_comparison_question(question):
             question = "盗刷（非本人授权交易）与本人消费后的商户退款争议有什么区别？"
         elif unfamiliar_merchant_name_question(question):
@@ -65,18 +99,21 @@ class RagAnswerNode(BaseNode):
         question = replacement_question or question
         if stolen_card_clarification(question, history) == "info":
             question = "银行卡被盗后如何处理？"
+        if not reference_bank and not state.get("private_input") and not state.get("human_requested"):
+            filters = financial_product_query(question)
+            if filters is not None:
+                return self._answer_financial_catalog(question, filters, lang)
         scope_rejected = unsupported_scope_reason(question)
         if scope_rejected and not reference_bank:
             self.last_run = {"generator": "none", "scope_rejected": scope_rejected}
             return {"answer": NOT_FOUND[lang], "sources": [], "search_query": question}
 
         entities = state.get("entities") or {}
-
-        # 1. 产品和属性都清楚，直接用术语图谱回答
-        graph_result = None if reference_bank or _TT_FEE_WITH_STATUS.search(question) else self._answer_from_graph(entities, lang)
+        # 1. 产品和属性明确时，用图谱事实生成回复。
+        graph_result = None
+        if not (reference_bank or asks_overseas_calendar(question) or _TT_FEE_WITH_STATUS.search(question)):
+            graph_result = self._answer_from_graph(entities, lang, question)
         if graph_result:
-            self.last_run = {"generator": "graph"}
-            self.log_step(self.name, "用术语图谱回答")
             return graph_result
 
         # 2. 其他情况走 RAG，找到了产品就把产品名加到检索里
@@ -85,13 +122,106 @@ class RagAnswerNode(BaseNode):
             result["answer"] += "\n\n如果您的卡已被盗，请尽快冻结卡片；如需协助冻结，请告诉我。"
         return result
 
-    def _answer_from_graph(self, entities, lang):
-        """产品和属性都清楚的话，直接用术语图谱里的值回答；有一个查不到就返回 None，走正常的 RAG"""
+    def _answer_financial_catalog(self, question, filters, lang):
+        try:
+            rows = read_financial_products(filters)
+        except Neo4jError:
+            self.last_run = {"generator": "none", "catalog_unavailable": True}
+            return {"answer": KB_DOWN[lang], "sources": [], "search_query": question}
+        if not rows:
+            self.last_run = {"generator": "none"}
+            return {"answer": NOT_FOUND[lang], "sources": [], "search_query": question}
+
+        title = "Financial product catalog" if lang == "en" else "金融产品目录"
+        names = [row[f"name_{lang}"] for row in rows]
+        if filters.get("use_case") == "emergency_saving":
+            rows = [row for row in rows if row.get(f"withdrawal_{lang}")]
+            if not rows:
+                self.last_run = {"generator": "none"}
+                return {"answer": NOT_FOUND[lang], "sources": [], "search_query": question}
+            sections = [row[f"name_{lang}"] for row in rows]
+            if lang == "en":
+                intro = f"You can withdraw funds without waiting for maturity from {', '.join(sections)}."
+                facts = [f"No fixed term. {row['withdrawal_en']}" for row in rows]
+            else:
+                intro = f"应急钱可以放在{'或'.join(sections)}，不用等到期就能支取。"
+                facts = [f"无固定存期。{row['withdrawal_zh']}" for row in rows]
+            separator = ": " if lang == "en" else "："
+            lines = [f"- {name}{separator}{row[f'withdrawal_{lang}']}" for name, row in zip(sections, rows)]
+            answer = f"{intro}\n\n" + "\n".join(lines)
+        elif not filters:
+            groups = {}
+            for name, row in zip(names, rows):
+                groups.setdefault(row[f"category_{lang}"], []).append(name)
+            separator = ": " if lang == "en" else "："
+            delimiter = ", " if lang == "en" else "、"
+            facts = [f"{category}{separator}{delimiter.join(products)}" for category, products in groups.items()]
+            lines = [f"- {fact}" for fact in facts]
+            sections = groups
+            answer = f"{title}\n\n" + "\n".join(lines)
+        else:
+            facts = []
+            for row in rows:
+                annual = row.get(f"annual_{lang}")
+                fx = row.get(f"fx_{lang}")
+                if lang == "en":
+                    line = f"({row['use_en']}) {row['overview_en']} {row['terms_en']}"
+                    if annual:
+                        line += f" Annual fee: {annual}."
+                    if fx:
+                        line += f" {row['fx_name_en']}: {fx}."
+                else:
+                    line = f"（{row['use_zh']}）{row['overview_zh']}{row['terms_zh']}"
+                    if annual:
+                        line += f"年费：{annual}。"
+                    if fx:
+                        line += f"{row['fx_name_zh']}：{fx}。"
+                facts.append(line)
+            sections = names
+            lines = [f"- {name} {fact}" for name, fact in zip(sections, facts)]
+            answer = f"{title}\n\n" + "\n".join(lines)
+        sources = [{"doc": "neo4j", "title": title, "section": section, "rerank_score": None}
+                   for section in sections]
+        docs = [{"section": name, "text": fact} for name, fact in zip(sections, facts)]
+        return self._generate_with_graph_facts(question, docs, sources, answer, lang,
+                                               catalog_names=names if not filters else ())
+
+    def _generate_with_graph_facts(self, question, docs, sources, fallback, lang,
+                                   catalog_names=(), require_all_sources=False):
+        start = time.perf_counter()
+        generated = response_utils.process(question, [], docs, lang, product_catalog=True,
+                                           complete_catalog=bool(catalog_names))
+        indices = generated.get("used_sources") or []
+        answer = generated["answer"]
+        usable = bool(answer and generated.get("citations_valid") and indices)
+        if usable and (catalog_names or require_all_sources):
+            usable = set(indices) == set(range(1, len(docs) + 1))
+        if usable and catalog_names:
+            normalized = answer.casefold()
+            usable = all(name.casefold() in normalized for name in catalog_names)
+        if usable:
+            sources = [sources[index - 1] for index in indices]
+        else:
+            answer = fallback
+        self.last_run = {"generator": generated["generator"] if usable else "graph",
+                         "generation_calls": generated.get("generation_attempts", 0),
+                         "t_generate": time.perf_counter() - start}
+        self.log_step(self.name, f"图谱资料回答生成：{self.last_run['generator']}")
+        return {"answer": answer, "sources": sources, "search_query": question}
+
+    def _answer_from_graph(self, entities, lang, question):
+        """用图谱中的产品属性作为证据，属性缺失时交给知识库检索。"""
         product_ids, attr = entities.get("products"), entities.get("attr")
-        if not product_ids or not attr:
+        compound = asks_overseas_fee_and_arrival(question) and (not product_ids or product_ids == ["overseas_tt"])
+        if compound:
+            product_ids = ["overseas_tt"]
+            attributes = ("fee", "arrival_time")
+        elif product_ids and attr:
+            attributes = (attr,)
+        else:
             return None
         try:
-            results = [get_product_attr(pid, attr) for pid in product_ids]
+            results = [get_product_attr(pid, key) for pid in product_ids for key in attributes]
         except Neo4jError as e:
             self.logger.warning(f"术语图谱查不了，用知识库回答：{e}")
             return None
@@ -107,13 +237,15 @@ class RagAnswerNode(BaseNode):
             lines = [f"{r['product_zh']}{' ' if r['product_zh'][-1].isascii() else ''}的{r['name_zh']}：{r['value_zh']}"
                      for r in results]
             source = "来源：产品资料（术语图谱）"
-        if len(lines) > 1:
-            lines = [f"- {line}" for line in lines]
-        answer = "\n".join(lines) + f"\n\n{source}"
-
-        sources = [{"doc": "neo4j", "title": "术语图谱 / Product graph", "section": r["product_zh"], "rerank_score": None}
+        fallback = "\n".join(f"- {line}" for line in lines) if len(lines) > 1 else lines[0]
+        fallback += f"\n\n{source}"
+        sources = [{"doc": "neo4j", "title": "术语图谱 / Product graph",
+                    "section": f"{r['product_zh']} · {r['name_zh']}" if compound else r["product_zh"],
+                    "rerank_score": None}
                    for r in results]
-        return {"answer": answer, "sources": sources, "search_query": ""}
+        docs = [{"section": f"{row[f'product_{lang}']} · {row[f'name_{lang}']}", "text": fact, "verbatim_fact": True}
+                for row, fact in zip(results, lines)]
+        return self._generate_with_graph_facts(question, docs, sources, fallback, lang, require_all_sources=compound)
 
     def answer(self, question, history, lang, products=None, sub_intent=None, reference_bank=None):
         reference_bank = reference_bank or resolve_reference_bank(question, history)
@@ -121,7 +253,18 @@ class RagAnswerNode(BaseNode):
             reference_bank = None
         # 1~4. 检索
         try:
-            rewritten_query, docs, info = self.retrieve(question, history, products, reference_bank)
+            if not reference_bank and asks_overseas_fee_and_arrival(question):
+                queries = ("海外电汇手续费是多少？", "海外电汇一般多久到账？") if lang == "zh" else (
+                    "What is the overseas telegraphic transfer fee?", "How long does an overseas telegraphic transfer take?")
+                docs_by_key = {}
+                for query in queries:
+                    _, matches, _ = self.retrieve(query, [], products)
+                    for doc in matches:
+                        docs_by_key[(doc["doc"], doc["section"], doc["text"])] = doc
+                rewritten_query, docs = question, list(docs_by_key.values())
+                info = {"facet_queries": queries}
+            else:
+                rewritten_query, docs, info = self.retrieve(question, history, products, reference_bank)
         except BankAssistantError as e:
             self.logger.error(f"知识库不可用：{e}")
             return {"answer": KB_DOWN[lang], "sources": [], "search_query": question, "error": str(e)}
@@ -131,48 +274,43 @@ class RagAnswerNode(BaseNode):
             self.last_run = {**info, "generator": "none"}
             return {"answer": NOT_FOUND[lang], "sources": [], "search_query": rewritten_query}
 
-        if response_utils.is_pin_unblock_question(question):
-            passage = response_utils.pin_unblock_source(docs, lang)
-            if not passage:
+        focused = None
+        pin_question = response_utils.is_pin_unblock_question(question)
+        if pin_question:
+            focused = response_utils.pin_unblock_source(docs, lang)
+            if not focused:
                 self.last_run = {**info, "generator": "none"}
                 return {"answer": NOT_FOUND[lang], "sources": [], "search_query": rewritten_query}
-            answer, doc = passage
-            self.last_run = {**info, "generator": "source_text"}
-            source = {"doc": doc["doc"], "title": doc["title"], "section": doc["section"],
-                      "rerank_score": doc["rerank_score"]}
-            source["label"] = self._source_label(doc, lang)
-            return {"answer": answer, "sources": [source],
-                    "search_query": rewritten_query}
-
-        if sub_intent == "extra_charge_on_statement":
-            result = response_utils.statement_charge_answer(docs, lang)
-            if result:
-                answer, doc = result
-                self.last_run = {**info, "generator": "grounded_template"}
-                source = {"doc": doc["doc"], "title": doc["title"], "section": doc["section"],
-                          "rerank_score": doc["rerank_score"]}
-                source["label"] = self._source_label(doc, lang)
-                return {"answer": answer, "sources": [source],
-                        "search_query": rewritten_query}
+        elif sub_intent == "extra_charge_on_statement":
+            focused = response_utils.statement_charge_answer(docs, lang)
+        if focused:
+            # Keep the resolution or fee guidance separate from unrelated sections.
+            evidence, doc = focused
+            docs = [{**doc, "text": evidence}] if pin_question else [doc]
 
         # 5. 生成回答，失败的话直接用资料原文
         start = time.perf_counter()
         response = response_utils.process(rewritten_query, history, docs, lang, reference_bank=reference_bank)
-        answer = response["answer"] or (NOT_FOUND[lang] if reference_bank else self._source_text(docs[0], lang))
-        if not response["answer"]:
-            docs = docs[:1] if not reference_bank else []  # 不直接向客户回显原始参考银行文档
-        self.last_run = {**info, "generator": response["generator"], "t_generate": time.perf_counter() - start,
+        generated = response["answer"]
+        if focused and not (response.get("citations_valid") and response.get("used_sources")):
+            generated = None
+        fallback = focused[0] if focused and not reference_bank else NOT_FOUND[lang]
+        answer = generated or fallback
+        if not generated:
+            docs = docs[:1] if focused and not reference_bank else []
+        generator = response["generator"] if generated else ("source_text" if docs else "none")
+        self.last_run = {**info, "generator": generator, "t_generate": time.perf_counter() - start,
                          "generation_calls": response.get("generation_attempts", 0),
                          "citations_valid": response.get("citations_valid"),
                          "used_sources": response.get("used_sources", [])}
-        self.log_step(self.name, f"5. 回答生成完成：{response['generator']}")
+        self.log_step(self.name, f"5. 回答生成完成：{generator}")
 
         # 6. 只展示生成结果标注为实际依据的来源。
         if response.get("citations_valid"):
             used_indices = response.get("used_sources", [])
         else:
             used_indices = list(range(1, len(docs) + 1))
-        if not response["answer"]:
+        if not generated:
             used_indices = list(range(1, len(docs) + 1))
         used_docs = [docs[index - 1] for index in used_indices if 1 <= index <= len(docs)]
         sources = [{"doc": d["doc"], "title": d["title"], "section": d["section"],
@@ -250,7 +388,8 @@ class RagAnswerNode(BaseNode):
 
         # 4. 精排；最高分太低说明知识库里没有答案
         start = time.perf_counter()
-        reranker_result = reranker_utils.process(rewritten_query, rrf_chunks)
+        rank_query = rewritten_query if reference_bank else with_banking_term_hint(rewritten_query)
+        reranker_result = reranker_utils.process(rank_query, rrf_chunks)
         docs = reranker_result["reranker_chunks"]
         best_score = docs[0]["rerank_score"] if docs else None
         if best_score is not None and best_score < cfg.rerank_min_score:
@@ -295,7 +434,8 @@ class RagAnswerNode(BaseNode):
             return search_embedding_utils.process(query)["embedding_chunks"]
 
         def rank(query, chunks):
-            result = reranker_utils.process(query, chunks)
+            rank_query = query if reference_bank else with_banking_term_hint(query)
+            result = reranker_utils.process(rank_query, chunks)
             sorted_docs = result["sorted_chunks"]
             docs = result["reranker_chunks"]
             best = sorted_docs[0]["rerank_score"] if sorted_docs else None
@@ -382,11 +522,6 @@ class RagAnswerNode(BaseNode):
         self.log_step(self.name, f"自适应检索完成：重写={info['used_rewrite']}，扩展={info['used_query_expansion']}，"
                                   f"HyDE={info['used_hyde']}，保留 {len(docs)} 个，最高分 {best_score}")
         return info["rewritten"], docs, info
-
-    @staticmethod
-    def _source_text(doc, lang):
-        body = doc["text"].split("\n", 1)[-1]
-        return response_utils.split_languages(body)[lang] or body
 
     @staticmethod
     def _source_label(doc, lang, reference_bank=None):

@@ -7,6 +7,7 @@ import re
 from langchain_core.messages import AIMessage, HumanMessage
 
 from src.intents import INTENT_ROUTES, is_human_request, mentions_other_bank
+from src.nodes.loan_calculator import LOAN_CALCULATION_INTENT, bare_amount_followup
 from src.schema.base import BaseNode, StateUpdate
 from src.schema.exceptions import MySQLError, Neo4jError
 from src.schema.state import GraphState
@@ -39,6 +40,70 @@ _INJECTION = re.compile(
     r"\b(?:disregard|ignore|bypass|reveal|disclose|dump|confidential)\b",
     re.IGNORECASE,
 )
+_ADMIN_IMPERSONATION = re.compile(
+    r"(?:我(?:现在)?是|你(?:现在)?是).{0,14}(?:管理员|主管)"
+    r"(?=.{0,55}(?:改|更新|替换|关闭|关掉|删除))"
+    r"(?=.{0,65}(?:客户|手机号|邮箱|工单|账户|资料))|"
+    r"\bi am (?:an? |the )?(?:admin(?:istrator)?|supervisor)\b"
+    r".{0,70}\b(?:change|update|replace|close|delete)\b"
+    r".{0,65}\b(?:customer|client|phone|email|ticket|account|profile)\b",
+    re.IGNORECASE,
+)
+_OTHER_CUSTOMER = re.compile(
+    r"(?:另一位?|其他|别的|他人|别人的)(?:客户|用户|账户)|"
+    r"\b(?:another|other) (?:customer|client|user)\b", re.I
+)
+_PROTECTED_CHANGE = re.compile(
+    r"(?:改|更新|替换|关闭|关掉|删除).{0,40}(?:资料|手机号|邮箱|邮件地址|工单)|"
+    r"(?:资料|手机号|邮箱|邮件地址|工单).{0,24}(?:换成|改成|关掉)|"
+    r"\b(?:change|update|replace|close|delete)\b.{0,55}\b(?:profile|phone|email|ticket)\b", re.I
+)
+_SKIP_CHECK = re.compile(
+    r"免验证|跳过验证|不用验证|不必验证|不用等我确认|无需确认|跳过确认|"
+    r"(?:没法|不能|无法|收不到).{0,12}验证码.{0,12}直接|"
+    r"\b(?:skip|without|bypass) (?:identity )?(?:verification|confirmation|otp)\b", re.I
+)
+_PROTECTED_ACTION = re.compile(
+    r"(?:改|换|更新).{0,12}(?:手机号|邮箱)|(?:手机号|邮箱).{0,7}(?:改|换|更新)|(?:下载|出具|开具).{0,10}账户证明|冻结|"
+    r"\b(?:change|update|download|issue|freeze)\b.{0,35}\b(?:phone|email|proof|certificate|card)\b", re.I
+)
+_FALSIFY_TRANSACTION = re.compile(
+    r"(?:汇款|转账|退款|交易).{0,28}(?:标成|改成|设为|标记为).{0,6}(?:成功|已到账|已完成)|"
+    r"\b(?:mark|change|set)\b.{0,35}\b(?:transfer|refund|transaction)\b.{0,25}"
+    r"\b(?:successful|completed|credited|settled)\b", re.I
+)
+
+
+def is_unsafe_customer_action(text):
+    """Recognize explicit requests to override customer controls or records."""
+    return bool(
+        _ADMIN_IMPERSONATION.search(text)
+        or (_OTHER_CUSTOMER.search(text) and _PROTECTED_CHANGE.search(text))
+        or (_SKIP_CHECK.search(text) and _PROTECTED_ACTION.search(text))
+        or _FALSIFY_TRANSACTION.search(text)
+    )
+
+
+def unsafe_action_reply(lang):
+    return pick(
+        lang,
+        "I can't change another customer's records, bypass verification or confirmation, or alter transaction results. Please use the official service entry or ask an agent to review the issue.",
+        "无法代改他人资料、跳过身份验证或操作确认，也不能改写交易结果。请通过正规业务入口办理，或联系坐席核查。",
+    )
+
+
+_INTERNAL_ROLE_QUESTION = re.compile(
+    r"(?:管理员|坐席主管)(?:的)?(?:角色|岗位|职责).{0,16}(?:做什么|负责什么|什么用|是什么)|"
+    r"(?:什么是|怎么理解).{0,12}(?:管理员|坐席主管)(?:的)?(?:角色|职责)|"
+    r"\bwhat (?:does an? (?:admin(?:istrator)?|supervisor) do|is the role of an? (?:admin(?:istrator)?|supervisor))\b",
+    re.IGNORECASE,
+)
+
+
+def is_internal_role_question(text):
+    return bool(_INTERNAL_ROLE_QUESTION.search(text))
+
+
 _COMPLAINT_REQUEST = re.compile(
     r"\s*(?:我要投诉|我想投诉|我要提出投诉|我想提出投诉|i (?:want|would like) to (?:make a complaint|complain))[。.!！?？\s]*",
     re.IGNORECASE,
@@ -123,11 +188,14 @@ class InputGuardNode(BaseNode):
         masked = _ACCOUNT_ID.sub("[ACCOUNT]", masked)
         masked = _ACCOUNT_NUMBER.sub(lambda m: m.group(1) + "[ACCOUNT]", masked)
         masked = _PHONE.sub("[PHONE]", masked)
+        unsafe_action = is_unsafe_customer_action(question)
+        lang = (state.get("conversation_lang") or "en") if bare_amount_followup(question) else detect_lang(question)
         result = {
-            "lang": detect_lang(question),
+            "lang": lang,
             "masked_question": masked,
             "private_input": masked != question or bool(_PRIVATE_QUESTION.search(question)),
-            "blocked": bool(_INJECTION.search(question)),
+            "blocked": bool(_INJECTION.search(question) or unsafe_action),
+            "unsafe_action": unsafe_action,
             "human_requested": is_human_request(masked),
             "messages": [HumanMessage(masked)],  # 对话历史里只存脱敏后的文本
         }
@@ -173,6 +241,22 @@ class EntityExtractionNode(BaseNode):
         entities.pop("attr", None)
         entities.update(found)
         return {"entities": entities}
+
+
+_FREEZE_REQUEST = re.compile(
+    r"冻结|挂失|(?:卡|card).{0,12}(?:丢了|不见了|遗失|被偷|被盗)|"
+    r"(?:丢了|遗失了|找不到).{0,12}(?:银行卡|信用卡|借记卡|我的卡)|"
+    r"\b(?:freeze|block|lock|lost|stolen|misplaced|missing)\b.{0,35}\bcard\b|"
+    r"\bcard\b.{0,50}\b(?:freeze|frozen|lost|stolen|missing|misplaced)\b",
+    re.IGNORECASE,
+)
+
+
+_FREEZE_NEGATION = re.compile(
+    r"(?:不要|不用|不想|不需要|别|不是要).{0,6}(?:冻结|挂失)|"
+    r"\b(?:do not|don't|don’t|never|no need to)\s+(?:freeze|block|lock)\b",
+    re.IGNORECASE,
+)
 
 
 class GateNode(BaseNode):
@@ -237,6 +321,11 @@ class GateNode(BaseNode):
                 return {**self._result("answer", "account", missing, clarify_count), "intent": "transfer_status"}
             return self._result("clarify", "ask_back", missing, clarify_count)
 
+        if intent == "card_lost_freeze" and (
+            not _FREEZE_REQUEST.search(text) or _FREEZE_NEGATION.search(text)
+        ):
+            return self._result("clarify", "ask_back", ["freeze_intent"], clarify_count)
+
         if score < low:
             if clarify_count >= self.MAX_CLARIFY:
                 return self._result("handoff", "handoff", missing, clarify_count)
@@ -286,6 +375,12 @@ class AskBackNode(BaseNode):
 
     def process(self, state: GraphState) -> StateUpdate:
         lang = state.get("lang", "en")
+        if state.get("sub_intent") == "ambiguous_amount":
+            return {"answer": pick(
+                lang,
+                "Does that amount refer to the loan principal, your monthly repayment budget, or something else?",
+                "请问这个金额是指贷款本金、月供预算，还是其他金额？",
+            )}
         if state.get("fraud_signal") == "hypothetical" or state.get("intent") == "fraud_report":
             return {"fraud_confirmation_pending": True, "answer": pick(lang,
                 "If you notice an unauthorized transaction, freeze your card in the bank's official app or contact the bank through an official emergency channel. Has this happened to you, or are you asking generally?",
@@ -303,6 +398,12 @@ class AskBackNode(BaseNode):
             return {"answer": "明白，您想了解额度调整。请问您指信用卡额度，还是转账或消费限额？我可以先帮您查询一般说明。"}
         if stolen_card_hypothetical(state.get("masked_question", "")):
             return {"answer": "如果卡片已被盗，请尽快冻结。您是想了解被盗后的处理方法，还是需要我协助冻结银行卡？"}
+        if "freeze_intent" in (state.get("missing_slots") or []):
+            return {"answer": pick(
+                lang,
+                "Would you like to view your latest card purchase or freeze your card?",
+                "您是想查看最近一笔银行卡消费，还是要冻结银行卡？",
+            )}
         if state.get("private_input") and state.get("route") in ("rag", "ask_back"):
             return {"answer": pick(lang, "This may involve private account information. Please ask to check your balance or a specific transfer.",
                                    "您的问题可能涉及私人账户资料，请说明是要查询余额还是某笔转账。")}
@@ -370,7 +471,14 @@ class RefuseNode(BaseNode):
             # 欢迎语里说明是 AI 客服
             return {"answer": pick(lang, "Hello! I'm Lion City Bank's AI assistant. How can I help you today?",
                                    "您好！我是狮城银行 AI 客服，请问有什么可以帮您？")}
+        lang = state.get("conversation_lang") or lang
         text = state.get("masked_question", "")
+        if is_internal_role_question(text):
+            return {"answer": pick(
+                lang,
+                "Internal staff roles are outside this customer chat. To track a support case, open My tickets.",
+                "管理员角色属于内部工作台。这里可以提供客户侧的业务办理说明。如需查看处理进度，请打开「我的工单」。",
+            )}
         investment = state.get("sub_intent") == "investment_advice" or re.search(
             r"投资|股票|基金|理财建议|加密货币|比特币|\b(?:invest(?:ment|ing)?|stocks?|shares?|crypto|bitcoin)\b",
             text, re.IGNORECASE)
@@ -389,8 +497,16 @@ class OutputGuardNode(BaseNode):
 
     def process(self, state: GraphState) -> StateUpdate:
         lang = state.get("lang", "en")
+        rejecting = state.get("route") == "refuse" or state.get("unsafe_action") or state.get("blocked")
+        conversation_lang = state.get("conversation_lang")
+        if rejecting:
+            lang = conversation_lang or lang
+        else:
+            conversation_lang = lang
         answer = state.get("answer", "")
-        if state.get("blocked"):
+        if state.get("unsafe_action"):
+            answer = unsafe_action_reply(lang)
+        elif state.get("blocked"):
             answer = pick(lang, "Sorry, I can't process that request.", "抱歉，无法处理该请求。")
         answer = _CARD_NO.sub("****", answer)
         # 账户结果只返回给客户，不放进会传给外部模型的对话历史
@@ -405,7 +521,18 @@ class OutputGuardNode(BaseNode):
         preserve_fraud_confirmation = (state.get("fraud_confirmation_pending")
                                        and state.get("intent") == "greeting"
                                        and state.get("sub_intent") in ("thanks", "acknowledgement"))
-        return {"answer": answer, "messages": updates,
+        return {"answer": answer, "messages": updates, "lang": lang, "conversation_lang": conversation_lang,
+                "loan_calculation_context": (
+                    state.get("loan_calculation_context") or {}
+                    if state.get("route") == "rag" and state.get("sub_intent") == LOAN_CALCULATION_INTENT
+                    and not state.get("loan_calculation_pending") and not state.get("blocked") else {}
+                ),
+                "loan_calculation_pending": (
+                    state.get("route") == "rag"
+                    and state.get("sub_intent") == LOAN_CALCULATION_INTENT
+                    and bool(state.get("loan_calculation_pending"))
+                    and not state.get("blocked")
+                ),
                 "fraud_confirmation_pending": preserve_fraud_confirmation or (
                     state.get("route") == "ask_back"
                     and (state.get("fraud_signal") == "hypothetical" or state.get("intent") == "fraud_report"))}

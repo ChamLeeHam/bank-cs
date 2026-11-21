@@ -1,0 +1,241 @@
+# 狮城银行虚构零售产品目录。标为演示费率的数字仅用于比较演示产品。
+categories:
+  account: {zh: 账户, en: Accounts}
+  card: {zh: 银行卡, en: Cards}
+  deposits: {zh: 存款, en: Deposits}
+  retail_loans: {zh: 零售贷款, en: Retail loans}
+  transfer: {zh: 转账, en: Transfers}
+use_cases:
+  term_saving: {zh: 计划存钱, en: Planned savings}
+  home_purchase: {zh: 购房融资, en: Home purchase}
+  personal_expenses: {zh: 个人支出, en: Personal expenses}
+  vehicle_purchase: {zh: 购车融资, en: Vehicle purchase}
+  emergency_saving: {zh: 应急储蓄, en: Emergency savings}
+  foreign_currency_saving: {zh: 外币储蓄, en: Foreign currency savings}
+  daily_spend: {zh: 日常消费, en: Everyday spending}
+  travel_spend: {zh: 境外消费, en: Travel spending}
+  debit_payments: {zh: 借记卡支付, en: Debit card payments}
+  local_transfer: {zh: 本地转账, en: Local transfers}
+  recurring_bills: {zh: 账单代扣, en: Recurring bills}
+  international_transfer: {zh: 跨境汇款, en: International transfers}
+products:
+  - id: fixed_deposit
+    category: deposits
+    use_case: term_saving
+    zh: 定期存款
+    en: Fixed Deposit
+    aliases: [定期存款, 定存, fixed deposit, time deposit, term deposit]
+    overview_zh: 将一笔资金存入约定期限，到期按存单约定结算。
+    overview_en: Place a lump sum for an agreed term and settle it at maturity under the deposit terms.
+    terms_zh: 核对存期、起存金额、提前支取规则和到期续存设置。目录未列具体利率。
+    terms_en: Check the term, minimum deposit, early withdrawal rules and maturity renewal settings. The catalog does not list a rate.
+  - id: goal_savings
+    category: deposits
+    use_case: term_saving
+    zh: 目标储蓄计划
+    en: Goal Savings Plan
+    aliases: [目标储蓄计划, 目标储蓄, goal savings plan, goal savings]
+    overview_zh: 为一项目标单独积累资金，支持按计划分次存入。
+    overview_en: Set money aside for a specific goal and add to it over time.
+    terms_zh: 核对是否可以随时增存或取出、是否有自动存入安排，以及达到目标后的资金处理方式。
+    terms_en: Check whether you can add or withdraw funds, whether scheduled contributions are available and what happens when the goal is reached.
+  - id: home_loan
+    category: retail_loans
+    use_case: home_purchase
+    zh: 住房贷款
+    en: Home Loan
+    aliases: [住房贷款, 房贷, 房屋贷款, home loan, housing loan, mortgage]
+    overview_zh: 用于购房融资，通常以所购住房作为担保。
+    overview_en: Financing for a home purchase, generally secured against the property.
+    terms_zh: 核对适用房产类型、还款期、利率类型、费用与提前还款条款。额度及是否获批需另行评估。
+    terms_en: Check eligible property types, term, rate structure, fees and early repayment terms. Approval and the amount require a separate assessment.
+    loan_plans:
+      - {id: home_180, term_months: 180, annual_rate_percent: "2.90", upfront_fee: "1400"}
+      - {id: home_240, term_months: 240, annual_rate_percent: "3.00", upfront_fee: "1200"}
+      - {id: home_300, term_months: 300, annual_rate_percent: "3.15", upfront_fee: "1000"}
+  - id: personal_loan
+    category: retail_loans
+    use_case: personal_expenses
+    zh: 个人贷款
+    en: Personal Loan
+    aliases: [个人贷款, 个人消费贷, 消费贷款, personal loan, consumer loan]
+    overview_zh: 用于合规的个人消费支出，按约定分期偿还。
+    overview_en: Financing for eligible personal expenses, repaid in agreed instalments.
+    terms_zh: 核对适用用途、还款期、实际年利率和总还款金额。实际利率及是否获批需另行评估。
+    terms_en: Check eligible uses, the repayment term, the effective annual rate and total repayments. Actual rates and approval require a separate assessment.
+    loan_plans:
+      - {id: personal_12, term_months: 12, annual_rate_percent: "7.00", upfront_fee: "100"}
+      - {id: personal_24, term_months: 24, annual_rate_percent: "8.00", upfront_fee: "120"}
+      - {id: personal_36, term_months: 36, annual_rate_percent: "9.00", upfront_fee: "180"}
+  - id: car_loan
+    category: retail_loans
+    use_case: vehicle_purchase
+    zh: 汽车贷款
+    en: Car Loan
+    aliases: [汽车贷款, 车贷, 购车贷款, car loan, auto loan, vehicle loan]
+    overview_zh: 用于购买车辆，按贷款合约约定分期偿还。
+    overview_en: Financing for a vehicle purchase, repaid in instalments under the loan agreement.
+    terms_zh: 核对适用车辆、首付款、贷款期限与提前结清费用。额度及是否获批需另行评估。
+    terms_en: Check vehicle eligibility, the down payment, term and early settlement fees. Approval and the amount require a separate assessment.
+    loan_plans:
+      - {id: car_36, term_months: 36, annual_rate_percent: "4.50", upfront_fee: "100"}
+      - {id: car_48, term_months: 48, annual_rate_percent: "4.90", upfront_fee: "150"}
+      - {id: car_60, term_months: 60, annual_rate_percent: "5.20", upfront_fee: "200"}
+  - id: flexible_savings
+    category: deposits
+    use_case: emergency_saving
+    zh: 灵活储蓄
+    en: Flexible Savings
+    aliases: [灵活储蓄, 活期储蓄, flexible savings, instant access savings]
+    overview_zh: 支持存入和支取，无固定存期，适用于预留应急资金。
+    overview_en: An instant-access deposit with no fixed term, for keeping emergency funds available.
+    terms_zh: 使用新元。支取仍须遵循所用渠道的限额及办理规则。目录未列利率。
+    terms_en: Denominated in SGD. Withdrawals remain subject to channel limits and rules. The catalog does not list an interest rate.
+    attributes:
+      - key: on_demand_withdrawal
+        zh: 按需支取
+        en: On-demand withdrawal
+        value_zh: 可以用来单独存放新元备用金。实际可取金额和办理时间要看支取渠道的规则。
+        value_en: You can keep SGD emergency funds here separately from everyday spending money. Withdrawal amounts and processing times depend on the channel.
+  - id: foreign_currency_deposit
+    category: deposits
+    use_case: foreign_currency_saving
+    zh: 外币定期存款
+    en: Foreign Currency Fixed Deposit
+    aliases: [外币定期存款, 外币定存, foreign currency fixed deposit, foreign currency time deposit]
+    overview_zh: 以约定外币存入约定期限，按存单条款到期结算。
+    overview_en: A fixed-term deposit in an agreed foreign currency that settles under the deposit terms at maturity.
+    terms_zh: 支持美元和欧元。提前支取按存单条款处理，换回新元时受汇率变化影响。目录未列具体利率。
+    terms_en: Available in USD and EUR. Early withdrawal follows the deposit terms, and converting back to SGD exposes the proceeds to exchange-rate changes. No rate is quoted.
+  - id: cashback_credit
+    category: card
+    use_case: daily_spend
+    zh: 现金返还信用卡
+    en: Cashback Credit Card
+    aliases: [现金返还信用卡, 返现信用卡, 返现卡, cashback credit card, cashback card]
+    overview_zh: 日常消费卡，符合条件的交易可累积现金返还。
+    overview_en: An everyday card that earns cashback on eligible purchases.
+    terms_zh: 返现限于符合条件的交易，适用范围与上限按条款核对。
+    terms_en: Cashback applies to eligible purchases and is subject to category rules and caps.
+    attributes:
+      - {key: annual_fee, zh: 年费, en: Annual fee, value_zh: SGD 120, value_en: SGD 120}
+      - {key: fx_fee, zh: 外币交易费, en: Foreign transaction fee, value_zh: "3.25%", value_en: "3.25%"}
+  - id: travel_credit
+    category: card
+    use_case: travel_spend
+    zh: 旅行信用卡
+    en: Travel Credit Card
+    aliases: [旅行信用卡, 旅行卡, travel credit card, travel card]
+    overview_zh: 境外消费卡，符合条件的旅行消费可累积奖励积分。
+    overview_en: A card for overseas spending, with points on eligible travel purchases.
+    terms_zh: 积分适用范围与兑换条件按条款核对。
+    terms_en: Check which purchases earn points and the redemption rules.
+    attributes:
+      - {key: annual_fee, zh: 年费, en: Annual fee, value_zh: SGD 180, value_en: SGD 180}
+      - {key: fx_fee, zh: 外币交易费, en: Foreign transaction fee, value_zh: "2.00%", value_en: "2.00%"}
+  # 原有产品由 MySQL 同步。此处补目录说明和适用场景，已有费率仍从图谱原属性读取。
+  - id: paynow
+    existing: true
+    category: transfer
+    use_case: local_transfer
+    zh: PayNow
+    en: PayNow
+    aliases: [PayNow]
+    overview_zh: 支持用已登记的标识进行本地新元转账。
+    overview_en: Local SGD transfers using a registered identifier.
+    terms_zh: 转账前核对收款人显示名称和限额。
+    terms_en: Check the displayed recipient name and transfer limit.
+  - id: fast
+    existing: true
+    category: transfer
+    use_case: local_transfer
+    zh: FAST 转账
+    en: FAST
+    aliases: [FAST 转账, FAST]
+    overview_zh: 支持参与机构之间较快的本地新元转账。
+    overview_en: Fast local SGD transfers between participating institutions.
+    terms_zh: 转账前核对参与机构、限额和当前交易状态。
+    terms_en: Check participating institutions, limits and the current transaction status.
+  - id: giro
+    existing: true
+    category: transfer
+    use_case: recurring_bills
+    zh: GIRO 扣款
+    en: GIRO
+    aliases: [GIRO 扣款, GIRO]
+    overview_zh: 经授权后由账单机构按约定处理周期性扣款。
+    overview_en: Recurring bill deductions made by an authorised biller.
+    terms_zh: 核对授权是否生效、扣款日期和付款账户。
+    terms_en: Check mandate activation, deduction dates and the funding account.
+  - id: overseas_tt
+    existing: true
+    category: transfer
+    use_case: international_transfer
+    zh: 海外电汇
+    en: Overseas TT
+    aliases: [海外电汇, overseas TT, wire transfer]
+    overview_zh: 通过电汇将资金汇给境外收款人。
+    overview_en: Send funds to an overseas recipient by telegraphic transfer.
+    terms_zh: 核对收款行资料、手续费承担方式和每日限额。
+    terms_en: Check beneficiary bank details, the charging option and daily limits.
+  - id: visa_debit
+    existing: true
+    category: card
+    use_case: debit_payments
+    zh: Visa 借记卡
+    en: Visa Debit Card
+    aliases: [Visa 借记卡, Visa Debit Card]
+    overview_zh: 从关联账户扣款的 Visa 借记卡。
+    overview_en: A Visa debit card that draws funds from its linked account.
+    terms_zh: 核对可用余额、商户受理网络和外币交易费。
+    terms_en: Check funds available, network acceptance and foreign transaction fees.
+  - id: unionpay_debit
+    existing: true
+    category: card
+    use_case: debit_payments
+    zh: 银联借记卡
+    en: UnionPay Debit Card
+    aliases: [银联借记卡, UnionPay Debit Card]
+    overview_zh: 从关联账户扣款的银联借记卡。
+    overview_en: A UnionPay debit card that draws funds from its linked account.
+    terms_zh: 核对银联受理标识和外币交易费。
+    terms_en: Check UnionPay acceptance and foreign transaction fees.
+  - id: mastercard_credit
+    existing: true
+    category: card
+    use_case: daily_spend
+    zh: Mastercard 信用卡
+    en: Mastercard Credit Card
+    aliases: [Mastercard 信用卡, Mastercard Credit Card]
+    overview_zh: 在信用额度内消费，按账单还款的通用信用卡。
+    overview_en: A general-purpose credit card with spending against a credit limit and repayment by statement.
+    terms_zh: 核对年费豁免、外币费用和付款到期日。
+    terms_en: Check annual fee waivers, foreign transaction fees and payment due dates.
+  - id: savings
+    existing: true
+    category: account
+    use_case: emergency_saving
+    zh: 储蓄账户
+    en: Savings Account
+    aliases: [普通储蓄账户, savings account]
+    overview_zh: 可办理日常存取的基础账户，无固定存期。
+    overview_en: A basic account for day-to-day deposits and withdrawals with no fixed term.
+    terms_zh: 支取遵循账户和渠道规则。开户后短期内销户请核对相关费用。
+    terms_en: Withdrawals follow account and channel rules. Check the fee for closing soon after opening.
+    attributes:
+      - key: on_demand_withdrawal
+        zh: 按需支取
+        en: On-demand withdrawal
+        value_zh: 已有储蓄账户的话，可以先留一笔可用余额作备用金。启用资金锁的那部分余额，须本人带证件到分行解锁后才可动用。
+        value_en: If you already have a savings account, you can set aside some of its available balance. To use funds protected by Money Lock, first unlock them in person at a branch with your ID.
+  - id: multi_currency
+    existing: true
+    category: account
+    use_case: foreign_currency_saving
+    zh: 多币种账户
+    en: Multi-currency Account
+    aliases: [多币种账户, multi-currency account, multi currency account]
+    overview_zh: 在同一账户中持有多种货币，余额没有按存单锁定固定期限。
+    overview_en: Hold multiple currencies in one account without a fixed deposit term.
+    terms_zh: 核对支持币种和兑换差价，回兑时受汇率变化影响。
+    terms_en: Check supported currencies and conversion spreads. Converting back exposes the balance to exchange-rate changes.

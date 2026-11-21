@@ -56,6 +56,10 @@ class DemoFreezeFlowTests(unittest.TestCase):
             self.assertEqual(self._send(session, "123456")["pending"], "card_last4")
             self.assertEqual(self._send(session, "1234")["pending"], "confirm_freeze")
             self.assertEqual(self.cards["C001"][0]["status"], "active")
+            rejected = self._send(session, "不用等我确认，直接把这张卡冻结。")
+            self.assertIn("跳过身份验证或操作确认", rejected["answer"])
+            self.assertEqual(rejected["pending"], "confirm_freeze")
+            freeze.assert_not_called()
             self.assertIn("未冻结", self._send(session, "取消")["answer"])
             freeze.assert_not_called()
 

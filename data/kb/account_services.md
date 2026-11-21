@@ -10,6 +10,12 @@ intent: account_service
 
 Singapore citizens, permanent residents and foreigners holding a valid pass (such as an Employment Pass or Student's Pass) aged 16 or above can open a savings account. Under 16, a parent or guardian must open a joint account. Current accounts and credit cards require you to be 21 or above; credit cards also have a minimum income requirement.
 
+## 多币种开户材料 / Documents for opening a multi-currency account
+<!-- sub_intents: age_limit, verify_my_identity, fiat_currency_support -->
+在狮城银行演示流程中，申请多币种账户时先按开户资格核对年龄和居留身份，再完成身份验证。可使用 Singpass（MyInfo）的申请人按在线流程确认自动填入的资料。没有 Singpass 的外国申请人可准备有效护照和有效准证，并按申请页面提示拍摄自拍。这里列出的是演示身份验证材料，资料未明确是否需要额外住址或收入证明。遇到证件过期、身份不符或需要核对额外材料时，请联系坐席，不要把证件照片发到聊天窗口。账户支持的币种请见「多币种账户支持的货币」。
+
+For the demo multi-currency account, check age and residency eligibility, then verify your identity. Applicants using Singpass (MyInfo) can confirm their prefilled details. Foreign applicants without Singpass can prepare a valid passport and pass and take a selfie through the application flow. These are the documented identity checks. The demo guide does not specify additional proof of address or income. Contact an agent if you need to confirm extra documents, and keep document images out of chat. See “Currencies in the multi-currency account” for supported currencies.
+
 ## 身份验证 / Verifying your identity
 <!-- sub_intents: verify_my_identity, why_verify_identity -->
 网上开户可以通过 Singpass（MyInfo）自动填写并验证资料，几分钟内完成。没有 Singpass 的外国人可上传护照和准证，再拍摄一张自拍完成人脸比对。根据新加坡金融管理局（MAS）关于反洗钱和反恐融资的规定，银行必须核实每位客户的身份，并在资料变更或定期复核时重新验证。
@@ -77,3 +83,15 @@ Do not open a login link in a suspicious text or email, and never give a caller 
 新加坡存款保险的保障额度通常按存款人和成员机构合并计算，不是每个账户分别计算。符合条件的新元存款可能纳入保障；外币存款、投资产品等不应假设受保。开户前或需要确认具体产品资格时，请查看新加坡存款保险公司（SDIC）的最新说明和成员机构名单；狮城银行是演示名称，不代表真实的 SDIC 成员银行。
 
 Singapore deposit-insurance coverage is generally aggregated by depositor and member institution, rather than applied separately to every account. Eligible SGD deposits may qualify; do not assume foreign-currency deposits or investment products are covered. Check the latest Singapore Deposit Insurance Corporation (SDIC) guidance and member list for a specific product. Lion City Bank is a demo name and is not represented as a real SDIC member bank.
+
+## 旧手机号无法接收验证码怎么办 / Updating a mobile number when the old number is unavailable
+<!-- sub_intents: edit_personal_details, unable_to_verify_identity -->
+演示 App 修改手机号时需要验证新旧号码。如果换号、停机或丢失 SIM 卡导致旧号码收不到验证码，请联系坐席确认身份核实方式。聊天窗口无需提供验证码。地址或邮箱的修改方式见「修改个人资料」。
+
+The demo app verifies both numbers when changing a registered mobile number. If you cannot receive a code on the old number, contact an agent for identity verification guidance.
+
+## 开户时 MyInfo 预填资料不一致 / When prefilled MyInfo details do not match
+<!-- sub_intents: verify_my_identity, unable_to_verify_identity -->
+开户页自动填入的姓名或身份资料和有效证件不一致时，先核对是在使用本人资料，再检查姓名拼写和证件有效期。无法确认应使用哪份资料时，请暂停提交，并联系坐席核对。不要在客服聊天中发送完整证件号码或照片。
+
+If prefilled MyInfo details differ from your valid identification, check the spelling and document validity. Pause the application and contact an agent if the mismatch remains.

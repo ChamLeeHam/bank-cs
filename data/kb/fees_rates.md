@@ -34,6 +34,12 @@ Converting currencies inside a multi-currency account has no separate fee; the c
 
 Withdrawals at Lion City Bank ATMs are free. Withdrawals at other banks' ATMs in Singapore cost SGD 2 each. Overseas ATM withdrawals cost SGD 5 each plus the 3.25% foreign transaction fee; the overseas ATM operator may add its own fee, which is shown on the screen.
 
+## 海外 ATM 取现与外币刷卡费用对比 / Overseas ATM withdrawal versus foreign-currency card purchase fees
+<!-- sub_intents: cash_withdrawal_charge, card_payment_fee_charged, exchange_charge -->
+海外 ATM 取现和外币刷卡消费适用不同的收费项目。按狮城银行演示规则，海外 ATM 取现每次收取 SGD 5，外币金额另加 3.25% 外币交易费。ATM 运营商也可能另外收费，以屏幕显示为准。外币刷卡消费适用「外币兑换与外币刷卡费用」的比例：Visa 或 Mastercard 为 3.25%，银联为 1%。刷卡买东西不收取海外 ATM 的 SGD 5 取现费。若商户报价以新元结算，需另核对商户是否收取动态货币转换（DCC）费用。无法确认账单上某笔费用时，可查看交易详情或请坐席核查。
+
+An overseas cash withdrawal costs SGD 5 per withdrawal plus a 3.25% fee on the foreign-currency amount under the demo rules. The ATM operator may charge separately. A foreign-currency card purchase follows a different rule: Visa and Mastercard charge 3.25%, and UnionPay charges 1%. The SGD 5 ATM withdrawal fee does not apply to card purchases. An overseas merchant may add dynamic currency conversion (DCC) charges when it offers SGD settlement. Check the transaction details or ask an agent to review an unfamiliar charge.
+
 ## 账单上看不懂的费用 / Unfamiliar charges on your statement
 <!-- sub_intents: extra_charge_on_statement, card_payment_fee_charged -->
 账单上常见的小额费用包括：外币交易费（3.25%）、海外 ATM 取款费（SGD 5）、信用卡年费、补卡费（SGD 15）以及逾期还款费。App 中点击该笔交易可以查看费用类型。如果是您完全没有做过的交易，请立即冻结卡片并举报盗刷；如果认为费用收错了，可以申请人工客服核查。
@@ -69,3 +75,9 @@ An overseas merchant or ATM may offer dynamic currency conversion (DCC), letting
 借记卡消费通常直接从关联存款账户扣款；信用卡消费则记入信用账户，之后需要按账单还款，未还余额可能产生利息或费用。退款、预授权、外币转换和争议处理的时间可能因卡组织、商户和发卡机构而不同。具体交易记录应以银行 App 和卡片条款为准。
 
 Debit-card purchases are generally taken from the linked deposit account. Credit-card purchases are charged to a credit account and must be repaid according to the statement; an unpaid balance may incur interest or fees. The timing of refunds, pre-authorisations, currency conversion and disputes can vary by card network, merchant and issuer. Check the bank app and card terms for a specific transaction.
+
+## 电汇本金以外为什么另扣一笔钱 / Why a transfer can have a separate fee entry
+<!-- sub_intents: transfer_fee_charged, extra_charge_on_statement -->
+海外电汇的汇款本金、本行手续费和中转行或收款行费用是不同项目。请在 App 交易详情里核对费用类别和参考编号，本行演示费率见「海外电汇（TT）手续费」。若是收款人收到的金额较少，也要核对汇款时的费用承担方式。需要查某笔交易的实际收费时，请先完成身份验证。
+
+Check the transfer details for the principal, our fee and the charge option. Intermediary or receiving bank fees can affect the amount received. Specific transaction details require verification.

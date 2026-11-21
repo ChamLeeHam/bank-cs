@@ -46,7 +46,8 @@ def search_faq(query: str):
         source_id = faq_source_id(d["doc"], d["section"])
         parts.append(f"【{i}】[FAQ:{source_id}]《{d['title']}》{d['section']}\n{body}")
     content = "\n\n".join(parts)
-    sources = [{"doc": d["doc"], "title": d["title"], "section": d["section"], "rerank_score": d["rerank_score"]}
+    sources = [{"doc": d["doc"], "title": d["title"], "section": d["section"], "rerank_score": d["rerank_score"],
+                "text": d["text"].split("\n", 1)[-1]}
                for d in docs]
     return content, sources
 
@@ -83,8 +84,10 @@ def get_product_info(product: str, attribute: ATTRIBUTES | None = None):
             for r in rows:
                 lines.append(f"{r['product_zh']} / {r['product_en']} - {r['name_zh']} / {r['name_en']}："
                              f"{r['value_zh']} / {r['value_en']}")
-            if rows:
-                found.append(p["product_id"])
+                zh = f"{r['product_zh']}的{r['name_zh']}：{r['value_zh']}"
+                en = f"{r['name_en']} for {r['product_en']}: {r['value_en']}"
+                found.append({"doc": "neo4j", "title": "术语图谱 / Product graph", "section": r["product_zh"],
+                              "rerank_score": None, "text_zh": zh, "text_en": en, "verbatim_fact": True})
         return "\n".join(lines), found
     except Neo4jError as e:
         logger.warning(f"术语图谱查不了：{e}")

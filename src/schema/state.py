@@ -34,8 +34,10 @@ class GraphState(TypedDict, total=False):
 
     # input_guard 写入
     lang: Lang  # 客户用的语言，决定用什么语言回复 [每轮]
+    conversation_lang: Lang | None  # 最近一次正常回复使用的语言 [跨轮]
     masked_question: str  # 脱敏后的问题，后面的节点都用这个 [每轮]
     private_input: bool  # 可能包含个人账户或交易信息，不发送给外部模型
+    unsafe_action: bool  # 是否要求越过客户业务权限 [每轮]
     blocked: bool  # 是否被拦截，比如提示注入 [每轮]
     human_requested: bool  # 客户是否要求转人工 [每轮]
 
@@ -67,6 +69,8 @@ class GraphState(TypedDict, total=False):
     otp_locked: bool  # 本会话连续输错达到上限后锁定账户查询 [跨轮]
     otp_failures: int
     fraud_confirmation_pending: bool
+    loan_calculation_pending: bool
+    loan_calculation_context: dict[str, Any]
     transfer_candidates: list[str]  # 最近一次已选中的候选列表，保持当时的顺序
     transfer_customer_id: str  # 列表所属客户
     tool_calls: list[dict[str, Any]]  # 账户智能体调用了哪些工具，用来审计 [每轮]
@@ -87,6 +91,7 @@ CROSS_TURN_DEFAULTS: dict[str, Any] = {
     "session_id": "",
     "customer_id": "",
     "messages": [],
+    "conversation_lang": None,
     "intent": "",
     "entities": {},
     "otp_verified": False,
@@ -94,6 +99,8 @@ CROSS_TURN_DEFAULTS: dict[str, Any] = {
     "otp_locked": False,
     "otp_failures": 0,
     "fraud_confirmation_pending": False,
+    "loan_calculation_pending": False,
+    "loan_calculation_context": {},
     "transfer_candidates": [],
     "transfer_customer_id": "",
     "ticket_id": None,
@@ -109,6 +116,7 @@ PER_TURN_DEFAULTS: dict[str, Any] = {
     "masked_question": "",
     "private_input": False,
     "blocked": False,
+    "unsafe_action": False,
     "human_requested": False,
     "sub_intent": "",
     "intent_score": 0.0,

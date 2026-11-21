@@ -1,5 +1,6 @@
 # 把 MySQL 里的产品数据迁移到 Neo4j，做成中英术语图谱
 # 运行：python src/datasync/neo4j_data_sync.py
+import argparse
 import sys
 
 import pymysql
@@ -11,6 +12,7 @@ from pymysql.cursors import DictCursor
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 from src.schema.config import get_config
+from src.utils.financial_products import load_financial_catalog
 
 config = get_config()
 
@@ -85,8 +87,65 @@ def write_product_alias(driver, aliases):
         driver.execute_query(cypher, parameters_=alias, database_=config.neo4j_database)
 
 
+def sync_financial_products(driver):
+    """Add or refresh the public demo catalog without clearing existing nodes."""
+    catalog = load_financial_catalog()
+    rows = [
+        {
+            **product,
+            "category_names": catalog["categories"][product["category"]],
+            "use_case_names": catalog["use_cases"][product["use_case"]],
+            "loan_plans": product.get("loan_plans", []),
+            "attrs": [
+                {"key": "overview", "zh": "产品说明", "en": "Overview",
+                 "value_zh": product["overview_zh"], "value_en": product["overview_en"]},
+                {"key": "key_terms", "zh": "条款核对", "en": "Terms to check",
+                 "value_zh": product["terms_zh"], "value_en": product["terms_en"]},
+                *product.get("attributes", ()),
+            ],
+        }
+        for product in catalog["products"]
+    ]
+    driver.execute_query("""
+        UNWIND $products AS item
+        MERGE (p:BankProduct {product_id: item.id})
+        SET p.name_zh = item.zh, p.name_en = item.en, p.catalog = 'retail_demo',
+            p.loan_plan_ids = [plan IN item.loan_plans | plan.id]
+        MERGE (c:BankCategory {category_id: item.category})
+        SET c.name_zh = item.category_names.zh, c.name_en = item.category_names.en
+        MERGE (p)-[:Belong]->(c)
+        MERGE (u:BankUseCase {use_case_id: item.use_case})
+        SET u.name_zh = item.use_case_names.zh, u.name_en = item.use_case_names.en
+        MERGE (p)-[:SUITABLE_FOR]->(u)
+        FOREACH (alias IN item.aliases |
+            MERGE (al:BankAlias {name: toLower(alias)})
+            MERGE (al)-[:Refers]->(p)
+        )
+        FOREACH (attr IN item.attrs |
+            MERGE (a:BankAttr {product_id: item.id, attr_key: attr.key})
+            SET a.name_zh = attr.zh, a.name_en = attr.en,
+                a.value_zh = attr.value_zh, a.value_en = attr.value_en
+            MERGE (p)-[:Have]->(a)
+        )
+        FOREACH (plan IN item.loan_plans |
+            MERGE (q:BankLoanPlan {plan_id: plan.id})
+            SET q.term_months = plan.term_months, q.annual_rate_percent = plan.annual_rate_percent,
+                q.upfront_fee = plan.upfront_fee
+            MERGE (p)-[:OFFERS_LOAN_PLAN]->(q)
+        )
+        """, products=rows, database_=config.neo4j_database)
+    return len(rows)
+
+
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Sync bank products to Neo4j")
+    parser.add_argument("--financial-products-only", action="store_true", help="Add or refresh the demo financial catalog only")
+    args = parser.parse_args()
     try:
+        if args.financial_products_only:
+            with GraphDatabase.driver(config.neo4j_uri, auth=(config.neo4j_user, config.neo4j_password)) as driver:
+                print(f"金融产品目录更新完成，共 {sync_financial_products(driver)} 款。")
+            sys.exit(0)
         # 1.从mysql中读取产品、属性、别名
         with pymysql.connect(
             host=config.mysql_host,
@@ -107,6 +166,9 @@ if __name__ == "__main__":
             write_product_info(driver, products)
             write_product_attr(driver, attrs)
             write_product_alias(driver, aliases)
+            financial_products = sync_financial_products(driver)
             print(f"数据迁移成功！产品 {len(products)} 个，属性 {len(attrs)} 个，别名 {len(aliases)} 个")
+            print(f"金融产品目录更新完成，共 {financial_products} 款。")
     except Exception as err:
         print(f"数据迁移失败：{type(err).__name__}: {err}")
+        sys.exit(1)

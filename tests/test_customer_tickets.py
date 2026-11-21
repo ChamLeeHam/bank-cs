@@ -2,6 +2,7 @@ import unittest
 from unittest.mock import patch
 
 from fastapi.testclient import TestClient
+from pymysql.err import IntegrityError
 
 from src.api import app, sessions
 from src.schema.exceptions import MySQLError
@@ -42,6 +43,14 @@ class CustomerTicketTests(unittest.TestCase):
         verified.assert_called_with(self.sid, 'C001')
 
     @patch('src.api.is_customer_verified', return_value=True)
+    @patch('src.api.list_customer_tickets', return_value=[{'ticket_id': 4, 'status': 'in_progress'}])
+    def test_chat_shows_in_progress_ticket_in_chinese(self, lookup, verified):
+        response = self.client.post(f'/api/sessions/{self.sid}/messages', json={'text': '我的工单处理进度怎么样了？'})
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('状态：处理中', response.json()['answer'])
+        lookup.assert_called_once_with('C001')
+
+    @patch('src.api.is_customer_verified', return_value=True)
     @patch('src.api.list_customer_tickets', side_effect=lambda customer: [{'ticket_id': 1}] if customer == 'C001' else [])
     def test_switching_customer_does_not_return_previous_customers_tickets(self, lookup, verified):
         other = self.client.post('/api/sessions', json={'customer_id':'C002'}).json()['session_id']
@@ -70,6 +79,25 @@ class CustomerTicketTests(unittest.TestCase):
         self.assertIn('where t.customer_id = %s', sql.lower())
         self.assertIn("status in ('replied', 'closed')", sql.lower())
         self.assertEqual(params, ('C002', 50))
+
+    @patch("src.api.require_local")
+    @patch("src.api.is_customer_verified", return_value=True)
+    @patch("src.api.get_statement_transaction")
+    @patch("src.api.find_active_related_ticket", side_effect=[None, {"ticket_id": 42}, {"ticket_id": 42}])
+    @patch("src.api.create_ticket")
+    def test_dispute_reuses_concurrent_winner_across_sessions(self, create, find, txn, verify, local):
+        txn_id = "TT00000001"
+        txn.return_value = {"transaction_id": txn_id, "kind": "transfer", "description": "Overseas TT",
+                            "amount": "100", "currency": "SGD", "status": "completed", "occurred_at": "2026-11-20"}
+        create.side_effect = MySQLError("insert failed", cause=IntegrityError(1062, "tickets.uk_ticket_active_txn"))
+        other = self.client.post("/api/sessions", json={"customer_id": "C001"}).json()["session_id"]
+        for session in (self.sid, other):
+            response = self.client.post(f"/api/sessions/{session}/statement/{txn_id}/dispute")
+            self.assertEqual(response.status_code, 200)
+            self.assertEqual(response.json()["ticket_id"], 42)
+            self.assertFalse(response.json()["created"])
+        self.assertEqual([call.args for call in find.call_args_list], [("C001", txn_id)] * 3)
+        create.assert_called_once()
 
 
 if __name__ == '__main__':

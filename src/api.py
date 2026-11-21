@@ -23,7 +23,9 @@ from langchain_core.messages import HumanMessage
 from langsmith import tracing_context
 from pydantic import BaseModel, Field
 
-from src.schema.main_graph import is_customer_verified, resume, run_query
+from src.nodes.loan_calculator import LoanComparison, compare_loan_plans
+from src.nodes.stub_nodes import detect_lang, is_unsafe_customer_action, unsafe_action_reply
+from src.schema.main_graph import get_conversation_language, is_customer_verified, resume, run_query
 from src.schema.exceptions import MySQLError
 from src.utils.ticket_utils import (
     claim_ticket_notification,
@@ -32,6 +34,7 @@ from src.utils.ticket_utils import (
     requeue_failed_notification,
     create_ticket,
     find_active_related_ticket,
+    is_active_dispute_conflict,
     get_customer_ticket,
     list_customer_tickets,
     list_tickets,
@@ -40,7 +43,7 @@ from src.utils.ticket_utils import (
     ticket_analytics,
     update_ticket,
 )
-from src.utils.ticket_assignment_schema import ensure_ticket_assignment_schema
+from src.utils.ticket_assignment_schema import ensure_ticket_assignment_schema, ensure_ticket_dispute_constraint
 from src.utils.ticket_notification_schema import ensure_ticket_notification_schema
 from src.utils.ticket_sla import SLA_ALERT_RANK, SLA_LABELS, sla_level
 from src.utils.ticket_sla_schema import ensure_ticket_sla_schema
@@ -59,6 +62,7 @@ async def lifespan(_app):
     from src.schema.config import get_config
 
     await asyncio.to_thread(ensure_ticket_assignment_schema)
+    await asyncio.to_thread(ensure_ticket_dispute_constraint)
     await asyncio.to_thread(ensure_ticket_notification_schema)
     await asyncio.to_thread(ensure_ticket_sla_schema)
     await asyncio.to_thread(ensure_service_feedback_schema)
@@ -409,6 +413,12 @@ def _set_agent_cookie(response: Response, token: str, request: Request):
 def index():
     react_index = WEB_DIR / "react" / "index.html"
     return FileResponse(react_index if react_index.is_file() else WEB_DIR / "index.html")
+
+
+@app.post("/api/loan-plans/compare")
+def compare_loan_plan_options(comparison: LoanComparison):
+    """Estimate fixed-rate plans from supplied terms and rank them by total cost under the monthly budget."""
+    return compare_loan_plans(comparison)
 
 
 @app.get("/agent")
@@ -965,6 +975,12 @@ def download_statement_receipt(session_id: str, transaction_id: str, request: Re
         session["lock"].release()
 
 
+def _existing_dispute(ticket):
+    ticket_id = ticket["ticket_id"]
+    return {"ticket_id": ticket_id, "created": False,
+            "answer": f"这笔交易已有核查工单 #{ticket_id}，请在「我的工单」查看处理进度。"}
+
+
 @app.post("/api/sessions/{session_id}/statement/{transaction_id}/dispute")
 def create_statement_dispute(session_id: str, transaction_id: str, request: Request, response: Response):
     """Create a ticket with a structured transaction link; never pass transaction details to the chat model."""
@@ -982,15 +998,14 @@ def create_statement_dispute(session_id: str, transaction_id: str, request: Requ
             txn = get_statement_transaction(session["customer_id"], transaction_id)
             if not txn:
                 raise HTTPException(status_code=404, detail="没有找到这笔账单交易。")
-            existing = find_active_related_ticket(session_id, transaction_id)
+            existing = find_active_related_ticket(session["customer_id"], transaction_id)
         except MySQLError:
             logger.exception("创建账单争议工单前读取记录失败")
             raise HTTPException(status_code=503, detail="账单暂时无法读取，请稍后重试。")
 
         response.headers["Cache-Control"] = "no-store"
         if existing:
-            return {"ticket_id": existing["ticket_id"], "created": False,
-                    "answer": f"这笔交易已有核查工单 #{existing['ticket_id']}，请在「我的工单」查看处理进度。"}
+            return _existing_dispute(existing)
 
         occurred_at = txn["occurred_at"]
         if hasattr(occurred_at, "isoformat"):
@@ -1022,7 +1037,18 @@ def create_statement_dispute(session_id: str, transaction_id: str, request: Requ
         }
         try:
             ticket_id = create_ticket(state, "normal", related_transaction=related_transaction)
-        except (MySQLError, ValueError):
+        except MySQLError as exc:
+            if is_active_dispute_conflict(exc):
+                try:
+                    existing = find_active_related_ticket(session["customer_id"], transaction_id)
+                except MySQLError:
+                    logger.exception("读取并发创建的争议工单失败")
+                else:
+                    if existing:
+                        return _existing_dispute(existing)
+            logger.exception("创建账单关联工单失败")
+            raise HTTPException(status_code=503, detail="暂时无法创建核查工单，请稍后重试。")
+        except ValueError:
             logger.exception("创建账单关联工单失败")
             raise HTTPException(status_code=503, detail="暂时无法创建核查工单，请稍后重试。")
         return {
@@ -1044,6 +1070,12 @@ def send_message(session_id: str, request: Message):
     if not session["lock"].acquire(blocking=False):
         raise HTTPException(status_code=409, detail="上一条消息还在处理，请稍候。")
     try:
+        # 恢复挂起流程和直接查询工单都会跳过图的输入护栏。
+        if (session["pending"] or TICKET_STATUS_QUESTION.search(message)) and is_unsafe_customer_action(message):
+            lang = get_conversation_language(session_id, session["customer_id"]) or detect_lang(message)
+            return {"answer": unsafe_action_reply(lang),
+                    "pending": session["pending"], "sources": []}
+
         if session.get("pending") == "service_rating":
             parsed = parse_service_feedback(message)
             if parsed:
@@ -1072,7 +1104,7 @@ def send_message(session_id: str, request: Message):
                 raise HTTPException(status_code=503, detail="工单状态暂时无法查询，请稍后重试。")
             if not tickets:
                 return {"answer": "查询完成，您目前没有已创建的工单。", "pending": None}
-            labels = {"open": "待处理", "replied": "已有回复", "closed": "已关闭"}
+            labels = {"open": "待处理", "in_progress": "处理中", "replied": "已有回复", "closed": "已关闭"}
             latest = tickets[0]
             answer = (f"您最近一张工单是 #{latest['ticket_id']}，状态："
                       f"{labels.get(latest['status'], latest['status'])}。您共有 {len(tickets)} 张工单；"

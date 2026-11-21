@@ -74,3 +74,15 @@ After a card is replaced or expires, a recurring payment may fail because the ca
 酒店、租车、加油站或部分线上商户可能先发起一笔预授权，最终结算金额确认后才入账；预授权期间，可用余额或额度可能暂时减少。预授权何时释放、显示多久以及最终金额如何确认由商户和发卡机构决定。若同一笔交易长期显示待处理或金额不符，请准备交易日期、金额和参考号联系银行查询；不要仅因待处理记录就重复付款。
 
 Hotels, car-rental companies, petrol stations and some online merchants may place an authorisation first and submit the final amount later. While it is pending, your available balance or credit may be temporarily reduced. The merchant and issuer determine when the hold is released, how long it appears and how the final amount is settled. If the same transaction remains pending unusually long or the amount is wrong, contact your bank with the date, amount and reference; do not pay again just because it is pending.
+
+## 网购能付但感应付款失败 / When contactless fails but other card payments work
+<!-- sub_intents: contactless_not_working, card_not_working -->
+如果只有感应付款（contactless）失败，先确认商户终端支持感应，并在 App 查看卡片是否激活或冻结。若手头有实体卡，可按终端提示改用插卡方式。若不同商户都失败，记录发生的时间和终端提示，联系坐席排查。
+
+If only contactless payments fail, confirm the terminal supports contactless, check card status, and try inserting the card when the terminal allows. Contact support if the issue repeats.
+
+## 到期换卡与丢失补卡如何区分 / Renewing an expiring card versus replacing a lost card
+<!-- sub_intents: card_about_to_expire, order_physical_card -->
+卡片即将到期时，先核对 App 中的卡片状态和邮寄地址，并参考「卡片即将到期」的换卡说明。卡片找不到或怀疑被盗时，先按「银行卡丢失或被盗」处理卡片安全，再了解补发方式。等新卡时可参考「新卡寄送时间」，具体进度可在 App 查阅。
+
+For expiry, check your mailing address and renewal status. For loss or suspected theft, secure the card first, then check replacement options and delivery.

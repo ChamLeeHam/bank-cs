@@ -119,6 +119,17 @@ _REPORT = re.compile(
 )
 
 
+_RECORDED_UNAUTHORIZED_EVENT = re.compile(
+    r"(?:\b(?:card payment|card transaction|cash withdrawal)\b.{0,70}"
+    r"\bi (?:never|did not|didn't) authori[sz]e(?:d)? (?:it|that)\b)|"
+    r"(?:\bi (?:never|did not|didn't) use(?:d)? (?:that|the) atm\b.{0,80}"
+    r"\bmy account (?:shows|lists|has) (?:a |the )?(?:cash )?withdrawal\b)|"
+    r"(?:(?:我)?(?:没(?:有)?|从未)去过.{0,12}(?:柜员机|ATM).{0,25}"
+    r"(?:账上|账单|账户).{0,12}(?:出现|显示|有).{0,12}(?:取款|提现))",
+    re.IGNORECASE,
+)
+
+
 def fraud_context(text):
     """返回风险判断和剔除已否认风险后仍需分类的内容。"""
     remaining = []
@@ -127,6 +138,8 @@ def fraud_context(text):
     future_reference = bool(re.match(r"^\s*(?:for future reference\b|一般来说|只是了解一下)", normalized, re.IGNORECASE))
     if re.search(r"我.{0,20}(?:根本|完全)?没刷卡\s*[，,]\s*(?:但是|但|却).{0,20}(?:扣款|消费)(?:短信|通知)",
                  normalized) and not _HYPOTHETICAL.search(normalized):
+        return "reported", text
+    if not _HYPOTHETICAL.search(normalized) and _RECORDED_UNAUTHORIZED_EVENT.search(normalized):
         return "reported", text
     for clause in _CLAUSE_BREAK.split(normalized):
         clause = clause.strip()
