@@ -1,0 +1,25 @@
+{"id":"ZH01","group":"中文口语","lang":"zh","question":"工资卡在柜员机里没吐出来，屏幕已经回到首页，我先找谁？","expected":["ATM 吞卡"]}
+{"id":"ZH02","group":"中文口语","lang":"zh","question":"电汇的那笔钱已经扣过了，明细里为什么还单独出了一笔扣款？","expected":["电汇本金以外为什么另扣一笔钱"]}
+{"id":"ZH03","group":"中文口语","lang":"zh","question":"超市收银问我刷哪种币，我在国外买东西，总是习惯选新币，这样该怎么比较？","expected":["海外刷卡时选择新元还是当地货币"]}
+{"id":"ZH04","group":"中文口语","lang":"zh","question":"新加坡银行账户开了好几个，同一家行里的存款保障是各算各的吗？","expected":["存款保险是按账户还是按银行计算"]}
+{"id":"ZH05","group":"中文口语","lang":"zh","question":"已经出账单了，我后来又刷了一笔，为什么现在欠的比那张单子写的多？","expected":["信用卡账单日、到期日和应还金额"]}
+{"id":"ZH06","group":"中文口语","lang":"zh","question":"钱已经付给信用卡了，发卡方那里仍像没付一样，我该先查付款银行还是卡账？","expected":["信用卡还款后仍显示未还"]}
+{"id":"EN01","group":"英文改写","lang":"en","question":"I got a replacement for my expired plastic and now my streaming subscription won't renew. What should I check?","expected":["订阅扣款在换卡后失败"]}
+{"id":"EN02","group":"英文改写","lang":"en","question":"I signed up for automatic bill collection online, but the authorisation is still pending. What can I do about the current bill?","expected":["eGIRO 授权没有马上生效怎么办"]}
+{"id":"EN03","group":"英文改写","lang":"en","question":"My old mobile line has been disconnected and I can't receive the text code. What's the official way to register my new number?","expected":["旧手机号无法接收验证码怎么办"]}
+{"id":"EN04","group":"英文改写","lang":"en","question":"Can a printout for one payment also serve as evidence that I own the account for a rental application?","expected":["月度对账单、交易回单与账户证明有什么区别"]}
+{"id":"EN05","group":"英文改写","lang":"en","question":"A cash machine says the withdrawal went through, but no banknotes came out. What information should I keep?","expected":["ATM 已扣款但没有收到现金"]}
+{"id":"EN06","group":"英文改写","lang":"en","question":"The shop says it sent the money back, but the credit hasn't appeared on my card statement. What evidence would help?","expected":["商户说已退款但账单还没显示"]}
+{"id":"MIX01","group":"中英混杂","lang":"mixed","question":"我在 checkout 看到 SGQR，扫完显示的 merchant name 不对，应该先看哪些地方？","expected":["使用 PayNow QR 或 SGQR 付款"]}
+{"id":"MIX02","group":"中英混杂","lang":"mixed","question":"开 multicurrency account 时 MyInfo 自动填的 address 跟现在的不一样，要怎么继续？","expected":["开户时 MyInfo 预填资料不一致"]}
+{"id":"MIX03","group":"中英混杂","lang":"mixed","question":"刷卡 online 正常，实体店 tap 一直 fail，也没有插卡再试过，先排查什么？","expected":["网购能付但感应付款失败"]}
+{"id":"MIX04","group":"中英混杂","lang":"mixed","question":"收到陌生人的 PayNow，他短信说 transfer back 给另一个号码，应该怎么处理？","expected":["收到不明的 PayNow 转账"]}
+{"id":"MIX05","group":"中英混杂","lang":"mixed","question":"这张 transfer receipt 有 reference number，能拿给房东当已经到账的 proof 吗？","expected":["电子交易回单能证明什么"]}
+{"id":"MIX06","group":"中英混杂","lang":"mixed","question":"之前的 support case 标成 closed，但故障没解决，我需要从头再开一个 ticket 吗？","expected":["工单已提交但还没解决怎么办"]}
+{"id":"MT01","group":"多轮指代","lang":"zh","history":[["如果我刚加了一个境外收款人，可以汇款吗？","新增收款人后，可能有验证、冷静期或临时限制。"]],"question":"那刚加完时为什么有额度也用不了？","expected":["新增收款人后为什么还不能汇款"]}
+{"id":"MT02","group":"多轮指代","lang":"en","history":[["The hotel took a card deposit at check-in and then billed me at check-out.","The first entry might be an authorisation. The final charge should be checked against the hotel's invoice."]],"question":"Why are those two figures different then?","expected":["卡片预授权与最终入账金额不同"]}
+{"id":"MT03","group":"多轮指代","lang":"mixed","history":[["学校说账户归属的 supporting document 要正式一点。","可以先确认对方需要账户证明还是对账单。"]],"question":"那我找学校确认时，除了 language 还要问什么？","expected":["申请账户证明前需要确认什么"]}
+{"id":"MT04","group":"多轮指代","lang":"zh","history":[["信用卡账单上有账单日和还款到期日。","账单日是本期出账日，到期日是这期付款期限。"]],"question":"那我只付最低的，剩下的怎么处理？","expected":["信用卡还款应该核对什么","信用卡应还全额还是最低还款额"]}
+{"id":"EDGE01","group":"资料边界","lang":"zh","question":"信用卡用外行付款，今天傍晚六点付的话保证几点入账？","expected":[]}
+{"id":"EDGE02","group":"资料边界","lang":"en","question":"Can you guarantee a human agent will close my existing support case within exactly 45 minutes?","expected":[]}
+{"id":"EDGE03","group":"资料边界","lang":"mixed","question":"账户证明要寄 overseas，送到伦敦的国际邮费是多少？","expected":[]}

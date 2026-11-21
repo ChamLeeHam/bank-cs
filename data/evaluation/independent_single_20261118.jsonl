@@ -1,0 +1,48 @@
+{"id":"S01","lang":"zh","intent":"balance_inquiry","route":"account","risk":"low","text":"今天我活期户头里还剩多少新元？"}
+{"id":"S02","lang":"en","intent":"balance_inquiry","route":"account","risk":"low","text":"Could you show the cash remaining in my savings account today?"}
+{"id":"S03","lang":"mixed","intent":"balance_inquiry","route":"account","risk":"low","text":"帮我看一下 savings account 现在还有多少新元"}
+{"id":"S04","lang":"zh","intent":"transfer_status","route":"account","risk":"low","text":"我昨晚给房东汇的那笔钱现在到哪一步了？"}
+{"id":"S05","lang":"en","intent":"transfer_status","route":"account","risk":"low","text":"Is the remittance I sent to my landlord last night still pending?"}
+{"id":"S06","lang":"mixed","intent":"transfer_status","route":"account","risk":"low","text":"我昨晚给房东发的 remittance 现在是什么 status？"}
+{"id":"S07","lang":"zh","intent":"card_lost_freeze","route":"account","risk":"high","text":"卡落在出租车上了，请先帮我冻结"}
+{"id":"S08","lang":"en","intent":"card_lost_freeze","route":"account","risk":"high","text":"I left my debit card in a taxi and need it frozen."}
+{"id":"S09","lang":"mixed","intent":"card_lost_freeze","route":"account","risk":"high","text":"debit card 落在 taxi 上了，帮我 freeze 一下"}
+{"id":"S10","lang":"zh","intent":"card_transaction_inquiry","route":"account","risk":"low","text":"能查一下我银行卡最近一笔消费吗？"}
+{"id":"S11","lang":"en","intent":"card_transaction_inquiry","route":"account","risk":"low","text":"Can you show me the latest purchase on my debit card?"}
+{"id":"S12","lang":"mixed","intent":"card_transaction_inquiry","route":"account","risk":"low","text":"帮我看 debit card 最近一笔 transaction"}
+{"id":"S13","lang":"zh","intent":"fees_rates","route":"rag","risk":"low","text":"在海外用银行卡取现一般有哪些费用？"}
+{"id":"S14","lang":"en","intent":"fees_rates","route":"rag","risk":"low","text":"What fees apply if I use my debit card at an overseas ATM?"}
+{"id":"S15","lang":"mixed","intent":"fees_rates","route":"rag","risk":"low","text":"在 overseas ATM 取钱通常有哪些 fee？"}
+{"id":"S16","lang":"zh","intent":"transfer_howto","route":"rag","risk":"low","text":"第一次汇款给海外供应商，需要收款方准备哪些资料？"}
+{"id":"S17","lang":"en","intent":"transfer_howto","route":"rag","risk":"low","text":"What recipient details do I need before sending an international transfer?"}
+{"id":"S18","lang":"mixed","intent":"transfer_howto","route":"rag","risk":"low","text":"第一次发 overseas TT，需要对方给什么 details？"}
+{"id":"S19","lang":"zh","intent":"card_service","route":"rag","risk":"low","text":"补发的新卡通常寄到哪里，能改收件地址吗？"}
+{"id":"S20","lang":"en","intent":"card_service","route":"rag","risk":"low","text":"Where is a replacement card normally delivered?"}
+{"id":"S21","lang":"mixed","intent":"card_service","route":"rag","risk":"low","text":"replacement card 会寄到哪个 address？"}
+{"id":"S22","lang":"zh","intent":"account_service","route":"rag","risk":"low","text":"想开个多币种账户，开户时得带什么资料？"}
+{"id":"S23","lang":"en","intent":"account_service","route":"rag","risk":"low","text":"What documents do new customers need to open a multicurrency account?"}
+{"id":"S24","lang":"mixed","intent":"account_service","route":"rag","risk":"low","text":"开 multicurrency account 要准备哪些 documents？"}
+{"id":"S25","lang":"zh","intent":"fraud_report","route":"handoff","risk":"high","text":"凌晨三点那笔网购不是我做的，也没授权任何人"}
+{"id":"S26","lang":"en","intent":"fraud_report","route":"handoff","risk":"high","text":"I was asleep when that online card payment happened. I never authorized it."}
+{"id":"S27","lang":"mixed","intent":"fraud_report","route":"handoff","risk":"high","text":"凌晨那笔 online card payment 不是我刷的，我没有授权"}
+{"id":"S28","lang":"zh","intent":"dispute_refund","route":"handoff","risk":"high","text":"那顿饭是我买的，但餐厅把同一笔钱扣了两次"}
+{"id":"S29","lang":"en","intent":"dispute_refund","route":"handoff","risk":"high","text":"I made the purchase, but the same restaurant charged me twice."}
+{"id":"S30","lang":"mixed","intent":"dispute_refund","route":"handoff","risk":"high","text":"餐厅这笔是我付的，但是 merchant 扣了两遍"}
+{"id":"S31","lang":"zh","intent":"complaint","route":"handoff","risk":"low","text":"我想投诉，前面两位坐席一直中途挂断电话"}
+{"id":"S32","lang":"en","intent":"complaint","route":"handoff","risk":"low","text":"I want to file a complaint about two agents hanging up on me."}
+{"id":"S33","lang":"mixed","intent":"complaint","route":"handoff","risk":"low","text":"我要 complaint，前面两个客服都把电话挂了"}
+{"id":"S34","lang":"zh","intent":"out_of_scope","route":"refuse","risk":"low","text":"推荐一只下个月值得买入的股票吧"}
+{"id":"S35","lang":"en","intent":"out_of_scope","route":"refuse","risk":"low","text":"Which stock should I buy for a short-term gain next month?"}
+{"id":"S36","lang":"mixed","intent":"out_of_scope","route":"refuse","risk":"low","text":"下个月想赚 short-term gain，推荐一只 stock"}
+{"id":"S37","lang":"zh","intent":"greeting","route":"greeting","risk":"low","text":"早上好呀"}
+{"id":"S38","lang":"en","intent":"greeting","route":"greeting","risk":"low","text":"Good morning!"}
+{"id":"S39","lang":"mixed","intent":"greeting","route":"greeting","risk":"low","text":"嗨 hello"}
+{"id":"S40","lang":"zh","intent":"transfer_status","route":"account","risk":"low","text":"上周五发出的汇款被退回来了，帮我查那一笔"}
+{"id":"S41","lang":"en","intent":"transfer_status","route":"account","risk":"low","text":"Please check what happened to the transfer I made last Friday that was returned."}
+{"id":"S42","lang":"mixed","intent":"transfer_status","route":"account","risk":"low","text":"上周五那笔 transfer 被退回，帮我查原因"}
+{"id":"S43","lang":"zh","intent":"fraud_report","route":"handoff","risk":"high","text":"我没去过那台柜员机，可账上出现了昨夜的取款"}
+{"id":"S44","lang":"en","intent":"fraud_report","route":"handoff","risk":"high","text":"I never used that ATM, but my account shows a cash withdrawal there last night."}
+{"id":"S45","lang":"mixed","intent":"fraud_report","route":"handoff","risk":"high","text":"昨晚那笔 ATM withdrawal 不是我取的"}
+{"id":"S46","lang":"zh","intent":"dispute_refund","route":"handoff","risk":"high","text":"商户确认给我退货款了，两周后原卡还是没有这笔退款"}
+{"id":"S47","lang":"en","intent":"dispute_refund","route":"handoff","risk":"high","text":"The merchant confirmed the refund two weeks ago, but it still hasn't appeared on my card."}
+{"id":"S48","lang":"mixed","intent":"dispute_refund","route":"handoff","risk":"high","text":"merchant 说两周前就 refund 了，原卡还是没到账"}

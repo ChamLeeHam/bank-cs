@@ -1,0 +1,6 @@
+{"id":"M01","lang":"zh","turns":["海外电汇一般多久到账？","那单日最多能汇多少？"],"answer_contains":"20,000","source_contains":"转账限额"}
+{"id":"M02","lang":"en","turns":["How long do FAST transfers usually take?","What about PayNow?"],"answer_contains":"second","source_contains":"PayNow"}
+{"id":"M03","lang":"mixed","turns":["我的 replacement card 一般多久寄到？","那附属卡怎么申请？"],"answer_contains":"附属卡","source_contains":"附属卡"}
+{"id":"M04","lang":"zh","turns":["申请多币种账户要准备哪些材料？","那可以用哪些币种？"],"answer_contains":"美元","source_contains":"多币种"}
+{"id":"M05","lang":"en","turns":["What fees apply to an overseas ATM withdrawal?","Does the same apply to overseas card purchases?"],"answer_contains":"fee","source_contains":"card"}
+{"id":"M06","lang":"mixed","turns":["在 App 里面怎么调 daily transfer limit？","调高以后是马上生效吗？"],"answer_contains":"12","source_contains":"限额"}

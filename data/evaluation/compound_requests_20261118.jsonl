@@ -1,0 +1,8 @@
+{"id": "C01", "text": "帮我查一下余额，另外银行卡丢了，先帮我冻结。", "intent": "card_lost_freeze", "route": "account", "secondary": "balance_inquiry"}
+{"id": "C02", "text": "Can you show my balance and freeze my missing debit card first?", "intent": "card_lost_freeze", "route": "account", "secondary": "balance_inquiry"}
+{"id": "C03", "text": "查一下 savings balance，debit card 找不到了，也帮我 freeze。", "intent": "card_lost_freeze", "route": "account", "secondary": "balance_inquiry"}
+{"id": "C04", "text": "凌晨那笔消费不是我刷的，另外帮我查看最近一笔消费。", "intent": "fraud_report", "route": "handoff", "secondary": "card_transaction_inquiry"}
+{"id": "C05", "text": "I never authorized that card payment. Can you also show my latest card transaction?", "intent": "fraud_report", "route": "handoff", "secondary": "card_transaction_inquiry"}
+{"id": "C06", "text": "帮我查昨天发出的那笔汇款进度，再告诉我境外电汇怎么收费。", "intent": "transfer_status", "route": "account", "secondary": "fees_rates"}
+{"id": "C07", "text": "How much are overseas transfer fees, and can you check the transfer I sent yesterday?", "intent": "transfer_status", "route": "account", "secondary": "fees_rates"}
+{"id": "C08", "text": "帮我查 debit card 最近一笔 transaction，再查一下账户余额。", "intent": "card_transaction_inquiry", "route": "account", "secondary": "balance_inquiry"}
